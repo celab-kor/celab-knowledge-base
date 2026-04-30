@@ -1,0 +1,5 @@
+.DS_Store
+.sync.log
+.sync-out.log
+.sync-err.log
+*.log.tmp

@@ -1,0 +1,35 @@
+[main b439f42] Auto sync: 4 file(s) updated at 2026-04-30 23:51:36
+ Committer: Vision K <visionschool@Visionui-MacBookPro.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 17 files changed, 29 insertions(+)
+ create mode 100644 .sync-err.log
+ create mode 100644 .sync-out.log
+ create mode 100644 .sync.log
+ create mode 100644 pages/slides/s1_07_10m04s.jpg
+ create mode 100644 pages/slides/s1_10_12m21s.jpg
+ create mode 100644 pages/slides/s1_18_24m30s.jpg
+ create mode 100644 pages/slides/s2_t_100m00s.jpg
+ create mode 100644 pages/slides/s2_t_110m00s.jpg
+ create mode 100644 pages/slides/s2_t_116m40s.jpg
+ create mode 100644 pages/slides/s2_t_70m00s.jpg
+ create mode 100644 pages/slides/s2_t_73m20s.jpg
+ create mode 100644 pages/slides/s2_t_76m40s.jpg
+ create mode 100644 pages/slides/s2_t_83m20s.jpg
+ create mode 100644 pages/slides/s2_t_90m00s.jpg
+ create mode 100644 pages/slides/slide_04_09m17s.jpg
+ create mode 100644 pages/slides/slide_15_67m07s.jpg
+ create mode 100755 sync.sh
+To https://github.com/celab-kor/celab-knowledge-base.git
+   ff374cf..b439f42  main -> main
+[2026-04-30 23:51:36] ✅ 4 파일 동기화 완료
