@@ -1,1 +1,3 @@
 /bin/bash: /Users/visionschool/Documents/celab-knowledge-base/sync.sh: Operation not permitted
+/Users/visionschool/Library/Scripts/celab-sync.sh: line 24: /Users/visionschool/Documents/celab-knowledge-base/.sync.log: Operation not permitted
+tail: /Users/visionschool/Documents/celab-knowledge-base/.sync.log: Operation not permitted
