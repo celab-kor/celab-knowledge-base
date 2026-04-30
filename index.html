@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CELab 지식창고</title>
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy2: #1a2d45;
+    --gold: #c9a84c;
+    --gold2: #e8c96a;
+    --text: #e8edf2;
+    --muted: #8a9bb0;
+    --card-bg: #162030;
+    --card-border: #243450;
+    --radius: 12px;
+    --tag-gap: 6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy); color: var(--text); font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; min-height: 100vh; }
+
+  /* HEADER */
+  header { background: linear-gradient(135deg, var(--navy2) 0%, #0a1628 100%); border-bottom: 1px solid var(--card-border); padding: 48px 24px 40px; text-align: center; }
+  header .logo { font-size: 13px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; }
+  header h1 { font-size: clamp(26px, 5vw, 42px); font-weight: 700; background: linear-gradient(135deg, #fff 0%, var(--gold2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  header p { margin-top: 10px; color: var(--muted); font-size: 15px; }
+  .stats { display: flex; justify-content: center; gap: 32px; margin-top: 28px; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--gold); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* FILTER BAR */
+  .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 24px 24px 8px; }
+  .filter-btn { background: var(--card-bg); border: 1px solid var(--card-border); color: var(--muted); padding: 7px 16px; border-radius: 20px; font-size: 13px; cursor: pointer; transition: all .2s; }
+  .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .filter-btn.active { background: var(--gold); border-color: var(--gold); color: var(--navy); font-weight: 600; }
+
+  /* SEARCH */
+  .search-wrap { display: flex; justify-content: center; padding: 12px 24px 20px; }
+  .search-wrap input { width: 100%; max-width: 480px; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text); padding: 10px 16px; border-radius: 8px; font-size: 14px; outline: none; transition: border-color .2s; }
+  .search-wrap input::placeholder { color: var(--muted); }
+  .search-wrap input:focus { border-color: var(--gold); }
+
+  /* GALLERY GRID */
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 0 24px 60px; max-width: 1200px; margin: 0 auto; }
+  .no-results { grid-column: 1/-1; text-align: center; color: var(--muted); padding: 60px 0; font-size: 16px; }
+
+  /* CARD */
+  .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; transition: transform .2s, box-shadow .2s, border-color .2s; display: flex; flex-direction: column; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); border-color: var(--gold); }
+  .card-thumb { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 48px; position: relative; }
+  .card-category-badge { position: absolute; top: 12px; right: 12px; font-size: 10px; padding: 3px 10px; border-radius: 20px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .card-body { padding: 18px 18px 14px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .card-title { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.4; }
+  .card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: var(--tag-gap); }
+  .tag { background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); font-size: 11px; padding: 3px 9px; border-radius: 12px; cursor: pointer; transition: background .15s; }
+  .tag:hover { background: rgba(201,168,76,0.25); }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px 16px; border-top: 1px solid var(--card-border); }
+  .card-date { font-size: 11px; color: var(--muted); }
+  .card-link { background: var(--gold); color: var(--navy); font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 6px; text-decoration: none; transition: background .2s; }
+  .card-link:hover { background: var(--gold2); }
+
+  /* CATEGORY COLORS */
+  .cat-투자 { background: rgba(99,179,237,0.15); }
+  .cat-투자 .card-category-badge { background: rgba(99,179,237,0.2); color: #63b3ed; border: 1px solid rgba(99,179,237,0.4); }
+  .cat-IR { background: rgba(154,230,180,0.1); }
+  .cat-IR .card-category-badge { background: rgba(154,230,180,0.2); color: #9ae6b4; border: 1px solid rgba(154,230,180,0.4); }
+  .cat-분석 { background: rgba(201,168,76,0.08); }
+  .cat-분석 .card-category-badge { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.4); }
+  .cat-전략 { background: rgba(237,137,54,0.1); }
+  .cat-전략 .card-category-badge { background: rgba(237,137,54,0.2); color: #f6ad55; border: 1px solid rgba(237,137,54,0.4); }
+  .cat-기타 { background: rgba(160,174,192,0.08); }
+  .cat-기타 .card-category-badge { background: rgba(160,174,192,0.15); color: #a0aec0; border: 1px solid rgba(160,174,192,0.4); }
+
+  footer { text-align: center; padding: 24px; border-top: 1px solid var(--card-border); color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">CELab · Knowledge Base</div>
+  <h1>지식창고</h1>
+  <p>분석 자료 · 인터뷰 · 투자 전략 · 스타트업 리서치</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="total-count">0</div><div class="stat-label">총 문서</div></div>
+    <div class="stat"><div class="stat-num" id="tag-count">0</div><div class="stat-label">태그</div></div>
+    <div class="stat"><div class="stat-num" id="cat-count">0</div><div class="stat-label">카테고리</div></div>
+  </div>
+</header>
+
+<div class="filter-bar" id="filter-bar">
+  <button class="filter-btn active" data-tag="전체">전체</button>
+</div>
+
+<div class="search-wrap">
+  <input type="text" id="search-input" placeholder="제목, 태그, 내용으로 검색..." />
+</div>
+
+<div class="gallery" id="gallery"></div>
+
+<footer>CELab 지식창고 · celab-kor · <span id="footer-year"></span></footer>
+
+<script>
+// ============================================================
+// DATA — 새 문서 추가할 때 이 배열에 항목 추가
+// ============================================================
+const PAGES = [
+  {
+    id: 1,
+    title: "투자지주 특강 분석",
+    desc: "서울대 기술지주 심상우 팀장 + 탭앤젤 파트너스 주진영 부대표의 스타트업 투자 생태계 및 TIPS 프로그램 심층 분석. 슬라이드 갤러리 + VC·창업가 관점 포함.",
+    category: "투자",
+    tags: ["투자", "TIPS", "세미나", "스타트업", "AC", "VC", "투자생태계"],
+    date: "2025-04-30",
+    emoji: "📊",
+    url: "pages/투자지주특강_분석.html"
+  },
+  {
+    id: 2,
+    title: "SnapScale 공동창업 협업 증거 대시보드",
+    desc: "박규호 부장 30% 지분 정당성 증거 대시보드. 9개월 48회 회의, 5개 기여 영역, 32개 미팅 기록, 투자자 Q&A 20문항 포함.",
+    category: "IR",
+    tags: ["IR", "SnapScale", "공동창업", "지분", "씨드투자", "협업증거"],
+    date: "2025-04-28",
+    emoji: "🤝",
+    url: "pages/snapscale_협업증거.html"
+  }
+];
+
+// ============================================================
+// RENDER
+// ============================================================
+const allTags = [...new Set(PAGES.flatMap(p => p.tags))];
+const allCats = [...new Set(PAGES.map(p => p.category))];
+
+document.getElementById('total-count').textContent = PAGES.length;
+document.getElementById('tag-count').textContent = allTags.length;
+document.getElementById('cat-count').textContent = allCats.length;
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+// Build filter buttons
+const filterBar = document.getElementById('filter-bar');
+allTags.forEach(tag => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn';
+  btn.dataset.tag = tag;
+  btn.textContent = tag;
+  filterBar.appendChild(btn);
+});
+
+let activeTag = '전체';
+let searchQuery = '';
+
+function renderGallery() {
+  const gallery = document.getElementById('gallery');
+  let filtered = PAGES.filter(p => {
+    const matchTag = activeTag === '전체' || p.tags.includes(activeTag) || p.category === activeTag;
+    const q = searchQuery.toLowerCase();
+    const matchSearch = !q || p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q));
+    return matchTag && matchSearch;
+  });
+
+  gallery.innerHTML = '';
+  if (filtered.length === 0) {
+    gallery.innerHTML = '<div class="no-results">검색 결과가 없습니다.</div>';
+    return;
+  }
+
+  filtered.forEach(p => {
+    const card = document.createElement('div');
+    card.className = `card cat-${p.category}`;
+    card.innerHTML = `
+      <div class="card-thumb cat-${p.category}">
+        <span>${p.emoji}</span>
+        <span class="card-category-badge">${p.category}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${p.title}</div>
+        <div class="card-desc">${p.desc}</div>
+        <div class="card-tags">
+          ${p.tags.map(t => `<span class="tag" data-tag="${t}">${t}</span>`).join('')}
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="card-date">${p.date}</span>
+        <a class="card-link" href="${p.url}" target="_blank">보러가기 →</a>
+      </div>
+    `;
+    // Tag click → filter
+    card.querySelectorAll('.tag').forEach(tagEl => {
+      tagEl.addEventListener('click', e => {
+        e.preventDefault();
+        setActiveTag(tagEl.dataset.tag);
+      });
+    });
+    gallery.appendChild(card);
+  });
+}
+
+function setActiveTag(tag) {
+  activeTag = tag;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.tag === tag));
+  renderGallery();
+}
+
+filterBar.addEventListener('click', e => {
+  if (e.target.classList.contains('filter-btn')) setActiveTag(e.target.dataset.tag);
+});
+
+document.getElementById('search-input').addEventListener('input', e => {
+  searchQuery = e.target.value;
+  renderGallery();
+});
+
+renderGallery();
+</script>
+</body>
+</html>
