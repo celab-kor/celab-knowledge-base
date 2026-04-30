@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회의록 - 필즈엔지니어링 국가과제 대비 미팅 | 2026.04.05</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary-navy: #1e3c72;
+            --secondary-navy: #2a5298;
+            --accent-blue: #4a90e2;
+            --light-blue: #e3f2fd;
+            --dark-gray: #2c3e50;
+            --medium-gray: #7f8c8d;
+            --light-gray: #ecf0f1;
+            --white: #ffffff;
+            --success-green: #27ae60;
+            --warning-orange: #f39c12;
+            --danger-red: #e74c3c;
+            --snapscale-green: #32B489;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: var(--dark-gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
+            color: var(--white);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+
+        .warning-banner {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.5);
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin-bottom: 30px;
+            font-size: 13px;
+            position: relative;
+            z-index: 1;
+            color: #ffe082;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+        }
+        .meeting-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        .meta-item {
+            background: rgba(255,255,255,0.12);
+            padding: 14px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: left;
+        }
+        .meta-label {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .meta-value { font-size: 15px; font-weight: 600; }
+
+        /* ─── NAV ─── */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            background: var(--primary-navy);
+            z-index: 100;
+            padding: 0 40px;
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .sticky-nav::-webkit-scrollbar { display: none; }
+        .nav-item {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            padding: 14px 18px;
+            font-size: 13px;
+            white-space: nowrap;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-item:hover {
+            color: #fff;
+            border-bottom-color: var(--snapscale-green);
+        }
+
+        /* ─── CONTENT ─── */
+        .content { padding: 40px; }
+        .section { margin-bottom: 55px; }
+        .section-title {
+            color: var(--primary-navy);
+            font-size: 28px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* ─── TOC ─── */
+        .toc {
+            background: var(--light-blue);
+            padding: 28px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--accent-blue);
+        }
+        .toc h3 { color: var(--primary-navy); margin-bottom: 16px; font-size: 20px; }
+        .toc ul { list-style: none; }
+        .toc li { padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .toc li:last-child { border-bottom: none; }
+        .toc a {
+            color: var(--secondary-navy);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toc a:hover { color: var(--accent-blue); padding-left: 8px; }
+
+        /* ─── INFO CARDS ─── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .info-card {
+            background: linear-gradient(135deg, #f8faff 0%, var(--light-blue) 100%);
+            border: 1px solid #b3d4f5;
+            border-radius: 10px;
+            padding: 22px;
+        }
+        .info-card h3 {
+            color: var(--primary-navy);
+            font-size: 15px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-card p { font-size: 14px; line-height: 1.7; color: #444; }
+
+        /* ─── AGENDA ITEMS ─── */
+        .agenda-item {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .agenda-item:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.09); transform: translateY(-2px); }
+        .agenda-header {
+            background: linear-gradient(135deg, var(--light-blue) 0%, #bbdefb 100%);
+            padding: 18px 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: all 0.3s;
+        }
+        .agenda-header:hover { background: linear-gradient(135deg, #bbdefb 0%, #90caf9 100%); }
+        .agenda-number {
+            background: var(--accent-blue);
+            color: var(--white);
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(74,144,226,0.3);
+        }
+        .agenda-title { flex: 1; font-size: 18px; font-weight: 600; color: var(--primary-navy); }
+        .toggle-icon { color: var(--accent-blue); font-size: 22px; transition: transform 0.3s; }
+        .agenda-item.collapsed .toggle-icon { transform: rotate(-90deg); }
+        .agenda-content {
+            padding: 28px 22px;
+            max-height: 5000px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        .agenda-item.collapsed .agenda-content { max-height: 0; padding: 0 22px; }
+
+        /* ─── QUOTES ─── */
+        .speaker-quote {
+            background: #f8f9fa;
+            border-left: 4px solid var(--accent-blue);
+            padding: 13px 18px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            font-size: 14px;
+        }
+        .speaker-name { font-weight: 700; color: var(--primary-navy); font-style: normal; }
+        .speaker-kim .speaker-name { color: #1e3c72; }
+        .speaker-park .speaker-name { color: #1565c0; }
+
+        /* ─── INSIGHT ─── */
+        .insight-box {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+            border-left: 5px solid var(--warning-orange);
+            padding: 22px;
+            margin: 22px 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .insight-title {
+            color: #d68910;
+            font-weight: 700;
+            font-size: 17px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .insight-list { list-style: none; }
+        .insight-list li {
+            padding: 8px 0;
+            padding-left: 28px;
+            position: relative;
+            font-size: 14px;
+        }
+        .insight-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--warning-orange);
+            font-weight: bold;
+        }
+
+        /* ─── DELIVERABLE TABLE ─── */
+        .deliverable-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        .deliverable-table th {
+            background: var(--primary-navy);
+            color: var(--white);
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .deliverable-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--light-gray);
+            vertical-align: top;
+        }
+        .deliverable-table tr:nth-child(even) td { background: #f8faff; }
+        .deliverable-table tr:hover td { background: var(--light-blue); }
+
+        /* ─── ACTION ITEMS ─── */
+        .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        .action-item:hover { border-color: var(--accent-blue); box-shadow: 0 4px 12px rgba(74,144,226,0.1); }
+        .action-badge {
+            background: var(--accent-blue);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .action-badge.high { background: var(--danger-red); }
+        .action-badge.medium { background: var(--warning-orange); }
+        .action-badge.low { background: var(--success-green); }
+        .action-body { flex: 1; }
+        .action-title { font-weight: 600; font-size: 15px; color: var(--primary-navy); margin-bottom: 4px; }
+        .action-meta { font-size: 13px; color: var(--medium-gray); }
+
+        /* ─── DECISION BOX ─── */
+        .decision-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left: 5px solid var(--success-green);
+            padding: 20px;
+            margin: 18px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .decision-title { color: #1b5e20; font-weight: 700; font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .decision-list { list-style: none; }
+        .decision-list li { padding: 6px 0; padding-left: 22px; position: relative; font-size: 14px; }
+        .decision-list li::before { content: "✓"; position: absolute; left: 0; color: var(--success-green); font-weight: bold; }
+
+        /* ─── RISK ─── */
+        .risk-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 5px solid var(--danger-red);
+            padding: 20px;
+            margin: 18px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .risk-title { color: #b71c1c; font-weight: 700; font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .risk-list { list-style: none; }
+        .risk-list li { padding: 6px 0; padding-left: 22px; position: relative; font-size: 14px; }
+        .risk-list li::before { content: "⚠"; position: absolute; left: 0; color: var(--danger-red); }
+
+        /* ─── DIAGRAM ─── */
+        .diagram-container {
+            background: #f8f9fa;
+            padding: 28px;
+            border-radius: 10px;
+            margin: 22px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .diagram-container .mermaid { min-width: 800px; margin: 0 auto; }
+        .diagram-label {
+            font-size: 13px;
+            color: var(--medium-gray);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* ─── TAG ─── */
+        .tag {
+            display: inline-block;
+            background: var(--light-blue);
+            color: var(--secondary-navy);
+            border-radius: 20px;
+            padding: 3px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 2px;
+        }
+        .tag.green { background: #e8f5e9; color: #1b5e20; }
+        .tag.orange { background: #fff3e0; color: #e65100; }
+        .tag.red { background: #ffebee; color: #b71c1c; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--primary-navy);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 20px 40px;
+            font-size: 13px;
+        }
+
+        /* ─── PRINT ─── */
+        @media print {
+            body { background: white; padding: 0; }
+            .sticky-nav { display: none; }
+            .agenda-item.collapsed .agenda-content { max-height: none; padding: 28px 22px; }
+            .container { box-shadow: none; border-radius: 0; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 30px 20px; }
+            h1 { font-size: 24px; }
+            .content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+<!-- ════════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════════ -->
+<header>
+    <div class="warning-banner">
+        ⚠️ 안내사항: 본 회의록은 AI 기술을 활용하여 녹취록을 기반으로 작성되었으며, 일부 정확도가 떨어질 수 있습니다.
+    </div>
+    <h1>🔧 필즈엔지니어링 국가과제 대비 미팅</h1>
+    <div class="subtitle">LNGC 재기화·CCS 국가과제 AutoFlow 적용 범위 및 견적 전략 논의</div>
+    <div class="meeting-meta">
+        <div class="meta-item">
+            <div class="meta-label">📅 일시</div>
+            <div class="meta-value">2026년 4월 5일</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">📍 장소</div>
+            <div class="meta-value">온라인 화상 미팅</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">👥 참석자</div>
+            <div class="meta-value">김상윤 대표 · 박규호 부장</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">🎯 회의 목적</div>
+            <div class="meta-value">필즈 국가과제 딜리버러블 분석 및 AutoFlow 적용 범위 도출</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">📄 작성일</div>
+            <div class="meta-value">2026.04.05</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">🔖 문서 상태</div>
+            <div class="meta-value">내부 검토용 초안</div>
+        </div>
+    </div>
+</header>
+
+<!-- ════════════════════════════════════════════════
+     STICKY NAV
+════════════════════════════════════════════════ -->
+<nav class="sticky-nav">
+    <a href="#overview" class="nav-item">📋 회의 개요</a>
+    <a href="#speakers" class="nav-item">👤 화자 요약</a>
+    <a href="#agenda1" class="nav-item">① 국가과제 분석</a>
+    <a href="#agenda2" class="nav-item">② AutoFlow 적용</a>
+    <a href="#agenda3" class="nav-item">③ 견적 전략</a>
+    <a href="#agenda4" class="nav-item">④ 리소스·일정</a>
+    <a href="#decisions" class="nav-item">✅ 결정사항</a>
+    <a href="#actions" class="nav-item">📌 액션아이템</a>
+    <a href="#timeline" class="nav-item">📆 타임라인</a>
+    <a href="#flow" class="nav-item">🗺️ 워크플로우</a>
+</nav>
+
+<div class="content">
+
+<!-- ════════════════════════════════════════════════
+     TOC
+════════════════════════════════════════════════ -->
+<div class="toc">
+    <h3>📑 목차</h3>
+    <ul>
+        <li><a href="#overview">1. 회의 개요 및 배경</a></li>
+        <li><a href="#speakers">2. 화자별 발언 요약</a></li>
+        <li><a href="#agenda1">3. 안건 ① — 필즈 국가과제 구조 및 딜리버러블 분석</a></li>
+        <li><a href="#agenda2">4. 안건 ② — AutoFlow 적용 범위 및 기술 접근 방향</a></li>
+        <li><a href="#agenda3">5. 안건 ③ — 견적 전략 및 가격 정책</a></li>
+        <li><a href="#agenda4">6. 안건 ④ — 리소스 요구 및 일정 계획</a></li>
+        <li><a href="#decisions">7. 주요 결정사항</a></li>
+        <li><a href="#actions">8. 액션아이템</a></li>
+        <li><a href="#timeline">9. 타임라인 다이어그램</a></li>
+        <li><a href="#flow">10. AutoFlow 설계 전주기 워크플로우</a></li>
+    </ul>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     OVERVIEW
+════════════════════════════════════════════════ -->
+<section class="section" id="overview">
+    <h2 class="section-title">📋 회의 개요 및 배경</h2>
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>🏭 필즈엔지니어링 국가과제 현황</h3>
+            <p>산업부 주관 국가 연구개발 과제 수주 완료. 2026년 3월 말 연구비 입금 확인. 2차 년도(2026년) 수행 중. 과제는 <strong>총 3개 세부 과제</strong>로 구성: ① LNGC 재기화 설비(750 MMSCFD), ② 소형 재기화 설비(20 MMSCFD), ③ CO₂ 해저 주입 시설.</p>
+        </div>
+        <div class="info-card">
+            <h3>🎯 회의 핵심 목적</h3>
+            <p>국가과제 수행 딜리버러블을 분석하여 AutoFlow(SnapScale)가 <strong>각 단계별로 개입할 수 있는 범위</strong>를 확정하고, 필즈 측에 요청할 입력 데이터 목록 및 견적서를 다음 주 화요일까지 발송하기 위한 논의.</p>
+        </div>
+        <div class="info-card">
+            <h3>📌 SnapScale 관점에서의 기회</h3>
+            <p>이번 국가과제는 <strong>테스트베드(실증 사업)</strong>로 최적. 국가과제 특성상 결과 부분 허용, 리스크 낮음. 성공 레퍼런스 확보 시 Series A/B 라운드에 강력한 PoC 근거 제공 가능.</p>
+        </div>
+        <div class="info-card">
+            <h3>⚙️ 핵심 기술 배경</h3>
+            <p>LNGC → FSRU(재기화 유닛) 전환은 박규호 부장이 기본 설계 시절부터 연구해온 분야. 동남아 중심으로 실제 수주 사례 다수. SnapScale 온톨로지 기반 AI는 이 공정 구조를 그래프로 모델링하여 자동화 가능.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SPEAKERS
+════════════════════════════════════════════════ -->
+<section class="section" id="speakers">
+    <h2 class="section-title">👤 화자별 발언 요약</h2>
+    <div class="info-grid">
+        <div class="info-card speaker-kim">
+            <h3>🟦 김상윤 대표 (SnapScale)</h3>
+            <p>
+                • <strong>역할:</strong> 비즈니스·전략 리더. 필즈와의 계약 방향 및 견적 전략 주도<br>
+                • <strong>핵심 발언:</strong> AutoFlow를 통한 설계 전주기 자동화 비전 제시, 국가과제 딜리버러블별 적용 범위 도출 요청<br>
+                • <strong>주요 기여:</strong> "필즈가 수주한 국가과제에 연구개발비 일부를 써서 AutoFlow로 전체 설계 자동화 초안을 뽑는 것을 해보자" — 협업 방향 명확화<br>
+                • <strong>우려 사항:</strong> 현 인력으로는 새로운 영역(개념 설계 전단) 커버 한계; 견적 규모 타당성 확보 필요
+            </p>
+        </div>
+        <div class="info-card speaker-park">
+            <h3>🟩 박규호 부장 (SnapScale, 前 AspenTech)</h3>
+            <p>
+                • <strong>역할:</strong> 기술 도메인 전문가. 플랜트 설계 전주기 구조와 딜리버러블 체계 설명<br>
+                • <strong>핵심 발언:</strong> LNGC 개조 공정(FSRU·재기화) 기술 메커니즘, 단계별 딜리버러블, AutoFlow 적용 가능 범위 상세 설명<br>
+                • <strong>주요 기여:</strong> "Design Philosophy → PFD/HMB → PNID → Equipment List → Line List → MTO 까지의 전 공정이 이미 정의된 공정"임을 명확히 하며 SnapScale 적용 범위 구체화<br>
+                • <strong>경계 설정:</strong> "라이선서 개념 설계를 AI가 직접 해주는 것은 위험 — 필즈가 해야 할 일을 우리가 떠안는 구조 방지"
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     AGENDA 1
+════════════════════════════════════════════════ -->
+<section class="section" id="agenda1">
+    <h2 class="section-title">① 필즈 국가과제 구조 및 딜리버러블 분석</h2>
+
+    <div class="agenda-item">
+        <div class="agenda-header" onclick="toggleAgenda(this)">
+            <div class="agenda-number">1</div>
+            <div class="agenda-title">국가과제 세부 내용 및 연도별 수행 계획</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="agenda-content">
+            <div class="speaker-quote speaker-park">
+                <span class="speaker-name">박규호 부장:</span> "일단 크게 다르진 않아요. 필즈에서 직접적으로 해야 할 일들은 설계 용역이에요. 개념 설계를 잡는 일. LNGC를 개조해서 쓸 수 있는 이유나 해양 플랫폼을 사용할 수 있는 이유는 딱 두 가지입니다."
+            </div>
+
+            <p style="margin:14px 0; font-size:14px;">필즈엔지니어링이 수주한 국가과제 연구개발계획서 기준, 연도별 주요 수행 사항:</p>
+
+            <table class="deliverable-table">
+                <thead>
+                    <tr>
+                        <th>수행 연도</th>
+                        <th>주요 과제 내용</th>
+                        <th>주요 딜리버러블</th>
+                        <th>AI 적용 가능성</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1차 년도</strong></td>
+                        <td>사업성 평가 / 타당성 조사, LCA</td>
+                        <td>타당성 보고서</td>
+                        <td><span class="tag orange">간접 지원</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2차 년도</strong><br><span style="color:#e74c3c; font-size:12px;">(현재 진행 중)</span></td>
+                        <td>개념 설계 수행</td>
+                        <td>Design Philosophy, Basis of Design, PFD, UFD, MSD, PSD, Process Simulation, H&MB, Layout</td>
+                        <td><span class="tag green">직접 적용</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>3차 년도</strong></td>
+                        <td>기본 설계 수행</td>
+                        <td>P&ID, Equipment/Instrument Data Sheet, Piping Isometric, 3D Modeling</td>
+                        <td><span class="tag green">핵심 적용</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>4차 년도 이후</strong></td>
+                        <td>실증 설비 구축 및 시운전</td>
+                        <td>Commissioning Procedure, Operational Scenarios</td>
+                        <td><span class="tag">후단 지원</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="insight-box">
+                <div class="insight-title">💡 안건 인사이트</div>
+                <ul class="insight-list">
+                    <li><strong>현재(2차 년도)가 골든 타임:</strong> 개념 설계 단계에서 SnapScale이 개입하면 이후 전 단계에 누적 효과 발생. 지금 시작하지 않으면 3차 년도부터 후발 진입이 됨.</li>
+                    <li><strong>750 MMSCFD만 타겟:</strong> 20 MMSCFD는 외주 예정, CO₂ 주입은 범위 제외. 협업 대상 과제를 명확히 좁혀 리소스 집중 가능.</li>
+                    <li><strong>해양 분야 전문성 희소성:</strong> 박규호 부장이 직접 설계 경험을 보유한 FSRU·재기화 분야 — 타 AI 업체가 모방하기 어려운 도메인 지식 기반의 차별화.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="agenda-item">
+        <div class="agenda-header" onclick="toggleAgenda(this)">
+            <div class="agenda-number">2</div>
+            <div class="agenda-title">LNGC 재기화(FSRU) 공정 기술 구조 이해</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="agenda-content">
+            <div class="speaker-quote speaker-park">
+                <span class="speaker-name">박규호 부장:</span> "탱크에 극저온 LNG가 마이너스 163도에 있다. 그걸 목적하는 데까지 보낼 거다. 그 설계기술서가 나올 거고요. 장비 두 라인이 있는데 — BOG 자동기화 라인과 펌프 강제기화 라인 — 이 두 가지 합산이 리퀴어먼트를 만족해야 합니다."
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📦 재기화 공정 핵심 구조</h3>
+                    <p>
+                        <strong>① BOG(Boil-Off Gas) 라인:</strong> 탱크 내 자동 기화 가스 → 압축 → 요구 조건 송출<br><br>
+                        <strong>② 강제기화 라인:</strong> LNG 펌프로 액체 추출 → 열교환기(Glycol Water) → 기화 → 압축 → 요구 조건 송출<br><br>
+                        <strong>최종 요구조건:</strong> 750 MMSCFD / 목표 압력·온도 (연구계획서 기재)
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>⚙️ 하이시스 모델링 핵심 과제</h3>
+                    <p>
+                        <strong>피드 정의:</strong> LNG 성분(몰분율: 메탄 ~95%, 에탄 등) + BOR(Boil-Off Rate) 산정<br><br>
+                        <strong>목적값 찾기(Adjust):</strong> 열교환기 후단 온도·압력이 요구조건에 수렴하도록 반복 최적화 — 핀치 분석(Pinch Analysis) 필요<br><br>
+                        <strong>장비 사이징 확정 → Equipment List 출력</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">💡 안건 인사이트</div>
+                <ul class="insight-list">
+                    <li><strong>피드·프로덕트 정의만 있으면 AutoFlow 시작 가능:</strong> 공정 구조 자체는 기존 논문·특허로 완벽히 정의됨. AI가 논문 서베이 → 장비 리스트 → 하이시스 자동 드로잉을 순차 실행 가능.</li>
+                    <li><strong>Adjust 함수 자동화가 핵심 기술 과제:</strong> 반복 최적화(이터레이션)를 AI 코딩으로 자동화하면 석사 논문 1편 분량의 작업을 수 시간 내 완료.</li>
+                    <li><strong>현대중공업 LFSS 사례 직접 재활용 가능:</strong> 박 부장이 보유한 설계 표준이 현재 과제와 동일한 코드·구조를 따름. 온톨로지 구축에 즉시 활용 가능 (외부 유출 금지).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     AGENDA 2
+════════════════════════════════════════════════ -->
+<section class="section" id="agenda2">
+    <h2 class="section-title">② AutoFlow 적용 범위 및 기술 접근 방향</h2>
+
+    <div class="agenda-item">
+        <div class="agenda-header" onclick="toggleAgenda(this)">
+            <div class="agenda-number">3</div>
+            <div class="agenda-title">AutoFlow 단계별 개입 범위 확정</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="agenda-content">
+            <div class="speaker-quote speaker-park">
+                <span class="speaker-name">박규호 부장:</span> "결과적으로 우리가 해줄 수 있는 거는 P&ID가 나오시면 그거를 달라고 하면, 그 이후에 Detail Engineering에 들어가는 품을 저희가 줄여드릴 수 있기 위해서 — Equipment List, Instrument Data Sheet, Line List, Purchase Order 문서들을 자동화해 드리면..."
+            </div>
+
+            <div class="speaker-quote speaker-kim">
+                <span class="speaker-name">김상윤 대표:</span> "AutoFlow로 넘어가서 이것들이 진짜 문서화 돼야 될 때 그 문서화 정합성과 속도를 우리가 빨리 만들어줄 수 있다."
+            </div>
+
+            <p style="margin:14px 0; font-size:14px; font-weight:600; color: var(--primary-navy);">▶ 단계별 AutoFlow 개입 범위</p>
+
+            <table class="deliverable-table">
+                <thead>
+                    <tr>
+                        <th>단계</th>
+                        <th>필즈 수행 내용</th>
+                        <th>AutoFlow 역할</th>
+                        <th>필즈 제공 데이터</th>
+                        <th>적용 난이도</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>①</strong> Design Philosophy</td>
+                        <td>논문·특허 조사, 설계 기준 수립</td>
+                        <td>논문 자동 서베이, 장비 후보 리스트 도출, 설계 기준 문서 초안 생성</td>
+                        <td>산업표준 코드(IGC, 선급 규정), 750 MMSCFD 요구 조건</td>
+                        <td><span class="tag green">즉시 가능</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>②</strong> Basis of Design</td>
+                        <td>Feed 성분, Product 요구조건 확정</td>
+                        <td>기준 템플릿 자동 생성, 논문 근거 자동 참조</td>
+                        <td>LNG 몰분율, 목표 압력·온도·유량</td>
+                        <td><span class="tag green">즉시 가능</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>③</strong> PFD + 하이시스 시뮬레이션</td>
+                        <td>하이시스 시뮬레이션 수행</td>
+                        <td>Feed+Product 조건 입력 → 하이시스 자동 드로잉 → Adjust(목적값 찾기) 자동화</td>
+                        <td>Feed 조건, Product 요구조건 (BOD에서 도출)</td>
+                        <td><span class="tag orange">2~3개월 개발</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>④</strong> H&MB 자동 추출</td>
+                        <td>하이시스에서 H&MB 엑셀 추출</td>
+                        <td>워크북 자동 추출, 라인별 온도·압력·유량 자동 정리</td>
+                        <td>하이시스 파일</td>
+                        <td><span class="tag orange">개발 필요</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>⑤</strong> P&ID 생성 (3차 년도)</td>
+                        <td>P&ID 도면 작성</td>
+                        <td>PFD → P&ID 변환(Safety Logic 포함) — 현재 Phase 3 계획 단계</td>
+                        <td>PFD, Safety Logic 기준</td>
+                        <td><span class="tag red">장기 개발</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>⑥</strong> Equipment/Instrument List</td>
+                        <td>장비·계기 데이터 시트 작성</td>
+                        <td>P&ID 입력 → Equipment List, Instrument List, Data Sheet 자동 생성 (현재 구축 완료)</td>
+                        <td>P&ID 도면</td>
+                        <td><span class="tag green">즉시 가능</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>⑦</strong> Line List + Hydraulic Calc</td>
+                        <td>라인 리스트 및 수리 계산</td>
+                        <td>H&MB → 유속 기준 자동 라인 사이즈 계산, 라인 리스트 자동 생성</td>
+                        <td>속도·압력 드랍 기준</td>
+                        <td><span class="tag green">즉시 가능</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>⑧</strong> MTO + 견적</td>
+                        <td>물량 산출 및 구매 견적</td>
+                        <td>전 단계 데이터 정합성 검증 → MTO 자동 집계, PO 문서 자동 생성</td>
+                        <td>벤더 데이터</td>
+                        <td><span class="tag green">즉시 가능</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>⑨</strong> Commissioning Procedure</td>
+                        <td>시운전 시나리오 작성</td>
+                        <td>Operation Scenario 별 밸브 시퀀스 자동 문서화</td>
+                        <td>확정된 P&ID, 운전 시나리오</td>
+                        <td><span class="tag orange">개발 필요</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="risk-box">
+                <div class="risk-title">⚠️ 핵심 경계 — 라이선서 역할 침범 금지</div>
+                <ul class="risk-list">
+                    <li>AI가 개념 설계를 "보장"하거나 완성물로 제공하는 것은 사업 리스크: "필즈가 수주한 연구 용역을 서브콘으로 우리가 받아버리는 상황이 될 수 있다"(박규호)</li>
+                    <li>AutoFlow의 역할: 정확도 보장이 아닌 <strong>"인간이 실제 일을 하는 프로세스를 더 단축"</strong>하는 속도 도구</li>
+                    <li>초안의 정확도보다 <strong>작업 시간 절감 측정(KPI)</strong>이 핵심 성과 지표</li>
+                </ul>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">💡 안건 인사이트</div>
+                <ul class="insight-list">
+                    <li><strong>① → ④ 구간이 즉시 착수 가능한 영역:</strong> 기존 온톨로지 기반 구조 + 박 부장 도메인 지식 조합으로 3~4개월 내 구현 가능성 확인.</li>
+                    <li><strong>⑤ PFD→P&ID 변환은 Phase 3 과제:</strong> Safety Logic 추론 모델이 필요 — 현재 영역 초과. 명시적으로 스코프 아웃 선언 필요.</li>
+                    <li><strong>⑥~⑧ 구간은 SnapScale 현재 강점:</strong> P&ID 이후 디테일 엔지니어링 자동화는 현재 구축된 AutoFlow의 핵심. 이 구간에서 최대 ROI 창출 가능.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="agenda-item">
+        <div class="agenda-header" onclick="toggleAgenda(this)">
+            <div class="agenda-number">4</div>
+            <div class="agenda-title">필즈 측에 요청할 입력 데이터 목록</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="agenda-content">
+            <div class="speaker-quote speaker-park">
+                <span class="speaker-name">박규호 부장:</span> "피드 성분(LNG 몰분율)과 프로덕트 오퍼레이팅 컨디션(목표 압력·온도·유량)만 주시면 나머지는 AI가 찾아서 시작할 수 있습니다. 산업표준 코드만 어떤 걸 선택할지 확정해 주시면 됩니다."
+            </div>
+
+            <table class="deliverable-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>요청 데이터</th>
+                        <th>용도</th>
+                        <th>필즈 준비 여부</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>①</td>
+                        <td><strong>산업표준 코드 선택</strong><br>IGC Code, 선급 규정(KR/DNV/LR), ASME/API 기준</td>
+                        <td>설계 기준선 확정, 온톨로지 코드 입력</td>
+                        <td><span class="tag green">선택 가능</span></td>
+                    </tr>
+                    <tr>
+                        <td>②</td>
+                        <td><strong>피드 조건</strong><br>LNG 성분(몰분율), BOR, 탱크 용량</td>
+                        <td>하이시스 Feed 스트림 정의</td>
+                        <td><span class="tag green">확정 가능</span></td>
+                    </tr>
+                    <tr>
+                        <td>③</td>
+                        <td><strong>프로덕트 요구조건</strong><br>750 MMSCFD, 목표 압력·온도, 송출 지점 조건</td>
+                        <td>Adjust 목적값 설정, 하이시스 Product 스트림 정의</td>
+                        <td><span class="tag orange">일부 연구계획서 기재</span></td>
+                    </tr>
+                    <tr>
+                        <td>④</td>
+                        <td><strong>운전 시나리오</strong><br>Loading, Unloading, Normal 등 Operation Mode</td>
+                        <td>복수 하이시스 파일 생성, 장비 사이징 최대화</td>
+                        <td><span class="tag red">추후 확정 예정</span></td>
+                    </tr>
+                    <tr>
+                        <td>⑤</td>
+                        <td><strong>문서 템플릿</strong><br>필즈 표준 문서 서식(H&MB, Equipment Data Sheet 등)</td>
+                        <td>AutoFlow 출력 포맷 정렬</td>
+                        <td><span class="tag orange">요청 필요</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="decision-box">
+                <div class="decision-title">✅ 합의된 요청 전략</div>
+                <ul class="decision-list">
+                    <li>필즈에 "어떤 걸 만들어서 달라"가 아닌 → <strong>"이것만 주시면 나머지는 AI가 자동 처리"</strong> 프레임으로 요청</li>
+                    <li>산업표준 코드 선택만 필즈가 결정; 나머지 Feed·Product 조건이 없으면 AI가 논문 기반으로 초안 제시 후 확정 요청</li>
+                    <li>연구소장이 내부 실무자 설득: "이것만 주면 나머지는 SnapScale이 다 해줌" 메시지 전달</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     AGENDA 3
+════════════════════════════════════════════════ -->
+<section class="section" id="agenda3">
+    <h2 class="section-title">③ 견적 전략 및 가격 정책</h2>
+
+    <div class="agenda-item">
+        <div class="agenda-header" onclick="toggleAgenda(this)">
+            <div class="agenda-number">5</div>
+            <div class="agenda-title">견적 규모 및 구성 방향</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="agenda-content">
+            <div class="speaker-quote speaker-kim">
+                <span class="speaker-name">김상윤 대표:</span> "POC이기 때문에 인건비 베이스로 선정을 할 거고, 이전에 보여드렸던 3억~4억 정도와 비슷하게 보낼 계획이에요."
+            </div>
+
+            <div class="speaker-quote speaker-park">
+                <span class="speaker-name">박규호 부장:</span> "Contingency 중 Engineering Rework는 전체 Cost의 약 9% × 60% = 약 5.4%. 그 Rework를 줄이는 것이 SnapScale 제품 가치입니다. 거기서 LD(지체상금)까지 포함하면 — 앞에서 2주 땡기면 뒤에서 최소 4주가 땡겨집니다."
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>💰 견적 규모 (현행 방향)</h3>
+                    <p>
+                        <strong>POC 견적:</strong> ₩3억~4억 (인건비 기반)<br>
+                        <strong>국가과제 2차 년도 연구비:</strong> 약 ₩60억 (연구계획서 기준)<br>
+                        <strong>AI 연구비 비율:</strong> 약 5~7%<br><br>
+                        <span style="color: var(--warning-orange); font-weight:600;">※ 설계 전주기 신규 개발 포함 시 증액 타당성 논의 필요</span>
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>📊 가치 산정 프레임 (박 부장 제안)</h3>
+                    <p>
+                        <strong>1. Rework 절감:</strong> 전체 Project Cost의 ~5.4% 절감<br>
+                        <strong>2. LD 회피:</strong> 일정 단축(앞 2주 → 뒤 4주)으로 지체상금 면피<br>
+                        <strong>3. 엔지니어링 속도:</strong> PFD 1주 → 2시간, Line List 자동화 등<br>
+                        <strong>4. 교육 비용 절감:</strong> Junior → Senior 학습 기간 단축
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>🧾 두 가지 "견적"의 구분 (중요!)</h3>
+                    <p>
+                        <strong>견적 A (SnapScale 견적):</strong><br>
+                        "AI 툴 설치·개발에 이만큼 돈을 주세요" — 오늘 논의의 핵심<br><br>
+                        <strong>견적 B (실증 설비 견적):</strong><br>
+                        "실제 FSRU 설비를 짓는 데 얼마 드는가" — 박 부장이 설명한 Total Direct Cost 개념. 범위 혼동 주의.
+                    </p>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">💡 안건 인사이트</div>
+                <ul class="insight-list">
+                    <li><strong>Rework·LD 기반 ROI 수치화가 견적 설득력 핵심:</strong> 단순 인건비 견적에서 "가치 기반 견적"으로 전환 필요. CapEx 절감 근거 포함 시 ₩3~4억 이상도 정당화 가능.</li>
+                    <li><strong>교육 프로그램 번들 제안:</strong> 내부 반발을 완화하고 "AI 도입 = 기존 인력 위협"이 아닌 "Junior 성장 가속" 프레임으로 전환. 교육 비용을 견적에 명시적으로 포함.</li>
+                    <li><strong>필즈 내부 반발 관리:</strong> 연구소장 설득 이후 실무자 저항 예상 — "너희 할 거 없고 AI가 다 해줌"이 아니라 "더 어려운 일에 집중할 수 있게 도와줌" 메시지 필요.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     AGENDA 4
+════════════════════════════════════════════════ -->
+<section class="section" id="agenda4">
+    <h2 class="section-title">④ 리소스 요구 및 일정 계획</h2>
+
+    <div class="agenda-item">
+        <div class="agenda-header" onclick="toggleAgenda(this)">
+            <div class="agenda-number">6</div>
+            <div class="agenda-title">필요 인력 및 개발 일정</div>
+            <div class="toggle-icon">▼</div>
+        </div>
+        <div class="agenda-content">
+            <div class="speaker-quote speaker-park">
+                <span class="speaker-name">박규호 부장:</span> "만약에 Chemical Engineer 한 명, 최대 두 명. 슈퍼팀으로. 그러면 이거 3~4개월 안에 만들 수 있어요. 아예 필즈가 만들어야 될 걸 도와줄 수 있는 시스템을."
+            </div>
+
+            <div class="speaker-quote speaker-kim">
+                <span class="speaker-name">김상윤 대표:</span> "어차피 인원 충원할 거고... 내년 5월까지 계획으로 잡을 거라서 1년 정도의 시간이 주어지긴 할 거예요."
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>👥 추가 인력 필요 사항</h3>
+                    <p>
+                        <strong>Chemical/Process Engineer:</strong> 1~2명<br>
+                        (하이시스 이해 + Python 코딩 가능)<br><br>
+                        <strong>역할:</strong> Design Philosophy 수립, 하이시스 자동화 코딩, 온톨로지 확장(해양 코드 추가)<br><br>
+                        <strong>타이밍:</strong> Series A 인원 충원 전에 선제적 채용 필요 여부 검토
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>📅 주요 일정 (잠정)</h3>
+                    <p>
+                        <strong>2026.04.08(화) 화요일:</strong> 필즈 측 견적서 + 데이터 요청서 발송 (데드라인)<br><br>
+                        <strong>2026.04.06(월) 오전:</strong> 연구소장 3자 화상 미팅 추진<br><br>
+                        <strong>2026.04.06(월) 오후:</strong> 대표-부장 2자 미팅으로 견적서 디벨롭<br><br>
+                        <strong>2027년 5월:</strong> 국가과제 2~3차 년도 SnapScale 도구 적용 완료 목표
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>⚡ 현재 vs. 신규 개발 구분</h3>
+                    <p>
+                        <strong>현재 가능 (기존 AutoFlow):</strong><br>
+                        P&ID → Equipment/Instrument List, Line List, MTO, 정합성 검증<br><br>
+                        <strong>신규 개발 필요:</strong><br>
+                        Design Philosophy 자동 생성, 하이시스 자동 드로잉, Adjust 최적화, Commissioning Procedure 자동화
+                    </p>
+                </div>
+            </div>
+
+            <div class="risk-box">
+                <div class="risk-title">⚠️ 리소스 리스크</div>
+                <ul class="risk-list">
+                    <li>현 인력 기준(현대엔지니어링 POC 동시 진행) + 필즈 신규 개발 병행 시 과부하 우려</li>
+                    <li>필즈 2차 년도 과제가 2026년 내 결과를 요구 → SnapScale 개발 일정과 overlap 발생 시 품질 리스크</li>
+                    <li>해양 분야 온톨로지 확장(IGC 코드 등) — 기존 화공 온톨로지에 추가 코드 입력 필요 (단기 작업이나 전문성 필요)</li>
+                </ul>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">💡 안건 인사이트</div>
+                <ul class="insight-list">
+                    <li><strong>"3년 국가과제 = Series A·B 라운드 타이밍"과 정확히 일치:</strong> 과제 완료 시점에 실증 레퍼런스 공개 → 투자 유치 가속 시나리오 유효.</li>
+                    <li><strong>해양 분야 진입 자체가 신규 시장 포지셔닝:</strong> 정유화학 EPC에서 해양(FSRU·CCS)으로 적용 범위 확대 — IR 덱의 TAM 확장 근거.</li>
+                    <li><strong>선택과 집중 원칙 재확인:</strong> 현재 현대엔지니어링(디테일 엔지니어링)과 필즈(개념 설계 전단) 방향이 다름 — 양립 가능하나 인력 계획 명확화 필요.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     DECISIONS
+════════════════════════════════════════════════ -->
+<section class="section" id="decisions">
+    <h2 class="section-title">✅ 주요 결정사항</h2>
+
+    <div class="decision-box">
+        <div class="decision-title">✅ 결정 1 — 타겟 과제 확정</div>
+        <ul class="decision-list">
+            <li>3개 세부 과제 중 <strong>750 MMSCFD LNGC 재기화 설비만 AutoFlow 적용 타겟</strong>으로 확정</li>
+            <li>20 MMSCFD는 외주 예정이므로 제외; CO₂ 주입은 범위 외</li>
+        </ul>
+    </div>
+
+    <div class="decision-box">
+        <div class="decision-title">✅ 결정 2 — AutoFlow 포지셔닝</div>
+        <ul class="decision-list">
+            <li>AI가 설계 정답을 보장하는 것이 아닌, <strong>각 태스크별 인간 작업 시간을 단축하는 속도 도구</strong>로 포지셔닝</li>
+            <li>초안 정확도가 아닌 <strong>작업 시간 절감(KPI)</strong>을 성과 지표로 삼음</li>
+        </ul>
+    </div>
+
+    <div class="decision-box">
+        <div class="decision-title">✅ 결정 3 — 견적서 발송 방향</div>
+        <ul class="decision-list">
+            <li>필즈 측에 보낼 문서: <strong>① 견적서(₩3~4억, 인건비 기반) + ② 데이터 요청서(산업표준·Feed·Product 조건)</strong></li>
+            <li>발송 기한: <strong>2026년 4월 8일(화요일)</strong></li>
+        </ul>
+    </div>
+
+    <div class="decision-box">
+        <div class="decision-title">✅ 결정 4 — 다음 단계 미팅 계획</div>
+        <ul class="decision-list">
+            <li>연구소장 3자 화상 미팅: <strong>4월 6일(월) 오전</strong> 추진</li>
+            <li>대표-부장 2자 견적서 디벨롭 미팅: <strong>4월 6일(월) 오후</strong> 예정</li>
+            <li>수요일 기존 미팅 유지</li>
+        </ul>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     ACTIONS
+════════════════════════════════════════════════ -->
+<section class="section" id="actions">
+    <h2 class="section-title">📌 액션아이템</h2>
+
+    <div class="action-item">
+        <div class="action-badge high">High</div>
+        <div class="action-body">
+            <div class="action-title">필즈 견적서 + 데이터 요청서 작성 및 발송</div>
+            <div class="action-meta">담당: 김상윤 대표 · 박규호 부장 | 기한: 2026.04.08(화) | 완료 기준: 연구소장에게 문서 전달 완료</div>
+        </div>
+    </div>
+
+    <div class="action-item">
+        <div class="action-badge high">High</div>
+        <div class="action-body">
+            <div class="action-title">연구소장 3자 화상 미팅 일정 확정</div>
+            <div class="action-meta">담당: 김상윤 대표 | 기한: 2026.04.06(월) 오전 | 완료 기준: 일정 확정 및 캘린더 공유</div>
+        </div>
+    </div>
+
+    <div class="action-item">
+        <div class="action-badge high">High</div>
+        <div class="action-body">
+            <div class="action-title">설계 전주기 딜리버러블 매핑 문서 작성 (AutoFlow 개입 범위)</div>
+            <div class="action-meta">담당: 박규호 부장 | 기한: 2026.04.08(화) | 완료 기준: 태스크별 딜리버러블 × AutoFlow 역할 × 요청 데이터 3컬럼 표 완성</div>
+        </div>
+    </div>
+
+    <div class="action-item">
+        <div class="action-badge medium">Medium</div>
+        <div class="action-body">
+            <div class="action-title">견적 가치 산정 — Rework 절감·LD 회피 ROI 수치화</div>
+            <div class="action-meta">담당: 박규호 부장 | 기한: 2026.04.08(화) | 완료 기준: 절감 금액 추정치 포함한 가치 제안서 초안 작성</div>
+        </div>
+    </div>
+
+    <div class="action-item">
+        <div class="action-badge medium">Medium</div>
+        <div class="action-body">
+            <div class="action-title">오너사·EPC·서브콘 관점별 가격 정책 고민 (다음 주 미팅 준비)</div>
+            <div class="action-meta">담당: 박규호 부장 | 기한: 2026.04.13(다음 주) | 완료 기준: 관점별 가치 차별화 프레임 문서화</div>
+        </div>
+    </div>
+
+    <div class="action-item">
+        <div class="action-badge medium">Medium</div>
+        <div class="action-body">
+            <div class="action-title">해양 분야 온톨로지 확장 계획 수립 (IGC·선급 코드 추가)</div>
+            <div class="action-meta">담당: 기술팀(이종현 부장 협의) | 기한: 2026.04.15 | 완료 기준: 추가 필요 코드 목록 및 우선순위 정리</div>
+        </div>
+    </div>
+
+    <div class="action-item">
+        <div class="action-badge low">Low</div>
+        <div class="action-body">
+            <div class="action-title">인력 충원 계획 검토 (Chemical/Process Engineer 1~2명)</div>
+            <div class="action-meta">담당: 김상윤 대표 | 기한: 2026.04.30 | 완료 기준: 채용 여부 및 타이밍 결정</div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     TIMELINE
+════════════════════════════════════════════════ -->
+<section class="section" id="timeline">
+    <h2 class="section-title">📆 타임라인 다이어그램</h2>
+    <div class="diagram-container">
+        <div class="mermaid">
+gantt
+    title 필즈엔지니어링 협업 주요 마일스톤
+    dateFormat YYYY-MM-DD
+    axisFormat %m/%d
+
+    section 즉시 실행
+    연구소장 3자 미팅      :done, m1, 2026-04-06, 1d
+    견적서 + 요청서 발송   :crit, m2, 2026-04-07, 2d
+
+    section 4월 내 완료
+    데이터 요청서 확정     :active, m3, 2026-04-08, 5d
+    필즈 산업표준 코드 수령 :m4, 2026-04-10, 7d
+    Feed/Product 조건 수령  :m5, 2026-04-14, 7d
+
+    section 개발 Phase 1 (4~6월)
+    해양 온톨로지 확장     :m6, 2026-04-15, 30d
+    Design Philosophy 자동화 :m7, 2026-05-01, 30d
+    하이시스 자동 드로잉 PoC :crit, m8, 2026-05-15, 45d
+
+    section 개발 Phase 2 (7~9월)
+    H&MB 자동 추출 완성    :m9, 2026-07-01, 30d
+    Line List 자동화 완성  :m10, 2026-07-15, 30d
+    필즈 내 AutoFlow 툴 배포 :milestone, m11, 2026-09-01, 0d
+
+    section 성과 검증 (10월~)
+    시간 절감 KPI 측정     :m12, 2026-09-01, 60d
+    Series A 레퍼런스 확정  :milestone, m13, 2026-11-01, 0d
+        </div>
+        <div class="diagram-label">※ 일정은 미팅 논의 기반 잠정 계획. 필즈 측 데이터 제공 속도에 따라 조정 가능.</div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     WORKFLOW
+════════════════════════════════════════════════ -->
+<section class="section" id="flow">
+    <h2 class="section-title">🗺️ AutoFlow 설계 전주기 워크플로우</h2>
+    <div class="diagram-container">
+        <div class="mermaid">
+flowchart TD
+    A["📋 필즈 제공\n산업표준 코드\nFeed 조건 / Product 요구조건"] --> B
+
+    subgraph PHASE1["Phase 1 — 개념 설계 지원 (2차 년도)"]
+        B["🤖 AI 논문·특허 서베이\nFSRU 재기화 시스템 분석"] --> C["📝 Design Philosophy 초안\n+ Basis of Design 문서 자동 생성"]
+        C --> D["⚙️ 하이시스 자동 드로잉\nFeed→Product 스트림 매핑"]
+        D --> E["🔁 Adjust 최적화\n목적값 수렴 반복 계산"]
+        E --> F["📊 PFD 확정\n+ H&MB 자동 추출"]
+    end
+
+    subgraph PHASE2["Phase 2 — 기본 설계 지원 (3차 년도)"]
+        F --> G["🖼️ P&ID 수령\n(필즈 자체 작성)"]
+        G --> H["📋 Equipment List\n+ Instrument Data Sheet 자동 생성"]
+        H --> I["📏 Line List\n+ Hydraulic Calculation 자동화"]
+        I --> J["🛒 MTO 집계\n+ PO 문서 자동 생성"]
+    end
+
+    subgraph PHASE3["Phase 3 — 검증 및 정합성"]
+        J --> K["🔍 전 문서 정합성 원클릭 검증\nChange Order 자동 반영"]
+        K --> L["🚀 Commissioning Procedure\nOperation Scenario 자동화"]
+    end
+
+    subgraph VALUE["💰 가치 창출"]
+        L --> M1["⏱️ 엔지니어링 기간 단축\n(앞 2주 → 뒤 4주 절감)"]
+        L --> M2["🔧 Rework 비용 절감\n(전체 Cost의 ~5.4%)"]
+        L --> M3["📉 LD 리스크 회피\n지체상금 면피"]
+    end
+
+    style PHASE1 fill:#e3f2fd,stroke:#1e88e5
+    style PHASE2 fill:#e8f5e9,stroke:#43a047
+    style PHASE3 fill:#fff3e0,stroke:#fb8c00
+    style VALUE fill:#f3e5f5,stroke:#8e24aa
+        </div>
+        <div class="diagram-label">AutoFlow 설계 전주기 자동화 흐름 — Phase 1·2는 병렬 개발, Phase 3는 통합 단계.</div>
+    </div>
+
+    <div class="diagram-container" style="margin-top: 20px;">
+        <div class="mermaid">
+graph LR
+    A1["필즈 엔지니어링"] -- "산업표준 코드\nFeed/Product 조건" --> B1["SnapScale\nAutoFlow"]
+    B1 -- "Design Philosophy\nBasis of Design\nPFD / H&MB" --> A1
+    B1 -- "Equipment List\nLine List\nMTO / PO" --> A1
+    A1 -- "P&ID 도면\n하이시스 파일" --> B1
+    B1 -- "정합성 검증 리포트\nChange Order 자동 반영" --> A1
+
+    style A1 fill:#1e3c72,color:#fff,stroke:#2a5298
+    style B1 fill:#32B489,color:#fff,stroke:#27ae60
+        </div>
+        <div class="diagram-label">필즈-SnapScale 협업 데이터 교환 관계도</div>
+    </div>
+</section>
+
+</div><!-- /content -->
+
+<footer>
+    <p>Confidential &amp; Proprietary | SnapScale Internal Use Only</p>
+    <p style="margin-top:6px; font-size:11px;">본 문서는 2026.04.05 회의 녹취록을 AI로 분석하여 작성된 내부 회의록입니다. 외부 배포 금지.</p>
+</footer>
+
+</div><!-- /container -->
+
+<script>
+    // ─── Mermaid Init ───
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        themeVariables: {
+            primaryColor: '#bbdefb',
+            primaryTextColor: '#1e3c72',
+            primaryBorderColor: '#2196f3',
+            lineColor: '#5a6c7d',
+            secondaryColor: '#ffe082',
+            tertiaryColor: '#fff9c4'
+        },
+        gantt: {
+            titleTopMargin: 25,
+            barHeight: 28,
+            barGap: 6,
+            topPadding: 50,
+            leftPadding: 180,
+            gridLineStartPadding: 35,
+            fontSize: 12,
+            sectionFontSize: 13,
+            numberSectionStyles: 4,
+            axisFormat: '%m/%d',
+            useWidth: 1400
+        }
+    });
+
+    // ─── Multi-CDN Fallback ───
+    function loadMermaidFallback() {
+        const cdns = [
+            'https://unpkg.com/mermaid@10/dist/mermaid.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js'
+        ];
+        let idx = 0;
+        function tryNext() {
+            if (idx >= cdns.length) return;
+            const s = document.createElement('script');
+            s.src = cdns[idx++];
+            s.onload = () => mermaid.initialize({ startOnLoad: true });
+            s.onerror = tryNext;
+            document.head.appendChild(s);
+        }
+        if (typeof mermaid === 'undefined') tryNext();
+    }
+    window.addEventListener('load', loadMermaidFallback);
+
+    // ─── Collapsible Agenda ───
+    function toggleAgenda(header) {
+        const item = header.parentElement;
+        item.classList.toggle('collapsed');
+    }
+
+    // ─── Smooth Scroll ───
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+</script>
+</body>
+</html>

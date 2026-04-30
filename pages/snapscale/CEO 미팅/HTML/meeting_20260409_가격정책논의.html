@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회의록 - 가격 정책 논의 | 2026.04.09</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary-navy: #1e3c72;
+            --secondary-navy: #2a5298;
+            --accent-blue: #4a90e2;
+            --light-blue: #e3f2fd;
+            --dark-gray: #2c3e50;
+            --medium-gray: #7f8c8d;
+            --light-gray: #ecf0f1;
+            --white: #ffffff;
+            --success-green: #27ae60;
+            --warning-orange: #f39c12;
+            --danger-red: #e74c3c;
+            --snapscale-green: #32B489;
+            --speaker-jade: #1e3c72;
+            --speaker-park: #7b3f9e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: var(--dark-gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        /* ─── HEADER ─── */
+        header {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
+            color: var(--white);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+
+        .warning-banner {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.5);
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin-bottom: 30px;
+            font-size: 13px;
+            position: relative;
+            z-index: 1;
+            color: #ffe082;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+        }
+        .meeting-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        .meta-item {
+            background: rgba(255,255,255,0.12);
+            padding: 14px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: left;
+        }
+        .meta-label {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .meta-value { font-size: 15px; font-weight: 600; }
+
+        /* ─── NAV ─── */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            background: var(--primary-navy);
+            z-index: 100;
+            padding: 0 40px;
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+        }
+        .sticky-nav a {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            padding: 14px 18px;
+            font-size: 13px;
+            white-space: nowrap;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+        .sticky-nav a:hover {
+            color: white;
+            border-bottom-color: var(--snapscale-green);
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* ─── MAIN ─── */
+        main { padding: 40px; }
+
+        /* ─── SECTION ─── */
+        .section {
+            margin-bottom: 50px;
+            scroll-margin-top: 60px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--light-blue);
+        }
+        .section-icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, var(--primary-navy), var(--accent-blue));
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; flex-shrink: 0;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-navy);
+        }
+        .section-num {
+            background: var(--light-blue);
+            color: var(--primary-navy);
+            border-radius: 20px;
+            padding: 2px 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 17px;
+            color: var(--secondary-navy);
+            margin: 20px 0 10px;
+            padding-left: 12px;
+            border-left: 4px solid var(--snapscale-green);
+        }
+
+        p { margin-bottom: 12px; font-size: 15px; }
+
+        /* ─── SPEAKER CARDS ─── */
+        .speaker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .speaker-card {
+            border-radius: 10px;
+            padding: 22px;
+            border: 1px solid;
+        }
+        .speaker-card.jade {
+            background: #eef2fb;
+            border-color: #b3c6f0;
+        }
+        .speaker-card.park {
+            background: #f5eefb;
+            border-color: #d4b3f0;
+        }
+        .speaker-card h3 {
+            border-left: 4px solid var(--speaker-jade);
+            margin-top: 0;
+        }
+        .speaker-card.park h3 {
+            border-left-color: var(--speaker-park);
+        }
+        .speaker-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-jade { background: var(--speaker-jade); color: white; }
+        .badge-park { background: var(--speaker-park); color: white; }
+
+        /* ─── QUOTE BLOCKS ─── */
+        .quote {
+            border-left: 4px solid var(--accent-blue);
+            background: #f0f7ff;
+            padding: 14px 18px;
+            border-radius: 0 8px 8px 0;
+            margin: 12px 0;
+            font-style: italic;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+        .quote .speaker-tag {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .quote.jade-q { border-left-color: var(--speaker-jade); background: #eef2fb; }
+        .quote.park-q { border-left-color: var(--speaker-park); background: #f5eefb; }
+        .speaker-tag.jade-t { color: var(--speaker-jade); }
+        .speaker-tag.park-t { color: var(--speaker-park); }
+
+        /* ─── INFO GRID ─── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin: 20px 0;
+        }
+        .info-card {
+            background: var(--light-blue);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid var(--accent-blue);
+        }
+        .info-card h4 {
+            color: var(--primary-navy);
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .info-card p, .info-card li { font-size: 14px; margin-bottom: 6px; }
+        .info-card ul { padding-left: 16px; }
+
+        /* ─── HIGHLIGHT BOXES ─── */
+        .highlight-box {
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 16px 0;
+        }
+        .highlight-box.green {
+            background: #e8f8f1;
+            border-left: 5px solid var(--success-green);
+        }
+        .highlight-box.orange {
+            background: #fef9e7;
+            border-left: 5px solid var(--warning-orange);
+        }
+        .highlight-box.blue {
+            background: #eaf4fd;
+            border-left: 5px solid var(--accent-blue);
+        }
+        .highlight-box.purple {
+            background: #f5eefb;
+            border-left: 5px solid var(--speaker-park);
+        }
+        .highlight-box h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .highlight-box.green h4 { color: var(--success-green); }
+        .highlight-box.orange h4 { color: #d68910; }
+        .highlight-box.blue h4 { color: var(--accent-blue); }
+        .highlight-box.purple h4 { color: var(--speaker-park); }
+
+        /* ─── ACTION ITEMS ─── */
+        .action-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+        .action-table th {
+            background: var(--primary-navy);
+            color: white;
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .action-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e8ecf0;
+            vertical-align: top;
+        }
+        .action-table tr:nth-child(even) td { background: #f8fafc; }
+        .action-table tr:hover td { background: var(--light-blue); }
+
+        .priority-high {
+            background: #fde8e8;
+            color: var(--danger-red);
+            font-weight: 700;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 12px;
+        }
+        .priority-medium {
+            background: #fef9e7;
+            color: #b7950b;
+            font-weight: 700;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 12px;
+        }
+        .priority-low {
+            background: #eafaf1;
+            color: #1e8449;
+            font-weight: 700;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 12px;
+        }
+
+        /* ─── INSIGHT BOX ─── */
+        .insight-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .insight-list li {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e8ecf0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .insight-list li:last-child { border-bottom: none; }
+        .insight-num {
+            width: 26px; height: 26px;
+            background: var(--primary-navy);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* ─── PRICING TABLE ─── */
+        .pricing-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin: 16px 0;
+        }
+        .pricing-matrix th {
+            background: var(--secondary-navy);
+            color: white;
+            padding: 10px 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .pricing-matrix td {
+            padding: 10px 12px;
+            border: 1px solid #dde3e9;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .pricing-matrix tr:nth-child(even) td { background: #f8fafc; }
+        .pricing-matrix .row-header {
+            font-weight: 700;
+            background: #eef2fb;
+            color: var(--primary-navy);
+            text-align: left;
+        }
+
+        /* ─── DIAGRAM ─── */
+        .diagram-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .diagram-container .mermaid { min-width: 700px; margin: 0 auto; }
+        .diagram-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--medium-gray);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ─── COLLAPSIBLE ─── */
+        .collapsible-header {
+            background: var(--light-blue);
+            border-radius: 8px;
+            padding: 14px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-weight: 600;
+            color: var(--primary-navy);
+            font-size: 15px;
+            transition: background 0.2s;
+        }
+        .collapsible-header:hover { background: #c8e0f7; }
+        .collapsible-header .arrow { transition: transform 0.3s; font-size: 12px; }
+        .collapsible-header.open .arrow { transform: rotate(180deg); }
+        .collapsible-body {
+            display: none;
+            padding: 20px;
+            background: #fafcff;
+            border: 1px solid #d6e6f7;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 12px;
+        }
+        .collapsible-body.open { display: block; }
+
+        /* ─── INVESTOR SCHEDULE ─── */
+        .schedule-card {
+            display: flex;
+            gap: 20px;
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid #dde3e9;
+            margin-bottom: 12px;
+            align-items: flex-start;
+            background: white;
+            transition: box-shadow 0.2s;
+        }
+        .schedule-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+        .schedule-date {
+            background: var(--primary-navy);
+            color: white;
+            border-radius: 8px;
+            padding: 10px 14px;
+            text-align: center;
+            flex-shrink: 0;
+            min-width: 80px;
+        }
+        .schedule-date .month { font-size: 11px; opacity: 0.8; text-transform: uppercase; }
+        .schedule-date .day { font-size: 28px; font-weight: 700; line-height: 1; }
+        .schedule-date .dow { font-size: 11px; opacity: 0.8; }
+        .schedule-info h4 { font-size: 16px; color: var(--primary-navy); margin-bottom: 4px; }
+        .schedule-info p { font-size: 13px; color: var(--medium-gray); margin: 0; }
+        .schedule-required {
+            margin-left: auto;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .req-yes { background: #e8f8f1; color: var(--success-green); border: 1px solid #a3e4c2; }
+        .req-opt { background: #fef9e7; color: #b7950b; border: 1px solid #f9e79f; }
+
+        /* ─── PRICING LAYERS ─── */
+        .layer-card {
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin-bottom: 14px;
+            border: 2px solid;
+        }
+        .layer-card.l1 { border-color: #1e3c72; background: #eef2fb; }
+        .layer-card.l2 { border-color: #32B489; background: #eafaf5; }
+        .layer-card.l3 { border-color: #f39c12; background: #fef9e7; }
+        .layer-card.l4 { border-color: #7b3f9e; background: #f5eefb; }
+        .layer-num {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .layer-card.l1 .layer-num { color: #1e3c72; }
+        .layer-card.l2 .layer-num { color: #1a7f5e; }
+        .layer-card.l3 .layer-num { color: #9a6c0a; }
+        .layer-card.l4 .layer-num { color: #7b3f9e; }
+        .layer-card h4 { font-size: 16px; margin-bottom: 8px; color: var(--dark-gray); }
+        .layer-card p { font-size: 14px; margin: 0; }
+
+        /* ─── DECISION BOX ─── */
+        .decision-item {
+            background: linear-gradient(135deg, #eef2fb, #f5eefb);
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin-bottom: 14px;
+            border-left: 5px solid var(--primary-navy);
+        }
+        .decision-item h4 { font-size: 15px; color: var(--primary-navy); margin-bottom: 8px; }
+        .decision-item p { font-size: 14px; margin: 0; }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--dark-gray);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 24px 40px;
+            font-size: 13px;
+        }
+
+        /* ─── PRINT ─── */
+        @media print {
+            body { background: white; padding: 0; }
+            .sticky-nav { display: none; }
+            .collapsible-body { display: block !important; }
+            .container { box-shadow: none; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 30px 20px; }
+            main { padding: 20px; }
+            h1 { font-size: 26px; }
+            .sticky-nav { padding: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+<!-- ─── HEADER ─── -->
+<header>
+    <div class="warning-banner">
+        ⚠️ 안내사항: 본 회의록은 AI 기술을 활용하여 녹취록을 기반으로 작성되었으며, 일부 정확도가 떨어질 수 있습니다.
+    </div>
+    <h1>💰 가격 정책 논의 회의록</h1>
+    <div class="subtitle">공동 창업자 역할 정의 · 투자 일정 · 가격 구조 심층 논의</div>
+    <div class="meeting-meta">
+        <div class="meta-item">
+            <div class="meta-label">📅 회의 일시</div>
+            <div class="meta-value">2026.04.09 (목) 오전</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">📍 장소</div>
+            <div class="meta-value">스냅스케일 사무실</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">👥 참석자</div>
+            <div class="meta-value">김상윤 대표 · 박규호 부장</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">🎯 회의 목적</div>
+            <div class="meta-value">가격 정책 고도화 및 공동창업 역할·투자 일정 논의</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">⏱ 진행 시간</div>
+            <div class="meta-value">약 1.5시간 (→ 오후 2시 후속 미팅)</div>
+        </div>
+    </div>
+</header>
+
+<!-- ─── NAV ─── -->
+<nav class="sticky-nav">
+    <a href="#summary">📋 요약</a>
+    <a href="#speakers">👥 화자별 발언</a>
+    <a href="#cofounder">🤝 공동창업 역할</a>
+    <a href="#investment">📈 투자 일정</a>
+    <a href="#pricing">💰 가격 정책</a>
+    <a href="#aspen">📊 AspenTech 벤치마크</a>
+    <a href="#decisions">✅ 결정사항</a>
+    <a href="#actions">📌 액션아이템</a>
+    <a href="#diagrams">📐 다이어그램</a>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<main>
+
+<!-- ── 섹션 1: 핵심 요약 ── -->
+<section class="section" id="summary">
+    <div class="section-header">
+        <div class="section-icon">📋</div>
+        <div class="section-title">핵심 요약</div>
+        <span class="section-num">Overview</span>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h4>🤝 공동창업 역할 분담 확정</h4>
+            <p>김상윤 대표 → 기술·AI 전략 (Intelligence 축)<br>박규호 부장 → 도메인 전문가 네트워크·영업·휴먼 터치 (Human 축)<br>지분: 65 : 35 (공동 파트너)</p>
+        </div>
+        <div class="info-card">
+            <h4>📈 투자 라운드 본격화</h4>
+            <p>4월 21일 포스텍홀딩스, 4월 24일 메쉬업벤처스, 4월 27일 스트롱벤처스 미팅 확정. 밸류 80~90억, 목표 조달 10억 원.</p>
+        </div>
+        <div class="info-card">
+            <h4>💰 가격 구조 4-Layer 체계</h4>
+            <p>기본 구축비 → 모듈/사용량 과금 → POC 비용 내재화 → 성과 기반 보너스 옵션의 4단계 하이브리드 구조 합의.</p>
+        </div>
+        <div class="info-card">
+            <h4>📊 AspenTech 기준 가격 설정</h4>
+            <p>삼성E&A 3년 계약 14.4억, 1년 4.8억 기준. 저희는 소프트웨어 비교가 아닌 TIC 대비 ROI로 가치 산정. 베이스 금액 5천만 원/년(초안) 검토 중.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── 섹션 2: 화자별 발언 요약 ── -->
+<section class="section" id="speakers">
+    <div class="section-header">
+        <div class="section-icon">👥</div>
+        <div class="section-title">화자별 발언 요약</div>
+        <span class="section-num">Speakers</span>
+    </div>
+
+    <div class="speaker-grid">
+        <div class="speaker-card jade">
+            <span class="speaker-badge badge-jade">김상윤 대표 (Jade)</span>
+            <h3>주요 역할 및 기여</h3>
+            <ul style="padding-left:16px; font-size:14px;">
+                <li>공동창업 역할 분담 프레임 제안 및 의사결정 공유</li>
+                <li>투자 라운드 일정 구체화 및 AC 전략 설명</li>
+                <li>가격 구조 4-Layer 모델 상세 설명</li>
+                <li>AspenTech 계약 데이터 기반 벤치마크 제시</li>
+                <li>EPC 산업 수직계열화 기반 과금 로직 설계</li>
+            </ul>
+            <div class="quote jade-q" style="margin-top:14px;">
+                <div class="speaker-tag jade-t">김상윤 대표</div>
+                "아이템 특성상 도메인 지식을 한 명으로부터 다 얻을 수 없어요. 많은 도메인 전문가들을 끌어와서 그들과 함께 지식을 축적하는 걸 잘할 수 있는 사람이어야 한다고 생각했습니다."
+            </div>
+        </div>
+        <div class="speaker-card park">
+            <span class="speaker-badge badge-park">박규호 부장</span>
+            <h3>주요 역할 및 기여</h3>
+            <ul style="padding-left:16px; font-size:14px;">
+                <li>커뮤니티 전략 구체화 (화공엔지니어 생태계 구축)</li>
+                <li>시니어 엔지니어 수급 전략 제시</li>
+                <li>ACC·AspenTech 데이터 분석 자료 준비·발표</li>
+                <li>EPC 레이어별 가치 산정 프레임 제안</li>
+                <li>LD 리스크 기반 ROI 산정 방법론 제시</li>
+            </ul>
+            <div class="quote park-q" style="margin-top:14px;">
+                <div class="speaker-tag park-t">박규호 부장</div>
+                "소프트웨어 기준으로 비교하는 걸 완전히 지워줬으면 좋겠어요. 저희가 줄 수 있는 가치의 가치 쉐어링 기준으로 산정해야 합니다. 전체 TIC 대비 기여분으로 접근해야 기업이 납득할 수 있습니다."
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── 섹션 3: 공동창업 역할 정의 ── -->
+<section class="section" id="cofounder">
+    <div class="section-header">
+        <div class="section-icon">🤝</div>
+        <div class="section-title">공동창업 역할 정의 논의</div>
+        <span class="section-num">Co-founder Roles</span>
+    </div>
+
+    <h3>배경 및 의사결정 과정</h3>
+    <p>김상윤 대표는 이상적인 공동창업자가 갖춰야 할 기술 역량(Capability)과 사회적 역량(Human Touch) 두 축을 모두 충족하는 인재를 단기에 찾는 것이 현실적으로 어렵다고 판단, 역할 분담 모델로 전환하였다.</p>
+
+    <div class="highlight-box blue">
+        <h4>🔍 역할 분담 판단 근거</h4>
+        <p>EPC/플랜트 엔지니어링 AI 자동화 특성상, 단일 인물이 AI 기술 역량과 광범위한 도메인 지식을 모두 보유하기보다, <strong>수십 명의 도메인 전문가를 체계적으로 연결·조직화</strong>하는 역량이 더 중요하다. 이에 따라 박규호 부장의 광범위한 산업 네트워크와 신뢰 구축 능력을 핵심 역할로 재정의함.</p>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h4>🤖 김상윤 대표 — Intelligence 축</h4>
+            <ul>
+                <li>AI 기술전략 수립 및 제품 로드맵</li>
+                <li>가격 정책·비즈니스 모델 주도</li>
+                <li>투자자 커뮤니케이션 (기술 부문)</li>
+                <li>AutoFlow 플랫폼 개발 방향 결정</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h4>🤝 박규호 부장 — Human Touch 축</h4>
+            <ul>
+                <li>도메인 전문가 네트워크 구축·관리</li>
+                <li>엔지니어링 커뮤니티 운영 및 성장</li>
+                <li>시니어 엔지니어 발굴·수급</li>
+                <li>고객사 챔피언 관리 및 영업 지원</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h4>⚖️ 공통 원칙</h4>
+            <ul>
+                <li>분업 구조가 아닌 <strong>공동 의사결정</strong></li>
+                <li>모든 핵심 결정은 둘이 함께 논의</li>
+                <li>지분 65(대표) : 35(박 부장) 공동 파트너</li>
+                <li>투자자 미팅은 원칙적으로 동반 참석</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>커뮤니티 전략 논의 (박규호 부장 제안)</h3>
+    <p>박규호 부장은 화공엔지니어 대상 지식 커뮤니티 생태계를 구축하여 도메인 지식 축적과 인재 파이프라인을 동시에 확보하는 전략을 제안했다. 트레바리, 지피터스, 모드웨이 연구소 등 성공적 커뮤니티 모델을 레퍼런스로 제시했다.</p>
+
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+        📌 커뮤니티 운영 구조 상세 (클릭하여 펼치기) <span class="arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+        <div class="highlight-box purple">
+            <h4>클럽장 기반 선순환 생태계 구조</h4>
+            <p><strong>1단계:</strong> AI 전환 불안감을 가진 도메인 엔지니어를 대상으로 AI 적용 방법론 교육 커뮤니티 제공<br>
+            <strong>2단계:</strong> 우수 참여자를 '클럽장'으로 선발 → SnapScale 플랫폼 위에서 교육 콘텐츠 제작·판매<br>
+            <strong>3단계:</strong> 클럽장 수익화 → 교육료 일부 배분 → 참여 선순환<br>
+            <strong>4단계:</strong> 우수 인재를 SnapScale 채용 파이프라인으로 연결</p>
+        </div>
+        <div class="quote park-q">
+            <div class="speaker-tag park-t">박규호 부장</div>
+            "저희가 이번에 채용한 개발자님도 그런 부트캠프를 통해서 전환을 고려하실 텐데 도메인 지식이 깊으신 분들한테는 공부 뿐만이 아니라 실질적으로 수익화가 되거나 레퍼테이션이 쌓여나가서 리딩할 수 있는 자리가 필요합니다."
+        </div>
+        <p style="font-size:14px; margin-top:12px;"><strong>스트롱벤처스 피드백:</strong> 커뮤니티 운영 시 개인 대 개인 관계에서 회사 대 개인 계약으로 전환 시 데이터 보안 및 동기부여 구조를 별도로 설계해야 한다는 조언 수렴.</p>
+    </div>
+
+    <h3>박규호 부장 육아휴직 기간 참여 방식</h3>
+    <div class="highlight-box orange">
+        <h4>⚠️ 7월 2일 육아휴직 예정 (출산: 5월 28일)</h4>
+        <p>20일 출산휴가 + 6개월 육아휴직 (정부 지원금 수령). 이후 내년 1~2월 복귀 예정.<br>
+        <strong>현실적 방안:</strong> 육아휴직 기간 중 핸드폰 기반 최소 참여 유지, 짬나는 시간 활용. 월급 지급 및 공식 참여 시점은 회사 매출 발생 이후로 합의.</p>
+    </div>
+</section>
+
+<!-- ── 섹션 4: 투자 일정 ── -->
+<section class="section" id="investment">
+    <div class="section-header">
+        <div class="section-icon">📈</div>
+        <div class="section-title">투자 라운드 일정 및 전략</div>
+        <span class="section-num">Investment Schedule</span>
+    </div>
+
+    <h3>4월 확정 투자자 미팅 일정</h3>
+
+    <div class="schedule-card">
+        <div class="schedule-date">
+            <div class="month">APR</div>
+            <div class="day">21</div>
+            <div class="dow">화요일</div>
+        </div>
+        <div class="schedule-info">
+            <h4>포스텍홀딩스 (POSTECH Holdings)</h4>
+            <p>오전 11:00 · 학교 소속 AC (카이스트 창업원 유사 구조) · 박규호 부장 교육 일정으로 참석 어려움</p>
+        </div>
+        <span class="schedule-required req-opt">Optional</span>
+    </div>
+
+    <div class="schedule-card">
+        <div class="schedule-date">
+            <div class="month">APR</div>
+            <div class="day">24</div>
+            <div class="dow">금요일</div>
+        </div>
+        <div class="schedule-info">
+            <h4>메쉬업벤처스 (Meshup Ventures)</h4>
+            <p>오후 2:30 · 창업가가 만든 AC · "투자금 다 소진해도 끝나고 술 편하게 먹는" 창업자 친화적 투자사 · 일정 유동적</p>
+        </div>
+        <span class="schedule-required req-opt">Optional</span>
+    </div>
+
+    <div class="schedule-card">
+        <div class="schedule-date">
+            <div class="month">APR</div>
+            <div class="day">27</div>
+            <div class="dow">월요일</div>
+        </div>
+        <div class="schedule-info">
+            <h4>스트롱벤처스 (Strong Ventures)</h4>
+            <p>오전 10:00 · 스트롱벤처스 본사 · 4월 20일 현행 미팅 후 추가 미팅 확정 · 본격 투자 라운드 시작 신호</p>
+        </div>
+        <span class="schedule-required req-yes">동반 참석</span>
+    </div>
+
+    <h3>추가 컨택 예정 투자자</h3>
+    <div class="info-grid">
+        <div class="info-card">
+            <h4>🚀 패스트벤처스</h4>
+            <p>박지용 이사. 연락 요청 있었음. 창업자 친화적 AC.</p>
+        </div>
+        <div class="info-card">
+            <h4>🎸 베이스벤처스</h4>
+            <p>이태영 대표 (토스 공동창업자 출신). "깔아주겠다, 그 위에서 놀아라" 철학. 포트폴리오사 주 2~3회 직접 방문.</p>
+        </div>
+        <div class="info-card">
+            <h4>🐾 카카오벤처스</h4>
+            <p>연락 예정. 대형 플랫폼 기업 연계 AC로 네트워크 확장 유리.</p>
+        </div>
+        <div class="info-card">
+            <h4>🎓 카이스트 창업원</h4>
+            <p>한준현 이사 통해 오피셜 미팅 확정 예정. 4월 22일 이후 연락.</p>
+        </div>
+    </div>
+
+    <h3>밸류에이션 및 조달 목표</h3>
+    <div class="highlight-box green">
+        <h4>💵 목표 조달 구조</h4>
+        <p><strong>목표 조달액:</strong> 최소 10억 원 (5억도 가능)<br>
+        <strong>목표 밸류에이션:</strong> 80~90억 원<br>
+        <strong>예상 지분율:</strong> 10~11% (10억 기준) · 7% (5억 기준)<br>
+        <strong>스트롱벤처스 초기 제안:</strong> 5억 / 12% → 재협상 여지 있음 (창업대상 수상 이전 제안)</p>
+    </div>
+</section>
+
+<!-- ── 섹션 5: 가격 정책 ── -->
+<section class="section" id="pricing">
+    <div class="section-header">
+        <div class="section-icon">💰</div>
+        <div class="section-title">가격 정책 구조 논의</div>
+        <span class="section-num">Pricing Structure</span>
+    </div>
+
+    <h3>김상윤 대표 — 4-Layer 가격 구조 제안</h3>
+    <p>EPC 산업의 수주기반·수직계열화 특성을 반영한 복합 과금 구조. <strong>소프트웨어 단순 비교 금지</strong>, TIC(Total Installed Cost) 대비 절감 가치 기준으로 접근.</p>
+
+    <div class="layer-card l1">
+        <div class="layer-num">Layer 1 — 기본 구축비 (Setup Fee)</div>
+        <h4>초기 도입 및 기반 비용</h4>
+        <p>기업 규모별 차등 적용 (1억 ~ 2억 원). LLM 기본 제공 + AI 컨설팅 + 유지보수 포함. 계약 시 기본 사용량 번들 포함.</p>
+    </div>
+
+    <div class="layer-card l2">
+        <div class="layer-num">Layer 2 — 모듈·사용량 과금 (Usage-based)</div>
+        <h4>AutoFlow 플랫폼 + AI 도구 사용료</h4>
+        <p>프로젝트당 × 참여 엔지니어 수 기반. 기본 번들 내 충분한 사용량 제공 후 초과분 별도 과금. 기업이 <strong>예측 가능한 고정비</strong> 구조가 되도록 설계. (클라우드 변동비 문제 방지)</p>
+    </div>
+
+    <div class="layer-card l3">
+        <div class="layer-num">Layer 3 — POC 비용 내재화</div>
+        <h4>POC 완료 후 본계약에 흡수</h4>
+        <p>무료 POC 금지 원칙. POC 비용은 연간 계약 금액에 포함하여 처리. 초기 고객사에 더 많은 사용량 번들 제공으로 부담 완화.</p>
+    </div>
+
+    <div class="layer-card l4">
+        <div class="layer-num">Layer 4 — 성과 기반 보너스 옵션 (미래 단계)</div>
+        <h4>ROI 실증 이후 적용 가능</h4>
+        <p>POC 2~3건으로 LD 감소·공기 단축·인건비 절감 실증치 확보 후 도입. 예: LD 5% → 1.5% 달성 시 절감분의 일정 % 공유. <strong>계약상 어트리뷰션 문제</strong>로 초기 도입 불가 → 실적 기반 협의 후 추가.</p>
+    </div>
+
+    <h3>박규호 부장 — EPC 가치 레이어 제안</h3>
+    <div class="highlight-box blue">
+        <h4>🏗️ EPC 고객 유형별 가치 포인트</h4>
+        <table class="pricing-matrix" style="margin-top:12px;">
+            <thead>
+                <tr>
+                    <th>고객 유형</th>
+                    <th>핵심 페인 포인트</th>
+                    <th>AutoFlow 제공 가치</th>
+                    <th>가격 레버</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="row-header">오너사 (발주처)</td>
+                    <td>생산 효율 및 자산 운영</td>
+                    <td>O&M 데이터 AI 처리</td>
+                    <td>Enterprise</td>
+                </tr>
+                <tr>
+                    <td class="row-header">FEED / PMC사</td>
+                    <td>견적 정확도 ±30% 리스크</td>
+                    <td>ACC 연동 견적 검증 자동화</td>
+                    <td>Professional</td>
+                </tr>
+                <tr>
+                    <td class="row-header">대형 EPC사</td>
+                    <td>LD 초과 → 적자 리스크</td>
+                    <td>P&ID 자동화 → 공기 단축</td>
+                    <td>Enterprise</td>
+                </tr>
+                <tr>
+                    <td class="row-header">서브 컨트랙터</td>
+                    <td>설계 리워크 시간 비용</td>
+                    <td>문서 자동화로 인건비 절감</td>
+                    <td>Starter / Pro</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>가격 산정 핵심 논점 및 합의</h3>
+    <div class="info-grid">
+        <div class="info-card">
+            <h4>✅ 합의된 원칙</h4>
+            <ul>
+                <li>소프트웨어 금액 비교 기준 사용 금지</li>
+                <li>TIC 대비 절감 가치 기반 접근</li>
+                <li>기업 입장 예측 가능 비용 구조</li>
+                <li>어트리뷰션 측정 가능한 KPI 설계</li>
+                <li>무료 POC 절대 금지</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h4>⚠️ 미결 과제</h4>
+            <ul>
+                <li>절대 가격 (베이스 금액 5천만 원 적정성 검증)</li>
+                <li>LD 감소량 사전 예측 방법론 개발</li>
+                <li>기업군별 TIC 비율 매트릭스 완성</li>
+                <li>사용량 번들 구성 (기본 제공량 설정)</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h4>🔮 미래 전략 (빅테크 방어)</h4>
+            <ul>
+                <li>OpenAI/Microsoft FD 진입 대비 가격 방어 필요</li>
+                <li>온톨로지 기반 선점 + 장기 계약 구조로 Lock-in</li>
+                <li>팔란티어 모델 참고: 자체 구축보다 SnapScale 선택이 유리한 구조 설계</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ── 섹션 6: AspenTech 벤치마크 ── -->
+<section class="section" id="aspen">
+    <div class="section-header">
+        <div class="section-icon">📊</div>
+        <div class="section-title">AspenTech 계약 데이터 벤치마크</div>
+        <span class="section-num">Market Reference</span>
+    </div>
+
+    <p>박규호 부장이 실제 계약 데이터를 기반으로 주요 EPC사의 AspenTech(HYSYS 포함) 계약 현황을 분석하여 SnapScale 가격 정책의 기준선으로 제시했다.</p>
+
+    <div class="highlight-box orange">
+        <h4>⚠️ 소프트웨어 비교 금지 이유</h4>
+        <p>AspenTech 수준의 기본 엔지니어링 계산 기능만 제공해도 아래 계약 금액이 발생함. SnapScale은 여기에 <strong>AI 자동화·문서생성·일관성 검토·LLM 기능을 추가</strong>하는 레이어로서 최소 동등 이상의 가치를 제공 가능.</p>
+    </div>
+
+    <table class="pricing-matrix">
+        <thead>
+            <tr>
+                <th>기업명</th>
+                <th>계약 기간</th>
+                <th>계약 금액</th>
+                <th>연간 환산</th>
+                <th>비고</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="row-header">삼성 E&A</td>
+                <td>3년</td>
+                <td>14.4억 원</td>
+                <td>4.8억 원</td>
+                <td>국내 단일 건설사 중 최다 토큰 (550토큰), 10석</td>
+            </tr>
+            <tr>
+                <td class="row-header">현대엔지니어링</td>
+                <td>6년</td>
+                <td>상이</td>
+                <td>약 3.6억 원</td>
+                <td>국내 5대 건설사 기준 포함</td>
+            </tr>
+            <tr>
+                <td class="row-header">GS건설</td>
+                <td>장기</td>
+                <td>역산 약 3.86억</td>
+                <td>—</td>
+                <td>총 284토큰, 초기 저가 계약 이력</td>
+            </tr>
+            <tr>
+                <td class="row-header">필즈엔지니어링</td>
+                <td>연간</td>
+                <td>소규모</td>
+                <td>—</td>
+                <td>엔지니어 23명 규모, 36토큰 (2~3대), 저단가</td>
+            </tr>
+            <tr>
+                <td class="row-header">현대OilBank (오너사)</td>
+                <td>—</td>
+                <td>대규모</td>
+                <td>—</td>
+                <td>실시간 O&M 데이터 처리 → 토큰 소비 훨씬 높음</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="info-card" style="margin-top:16px;">
+        <h4>📌 AspenTech 과금 구조 참고</h4>
+        <p>• 토큰 단가: 약 200만 원/토큰<br>
+        • HYSYS 1대 가동: 약 18토큰 · Dynamic까지 포함 시 30토큰<br>
+        • 소규모 1카피 기준: 약 6천만 원~1억 원/년<br>
+        • 토큰 부족 → 접근 차단 → 토큰 추가 구매 유도 방식 (사용량 추적 기반)<br>
+        • 계약 기간 길어질수록, 한 번에 많이 납부할수록 토큰 단가 인하</p>
+    </div>
+</section>
+
+<!-- ── 섹션 7: 결정사항 ── -->
+<section class="section" id="decisions">
+    <div class="section-header">
+        <div class="section-icon">✅</div>
+        <div class="section-title">결정사항</div>
+        <span class="section-num">Decisions</span>
+    </div>
+
+    <div class="decision-item">
+        <h4>① 공동창업 역할 분담 공식 확정</h4>
+        <p>김상윤 대표 = Intelligence 축 (AI·기술·가격정책·IR), 박규호 부장 = Human Touch 축 (도메인 전문가 네트워크·커뮤니티·영업지원). 지분 65:35. 의사결정은 항상 공동으로.</p>
+    </div>
+
+    <div class="decision-item">
+        <h4>② 지분 구조 팀 내 공개 커뮤니케이션 계획</h4>
+        <p>재윤 등 개발자를 포함한 전체 팀원에게 지분 구조(스톡옵션 포함)를 설명. 투탑 체제 하 개발자 C레벨 1% 내외 스톡옵션 구조 설명 예정. 주변 레퍼런스 충분히 알아보도록 권장.</p>
+    </div>
+
+    <div class="decision-item">
+        <h4>③ 가격 정책 4-Layer 구조 채택</h4>
+        <p>기본 구축비 + 모듈·사용량 과금 + POC 내재화 + 성과 보너스(미래) 하이브리드 구조로 확정. 소프트웨어 단순 비교 기준 전면 폐기, TIC 대비 가치 기반으로 전환.</p>
+    </div>
+
+    <div class="decision-item">
+        <h4>④ 무료 POC 절대 금지</h4>
+        <p>가격 정책 3개 레이어(구축·사용·성과) 기준으로 POC도 유료로 진행. POC 비용은 연간 계약가에 내재화하는 구조.</p>
+    </div>
+
+    <div class="decision-item">
+        <h4>⑤ 스트롱벤처스 4월 27일 미팅 — 공동 참석</h4>
+        <p>오전 10시 본사 미팅. 박규호 부장 오후 여의도 일정으로 오전만 참석 가능하여 일정 조율 완료.</p>
+    </div>
+
+    <div class="decision-item">
+        <h4>⑥ 밸류에이션 목표 80~90억 / 조달 목표 10억 원</h4>
+        <p>지분율 약 10~11% 희석 기준. 스트롱벤처스 초기 제안(5억/12%)은 재협상 대상으로 취급.</p>
+    </div>
+</section>
+
+<!-- ── 섹션 8: 액션아이템 ── -->
+<section class="section" id="actions">
+    <div class="section-header">
+        <div class="section-icon">📌</div>
+        <div class="section-title">액션아이템</div>
+        <span class="section-num">Action Items</span>
+    </div>
+
+    <table class="action-table">
+        <thead>
+            <tr>
+                <th>우선순위</th>
+                <th>과제</th>
+                <th>담당</th>
+                <th>기한</th>
+                <th>완료 기준</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="priority-high">High</span></td>
+                <td>스트롱벤처스 4/27 미팅 준비 (IR 덱 최신화, 가격 정책 슬라이드 추가)</td>
+                <td>김상윤</td>
+                <td>4월 25일</td>
+                <td>IR 덱 가격 정책 페이지 완성</td>
+            </tr>
+            <tr>
+                <td><span class="priority-high">High</span></td>
+                <td>AspenTech 대비 ROI 계산기 현장 시연 버전 완성</td>
+                <td>박규호</td>
+                <td>4월 20일</td>
+                <td>입력값 → ROI 자동 산출 화면 완성</td>
+            </tr>
+            <tr>
+                <td><span class="priority-high">High</span></td>
+                <td>가격 정책 기준서 완성 (기업 유형별 과금 매트릭스 2×4 확정)</td>
+                <td>김상윤 + 박규호</td>
+                <td>4월 30일</td>
+                <td>고객사 제시 가능한 가격표 문서 완성</td>
+            </tr>
+            <tr>
+                <td><span class="priority-high">High</span></td>
+                <td>현대엔지니어링 POC 계약 체결 완료 (최우선)</td>
+                <td>김상윤</td>
+                <td>이월 (즉시)</td>
+                <td>계약서 서명 완료</td>
+            </tr>
+            <tr>
+                <td><span class="priority-medium">Medium</span></td>
+                <td>ACC 데이터 기반 LD 감소 예측 방법론 문서화</td>
+                <td>박규호</td>
+                <td>5월 15일</td>
+                <td>EPC 유형별 LD 감소 시나리오 3종 완성</td>
+            </tr>
+            <tr>
+                <td><span class="priority-medium">Medium</span></td>
+                <td>개발팀 지분 구조 설명 미팅 (재윤 포함)</td>
+                <td>김상윤</td>
+                <td>4월 중</td>
+                <td>팀원 전원 이해 확인 및 Q&A 완료</td>
+            </tr>
+            <tr>
+                <td><span class="priority-medium">Medium</span></td>
+                <td>패스트벤처스·베이스벤처스·카카오벤처스 컨택 개시</td>
+                <td>김상윤</td>
+                <td>4월 22일 이후</td>
+                <td>미팅 일정 1건 이상 확정</td>
+            </tr>
+            <tr>
+                <td><span class="priority-medium">Medium</span></td>
+                <td>박규호 부장 육아휴직 기간 참여 방식 구체화 (시간·역할·비용 처리)</td>
+                <td>김상윤 + 박규호</td>
+                <td>5월 초</td>
+                <td>합의 문서화 완료</td>
+            </tr>
+            <tr>
+                <td><span class="priority-low">Low</span></td>
+                <td>커뮤니티 운영 구조 상세 설계 (클럽장 선발 기준·수익 배분 모델)</td>
+                <td>박규호</td>
+                <td>5월 말</td>
+                <td>커뮤니티 운영 정책 1차 초안 완성</td>
+            </tr>
+            <tr>
+                <td><span class="priority-low">Low</span></td>
+                <td>TAM 기준 재설정 (화공플랜트 → 데이터센터·CCUS·재건 인프라 포함)</td>
+                <td>김상윤</td>
+                <td>IR 덱 v2 시</td>
+                <td>시장 정의 및 CAGR 수치 업데이트</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>다음 회의 준비사항</h3>
+    <div class="highlight-box green">
+        <h4>다음 미팅: 오후 2시 (동일 날짜)</h4>
+        <p>• 박규호 부장의 ACC 데이터 분석 자료 상세 리뷰 (Contingency 비율 분석 포함)<br>
+        • 기업 유형별 TIC 비율 매트릭스 화이트보드 작업<br>
+        • 가격 정책 기준서 초안 공동 작성</p>
+    </div>
+</section>
+
+<!-- ── 섹션 9: 다이어그램 ── -->
+<section class="section" id="diagrams">
+    <div class="section-header">
+        <div class="section-icon">📐</div>
+        <div class="section-title">시각화 다이어그램</div>
+        <span class="section-num">Diagrams</span>
+    </div>
+
+    <h3>① 가격 구조 4-Layer 흐름도</h3>
+    <div class="diagram-container">
+        <div class="diagram-title">AutoFlow 하이브리드 과금 구조</div>
+        <div class="mermaid">
+flowchart TD
+    A([고객사 계약 시작]) --> B
+
+    B[Layer 1\n기본 구축비\n1억~2억 / 초기 1회]
+    B --> C
+
+    C[Layer 2\n모듈·사용량 과금\n프로젝트 × 엔지니어 수 기반]
+    C --> D
+
+    D{POC 완료\nROI 실증?}
+    D -- YES --> E
+    D -- 진행 중 --> C
+
+    E[Layer 3\nPOC 비용 내재화\n연간 계약에 흡수]
+    E --> F
+
+    F{LD 감소\n실적 데이터 확보?}
+    F -- 2~3건 완료 --> G
+    F -- 미확보 --> E
+
+    G[Layer 4\n성과 기반 보너스 옵션\n절감분의 X% 공유]
+
+    style A fill:#1e3c72,color:#fff
+    style B fill:#eef2fb,stroke:#1e3c72,color:#1e3c72
+    style C fill:#eafaf5,stroke:#32B489,color:#1a7f5e
+    style D fill:#fef9e7,stroke:#f39c12,color:#9a6c0a
+    style E fill:#fef9e7,stroke:#f39c12,color:#9a6c0a
+    style F fill:#f5eefb,stroke:#7b3f9e,color:#7b3f9e
+    style G fill:#f5eefb,stroke:#7b3f9e,color:#7b3f9e
+        </div>
+    </div>
+
+    <h3>② EPC 수직계열화와 SnapScale 타겟 레이어</h3>
+    <div class="diagram-container">
+        <div class="diagram-title">EPC 산업 수직계열화 및 AutoFlow 적용 포인트</div>
+        <div class="mermaid">
+flowchart LR
+    OW[오너사\n발주처]
+    FD[FEED/PMC사\n견적·기획]
+    EP[대형 EPC사\n상세설계·조달·시공]
+    SC[서브 컨트랙터\n전문 공종]
+
+    OW -- 발주·감리 --> FD
+    FD -- EPC 발주 --> EP
+    EP -- 공종별 하청 --> SC
+
+    A1((AutoFlow\nO&M AI))
+    A2((AutoFlow\n견적 검증))
+    A3((AutoFlow\nP&ID 자동화))
+    A4((AutoFlow\n문서 자동화))
+
+    OW -.-> A1
+    FD -.-> A2
+    EP -.-> A3
+    SC -.-> A4
+
+    style OW fill:#1e3c72,color:#fff
+    style FD fill:#2a5298,color:#fff
+    style EP fill:#4a90e2,color:#fff
+    style SC fill:#87bcf5,color:#1e3c72
+    style A1 fill:#32B489,color:#fff
+    style A2 fill:#32B489,color:#fff
+    style A3 fill:#32B489,color:#fff
+    style A4 fill:#32B489,color:#fff
+        </div>
+    </div>
+
+    <h3>③ 투자 라운드 타임라인</h3>
+    <div class="diagram-container">
+        <div class="diagram-title">2026년 4~7월 투자 및 주요 마일스톤</div>
+        <div class="mermaid">
+gantt
+    title SnapScale 투자 라운드 및 사업 마일스톤
+    dateFormat YYYY-MM-DD
+    axisFormat %m/%d
+
+    section 투자 미팅
+    포스텍홀딩스 미팅        :milestone, m1, 2026-04-21, 0d
+    메쉬업벤처스 미팅        :milestone, m2, 2026-04-24, 0d
+    스트롱벤처스 추가 미팅   :crit, milestone, m3, 2026-04-27, 0d
+
+    section 추가 AC 컨택
+    패스트·베이스·카카오 컨택 :t1, 2026-04-22, 14d
+    미팅 일정 확정          :t2, 2026-05-06, 10d
+
+    section 사업 핵심
+    현대엔지니어링 계약 체결  :crit, done, t3, 2026-04-10, 7d
+    가격 기준서 완성         :t4, 2026-04-20, 10d
+    IR 덱 v2 완성           :t5, 2026-04-23, 3d
+
+    section 팀·인사
+    개발팀 지분 설명 미팅     :t6, 2026-04-15, 5d
+    박규호 부장 출산휴가      :t7, 2026-07-02, 20d
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+    <p>Confidential &amp; Proprietary | SnapScale Internal Use Only</p>
+    <p style="margin-top:6px; font-size:12px;">회의록 생성: 2026.04.10 | 작성 기준: 2026-04-09 녹취록</p>
+</footer>
+
+</div><!-- /.container -->
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        themeVariables: {
+            primaryColor: '#bbdefb',
+            primaryTextColor: '#1e3c72',
+            primaryBorderColor: '#2196f3',
+            lineColor: '#5a6c7d',
+            secondaryColor: '#ffe082',
+            tertiaryColor: '#fff9c4'
+        },
+        gantt: {
+            titleTopMargin: 25,
+            barHeight: 28,
+            barGap: 8,
+            topPadding: 50,
+            leftPadding: 170,
+            gridLineStartPadding: 35,
+            fontSize: 12,
+            sectionFontSize: 13,
+            numberSectionStyles: 4,
+            axisFormat: '%m/%d',
+            useWidth: 1400
+        }
+    });
+
+    function toggleCollapse(header) {
+        header.classList.toggle('open');
+        const body = header.nextElementSibling;
+        body.classList.toggle('open');
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('.sticky-nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+</body>
+</html>

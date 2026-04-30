@@ -1146,12 +1146,12 @@ function buildTimeline() {
 // Build evidence grid
 function buildEvidence() {
   const container = document.getElementById('evidenceGrid');
-  const BASE_PATH = '/Users/visionschool/Documents/02 CELab/00. 창업 40s/인터뷰/';
+  const BASE_PATH = './snapscale/';
 
   EVIDENCE_FILES.sort((a,b)=>a.date.localeCompare(b.date)).forEach(ev => {
     const card = document.createElement('a');
     card.className = 'evidence-card';
-    card.href = `file://${BASE_PATH}${ev.file}`;
+    card.href = `${BASE_PATH}${ev.file}`;
     card.target = '_blank';
     card.innerHTML = `
       <div class="evidence-date">${ev.date}</div>

@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapScale 세일즈 미팅 회의록 - 2026.01.08</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+            color: white;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .warning-banner {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 40px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-banner::before {
+            content: '⚠️';
+            font-size: 1.5em;
+        }
+
+        .warning-banner p {
+            color: #856404;
+            font-size: 0.95em;
+        }
+
+        .meta-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px 40px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .meta-icon {
+            font-size: 1.2em;
+            color: #2c5282;
+            margin-top: 2px;
+        }
+
+        .meta-content strong {
+            display: block;
+            color: #495057;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+        }
+
+        .meta-content span {
+            color: #6c757d;
+            font-size: 0.95em;
+        }
+
+        .content-section {
+            padding: 40px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #1e3a5f;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #32B489;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '▶';
+            color: #32B489;
+            font-size: 0.8em;
+        }
+
+        .agenda-grid {
+            display: grid;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .agenda-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border-left: 4px solid #32B489;
+        }
+
+        .agenda-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .agenda-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .agenda-title {
+            font-size: 1.2em;
+            color: #2c5282;
+            font-weight: 600;
+        }
+
+        .toggle-icon {
+            font-size: 1.2em;
+            color: #6c757d;
+            transition: transform 0.3s ease;
+        }
+
+        .agenda-item.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .agenda-content {
+            color: #495057;
+            line-height: 1.8;
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .agenda-item.collapsed .agenda-content {
+            max-height: 0;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+
+        .insight-box h4 {
+            color: #2e7d32;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .insight-box h4::before {
+            content: '💡';
+        }
+
+        .insight-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .insight-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #1b5e20;
+        }
+
+        .insight-box li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .decision-list, .action-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .decision-item, .action-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #2c5282;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .action-item {
+            border-left-color: #ff6b6b;
+        }
+
+        .decision-item h4, .action-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .decision-item p, .action-item p {
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .priority-high {
+            background: #fee;
+            color: #c00;
+        }
+
+        .priority-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .priority-low {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .mermaid-container {
+            background: white;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        .diagram-title {
+            text-align: center;
+            font-size: 1.2em;
+            color: #2c5282;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .agenda-item {
+                page-break-inside: avoid;
+            }
+            .toggle-icon {
+                display: none;
+            }
+            .agenda-content {
+                max-height: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+            .content-section {
+                padding: 20px;
+            }
+            .meta-info {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 SnapScale 세일즈 전략 회의</h1>
+            <p class="subtitle">복수 고객사 동시 접근 전략 및 POC 제안 최적화</p>
+        </div>
+
+        <!-- Warning Banner -->
+        <div class="warning-banner">
+            <p><strong>안내사항:</strong> 본 회의록은 AI 기술을 활용하여 녹취록을 기반으로 작성되었으며, 일부 정확도가 떨어질 수 있습니다.</p>
+        </div>
+
+        <!-- Meta Information -->
+        <div class="meta-info">
+            <div class="meta-item">
+                <div class="meta-icon">📅</div>
+                <div class="meta-content">
+                    <strong>일시</strong>
+                    <span>2026년 1월 8일 (수)</span>
+                </div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-icon">📍</div>
+                <div class="meta-content">
+                    <strong>장소</strong>
+                    <span>온라인 미팅 (화상회의)</span>
+                </div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-icon">👥</div>
+                <div class="meta-content">
+                    <strong>참석자</strong>
+                    <span>김상윤 (CEO), 박규호 (AspenTech 컨설턴트)</span>
+                </div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-icon">🎯</div>
+                <div class="meta-content">
+                    <strong>회의 목적</strong>
+                    <span>POC 제안 전략 수립 및 다중 고객사 영업 전략 논의</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-section">
+            <h2 class="section-title">핵심 안건</h2>
+            
+            <div class="agenda-grid">
+                <!-- Agenda 1 -->
+                <div class="agenda-item">
+                    <div class="agenda-header" onclick="toggleAgenda(this)">
+                        <h3 class="agenda-title">1. 삼두건설 POC 제안서 전략</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="agenda-content">
+                        <p><strong>논의 내용:</strong></p>
+                        <p>기존 PPT 자료에서 가격 부분만 제외하고 발송하는 방안에 대해 논의했습니다. 김상윤 대표는 데모 중심의 자료가 효과적일 것으로 판단했으나, 박규호 컨설턴트는 텍스트 문서 형태로 먼저 접근하는 것이 더 적합하다고 제안했습니다.</p>
+                        
+                        <p style="margin-top: 15px;"><strong>주요 논점:</strong></p>
+                        <ul style="padding-left: 20px; margin-top: 10px;">
+                            <li>POC 단계에서는 완성된 제품이 아닌 기술 구현 가능성을 보여주는 것이 목적</li>
+                            <li>워크플로우 중심의 텍스트 설명 + 동영상 데모 조합이 효과적</li>
+                            <li>가격은 별도로 제시하되, 초기 제안서에서는 제외</li>
+                            <li>데모 영상의 링크 오류 발견 및 정정 메일 발송 필요</li>
+                        </ul>
+
+                        <div class="insight-box">
+                            <h4>전략적 인사이트</h4>
+                            <ul>
+                                <li><strong>문서 형식 선택의 중요성:</strong> 스타트업의 POC 제안은 완성도보다 기술 구현 가능성에 초점을 맞춰야 하며, 텍스트 중심 문서가 기업 구매 의사결정자에게 더 친숙한 형태입니다.</li>
+                                <li><strong>가격 정보의 타이밍:</strong> 초기 제안서에서 가격을 제외함으로써 기술적 가치에 먼저 집중하게 하고, 관심 확보 후 가격 협상 여지를 남겨둡니다.</li>
+                                <li><strong>데모의 중요성:</strong> AutoCAD 자동 마크업 기능 등 실제 작동하는 기술을 시연함으로써 "CES의 LG 빨래 로봇"처럼 임팩트를 줄 수 있습니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agenda 2 -->
+                <div class="agenda-item">
+                    <div class="agenda-header" onclick="toggleAgenda(this)">
+                        <h3 class="agenda-title">2. 핵심 기술 가치 제안 및 차별화 전략</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="agenda-content">
+                        <p><strong>기술적 핵심 가치:</strong></p>
+                        <p>SnapScale의 경쟁 우위는 <strong>온톨로지(Ontology) 기반 자체 구축 AI 모델</strong>에 있습니다. 단순히 ChatGPT나 범용 LLM을 활용하는 것이 아니라, 화학공학 도메인 특화 지식 베이스를 구축했다는 점이 가장 중요한 차별화 포인트입니다.</p>
+                        
+                        <p style="margin-top: 15px;"><strong>P&ID 인식 기술:</strong></p>
+                        <ul style="padding-left: 20px; margin-top: 10px;">
+                            <li><strong>현재 정확도:</strong> 90% 이상 (내부 데이터 기준 99% 달성)</li>
+                            <li><strong>POC 목표:</strong> 현장 데이터 기반 95-99% 정확도 구현</li>
+                            <li><strong>기술 차별화:</strong> 기존 OCR 방식 대비 우수한 인식률 (SnapScale 독자 기술)</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>전체 워크플로우 자동화:</strong></p>
+                        <ul style="padding-left: 20px; margin-top: 10px;">
+                            <li>Requirement → PFD/HMB → Calculation → Excel 자동 생성 → Word 데이터시트</li>
+                            <li>P&ID와 Aspen HYSYS API 연동</li>
+                            <li>AutoCAD 자동 마크업 기능 (실시간 주석 자동 생성)</li>
+                            <li>Hydraulic Calculation 등 복잡 계산 자동화</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>AutoCAD 자동화 데모:</strong></p>
+                        <p>회의 중 시연된 AutoCAD 마크업 자동화 기능은 P&ID 도면에 누락된 주석을 AI가 자동으로 인식하고 생성하는 기능입니다. 속도는 최적화가 필요하지만, 기술 구현 가능성을 명확히 보여주는 임팩트 있는 데모로 평가되었습니다.</p>
+
+                        <div class="insight-box">
+                            <h4>전략적 인사이트</h4>
+                            <ul>
+                                <li><strong>도메인 전문성이 핵심:</strong> 범용 AI 기술이 아닌 화학공학 특화 온톨로지가 진입장벽이자 경쟁우위입니다. 기술 구현 방법은 공개하지 않되, 온톨로지 구축 능력은 강조해야 합니다.</li>
+                                <li><strong>인식률 90%의 의미:</strong> 현재 시장의 OCR 기반 솔루션 대비 우수하며, POC를 통해 95-99%까지 향상 가능하다는 로드맵이 명확합니다.</li>
+                                <li><strong>통합 솔루션의 가치:</strong> 개별 작업 자동화가 아닌 전체 워크플로우 통합이 진정한 가치입니다. 한국조선해양의 사례처럼 P&ID 속성값을 입력할 여력이 없던 기업들에게 획기적인 솔루션이 될 수 있습니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agenda 3 -->
+                <div class="agenda-item">
+                    <div class="agenda-header" onclick="toggleAgenda(this)">
+                        <h3 class="agenda-title">3. 다중 고객사 동시 접근 전략</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="agenda-content">
+                        <p><strong>타겟 고객사 및 접근 전략:</strong></p>
+                        
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">🏢 한국조선해양 (Korean Shipbuilding & Offshore Engineering)</h4>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>접촉 채널:</strong> GRC (Global Engineering Center) 개발부서 3개팀 접촉</li>
+                                <li><strong>미팅 일정:</strong> 다음 주 수요일 가능성 (Q&A 미팅 예정)</li>
+                                <li><strong>키 퍼슨:</strong> 개발부서 1팀, 2팀, 3팀 부서장 및 파트장</li>
+                                <li><strong>전략적 포지셔닝:</strong> 김영관 사장의 "기술 회사" 비전과 정렬, 신년사에서 개발팀에 미션 부여된 상황</li>
+                                <li><strong>특이사항:</strong> 현재 P&ID에 속성값 없이 작업 중, 글로벌 기술 수출을 목표로 하는 회사 방향성</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">🏗️ 현대엔지니어링 (Hyundai Engineering)</h4>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>미팅 확정:</strong> 1월 15일 (목) 9:30 이후</li>
+                                <li><strong>키 퍼슨:</strong> 윤형근 책임 (공정팀)</li>
+                                <li><strong>전략적 상황:</strong> 현대엔지니어링에서 먼저 연락, 신년 기획안에 SnapScale 언급 고려 중</li>
+                                <li><strong>경쟁 관계:</strong> 삼두건설이 현대엔지니어링의 UQ(Ultimate Question) 관심 있음</li>
+                                <li><strong>접근 전략:</strong> 현대엔지니어링 연락받은 사실을 다른 고객사에 전략적으로 활용 (견제 효과)</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">🏭 대림산업 (Daelim Industrial)</h4>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>접촉 경로:</strong> 대성가스 근무 중인 前 대림 임직원을 통한 공정설계팀 연결</li>
+                                <li><strong>연락 예정:</strong> 월요일 연락처 전달 예정</li>
+                                <li><strong>강점:</strong> 전체 워크플로우를 많이 활용하는 조직, 예산 집행 가능한 부서</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">🔧 GS건설 (GS Engineering & Construction)</h4>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>접촉 채널:</strong> 김상윤 대표가 공정팀장에게 직접 컨택 예정</li>
+                                <li><strong>특이사항:</strong> GS-CVC 연계 가능성</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">⚡ 두산에너빌리티 (Doosan Enerbility)</h4>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>키 퍼슨:</strong> 박병구 책임 (AspenTech 관련 교육 다수 수강, 공정팀)</li>
+                                <li><strong>관계:</strong> 박규호 컨설턴트와 친분 관계</li>
+                                <li><strong>전략적 가치:</strong> 두산인베스트먼트 자금력 풍부, CVC 투자 가능성</li>
+                                <li><strong>우선순위:</strong> GS건설보다 두산 우선 고려 (자금력 및 AI 드리븐 가능성)</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">🏗️ 삼성엔지니어링 (Samsung Engineering)</h4>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>현재 상태:</strong> 접근 보류 (자체 AI 개발 중, 경계 필요)</li>
+                                <li><strong>접촉 가능 채널:</strong> 임원급 및 기술개발팀 접촉 가능하나 신중 접근</li>
+                            </ul>
+                        </div>
+
+                        <div class="insight-box">
+                            <h4>전략적 인사이트</h4>
+                            <ul>
+                                <li><strong>타이밍의 완벽성:</strong> 현대엔지니어링이 먼저 연락한 것이 최적의 타이밍입니다. 한국조선해양과 기타 고객사에 신년사 미션 수행 압박이 있는 상황에서 SnapScale의 솔루션이 "해결사" 포지션을 차지할 수 있습니다.</li>
+                                <li><strong>3-4개월 단축 효과:</strong> 박규호 컨설턴트의 평가에 따르면, 현재 상황은 원래 계획보다 3-4개월 앞당겨진 것으로, 조기 시장 진입의 기회입니다.</li>
+                                <li><strong>레퍼런스 전략:</strong> 현대엔지니어링이나 한국조선해양에서 먼저 성공 사례를 만들면, 다른 대기업 영업 시 강력한 레퍼런스로 활용 가능합니다.</li>
+                                <li><strong>네트워크 효과:</strong> 박규호 컨설턴트의 AspenTech 네트워크를 통한 실무자 직접 연결이 영업 속도를 크게 가속화하고 있습니다.</li>
+                                <li><strong>CVC 투자 기회:</strong> 두산, GS 등 CVC를 보유한 기업들과의 POC는 단순 매출을 넘어 전략적 투자 유치 가능성도 내포합니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agenda 4 -->
+                <div class="agenda-item">
+                    <div class="agenda-header" onclick="toggleAgenda(this)">
+                        <h3 class="agenda-title">4. 가격 전략 및 비즈니스 모델</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="agenda-content">
+                        <p><strong>POC 및 본계약 가격 구조:</strong></p>
+                        
+                        <div style="margin-top: 15px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">💰 기본 가격 정책</h4>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>POC 비용:</strong> 3천만원</li>
+                                <li><strong>본계약:</strong> 5천만원/년/프로젝트</li>
+                                <li><strong>비교 기준:</strong> AspenTech HYSYS 스탠드얼론 라이선스 약 5천만원/년 수준</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">🎯 토큰 기반 라이선스 모델</h4>
+                            <p style="margin-bottom: 10px;"><strong>AspenTech 모델 벤치마킹:</strong></p>
+                            <ul style="padding-left: 20px;">
+                                <li>AspenTech는 토큰제 운영: 예) 27개, 60개 단위로 토큰 구성</li>
+                                <li>각 기능별 토큰 소비량 차등화 (HYSYS 기본: 18토큰, Dynamic 추가: 6토큰 등)</li>
+                                <li>워크북(Excel 연동) 등 부가 기능도 별도 토큰</li>
+                            </ul>
+
+                            <p style="margin-top: 15px; margin-bottom: 10px;"><strong>SnapScale 토큰 모델 설계 방향:</strong></p>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>프로젝트 기반:</strong> 1년에 5천만원으로 약 1-2개 프로젝트 수행 가능</li>
+                                <li><strong>팀 단위 구성:</strong> 한 프로젝트당 6개 discipline (기계, 공정, 배관, 계장, 전기, 구조/토목) 팀 구성</li>
+                                <li><strong>IP 기반 라이선스:</strong> 개인 PC IP 단위로 접근 허용 (AspenTech는 1대 PC 스탠드얼론)</li>
+                                <li><strong>토큰 소비 체계:</strong>
+                                    <ul style="padding-left: 20px; margin-top: 8px;">
+                                        <li>프로젝트 개시 시 토큰 차감 (예: 20토큰 계약 시 6토큰 소비)</li>
+                                        <li>프로젝트 종료 시 토큰 반환, 다른 팀 사용 가능</li>
+                                        <li>백엔드 데이터는 항상 구동되어야 하므로 추가 비용 발생</li>
+                                        <li>토큰 수량 증가 시 할인 혜택</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <p style="margin-top: 15px; margin-bottom: 10px;"><strong>기능별 토큰 차등화 (예시):</strong></p>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>베이직:</strong> 온톨로지 기반 화공 LLM만 사용 (최소 토큰)</li>
+                                <li><strong>스탠다드:</strong> Requirement → Aspen HYSYS API 연동 → PFD/HMB 생성</li>
+                                <li><strong>프리미엄:</strong> Hydraulic Calculation, PSV 자동 계산 등 고급 기능 포함</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">📚 교육 프로그램 제공 전략</h4>
+                            <p>AspenTech의 SC(Solution Consultant) 모델을 벤치마킹한 교육 서비스 제공:</p>
+                            <ul style="padding-left: 20px; margin-top: 10px;">
+                                <li><strong>온사이트 워크샵:</strong> 본계약 체결 시 SC 주기적 방문, 2회까지 반나절-하루 워크샵 무상 제공</li>
+                                <li><strong>정규 교육 토큰:</strong> 대형 계약 시 무상 교육 시트(Seat) 제공
+                                    <ul style="padding-left: 20px; margin-top: 5px;">
+                                        <li>예) 100시트 = 3일 강의 2회 수강 가능</li>
+                                        <li>약 10명 × 3일 교육 규모</li>
+                                    </ul>
+                                </li>
+                                <li><strong>교육 내용:</strong> 전체 워크플로우에 대한 이론 교육 (화공 기초부터 실무 적용까지)</li>
+                                <li><strong>차별화 포인트:</strong> 
+                                    <ul style="padding-left: 20px; margin-top: 5px;">
+                                        <li>단순 소프트웨어 사용법이 아닌 화공 도메인 교육</li>
+                                        <li>신입/주니어 엔지니어의 빠른 실무 적응 지원</li>
+                                        <li>노하우 전달 및 지식 서스테이너빌리티 확보</li>
+                                        <li>Competency Level 향상 및 Consistency 유지</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">⚠️ 가격 경쟁력 고려사항</h4>
+                            <p><strong>삼두건설 피드백:</strong></p>
+                            <ul style="padding-left: 20px; margin-top: 10px;">
+                                <li>AutoCAD → ZW-CAD 전환 (비용 절감 목적)</li>
+                                <li>MS Excel AI 기능을 위한 Enterprise 구독제 비용 부담 (구독제 전환 필요, 최신 버전 요구)</li>
+                                <li>삼두 측에서 "기존 가격의 절반" 농담처럼 언급 (구체적 제안은 아님)</li>
+                            </ul>
+
+                            <p style="margin-top: 15px;"><strong>대응 전략:</strong></p>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>가격 유지:</strong> 현재 가격은 절대 비싸지 않음 (박규호 의견)</li>
+                                <li><strong>가치 명확화:</strong> MS Excel AI는 단순 함수 도움 수준, SnapScale은 전체 워크플로우 자동화</li>
+                                <li><strong>기존 소프트웨어 대체 아닌 보완:</strong> 
+                                    <ul style="padding-left: 20px; margin-top: 5px;">
+                                        <li>Aspen HYSYS는 이미 Excel 연동 기능 보유</li>
+                                        <li>SnapScale은 Hydraulic Calculation 등 백그라운드 계산을 자동화하여 Excel에 결과만 출력</li>
+                                        <li>MS Copilot 대비 압도적인 도메인 특화 기능</li>
+                                    </ul>
+                                </li>
+                                <li><strong>ROI 제시:</strong> 인건비 절감, 설계 시간 단축, 정확도 향상을 통한 총소유비용(TCO) 절감 효과 강조</li>
+                            </ul>
+                        </div>
+
+                        <div class="insight-box">
+                            <h4>전략적 인사이트</h4>
+                            <ul>
+                                <li><strong>토큰 모델의 전략적 가치:</strong> AspenTech처럼 토큰 기반 모델은 고객사의 확장성을 보장하면서도 SnapScale의 수익 다각화를 가능하게 합니다. 초기 POC 성공 후 자연스럽게 토큰 추가 구매로 이어지는 구조입니다.</li>
+                                <li><strong>교육 프로그램의 차별화:</strong> 소프트웨어 판매를 넘어 "엔지니어 역량 강화 파트너"로 포지셔닝함으로써 장기적 고객 관계를 구축할 수 있습니다. 이는 단순 비용 절감 툴이 아닌 "비즈니스 성장 도구"로 인식되게 합니다.</li>
+                                <li><strong>가격 정당성 확보:</strong> MS Excel AI나 범용 도구와의 직접 비교를 피하고, 도메인 특화 가치와 전체 ROI 관점에서 접근해야 합니다. 현재 가격(POC 3천만원, 연간 5천만원)은 AspenTech 수준으로 시장에서 합리적입니다.</li>
+                                <li><strong>프리미엄 포지셔닝 유지:</strong> 삼두의 가격 인하 압박에 대해서는 "농담" 수준으로 받아들이고, 오히려 기술적 가치와 정확도 보장을 강조하여 프리미엄 이미지를 유지해야 합니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agenda 5 -->
+                <div class="agenda-item">
+                    <div class="agenda-header" onclick="toggleAgenda(this)">
+                        <h3 class="agenda-title">5. 투자 유치 및 조직 확장 전략</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="agenda-content">
+                        <p><strong>베스트 시나리오: POC 우선 완료 → 투자 유치</strong></p>
+                        
+                        <div style="margin-top: 15px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">🎯 이상적인 투자 유치 타임라인</h4>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>현재 ~ Q1 2026:</strong> 2-3개 대기업 POC 동시 진행</li>
+                                <li><strong>POC 성과:</strong> 설계 시간 단축 및 인건비 절감 데이터 확보</li>
+                                <li><strong>투자 유치:</strong> 검증된 POC 성과 기반으로 기업가치 상향 평가</li>
+                                <li><strong>투자 후:</strong> 개발자 및 엔지니어 추가 채용으로 기술 역량 강화</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">💼 조직 확장 계획</h4>
+                            <p><strong>현재 기술 리소스 구조:</strong></p>
+                            <ul style="padding-left: 20px; margin-top: 10px;">
+                                <li>안태현: Rule & Regulation 담당 (혼자서 진행 중)</li>
+                                <li>이종현 부장: Hydraulic Calculation 담당</li>
+                                <li>박규호 (잠재적 합류): AspenTech 전문가</li>
+                            </ul>
+
+                            <p style="margin-top: 15px;"><strong>투자 후 조직 구조 (제안안):</strong></p>
+                            <ul style="padding-left: 20px;">
+                                <li><strong>Rule & Regulation 팀:</strong> 안태현 + 추가 엔지니어 (정확도 향상 및 규정 데이터베이스 확장)</li>
+                                <li><strong>Hydraulic/Process 팀:</strong> 이종현 부장 주도로 계산 자동화 고도화</li>
+                                <li><strong>AspenTech 통합 팀:</strong> 박규호 + AspenTech 경력 엔지니어 (API 연동 및 최적화)</li>
+                                <li><strong>세일즈 & 운영팀:</strong> 김상윤 CEO 주도, 박규호의 네트워크 활용</li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">💰 엔젤 투자 가능성</h4>
+                            <ul style="padding-left: 20px;">
+                                <li>김상윤 대표 주변에 소액 엔젤 투자 의향자 다수 존재</li>
+                                <li>예상 투자액: 2-3억원/인 규모</li>
+                                <li>전략적 장점: 
+                                    <ul style="padding-left: 20px; margin-top: 5px;">
+                                        <li>VC 투자 1건과 동등한 효과</li>
+                                        <li>높은 기업가치 평가 기반으로 소액 지분 제공 가능</li>
+                                        <li>POC 성공 후 협상 시 유리한 고지 확보</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <h4 style="color: #2c5282; margin-bottom: 10px;">📈 기업가치 상향 전략</h4>
+                            <p><strong>POC 성과 기반 밸류에이션:</strong></p>
+                            <ul style="padding-left: 20px; margin-top: 10px;">
+                                <li>2-3개 대기업 POC 완료 시 실제 절감 데이터 확보 (시간, 비용)</li>
+                                <li>검증된 레퍼런스를 통한 시장 확장 가능성 입증</li>
+                                <li>전체 프로젝트 비용 10% 절감 → TAM(Total Addressable Market) 산정 용이</li>
+                                <li>글로벌 화공 플랜트 시장 진출 로드맵 제시 가능</li>
+                            </ul>
+
+                            <p style="margin-top: 15px;"><strong>장기 비전 제시:</strong></p>
+                            <ul style="padding-left: 20px;">
+                                <li>국내 POC → 국내 대기업 본계약 → 글로벌 B2B 진출</li>
+                                <li>커스터마이징 수주: 고객사별 팀 구성 (개발자+엔지니어 풀)</li>
+                                <li>플랫폼 확장: 화공 플랜트 → 다른 산업군 (조선, 석유화학 등)</li>
+                            </ul>
+                        </div>
+
+                        <div class="insight-box">
+                            <h4>전략적 인사이트</h4>
+                            <ul>
+                                <li><strong>POC-First 접근의 중요성:</strong> 투자를 먼저 받는 것보다 2-3개의 검증된 POC를 완료한 후 투자를 받는 것이 기업가치 협상에서 월등히 유리합니다. 현재 시점은 투자를 서두르기보다 POC 성과에 집중해야 합니다.</li>
+                                <li><strong>현대엔지니어링 효과:</strong> 현대엔지니어링이 먼저 연락한 것은 투자자들에게 매우 긍정적인 신호입니다. "수요처가 먼저 찾아오는 기술력"을 입증하는 사례이기 때문입니다.</li>
+                                <li><strong>3-4개월 시간 절약의 가치:</strong> 박규호 컨설턴트의 평가처럼 현재 영업 진행 속도는 계획보다 3-4개월 앞당겨진 상태입니다. 이는 투자 유치 타임라인도 앞당길 수 있음을 의미합니다.</li>
+                                <li><strong>CVC 전략적 활용:</strong> 두산이나 GS의 CVC와 POC를 진행하면, 단순 고객을 넘어 전략적 투자자로 전환될 가능성이 있습니다. 이는 시장 검증과 자금 확보를 동시에 달성하는 효율적 방법입니다.</li>
+                                <li><strong>조직 확장 시점:</strong> 투자 유치 후 엔지니어를 보강함으로써 기술적 디테일과 정확도를 높여 POC를 본계약으로 전환하는 성공률을 높일 수 있습니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decisions -->
+            <h2 class="section-title">핵심 결정사항</h2>
+            <ul class="decision-list">
+                <li class="decision-item">
+                    <h4>📄 삼두건설 제안서 형식 결정</h4>
+                    <p><strong>결정내용:</strong> PPT 자료가 아닌 텍스트 기반 워드 문서로 제안서 작성</p>
+                    <p><strong>근거:</strong> POC 단계에서는 완성된 제품보다 기술 구현 가능성과 워크플로우 설명이 중요. 데모 영상은 링크로 포함하되, 문서 중심 접근이 기업 의사결정자에게 더 적합</p>
+                    <p><strong>실행:</strong> 김상윤 대표가 내일(1월 9일) 오전까지 커스터마이징된 제안서 작성 및 메일 발송</p>
+                </li>
+                <li class="decision-item">
+                    <h4>💰 가격 정책 유지</h4>
+                    <p><strong>결정내용:</strong> 현재 가격 정책 유지 (POC 3천만원, 본계약 연간 5천만원)</p>
+                    <p><strong>근거:</strong> AspenTech 스탠드얼론 라이선스 수준으로 시장 가격 대비 합리적. 프리미엄 포지셔닝 유지 필요</p>
+                    <p><strong>특이사항:</strong> 삼두건설의 가격 인하 언급은 구체적 제안이 아닌 "농담" 수준으로 판단, 향후 협상 시 기술적 가치와 ROI 강조 예정</p>
+                </li>
+                <li class="decision-item">
+                    <h4>🎯 복수 고객사 동시 접근 전략 실행</h4>
+                    <p><strong>결정내용:</strong> 한국조선해양, 현대엔지니어링, 대림, GS건설, 두산에너빌리티 동시 영업 추진</p>
+                    <p><strong>전략적 의도:</strong> 고객사 간 경쟁심리 활용 및 레퍼런스 빠른 확보</p>
+                    <p><strong>우선순위:</strong> 
+                        <br>1순위: 현대엔지니어링 (1/15 미팅 확정)
+                        <br>2순위: 한국조선해양 (다음주 수요일 가능성)
+                        <br>3순위: 대림, 두산, GS (순차 접근)
+                    </p>
+                </li>
+                <li class="decision-item">
+                    <h4>💼 투자 유치 타이밍 전략</h4>
+                    <p><strong>결정내용:</strong> 2-3개 POC 완료 후 투자 유치 추진 (POC-First 전략)</p>
+                    <p><strong>근거:</strong> 검증된 성과 데이터를 바탕으로 협상 시 기업가치 평가에서 유리한 위치 확보 가능</p>
+                    <p><strong>타임라인:</strong> Q1 2026 POC 완료 → Q2 투자 유치 목표</p>
+                </li>
+                <li class="decision-item">
+                    <h4>📚 교육 프로그램 통합 제안</h4>
+                    <p><strong>결정내용:</strong> AspenTech SC 모델 벤치마킹한 교육 서비스를 가치 제안에 포함</p>
+                    <p><strong>차별화 요소:</strong> 
+                        <br>- 단순 소프트웨어 판매가 아닌 "엔지니어 역량 강화 파트너" 포지셔닝
+                        <br>- 노하우 전달 및 지식 서스테이너빌리티 확보
+                        <br>- 신입/주니어 빠른 실무 적응 지원
+                    </p>
+                </li>
+            </ul>
+
+            <!-- Action Items -->
+            <h2 class="section-title">액션 아이템</h2>
+            <ul class="action-list">
+                <li class="action-item">
+                    <h4>📧 삼두건설 제안서 발송 <span class="priority-badge priority-high">High</span></h4>
+                    <p><strong>담당:</strong> 김상윤 (CEO)</p>
+                    <p><strong>마감:</strong> 2026년 1월 9일 (목) 오전</p>
+                    <p><strong>세부내용:</strong> 텍스트 기반 워드 문서로 제안서 작성, 가격 부분 제외, 데모 영상 링크 정정 메일 발송</p>
+                </li>
+                <li class="action-item">
+                    <h4>📧 현대엔지니어링 제안서 발송 <span class="priority-badge priority-high">High</span></h4>
+                    <p><strong>담당:</strong> 김상윤 (CEO)</p>
+                    <p><strong>마감:</strong> 2026년 1월 9일 (목) 오전</p>
+                    <p><strong>세부내용:</strong> 1월 15일 (목) 9:30 미팅에 맞춰 커스터마이징된 제안서 준비</p>
+                </li>
+                <li class="action-item">
+                    <h4>📞 한국조선해양 GRC 미팅 일정 조율 <span class="priority-badge priority-high">High</span></h4>
+                    <p><strong>담당:</strong> 박규호 (컨설턴트)</p>
+                    <p><strong>마감:</strong> 2026년 1월 10일 (금)</p>
+                    <p><strong>세부내용:</strong> 다음주 수요일(1/15) 가능 여부 확인, 확정 시 김상윤 대표에게 즉시 공유. 화요일/목요일은 타 고객사 미팅으로 피해야 함</p>
+                </li>
+                <li class="action-item">
+                    <h4>📞 대림산업 연락처 확보 및 컨택 <span class="priority-badge priority-medium">Medium</span></h4>
+                    <p><strong>담당:</strong> 박규호 (컨설턴트)</p>
+                    <p><strong>마감:</strong> 2026년 1월 13일 (월)</p>
+                    <p><strong>세부내용:</strong> 대성가스 인맥을 통한 대림 공정설계팀 담당자 연락처 확보 및 전달</p>
+                </li>
+                <li class="action-item">
+                    <h4>💼 GS건설 공정팀장 컨택 <span class="priority-badge priority-medium">Medium</span></h4>
+                    <p><strong>담당:</strong> 김상윤 (CEO)</p>
+                    <p><strong>마감:</strong> 2026년 1월 중</p>
+                    <p><strong>세부내용:</strong> 박규호 컨설턴트가 직접 한번 더 요청 필요 (GS-CVC 연계 가능성 염두)</p>
+                </li>
+                <li class="action-item">
+                    <h4>💼 두산에너빌리티 CVC 컨택 준비 <span class="priority-badge priority-medium">Medium</span></h4>
+                    <p><strong>담당:</strong> 박규호 (컨설턴트)</p>
+                    <p><strong>마감:</strong> CVC 컨택 결정 시</p>
+                    <p><strong>세부내용:</strong> 박병구 책임(AspenTech 교육 다수, 공정팀) 연결, 두산인베스트먼트 자금력 활용한 전략적 접근</p>
+                </li>
+                <li class="action-item">
+                    <h4>📊 토큰 기반 비즈니스 모델 문서화 <span class="priority-badge priority-medium">Medium</span></h4>
+                    <p><strong>담당:</strong> 박규호 (컨설턴트) + 김상윤 (CEO)</p>
+                    <p><strong>마감:</strong> 2026년 1월 중순</p>
+                    <p><strong>세부내용:</strong> 
+                        <br>- AspenTech 토큰 테이블 분석 및 SnapScale 버전 설계
+                        <br>- 기능별 토큰 소비량 산정 (베이직/스탠다드/프리미엄)
+                        <br>- CAP TABLE, TAM, 타겟 프로필 분석 문서 작성
+                        <br>- 박규호 컨설턴트가 깊이 이해 후 영업 시 활용
+                    </p>
+                </li>
+                <li class="action-item">
+                    <h4>🤝 주말 미팅: 지분 구조 및 인사 규정 논의 <span class="priority-badge priority-low">Low</span></h4>
+                    <p><strong>담당:</strong> 김상윤 (CEO) + 박규호 (컨설턴트)</p>
+                    <p><strong>마감:</strong> 2026년 1월 11일 (토) 또는 12일 (일)</p>
+                    <p><strong>세부내용:</strong> 
+                        <br>- 지분 구조 최종 정리
+                        <br>- AspenTech HR 규정집 기반 SnapScale 채용 규정 작성
+                        <br>- 토큰 기반 계약 구조 매칭
+                    </p>
+                </li>
+            </ul>
+
+            <!-- Diagrams -->
+            <h2 class="section-title">전략 다이어그램</h2>
+            
+            <div class="mermaid-container">
+                <h3 class="diagram-title">🎯 다중 고객사 동시 접근 전략 맵</h3>
+                <div class="mermaid">
+graph TB
+    A[SnapScale<br/>POC 전략] --> B[현대엔지니어링<br/>1/15 미팅 확정]
+    A --> C[한국조선해양<br/>다음주 수요일 가능]
+    A --> D[대림산업<br/>월요일 연락처 확보]
+    A --> E[GS건설<br/>공정팀장 컨택]
+    A --> F[두산에너빌리티<br/>CVC 연계]
+    
+    B --> G[신년 기획안 포함 검토]
+    C --> H[GRC 개발부서 3팀<br/>신년사 미션]
+    D --> I[공정설계팀 직접 연결<br/>대성가스 경유]
+    E --> J[GS-CVC 가능성]
+    F --> K[두산인베스트먼트<br/>풍부한 자금력]
+    
+    G --> L[레퍼런스 확보]
+    H --> L
+    I --> L
+    J --> M[전략적 투자 기회]
+    K --> M
+    
+    L --> N[2-3개 POC 완료]
+    M --> N
+    N --> O[기업가치 상향<br/>투자 유치]
+    
+    style A fill:#2c5282,stroke:#1e3a5f,stroke-width:3px,color:#fff
+    style B fill:#32B489,stroke:#2a9d7a,stroke-width:2px,color:#fff
+    style C fill:#32B489,stroke:#2a9d7a,stroke-width:2px,color:#fff
+    style N fill:#ff6b6b,stroke:#ff5252,stroke-width:2px,color:#fff
+    style O fill:#ffd700,stroke:#ffc107,stroke-width:2px,color:#000
+                </div>
+            </div>
+
+            <div class="mermaid-container">
+                <h3 class="diagram-title">💰 토큰 기반 비즈니스 모델 구조</h3>
+                <div class="mermaid">
+graph LR
+    A[토큰 풀<br/>20토큰 계약] --> B[프로젝트 A 개시<br/>6토큰 소비]
+    A --> C[14토큰 잔여]
+    
+    B --> D[6명 팀 구성<br/>기계/공정/배관/계장/전기/구조]
+    
+    C --> E[프로젝트 B 가능<br/>6토큰 추가 소비]
+    C --> F[또는 대기<br/>프로젝트 A 종료 대기]
+    
+    B --> G[프로젝트 완료<br/>6토큰 반환]
+    G --> H[다른 팀 사용 가능<br/>또는 프로젝트 확장]
+    
+    I[기능별 토큰] --> J[베이직: 온톨로지 LLM만]
+    I --> K[스탠다드: HYSYS 연동+PFD]
+    I --> L[프리미엄: 고급 계산 포함]
+    
+    style A fill:#2c5282,stroke:#1e3a5f,stroke-width:2px,color:#fff
+    style B fill:#32B489,stroke:#2a9d7a,stroke-width:2px,color:#fff
+    style G fill:#ff6b6b,stroke:#ff5252,stroke-width:2px,color:#fff
+    style I fill:#ffd700,stroke:#ffc107,stroke-width:2px,color:#000
+                </div>
+            </div>
+
+            <div class="mermaid-container">
+                <h3 class="diagram-title">⏱️ POC to 투자유치 타임라인</h3>
+                <div class="mermaid">
+gantt
+    title SnapScale 2026 Q1-Q2 로드맵
+    dateFormat YYYY-MM-DD
+    
+    section POC 준비
+    삼두 제안서 발송           :done,    poc1, 2026-01-09, 1d
+    현대E 제안서 발송          :done,    poc2, 2026-01-09, 1d
+    대림 연락처 확보           :active,  poc3, 2026-01-13, 1d
+    
+    section 미팅 & POC
+    현대엔지니어링 미팅        :crit,    meet1, 2026-01-15, 1d
+    한국조선해양 미팅          :         meet2, 2026-01-15, 1d
+    대림/GS/두산 미팅          :         meet3, 2026-01-20, 5d
+    POC 진행 (2-3개사)         :         exec1, 2026-01-20, 45d
+    
+    section 성과 분석
+    POC 결과 정리              :         result, 2026-03-05, 10d
+    절감 데이터 분석           :         analysis, 2026-03-05, 10d
+    
+    section 투자 유치
+    투자 자료 준비             :         inv1, 2026-03-15, 10d
+    VC 미팅                    :         inv2, 2026-03-25, 15d
+    투자 유치 완료 목표        :milestone, inv3, 2026-04-10, 0d
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <h2 class="section-title">후속 계획</h2>
+            <div class="agenda-item">
+                <div class="agenda-content" style="max-height: none;">
+                    <h4 style="color: #2c5282; margin-bottom: 15px;">🔜 다음 회의 계획</h4>
+                    <ul style="padding-left: 20px; line-height: 1.8;">
+                        <li><strong>주말 미팅 (1/11-12):</strong> 지분 구조, 인사 규정, 토큰 모델 상세 설계 논의</li>
+                        <li><strong>현대엔지니어링 미팅 (1/15):</strong> 김상윤 대표 + 박규호 컨설턴트 참석, 기술 데모 및 가치 제안</li>
+                        <li><strong>한국조선해양 미팅 (1/15 가능성):</strong> GRC 방문, 개발부서 실무자 미팅</li>
+                    </ul>
+
+                    <h4 style="color: #2c5282; margin-top: 25px; margin-bottom: 15px;">📋 추가 준비 필요사항</h4>
+                    <ul style="padding-left: 20px; line-height: 1.8;">
+                        <li><strong>기술 검증 자료:</strong> P&ID 인식 정확도 99% 달성 사례 (IPS 스타일 검증 결과 시각화)</li>
+                        <li><strong>ROI 계산 템플릿:</strong> 프로젝트 비용 대비 10% 절감 효과 정량화 자료</li>
+                        <li><strong>경쟁 분석 자료:</strong> MS Excel AI, AutoCAD vs ZW-CAD 등 가격/기능 비교표</li>
+                        <li><strong>교육 프로그램 브로슈어:</strong> AspenTech SC 모델 기반 교육 서비스 설명 자료</li>
+                        <li><strong>토큰 모델 가이드:</strong> 고객사가 이해하기 쉬운 토큰 기반 라이선스 설명 문서</li>
+                    </ul>
+
+                    <h4 style="color: #2c5282; margin-top: 25px; margin-bottom: 15px;">⚠️ 리스크 및 대응 방안</h4>
+                    <ul style="padding-left: 20px; line-height: 1.8;">
+                        <li><strong>네트워크 불안정:</strong> 김상윤 대표 호텔 와이파이 문제 → 모바일 핫스팟 또는 안정적 환경 확보 필요</li>
+                        <li><strong>가격 압박:</strong> 삼두의 가격 인하 요구 → 프리미엄 포지셔닝 유지, ROI 기반 정당성 강조</li>
+                        <li><strong>기술 리소스 부족:</strong> 현재 인력으로 2-3개 POC 동시 진행 가능 여부 → 투자 유치 후 인력 보강 전까지 우선순위 관리 중요</li>
+                        <li><strong>삼성엔지니어링 경쟁:</strong> 자체 AI 개발 중 → 당분간 접근 보류, 다른 고객사 성공 후 재검토</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Insights Summary -->
+            <h2 class="section-title">종합 전략 인사이트</h2>
+            <div class="insight-box" style="margin-top: 0;">
+                <ul>
+                    <li><strong>타이밍의 완벽성:</strong> 현대엔지니어링이 먼저 연락하고, 한국조선해양 등 주요 고객사들의 신년사 미션 수행 압박이 겹치면서 SnapScale에게 최적의 진입 시점이 만들어졌습니다. 이는 원래 계획보다 3-4개월 앞당겨진 것으로 평가됩니다.</li>
+                    
+                    <li><strong>POC-First 전략의 중요성:</strong> 2-3개 대기업 POC를 완료한 후 투자를 받는 것이 기업가치 협상에서 월등히 유리합니다. 검증된 절감 데이터와 레퍼런스를 확보함으로써 투자자에게 리스크가 낮은 투자 대상으로 포지셔닝할 수 있습니다.</li>
+                    
+                    <li><strong>도메인 전문성이 핵심 차별화:</strong> 범용 AI가 아닌 화학공학 특화 온톨로지와 90%+ P&ID 인식률이 진정한 경쟁우위입니다. MS Excel AI나 범용 도구와의 직접 비교를 피하고, 전체 워크플로우 통합 가치를 강조해야 합니다.</li>
+                    
+                    <li><strong>교육 프로그램의 전략적 가치:</strong> 단순 소프트웨어 판매를 넘어 "엔지니어 역량 강화 파트너"로 포지셔닝함으로써 장기 고객 관계를 구축할 수 있습니다. 이는 비용 절감 도구가 아닌 "비즈니스 성장 도구"로 인식되게 합니다.</li>
+                    
+                    <li><strong>CVC 전략적 활용 기회:</strong> 두산, GS 등 CVC를 보유한 기업들과의 POC는 단순 매출을 넘어 전략적 투자 유치 가능성도 내포합니다. 시장 검증과 자금 확보를 동시에 달성하는 효율적 방법입니다.</li>
+                    
+                    <li><strong>토큰 모델의 확장성:</strong> AspenTech 벤치마킹한 토큰 기반 모델은 고객사의 확장성을 보장하면서도 SnapScale의 수익 다각화를 가능하게 합니다. 초기 POC 성공 후 자연스럽게 토큰 추가 구매로 이어지는 선순환 구조입니다.</li>
+                    
+                    <li><strong>프리미엄 포지셔닝 유지 필수:</strong> 가격 경쟁이 아닌 가치 경쟁에 집중해야 합니다. 현재 가격(POC 3천만원, 연간 5천만원)은 AspenTech 수준으로 시장에서 합리적이며, 정확도 보장과 ROI를 강조하여 프리미엄 이미지를 유지해야 합니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Confidential & Proprietary | SnapScale Internal Use Only</strong></p>
+            <p>본 문서는 SnapScale 내부 전용이며 무단 배포 및 외부 공유를 금지합니다.</p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">Generated: 2026-01-09 | Document Version: 1.0</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#2c5282',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#1e3a5f',
+                lineColor: '#32B489',
+                secondaryColor: '#32B489',
+                tertiaryColor: '#f8f9fa'
+            }
+        });
+
+        // Toggle agenda items
+        function toggleAgenda(element) {
+            const agendaItem = element.closest('.agenda-item');
+            agendaItem.classList.toggle('collapsed');
+        }
+
+        // Print functionality
+        function printDocument() {
+            // Expand all items before printing
+            document.querySelectorAll('.agenda-item').forEach(item => {
+                item.classList.remove('collapsed');
+            });
+            window.print();
+        }
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Collapse all agenda items on load for better UX
+        window.addEventListener('load', function() {
+            // Keep first agenda expanded, collapse others
+            document.querySelectorAll('.agenda-item').forEach((item, index) => {
+                if (index > 0) {
+                    item.classList.add('collapsed');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

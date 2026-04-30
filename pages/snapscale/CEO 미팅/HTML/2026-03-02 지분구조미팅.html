@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지분구조 미팅 회의록 - 2026.03.02</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary-navy: #1e3c72;
+            --secondary-navy: #2a5298;
+            --accent-blue: #4a90e2;
+            --light-blue: #e3f2fd;
+            --dark-gray: #2c3e50;
+            --medium-gray: #7f8c8d;
+            --light-gray: #ecf0f1;
+            --white: #ffffff;
+            --success-green: #27ae60;
+            --warning-orange: #f39c12;
+            --danger-red: #e74c3c;
+            --purple: #8e44ad;
+            --teal: #16a085;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: var(--dark-gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
+            color: var(--white);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+        }
+        h1 { font-size: 36px; font-weight: 700; margin-bottom: 10px; position: relative; z-index: 1; }
+        .meeting-subtitle { font-size: 16px; opacity: 0.85; position: relative; z-index: 1; margin-bottom: 30px; }
+        .meeting-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            position: relative; z-index: 1;
+        }
+        .meta-item {
+            background: rgba(255,255,255,0.15);
+            padding: 14px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .meta-label { font-size: 11px; opacity: 0.8; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .meta-value { font-size: 14px; font-weight: 600; }
+        nav {
+            background: var(--light-gray);
+            padding: 15px 40px;
+            border-bottom: 2px solid #ddd;
+            position: sticky; top: 0; z-index: 100;
+        }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+        nav ul li a {
+            text-decoration: none;
+            color: var(--primary-navy);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: var(--white);
+            transition: all 0.2s;
+            border: 1px solid #ddd;
+        }
+        nav ul li a:hover { background: var(--primary-navy); color: var(--white); }
+        .content { padding: 40px; }
+        .section {
+            margin-bottom: 50px;
+            scroll-margin-top: 70px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--light-blue);
+        }
+        .section-icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, var(--primary-navy), var(--accent-blue));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 18px;
+            flex-shrink: 0;
+        }
+        h2 { font-size: 22px; color: var(--primary-navy); font-weight: 700; }
+        h3 { font-size: 17px; color: var(--secondary-navy); font-weight: 600; margin-bottom: 12px; }
+
+        /* 화자 카드 */
+        .speaker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .speaker-card {
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid;
+            background: #fafafa;
+        }
+        .speaker-card.kim { border-color: var(--primary-navy); }
+        .speaker-card.park { border-color: var(--teal); }
+        .speaker-card-name { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+        .speaker-card.kim .speaker-card-name { color: var(--primary-navy); }
+        .speaker-card.park .speaker-card-name { color: var(--teal); }
+        .speaker-card-role { font-size: 13px; color: var(--medium-gray); margin-bottom: 10px; }
+        .speaker-card p { font-size: 14px; line-height: 1.7; }
+        .speaker-quote {
+            background: var(--light-blue);
+            border-left: 3px solid var(--accent-blue);
+            padding: 10px 14px;
+            border-radius: 0 6px 6px 0;
+            font-size: 13px;
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--dark-gray);
+        }
+
+        /* 안건 카드 */
+        .agenda-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .agenda-card-header {
+            background: linear-gradient(135deg, var(--primary-navy), var(--secondary-navy));
+            color: white;
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+        .agenda-num {
+            background: rgba(255,255,255,0.2);
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 14px;
+        }
+        .agenda-title { font-size: 16px; font-weight: 600; flex: 1; }
+        .agenda-toggle { font-size: 18px; transition: transform 0.3s; }
+        .agenda-body { padding: 22px; display: block; }
+        .agenda-body.collapsed { display: none; }
+
+        .discussion-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 14px;
+            align-items: flex-start;
+        }
+        .speaker-badge {
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        .badge-kim { background: #d0e4f7; color: var(--primary-navy); }
+        .badge-park { background: #d0f0ec; color: var(--teal); }
+        .discussion-text { font-size: 14px; line-height: 1.75; }
+
+        .insight-box {
+            background: linear-gradient(135deg, #fff9e6, #fff3cd);
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin-top: 18px;
+        }
+        .insight-box h4 { color: #856404; margin-bottom: 10px; font-size: 14px; }
+        .insight-list { list-style: none; }
+        .insight-list li {
+            padding: 6px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 14px;
+        }
+        .insight-list li::before {
+            content: '💡';
+            position: absolute; left: 0;
+            font-size: 13px;
+        }
+
+        /* 결정사항 & 액션아이템 */
+        .decision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 18px;
+        }
+        .decision-card {
+            background: #f0f7ff;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            padding: 18px;
+        }
+        .decision-card h4 { color: var(--primary-navy); font-size: 14px; margin-bottom: 8px; }
+        .decision-card p { font-size: 13px; color: var(--dark-gray); }
+
+        .action-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .action-table th {
+            background: var(--primary-navy);
+            color: white;
+            padding: 12px 14px;
+            text-align: left;
+            font-size: 13px;
+        }
+        .action-table td { padding: 11px 14px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .action-table tr:hover td { background: #f8f9ff; }
+        .priority-high { background: #ffe4e4; color: #c0392b; padding: 3px 9px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+        .priority-med { background: #fff3cd; color: #856404; padding: 3px 9px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+        .priority-low { background: #d4edda; color: #155724; padding: 3px 9px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+        .assignee-kim { color: var(--primary-navy); font-weight: 600; }
+        .assignee-park { color: var(--teal); font-weight: 600; }
+        .assignee-both { color: var(--purple); font-weight: 600; }
+
+        /* 다이어그램 */
+        .diagram-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .diagram-container .mermaid { min-width: 700px; margin: 0 auto; }
+        .diagram-title { font-size: 15px; font-weight: 600; color: var(--primary-navy); margin-bottom: 15px; }
+
+        /* 미해결 이슈 */
+        .pending-list { list-style: none; }
+        .pending-list li {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        .pending-list li:last-child { border-bottom: none; }
+        .pending-icon { font-size: 18px; flex-shrink: 0; }
+
+        /* 다음 미팅 */
+        .next-meeting-box {
+            background: linear-gradient(135deg, var(--primary-navy), var(--secondary-navy));
+            color: white;
+            border-radius: 10px;
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .next-meeting-icon { font-size: 40px; flex-shrink: 0; }
+        .next-meeting-info h3 { color: white; margin-bottom: 6px; }
+        .next-meeting-info p { font-size: 14px; opacity: 0.9; }
+
+        footer {
+            background: var(--light-gray);
+            text-align: center;
+            padding: 20px;
+            color: var(--medium-gray);
+            font-size: 13px;
+            border-top: 1px solid #ddd;
+        }
+
+        @media print {
+            nav { display: none; }
+            .agenda-body.collapsed { display: block !important; }
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 24px; }
+            .content { padding: 20px; }
+            header { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>📋 지분구조 미팅 회의록</h1>
+        <div class="meeting-subtitle">스냅스케일 공동창업자 지분·역할·전략 논의</div>
+        <div class="meeting-meta">
+            <div class="meta-item">
+                <div class="meta-label">📅 일시</div>
+                <div class="meta-value">2026년 3월 2일 (월)</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">🖥 형식</div>
+                <div class="meta-value">화상 미팅 (온라인)</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">👤 참석자</div>
+                <div class="meta-value">김상윤 대표, 박규호 부장</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">🎯 목적</div>
+                <div class="meta-value">지분구조·역할 정의·사업 현황 논의</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">⏱ 소요시간</div>
+                <div class="meta-value">약 90분 (추정)</div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#speakers">참석자</a></li>
+            <li><a href="#agenda1">일정조율</a></li>
+            <li><a href="#agenda2">공동창업자 역할</a></li>
+            <li><a href="#agenda3">지분·베스팅</a></li>
+            <li><a href="#agenda4">산학협력</a></li>
+            <li><a href="#agenda5">기술전략</a></li>
+            <li><a href="#agenda6">사업현황</a></li>
+            <li><a href="#agenda7">인력·네트워크</a></li>
+            <li><a href="#decisions">결정사항</a></li>
+            <li><a href="#actions">액션아이템</a></li>
+            <li><a href="#diagrams">다이어그램</a></li>
+            <li><a href="#pending">미결사항</a></li>
+        </ul>
+    </nav>
+
+    <div class="content">
+
+        <!-- 참석자 섹션 -->
+        <div class="section" id="speakers">
+            <div class="section-header">
+                <div class="section-icon">👥</div>
+                <h2>참석자 프로필</h2>
+            </div>
+            <div class="speaker-grid">
+                <div class="speaker-card kim">
+                    <div class="speaker-card-name">김상윤</div>
+                    <div class="speaker-card-role">대표이사 · 스냅스케일</div>
+                    <p>AI 기술 개발 총괄 및 제품 방향성 주도. 이번 미팅에서 공동창업자의 역할 정의, 지분구조(역베스팅) 설계 방안, 기술 전략 및 주요 사업 현황을 공유하고 논의를 이끌었음.</p>
+                    <div class="speaker-quote">"30%라는 지분에 걸맞은 책임과 역할이 무엇인지를 명확히 세우는 것이 핵심입니다."</div>
+                </div>
+                <div class="speaker-card park">
+                    <div class="speaker-card-name">박규호</div>
+                    <div class="speaker-card-role">부장 · 공동창업자 (조인 검토 중)</div>
+                    <p>글로벌 표준 베스팅 사례(YC 가이드라인, Stripe, GitHub 등) 조사·공유. 지분구조 논의에서 표준 관행과 스냅스케일 특수성 간의 차이를 짚어내며 균형 있는 시각 제공.</p>
+                    <div class="speaker-quote">"입사 시점부터 베스팅 구조로 가야 공동창업자에게도 동기부여가 됩니다."</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 안건 1: 일정 조율 -->
+        <div class="section" id="agenda1">
+            <div class="section-header">
+                <div class="section-icon">📅</div>
+                <h2>안건 1 · 정례 미팅 일정 조율</h2>
+            </div>
+            <div class="agenda-card">
+                <div class="agenda-card-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">1</div>
+                    <div class="agenda-title">매주 금요일 오전 10시 정례회의 일정 변경</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body">
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text">다음 주 금요일 오전 10시에 오라클 세일즈 쪽 화상 미팅이 겹쳐서 시간 변경을 요청함. 11시 반 또는 금요일 오후 가능 여부 확인.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-park">박규호</span>
+                        <div class="discussion-text">다음 주 수·목·금이 교육 일정으로 잡혀 있어 오후 7시 이후 가능. 토요일 오전도 가능하다고 제안.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text">오후 8시 정계회의가 있어 오후 7시 시작이 유일한 선택지. 단, 연속 미팅이 어려울 수 있어 토요일 오전 10시로 최종 확정.</div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>✅ 합의 사항</h4>
+                        <ul class="insight-list">
+                            <li>다음 정례 미팅: <strong>2026년 3월 7일(토) 오전 10시</strong></li>
+                            <li>이후 일정은 양측 상황에 따라 유동적으로 조율</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 안건 2: 공동창업자 역할 정의 -->
+        <div class="section" id="agenda2">
+            <div class="section-header">
+                <div class="section-icon">🧭</div>
+                <h2>안건 2 · 공동창업자 역할 정의 (30% 지분의 무게)</h2>
+            </div>
+            <div class="agenda-card">
+                <div class="agenda-card-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">2</div>
+                    <div class="agenda-title">박규호 부장의 핵심 역할 및 책임 범위</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body">
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text"><strong>[즉시 역할]</strong> 셀렙 교육섭 강의 지속, 하이시스 컨설팅을 통한 매출 파이프라인 구축 및 잠재 아웃바운드 세일즈 풀 확보. AI 개발팀이 내부 POC·개발에 집중할 수 있도록 회사 현금흐름을 유지시키는 '생명줄' 역할.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text"><strong>[중기 역할]</strong> 화공 엔지니어 채용·경영관리, 인건비 대비 매출 순익 구조 설계, 도메인 전문가 커뮤니티(인터넷 화학공학회 등) 운영 및 잠재 세일즈 풀로 활용. AI 개발자–도메인 전문가 간 밀도 있는 소통 문화 구축.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text"><strong>[장기 역할]</strong> 가격 정책 디벨롭, 경영 전반 공동 운영, 세일즈 미팅 참여, 동행지식·개발 과정 참여. 코파운더로서 회사의 도메인 전문 AI 기업 정체성 유지.</div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>핵심 인사이트</h4>
+                        <ul class="insight-list">
+                            <li>30% 지분은 단순 기술 기여가 아닌, <strong>회사 생존 엔진(현금·데이터 수급)을 총괄</strong>하는 역할에 대한 대가로 프레이밍됨</li>
+                            <li>AI 개발자–도메인 전문가 간 분절화를 막는 <strong>문화 설계자</strong> 역할이 초기부터 중요</li>
+                            <li>코파운더 조인 시 <strong>주변 동료 1~2명 추가 영입</strong>으로 하방 구조 자생력 강화 계획</li>
+                            <li>셀렉션밸리에서 논의한 '코파운더 찍는' 개념과 일맥상통 — 역할 일관성 확인됨</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 안건 3: 지분구조 및 베스팅 -->
+        <div class="section" id="agenda3">
+            <div class="section-header">
+                <div class="section-icon">📊</div>
+                <h2>안건 3 · 지분구조 및 역베스팅 설계</h2>
+            </div>
+            <div class="agenda-card">
+                <div class="agenda-card-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">3</div>
+                    <div class="agenda-title">역베스팅 시작 시점 및 구조 논의 (핵심 쟁점)</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body">
+                    <h3>🔴 쟁점: 베스팅 시작 시점의 불일치</h3>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text"><strong>[제안안]</strong> 시리즈 A 이전 엑시트 → 전략 액면 회수. 시리즈 A~B 구간 → 3% 역베스팅 (또는 시드 후 2년 후부터 시작). 시리즈 B 이후 → 4년 역베스팅, 1년 클리프, 7·7·7·6% 순차 확정. M&A·IPO 시 보호예수 해제 후 일정 기간 재직 시 미확정 지분 전량 부여.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-park">박규호</span>
+                        <div class="discussion-text"><strong>[반론]</strong> 글로벌 표준(YC, Stripe, GitHub 사례 등)은 <strong>입사 시점부터 1년 클리프 + 4년 베스팅</strong>이 기준. 시리즈 A·B를 베스팅 시작점으로 잡는 것은 표준과 상이. 베스팅이 없으면 시리즈 A 이전에 퇴사 유인이 오히려 더 커짐.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-park">박규호</span>
+                        <div class="discussion-text">YC 라이브러리, Captable 역베스팅 가이드, Stripe 베스팅 스케줄 등 레퍼런스 공유. 4년 베스팅·1년 클리프가 법적 기준이 아닌 관행이므로 창업자 간 협의로 조정 가능하나, 큰 틀에서 이 구조가 타당하다는 입장.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text">참조 사례들이 소프트웨어·SNS 중심이라 화공 도메인 + 시니어 엔지니어 구조와는 다를 수 있다는 점, 그리고 30% 대 10% 베스팅의 성격 차이를 추가 검토 필요 사항으로 제기.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-park">박규호</span>
+                        <div class="discussion-text">YC의 핵심 철학: 지분을 크게 주는 만큼 책임도 크게 부여하고, 중간 시련에 창업자가 매번 동기 부여할 수 없으므로 역베스팅 구조가 <strong>스스로 달려가게 하는 제도적 장치</strong>라는 점을 강조. 시작 시점 논리는 산업군과 무관하게 동일하게 적용.</div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>핵심 인사이트</h4>
+                        <ul class="insight-list">
+                            <li><strong>핵심 불일치</strong>: 베스팅 시작 시점 — '입사 즉시' vs '시리즈 A 이후'. 이것이 다음 미팅 전까지 최우선 해결 과제</li>
+                            <li>루닛 등 국내 바이오 AI 사례(삼성 출신 3인 창업, 지분 6:2:1.5 구조) 역추산 공유 — 국내 참조군 필요성 확인</li>
+                            <li>M&A·IPO 조기 실현 시 미확정 지분 보호 장치 필요 — 양측 모두 원칙적 공감</li>
+                            <li>5년 내 시리즈 B 달성이 현실적 목표일 경우, 입사 시점부터 1+4년 구조가 타임라인상 가장 정합적</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 안건 4: 산학협력 -->
+        <div class="section" id="agenda4">
+            <div class="section-header">
+                <div class="section-icon">🎓</div>
+                <h2>안건 4 · 산학협력 및 정부지원사업 활용</h2>
+            </div>
+            <div class="agenda-card">
+                <div class="agenda-card-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">4</div>
+                    <div class="agenda-title">대학 연계 공동연구 구조 및 특허·자금 배분</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body">
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-park">박규호</span>
+                        <div class="discussion-text">제조·바이오 분야 산학협력 정책자금이 많으나 기업-대학 간 인건비 배분, 특허 귀속, 수익 공유 구조가 불명확. 성균관대 공정제어 연구실 케이스를 계기로 연계 여부 검토 요청.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text">정부지원사업 구조 설명: 1억 지원 시 기업 자부담 30% 필요 (현금 1천만원 + 현물 등 2천만원 구조가 일반적). 자부담은 스냅스케일과 연구실 간 협의 필요. 정보지원사업 성격에 따라 AI 기업 직접 지원형 vs 기업-대학 공동개발형이 나뉨.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text">특허 귀속 분쟁 주변 사례 2~3건 확인. 표준이 있어도 결국 연구실과 지속 조율 필요. 한올이나 현대와의 연계 시에는 기능 단위를 분리해서 AI 구축은 해주되 핵심 제품은 자체 사업화하는 방향으로 가닥.</div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>핵심 인사이트</h4>
+                        <ul class="insight-list">
+                            <li>산학협력은 <strong>하방 매출 파이프라인이자 잠재 아웃바운드 풀</strong>로 활용 가능한 이중 효과 기대</li>
+                            <li>특허 귀속 및 수익 배분 구조 <strong>사전 계약화</strong> 필수 — 미리 법무 검토 권장</li>
+                            <li>성균관대 연계 여부는 연구실 동일성 확인 후 진행 결정 예정</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 안건 5: 기술 전략 -->
+        <div class="section" id="agenda5">
+            <div class="section-header">
+                <div class="section-icon">🤖</div>
+                <h2>안건 5 · 온프레미스 AI 기술 전략 및 진입장벽</h2>
+            </div>
+            <div class="agenda-card">
+                <div class="agenda-card-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">5</div>
+                    <div class="agenda-title">제조기업 온프레미스 AI 시장의 경쟁 우위 논의</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body">
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-park">박규호</span>
+                        <div class="discussion-text">LLM 지식 그래프·온톨로지 구조화가 빠르게 발전하면 진입장벽이 낮아지는 것 아닌가 하는 우려 제기.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text">제조 대기업은 데이터 보안상 Claude·Gemini 등 외부 LLM 직접 사용 불가(삼성 ChatGPT 기밀 유출 사례). 내부 GPU 10대 미만 온프레미스 환경에서는 2등급 LLM만 설치 가능 → 성능 한계 존재. 따라서 <strong>온톨로지 기반 지식구조를 사람이 설계하여 2등급 모델 위에서 돌리는 것</strong>이 현재 가장 빠른 제품화 경로. 이 노하우를 먼저 쌓는 것이 핵심 진입장벽.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text">한울 컴프레서 데이터 분석: 담당자가 매우 세밀한 워크플로우를 공유. 볼트홀 위치·재질 결정 등 모든 단계별 의사결정이 지식구조에 포함돼야 캐드 자동화 가능. 복잡도가 예상보다 높아 약 6주 작업 필요.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text">DW심(동적 워크플로우 시뮬레이션): 오픈소스 기반으로 하이시스보다 포텐셜 높음. 3월 중 강의 런칭 예정. 장현기 선생님과 협력 가능성 탐색 중.</div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>핵심 인사이트</h4>
+                        <ul class="insight-list">
+                            <li>스냅스케일의 진입장벽: <strong>로컬 온프레미스 환경에서의 온톨로지 설계 선점 노하우</strong> — Anthropic·Google도 단기간 진입 어려움</li>
+                            <li>제조 기업 데이터 보안 구조가 외부 LLM 도입을 막는 구조적 해자 역할</li>
+                            <li>인간 지식 → AI 이해 가능 구조화는 누가 먼저 '맨땅에서 시작했냐'의 선점 싸움</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 안건 6: 사업 현황 -->
+        <div class="section" id="agenda6">
+            <div class="section-header">
+                <div class="section-icon">💼</div>
+                <h2>안건 6 · 주요 사업 현황 (현행·현대·삼도)</h2>
+            </div>
+            <div class="agenda-card">
+                <div class="agenda-card-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">6</div>
+                    <div class="agenda-title">POC 계약 추진 및 고객사별 대응 전략</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body">
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text"><strong>[현행]</strong> 복잡도 예상 초과, 6주 POC 필요. 수익 계약 800만원(김상윤+재훈 1.5개월 인건비 기준) 제안 예정. 6주 후 라이브 데모 진행 계획. 주말 동안 딜리버러블 스터디 완료.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-park">박규호</span>
+                        <div class="discussion-text">수익 계약은 기술적 접근으로 하되, 임원 관계 활용(골프·식사 등 영업 관계 유지) 및 투자 유치 예정 사실을 흘려 '몇백만원으로 억대 투자 받는 스타트업 지원'이라는 프레임으로 푸시 필요.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text"><strong>[현대]</strong> 아직 답변 미수신. 연휴로 인해 내일 회신 예상.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text"><strong>[삼도]</strong> 플랜트 엔지니어 미팅 참여 목적 문의. 예상 이유: AI 개발자가 도메인 지식 부족을 보충받기 위함. 대응 전략: 캐주얼하게 이유를 물어보고, 필요한 것은 산업 일반 지식이 아닌 삼도만의 내부 워크플로우·데이터 구조 설명임을 안내.</div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>핵심 인사이트</h4>
+                        <ul class="insight-list">
+                            <li>3월 초 POC 계약 확보가 <strong>이번 쿼터 핵심 목표</strong> — 투자 라운드 선행 조건</li>
+                            <li>현행 수익 계약: 기술력 증명 + 현금흐름 확보 + 투자 유치 레버리지의 삼중 효과</li>
+                            <li>고객사 미팅에서 도메인 지식 보충은 외부 전문가 연계로 해결, 내부는 고객사 <strong>고유 로직</strong> 파악에 집중</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 안건 7: 인력·네트워크 -->
+        <div class="section" id="agenda7">
+            <div class="section-header">
+                <div class="section-icon">🤝</div>
+                <h2>안건 7 · 인력 확보 및 네트워크 활용</h2>
+            </div>
+            <div class="agenda-card">
+                <div class="agenda-card-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">7</div>
+                    <div class="agenda-title">양준호 선배·스테파노·외주 개발자·TF엔지니어링 논의</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body">
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text"><strong>[양준호 선배 — CTO 검토]</strong> 양준호 선배가 박규호 부장의 '속을 알기 어렵다'는 인상을 갖고 있음. 40곳 검토 중 저희가 유일한 제조 AI 케이스이며, 보안 지원 지속 의사 있음. 격식 없는 퍼스널리티 특성 설명, 추가 만남 통해 신뢰 구축 필요.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text"><strong>[스테파노 — 고문 검토]</strong> 현 회사 인프라 사업 영위 예정. 인터넷 화학공학회 운영 주체로 모시고, 프로젝트 기반 수익 쉐어링 구조 제안 검토. 자연스럽게 대화 중 스테파노가 먼저 말 꺼내도록 유도하는 것이 최선. 다음 만남 시 공동 참석하여 논의.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-kim">김상윤</span>
+                        <div class="discussion-text"><strong>[다손·정현우 선배 — 외주]</strong> 채용 전까지 외주용역 계약 체결. 각각 월 50만원, 총 100만원. 그동안 상금으로 충당 예정.</div>
+                    </div>
+                    <div class="discussion-item">
+                        <span class="speaker-badge badge-park">박규호</span>
+                        <div class="discussion-text"><strong>[TF 엔지니어링 — 고객 세분화]</strong> 공정설계원 6명이 창업한 전문 하청 엔지니어링 회사. 하이드롤릭 등 특정 유닛 특화. EPC 1군~4군 세분화 구조 설명. 각 군별 특화 기능에 맞춘 타겟 세일즈 전략 필요.</div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>핵심 인사이트</h4>
+                        <ul class="insight-list">
+                            <li>스테파노 고문 유치 시 커뮤니티 + 프로젝트 수주 + 검수의 <strong>삼각 가치</strong> 확보 가능</li>
+                            <li>양준호 선배 신뢰 구축은 격식 외 자연스러운 교류를 통해 진행 — 급하게 어필 지양</li>
+                            <li>엔지니어링 업체 4군까지의 세분화 구조 파악 → <strong>기능별 타겟 세일즈</strong>로 전략 다각화</li>
+                            <li>박규호 부장의 조인 시기: 투자 직후보다 <strong>육아휴직 활용으로 참여도 높이며 유연하게</strong> 검토</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 결정사항 -->
+        <div class="section" id="decisions">
+            <div class="section-header">
+                <div class="section-icon">✅</div>
+                <h2>최종 결정사항</h2>
+            </div>
+            <div class="decision-grid">
+                <div class="decision-card">
+                    <h4>📅 정례 미팅 변경</h4>
+                    <p>다음 정례 미팅: <strong>2026년 3월 7일(토) 오전 10시</strong>. 이후 일정은 유동적 조율.</p>
+                </div>
+                <div class="decision-card">
+                    <h4>💰 외주 계약 체결</h4>
+                    <p>다손·정현우 선배 외주용역 계약. 각 월 50만원(총 100만원). 상금으로 지급.</p>
+                </div>
+                <div class="decision-card">
+                    <h4>🏭 한울 컴프레서 POC</h4>
+                    <p>데이터시트·ASME·AutoCAD 기반 컴프레서 파일 자동완성 POC 먼저 진행. 내일 EPI 확인 후 착수.</p>
+                </div>
+                <div class="decision-card">
+                    <h4>📧 현행 수익 계약 제안</h4>
+                    <p>800만원 수익 계약 제안 예정. 기술적 접근 + 인간적 요청 방식 병행. 6주 POC 후 라이브 데모.</p>
+                </div>
+                <div class="decision-card">
+                    <h4>📋 삼도 대응 전략</h4>
+                    <p>플랜트 엔지니어 참여 목적 캐주얼 확인 후, 필요사항(내부 워크플로우 설명)을 명확히 안내.</p>
+                </div>
+                <div class="decision-card">
+                    <h4>🔍 지분구조 추가 조사</h4>
+                    <p>박규호 부장이 공유한 레퍼런스(YC, Stripe 등) 기반으로 김상윤 대표가 추가 검토 후 다음 미팅에서 재논의.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 액션아이템 -->
+        <div class="section" id="actions">
+            <div class="section-header">
+                <div class="section-icon">🚀</div>
+                <h2>액션 아이템</h2>
+            </div>
+            <table class="action-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>과제</th>
+                        <th>담당</th>
+                        <th>기한</th>
+                        <th>우선순위</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>한울 컴프레서 EPI 확인 및 POC 착수</td>
+                        <td><span class="assignee-kim">김상윤</span></td>
+                        <td>2026-03-03</td>
+                        <td><span class="priority-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>현행 수익 계약(800만원) 제안 메일 발송</td>
+                        <td><span class="assignee-kim">김상윤</span></td>
+                        <td>2026-03-04</td>
+                        <td><span class="priority-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>삼도 플랜트 엔지니어 참여 목적 캐주얼 문의 메일</td>
+                        <td><span class="assignee-kim">김상윤</span></td>
+                        <td>2026-03-04</td>
+                        <td><span class="priority-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>지분구조 레퍼런스(YC·Stripe 등) 검토 및 자체 케이스 스터디 (루닛 등 국내 사례 포함)</td>
+                        <td><span class="assignee-kim">김상윤</span></td>
+                        <td>2026-03-07</td>
+                        <td><span class="priority-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>다손·정현우 선배 외주용역 계약 체결</td>
+                        <td><span class="assignee-kim">김상윤</span></td>
+                        <td>2026-03-07</td>
+                        <td><span class="priority-med">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>스테파노님 연락 및 만남 일정 조율</td>
+                        <td><span class="assignee-park">박규호</span></td>
+                        <td>2026-03-10</td>
+                        <td><span class="priority-med">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>DW심 관련 내용 정리 및 김상윤 대표 공유</td>
+                        <td><span class="assignee-park">박규호</span></td>
+                        <td>2026-03-07</td>
+                        <td><span class="priority-med">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>양준호 선배 2차 만남 일정 조율 (공동 참석)</td>
+                        <td><span class="assignee-both">양측 공동</span></td>
+                        <td>2026-03-14</td>
+                        <td><span class="priority-med">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>엔지니어링 업체 군별(1~4군) 타겟 고객 세분화 분석</td>
+                        <td><span class="assignee-both">양측 공동</span></td>
+                        <td>2026-03-14</td>
+                        <td><span class="priority-low">Low</span></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>성균관대 공정제어 연구실 동일 여부 확인 및 산학협력 구조 조사</td>
+                        <td><span class="assignee-kim">김상윤</span></td>
+                        <td>2026-03-14</td>
+                        <td><span class="priority-low">Low</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 다이어그램 -->
+        <div class="section" id="diagrams">
+            <div class="section-header">
+                <div class="section-icon">📈</div>
+                <h2>시각화 다이어그램</h2>
+            </div>
+
+            <div class="diagram-title">① 역베스팅 구조 의사결정 흐름</div>
+            <div class="diagram-container">
+                <div class="mermaid">
+flowchart TD
+    A[박규호 부장 조인] --> B{베스팅 시작 시점}
+    B -->|김상윤 제안| C[시리즈 A 이후 시작]
+    B -->|박규호 제안| D[입사 즉시 1년 클리프 + 4년 베스팅]
+    C --> C1[시리즈 A~B: 3% 역베스팅]
+    C --> C2[시리즈 B~: 4년 역베스팅 7·7·7·6%]
+    D --> D1[5년 내 시리즈 B 달성 목표와 타임라인 일치]
+    D --> D2[YC·Stripe·GitHub 글로벌 표준]
+    C1 --> E[미결 ⚠️ 추가 케이스 스터디 필요]
+    C2 --> E
+    D1 --> E
+    D2 --> E
+    E --> F[다음 미팅 최종 합의]
+    F --> G{엑시트 유형}
+    G -->|시리즈 A 이전| H[전략 액면 회수]
+    G -->|M&A·IPO| I[보호예수 해제 후 재직 시 미확정 지분 전량 부여]
+    G -->|정상 엑시트| J[베스팅 일정대로 확정]
+                </div>
+            </div>
+
+            <div class="diagram-title">② 사업 전략 구조도</div>
+            <div class="diagram-container">
+                <div class="mermaid">
+graph LR
+    subgraph 수익["💰 하방 수익 구조"]
+        A1[셀렙 교육 강의]
+        A2[하이시스 컨설팅]
+        A3[POC 수익 계약]
+    end
+    subgraph 세일즈["🎯 세일즈 파이프라인"]
+        B1[현행]
+        B2[현대]
+        B3[삼도]
+    end
+    subgraph 네트워크["🤝 네트워크·인프라"]
+        C1[스테파노 고문]
+        C2[인터넷 화학공학회]
+        C3[산학협력·성균관대]
+    end
+    subgraph 투자["🚀 투자 유치"]
+        D1[시드 라운드]
+        D2[팁스·정부지원]
+    end
+    수익 --> 세일즈
+    네트워크 --> 세일즈
+    세일즈 --> 투자
+    투자 --> E[시리즈 A 달성]
+                </div>
+            </div>
+
+            <div class="diagram-title">③ 주요 일정 타임라인 (Gantt)</div>
+            <div class="diagram-container">
+                <div class="mermaid">
+gantt
+    title 2026 Q1~Q2 주요 마일스톤
+    dateFormat YYYY-MM-DD
+    axisFormat %m/%d
+
+    section 즉시 실행
+    한울 컴프레서 EPI 확인        :done, t1, 2026-03-03, 1d
+    현행 수익계약 제안 발송        :active, t2, 2026-03-04, 1d
+    삼도 참여목적 문의             :t3, 2026-03-04, 1d
+
+    section 3월 1주차
+    다음 정례 미팅 (토 10시)      :milestone, t4, 2026-03-07, 0d
+    지분구조 재논의                :t5, 2026-03-07, 1d
+    외주계약 체결                  :t6, 2026-03-07, 1d
+
+    section 3월 2주차
+    양준호 선배 2차 미팅           :t7, 2026-03-14, 1d
+
+    section 3월 중순~말
+    현행 POC 진행 (6주)           :crit, t8, 2026-03-04, 42d
+    투자 라운드 준비               :t9, 2026-03-10, 20d
+
+    section 4월
+    현행 라이브 데모               :milestone, t10, 2026-04-15, 0d
+    시드 투자 클로징 목표          :milestone, t11, 2026-04-30, 0d
+                </div>
+            </div>
+        </div>
+
+        <!-- 미결사항 -->
+        <div class="section" id="pending">
+            <div class="section-header">
+                <div class="section-icon">⚠️</div>
+                <h2>미결 사항 및 후속 논의 필요</h2>
+            </div>
+            <ul class="pending-list">
+                <li>
+                    <span class="pending-icon">🔴</span>
+                    <div><strong>[최우선] 베스팅 시작 시점 최종 결정</strong> — '입사 즉시' vs '시리즈 A 이후'. 국내 유사 케이스(루닛 등) + 해외 사례(지분율 규모별) 추가 조사 후 다음 미팅에서 결론 도출 필요.</div>
+                </li>
+                <li>
+                    <span class="pending-icon">🔴</span>
+                    <div><strong>[최우선] 박규호 부장 공식 조인 시점 결정</strong> — 투자 직후 vs 육아휴직 활용 단계적 참여. 투자자 설득 방안 함께 설계 필요.</div>
+                </li>
+                <li>
+                    <span class="pending-icon">🟡</span>
+                    <div><strong>스테파노 고문 구조 설계</strong> — 프로젝트 기반 수익 쉐어링 비율, 인터넷 화학공학회 운영 책임 범위 구체화.</div>
+                </li>
+                <li>
+                    <span class="pending-icon">🟡</span>
+                    <div><strong>산학협력 법무 검토</strong> — 특허 귀속, 수익 배분, 인건비 처리 등 계약 전 법무 자문 필요.</div>
+                </li>
+                <li>
+                    <span class="pending-icon">🟡</span>
+                    <div><strong>양준호 선배 신뢰 구축 및 CTO 조인 의사 확인</strong> — 2~3차 만남을 통해 자연스럽게 심화 논의.</div>
+                </li>
+                <li>
+                    <span class="pending-icon">🟢</span>
+                    <div><strong>EPC 엔지니어링 업체 군별 타겟팅 전략</strong> — 1~4군 세분화 및 특화 기능 매핑 분석.</div>
+                </li>
+                <li>
+                    <span class="pending-icon">🟢</span>
+                    <div><strong>노션 공동창업자 역할·기여 문서 업데이트</strong> — 김상윤 대표의 역할·이력·향후 기여도 추가 기재.</div>
+                </li>
+            </ul>
+
+            <br>
+            <div class="next-meeting-box">
+                <div class="next-meeting-icon">📆</div>
+                <div class="next-meeting-info">
+                    <h3>다음 미팅 일정</h3>
+                    <p><strong>2026년 3월 7일 (토요일) 오전 10시</strong> · 화상 미팅</p>
+                    <p>준비사항: 지분구조 케이스 스터디 자료, 현행 수익계약 진행 상황, DW심 정리 자료</p>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /content -->
+
+    <footer>
+        <p>스냅스케일 내부 기밀 회의록 · 2026년 3월 2일 작성 · 무단 배포 금지</p>
+    </footer>
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        themeVariables: {
+            primaryColor: '#bbdefb',
+            primaryTextColor: '#1e3c72',
+            primaryBorderColor: '#2196f3',
+            lineColor: '#5a6c7d',
+            secondaryColor: '#ffe082',
+            tertiaryColor: '#fff9c4'
+        },
+        gantt: {
+            titleTopMargin: 25,
+            barHeight: 28,
+            barGap: 8,
+            topPadding: 50,
+            leftPadding: 180,
+            gridLineStartPadding: 35,
+            fontSize: 12,
+            sectionFontSize: 13,
+            numberSectionStyles: 4,
+            axisFormat: '%m/%d',
+            useWidth: 1400
+        }
+    });
+
+    function toggleAgenda(header) {
+        const body = header.nextElementSibling;
+        const toggle = header.querySelector('.agenda-toggle');
+        if (body.classList.contains('collapsed')) {
+            body.classList.remove('collapsed');
+            toggle.style.transform = 'rotate(0deg)';
+        } else {
+            body.classList.add('collapsed');
+            toggle.style.transform = 'rotate(-90deg)';
+        }
+    }
+
+    // smooth scroll
+    document.querySelectorAll('nav a').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+</body>
+</html>

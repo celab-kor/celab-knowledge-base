@@ -1,0 +1,893 @@
+아래는 회의록 전문 HTML 문서입니다.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>회의록 | 장영기 선생님 미팅 — 2026-03-09</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    /* ===== CSS RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: #f4f6f9;
+      color: #2c3e50;
+      line-height: 1.7;
+    }
+
+    /* ===== PRINT ===== */
+    @media print {
+      .sidebar, .top-nav, .fab { display: none !important; }
+      .main-content { margin: 0 !important; padding: 20px !important; }
+      .card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+    }
+
+    /* ===== TOP NAV ===== */
+    .top-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: #1a2744;
+      color: #fff;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+      height: 56px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+    .top-nav .brand { font-size: .95rem; font-weight: 700; letter-spacing: .5px; }
+    .top-nav .meta { font-size: .78rem; color: #a8b8d8; }
+    .top-nav .print-btn {
+      background: #2e4a8a; border: none; color: #fff;
+      padding: 6px 14px; border-radius: 4px; cursor: pointer;
+      font-size: .78rem; transition: background .2s;
+    }
+    .top-nav .print-btn:hover { background: #3a5fa8; }
+
+    /* ===== LAYOUT ===== */
+    .layout { display: flex; margin-top: 56px; }
+
+    .sidebar {
+      width: 240px; min-height: calc(100vh - 56px);
+      background: #1e2d4e;
+      position: fixed; top: 56px; left: 0; bottom: 0;
+      overflow-y: auto;
+      padding: 20px 0;
+      transition: transform .3s;
+    }
+    .sidebar h3 {
+      font-size: .7rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #7a92bb;
+      padding: 0 20px 8px;
+    }
+    .sidebar a {
+      display: block; padding: 8px 20px;
+      color: #c0cfe8; text-decoration: none;
+      font-size: .82rem; border-left: 3px solid transparent;
+      transition: all .15s;
+    }
+    .sidebar a:hover, .sidebar a.active {
+      background: rgba(255,255,255,.07);
+      border-left-color: #4d8af0;
+      color: #fff;
+    }
+    .sidebar .divider { height: 1px; background: #2e3f60; margin: 10px 20px; }
+
+    .main-content {
+      margin-left: 240px;
+      padding: 28px 32px 60px;
+      width: calc(100% - 240px);
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .main-content { margin-left: 0; width: 100%; padding: 16px; }
+    }
+
+    /* ===== HERO HEADER ===== */
+    .hero {
+      background: linear-gradient(135deg, #1a2744 0%, #2e4a8a 50%, #1e6fa8 100%);
+      border-radius: 12px;
+      padding: 36px 40px;
+      color: #fff;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,.05);
+      border-radius: 50%;
+    }
+    .hero h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+    .hero .subtitle { font-size: .9rem; color: #a8c0e8; margin-bottom: 20px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 16px; }
+    .hero-meta .badge {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: .78rem;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .hero-meta .badge .icon { font-size: 1rem; }
+
+    /* ===== STATUS BADGES ===== */
+    .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .status-card {
+      background: #fff; border-radius: 10px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+      border-top: 4px solid;
+      text-align: center;
+    }
+    .status-card .num { font-size: 1.8rem; font-weight: 700; }
+    .status-card .label { font-size: .75rem; color: #7a8499; margin-top: 4px; }
+    .sc-blue  { border-color: #2e6fdf; } .sc-blue  .num { color: #2e6fdf; }
+    .sc-green { border-color: #27ae60; } .sc-green .num { color: #27ae60; }
+    .sc-orange{ border-color: #e67e22; } .sc-orange .num { color: #e67e22; }
+    .sc-red   { border-color: #e74c3c; } .sc-red   .num { color: #e74c3c; }
+
+    /* ===== CARD ===== */
+    .card {
+      background: #fff; border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.07);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .card-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 16px 24px;
+      cursor: pointer;
+      border-bottom: 1px solid #edf2f7;
+      user-select: none;
+    }
+    .card-header .section-num {
+      background: #2e6fdf; color: #fff;
+      border-radius: 6px; width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .78rem; font-weight: 700; flex-shrink: 0;
+    }
+    .card-header h2 { font-size: 1rem; font-weight: 700; flex: 1; }
+    .card-header .toggle { color: #7a8499; font-size: 1.1rem; transition: transform .25s; }
+    .card-header.open .toggle { transform: rotate(180deg); }
+    .card-body { padding: 24px; display: none; }
+    .card-body.open { display: block; }
+
+    /* ===== AGENDA SECTION ===== */
+    .agenda-item {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px; margin-bottom: 20px; overflow: hidden;
+    }
+    .agenda-title {
+      background: #f8faff;
+      padding: 12px 18px;
+      font-weight: 700; font-size: .9rem;
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .agenda-tag {
+      font-size: .68rem; padding: 3px 10px; border-radius: 12px;
+      font-weight: 700; letter-spacing: .5px;
+    }
+    .tag-tech   { background: #dbeafe; color: #1d4ed8; }
+    .tag-biz    { background: #dcfce7; color: #166534; }
+    .tag-collab { background: #fef3c7; color: #92400e; }
+    .tag-strat  { background: #f3e8ff; color: #6b21a8; }
+    .agenda-body { padding: 16px 18px; }
+
+    .content-block { margin-bottom: 14px; }
+    .content-block strong { display: block; font-size: .78rem; color: #4a5568; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 6px; }
+
+    ul.dot-list { padding-left: 18px; }
+    ul.dot-list li { margin-bottom: 5px; font-size: .88rem; }
+
+    /* ===== INSIGHT BOX ===== */
+    .insight-box {
+      background: linear-gradient(135deg, #f0f7ff, #e8f4fd);
+      border-left: 4px solid #2e6fdf;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      margin-top: 14px;
+    }
+    .insight-box .insight-title {
+      font-size: .78rem; font-weight: 700; color: #2e6fdf;
+      text-transform: uppercase; letter-spacing: .8px; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .insight-item {
+      display: flex; gap: 10px; align-items: flex-start;
+      margin-bottom: 8px; font-size: .86rem;
+    }
+    .insight-item .i-num {
+      background: #2e6fdf; color: #fff; border-radius: 50%;
+      width: 20px; height: 20px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .68rem; font-weight: 700; margin-top: 2px;
+    }
+
+    /* ===== DECISION TABLE ===== */
+    .decision-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    .decision-table th {
+      background: #1a2744; color: #fff;
+      padding: 10px 14px; text-align: left; font-weight: 600;
+    }
+    .decision-table td { padding: 10px 14px; border-bottom: 1px solid #edf2f7; vertical-align: top; }
+    .decision-table tr:last-child td { border-bottom: none; }
+    .decision-table tr:hover td { background: #f8faff; }
+
+    /* ===== ACTION ITEMS ===== */
+    .action-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+    .action-card {
+      border: 1px solid #e2e8f0; border-radius: 8px;
+      padding: 16px; position: relative; overflow: hidden;
+    }
+    .action-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    }
+    .priority-high::before   { background: #e74c3c; }
+    .priority-medium::before { background: #e67e22; }
+    .priority-low::before    { background: #27ae60; }
+
+    .action-priority {
+      font-size: .68rem; font-weight: 700; padding: 3px 10px;
+      border-radius: 12px; margin-bottom: 8px; display: inline-block;
+    }
+    .ph { background: #fee2e2; color: #991b1b; }
+    .pm { background: #fef3c7; color: #92400e; }
+    .pl { background: #dcfce7; color: #166534; }
+
+    .action-task { font-weight: 700; font-size: .9rem; margin-bottom: 10px; }
+    .action-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .action-meta span {
+      font-size: .76rem; color: #4a5568;
+      background: #f1f5f9; border-radius: 4px;
+      padding: 3px 8px; display: flex; align-items: center; gap: 4px;
+    }
+
+    /* ===== DIAGRAM CONTAINER ===== */
+    .diagram-wrap {
+      background: #fff; border: 1px solid #e2e8f0;
+      border-radius: 8px; padding: 20px;
+      margin-bottom: 20px; overflow-x: auto;
+    }
+    .diagram-label {
+      font-size: .78rem; font-weight: 700; color: #4a5568;
+      text-transform: uppercase; letter-spacing: .8px; margin-bottom: 14px;
+    }
+
+    /* ===== FOLLOWUP ===== */
+    .followup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .followup-card {
+      border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;
+      background: #f8faff;
+    }
+    .followup-card h4 { font-size: .88rem; font-weight: 700; color: #1a2744; margin-bottom: 8px; }
+    .followup-card p  { font-size: .83rem; color: #4a5568; }
+
+    /* ===== PARTICIPANTS ===== */
+    .participant-list { display: flex; flex-wrap: wrap; gap: 12px; }
+    .participant {
+      display: flex; align-items: center; gap: 10px;
+      background: #f8faff; border: 1px solid #e2e8f0;
+      border-radius: 8px; padding: 10px 16px;
+    }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .av1 { background: #2e6fdf; }
+    .av2 { background: #27ae60; }
+    .av3 { background: #e67e22; }
+    .participant .p-name { font-size: .88rem; font-weight: 700; }
+    .participant .p-role { font-size: .75rem; color: #7a8499; }
+
+    /* ===== FAB ===== */
+    .fab {
+      position: fixed; bottom: 28px; right: 28px;
+      background: #2e6fdf; color: #fff;
+      border: none; border-radius: 50%; width: 48px; height: 48px;
+      font-size: 1.2rem; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(46,111,223,.4);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999; transition: background .2s;
+    }
+    .fab:hover { background: #1a5cc8; }
+
+    /* ===== SECTION HEADINGS ===== */
+    .section-label {
+      font-size: .7rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #7a8499; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
+
+    hr.divider { border: none; border-top: 1px solid #e2e8f0; margin: 20px 0; }
+
+    /* ===== HIGHLIGHT ===== */
+    .highlight { background: #fef9c3; padding: 2px 6px; border-radius: 3px; }
+    .text-muted { color: #7a8499; font-size: .83rem; }
+
+    /* ===== QUOTE ===== */
+    blockquote {
+      border-left: 4px solid #2e6fdf; padding: 10px 16px;
+      background: #f8faff; border-radius: 0 6px 6px 0;
+      font-size: .86rem; color: #2c3e50; margin: 12px 0;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== TOP NAV ===== -->
+<nav class="top-nav">
+  <span class="brand">📋 회의록 | SnapScale × 장영기 선생님</span>
+  <span class="meta">2026-03-09 · 온라인(Saudi Arabia 연결)</span>
+  <button class="print-btn" onclick="window.print()">🖨 인쇄</button>
+</nav>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+  <h3>목차</h3>
+  <a href="#overview">📌 회의 개요</a>
+  <a href="#participants">👥 참석자</a>
+  <div class="divider"></div>
+  <a href="#agenda1">1. 안건: 기술 현황 공유</a>
+  <a href="#agenda2">2. 안건: 엔지니어링 계산 플랫폼</a>
+  <a href="#agenda3">3. 안건: AI 오케스트레이션 구조</a>
+  <a href="#agenda4">4. 안건: 협업 및 비즈니스 모델</a>
+  <a href="#agenda5">5. 안건: 마케팅 전략</a>
+  <div class="divider"></div>
+  <a href="#decisions">✅ 결정사항</a>
+  <a href="#actions">🎯 액션아이템</a>
+  <a href="#diagrams">📊 다이어그램</a>
+  <a href="#followup">🗓 후속 계획</a>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<main class="main-content">
+
+  <!-- HERO -->
+  <div class="hero" id="overview">
+    <h1>장영기 선생님 기술 협업 미팅</h1>
+    <p class="subtitle">엔지니어링 솔버 통합 · AI 오케스트레이션 · MCP 마켓플레이스 사업화 논의</p>
+    <div class="hero-meta">
+      <div class="badge"><span class="icon">📅</span> 2026-03-09 (녹취 생성: 2026-03-10 01:13)</div>
+      <div class="badge"><span class="icon">📍</span> 온라인 (한국 ↔ 사우디아라비아)</div>
+      <div class="badge"><span class="icon">⏱</span> 약 2시간 (추정)</div>
+      <div class="badge"><span class="icon">🔒</span> 내부 기밀</div>
+    </div>
+  </div>
+
+  <!-- STATUS GRID -->
+  <div class="status-grid">
+    <div class="status-card sc-blue">
+      <div class="num">5</div>
+      <div class="label">안건 수</div>
+    </div>
+    <div class="status-card sc-green">
+      <div class="num">7</div>
+      <div class="label">결정사항</div>
+    </div>
+    <div class="status-card sc-orange">
+      <div class="num">9</div>
+      <div class="label">액션아이템</div>
+    </div>
+    <div class="status-card sc-red">
+      <div class="num">3</div>
+      <div class="label">후속 회의 안건</div>
+    </div>
+  </div>
+
+  <!-- ===== PARTICIPANTS ===== -->
+  <div class="card" id="participants">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="section-num">👥</div>
+      <h2>참석자</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="card-body open">
+      <div class="participant-list">
+        <div class="participant">
+          <div class="avatar av1">장</div>
+          <div>
+            <div class="p-name">장영기 선생님</div>
+            <div class="p-role">사우디아람코 시니어 엔지니어 · EngineerScript.com 운영자</div>
+          </div>
+        </div>
+        <div class="participant">
+          <div class="avatar av2">김</div>
+          <div>
+            <div class="p-name">김상윤 대표</div>
+            <div class="p-role">SnapScale 대표이사 · 공동창업자</div>
+          </div>
+        </div>
+        <div class="participant">
+          <div class="avatar av3">박</div>
+          <div>
+            <div class="p-name">박 부장</div>
+            <div class="p-role">SnapScale 공동창업자 · Aspen HYSYS 전문가</div>
+          </div>
+        </div>
+      </div>
+      <p class="text-muted" style="margin-top:12px;">* 네트워크 불안정(사우디 현지 인터넷) 으로 음성 끊김 다수 발생</p>
+    </div>
+  </div>
+
+  <!-- ===== AGENDA 1 ===== -->
+  <div class="card" id="agenda1">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="section-num">1</div>
+      <h2>안건 1 — 현황 공유 및 배경 소개</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="card-body open">
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>1-1. 참석자 근황 및 환경 소개</span>
+          <span class="agenda-tag tag-collab">네트워킹</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>핵심 논의</strong>
+            <ul class="dot-list">
+              <li>장영기 선생님은 현재 사우디아라비아 근무 중이며, 현지 인터넷 환경 불량으로 통화 품질 저하</li>
+              <li>SnapScale은 서울 강남(역삼역 인근)에 새 사무실 확보 — 초기 체험자 저가 임대 프로그램 활용</li>
+              <li>주요 투자자 1인이 입주를 지원하여 임대료 절감</li>
+              <li>장 선생님은 GS타워(역삼) 근무 경험 보유 → 지역적 친근감 공유</li>
+              <li>SnapScale은 GS X-Program 미팅 완료 및 대표 긍정적 반응 확인</li>
+            </ul>
+          </div>
+          <div class="content-block">
+            <strong>관계 정의</strong>
+            <ul class="dot-list">
+              <li>장 선생님 : 취미 개발자 + 시니어 엔지니어, 사업 목적보다 기술·지식 공유 목적</li>
+              <li>SnapScale : 엔지니어링 AI 플랫폼 스타트업, 엔지니어링 워크플로우 자동화 목표</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>1-2. 사우디아람코 IT 프로젝트 실패 사례</span>
+          <span class="agenda-tag tag-tech">기술</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>핵심 내용</strong>
+            <ul class="dot-list">
+              <li>리파이너리 내 다수 Process IT 프로젝트가 실패 — "프로젝트 종료 후 아무도 사용하지 않는" 상태</li>
+              <li>실패 원인 1 : 발주처(사우디 측) 엔지니어의 무관심 및 QAQC 부재</li>
+              <li>실패 원인 2 : 벤더(Honeywell, AVEVA 등)가 적정 수준 이하의 인력을 배치</li>
+              <li>실패 원인 3 : 솔버 성능 부족(모델 용량 초과) 및 부정확한 모델링</li>
+              <li>Process Simulation Digital Twin(AVEVA 수행) — 모델 검토자 전무, Reconciliation 알고리즘 미이해</li>
+            </ul>
+          </div>
+          <div class="insight-box">
+            <div class="insight-title">💡 인사이트</div>
+            <div class="insight-item"><div class="i-num">1</div><div>엔지니어링 IT 프로젝트의 핵심 실패 요인은 기술 미숙보다 <span class="highlight">발주처 내부 역량 부재와 QAQC 공백</span>에 있음</div></div>
+            <div class="insight-item"><div class="i-num">2</div><div>이는 SnapScale이 솔루션 제공 외 <span class="highlight">교육·검증 체계 동반 제공</span>의 필요성을 시사</div></div>
+            <div class="insight-item"><div class="i-num">3</div><div>대형 벤더 솔루션(Aspen, AVEVA)이 지배적이나 품질 보증 미흡 → <span class="highlight">경쟁 우위 창출 기회</span> 존재</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== AGENDA 2 ===== -->
+  <div class="card" id="agenda2">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="section-num">2</div>
+      <h2>안건 2 — EngineerScript.com 및 MCP 솔버 데모</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="card-body open">
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>2-1. 플랫폼 구조 및 개발 철학</span>
+          <span class="agenda-tag tag-tech">기술</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>핵심 논의</strong>
+            <ul class="dot-list">
+              <li>EngineerScript.com : 웹 버전 + API(RapidAPI 등록) + MCP 3가지 접근 방식 지원</li>
+              <li>주요 계산 모듈: 탄화수소 물성(Hydrocarbon Properties), 열교환기 파울링(Fouling Factor), 데이터 리콘실리에이션(DVR), 에너지/물질/배출 밸런스 최적화, 핀치 분석, 쿨링타워 설계, NPV 계산 등</li>
+              <li>개발 언어 : Python 주력, GEKKO 솔버로 수식 디버깅 후 Python으로 전환</li>
+              <li>단위 변환 자동화 : MCP에서는 사용자가 단위를 잘못 입력해도 AI가 자동 보정(API 대비 큰 장점)</li>
+              <li>오픈소스 솔버 활용 : COIN-OR, Google OR-Tools — 고가 상용 솔버 수준에 근접</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>2-2. 고급 DVR (데이터 리콘실리에이션) 특허</span>
+          <span class="agenda-tag tag-tech">기술</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>기술 상세</strong>
+            <ul class="dot-list">
+              <li><strong>표준 DVR</strong> : 솔버 1회 실행 → 유량계 오차 범위 내 제로 밸런스 달성</li>
+              <li><strong>어드밴스드 DVR</strong> : 솔버 2회 실행 → Gross Error(이상치 유량계) 탐지</li>
+              <li><strong>장 선생님 특허 (어드밴스드 DVR+)</strong> : 솔버 3회 실행 — 2차 탐지 시 타 유량계에 오탐으로 끌려들어온 "무고한" 계측기를 역추출(Retraction Step 추가)</li>
+              <li>단점 : 연산 시간 증가 → 하드웨어 성능 향상으로 극복 가능</li>
+              <li>솔버 성능 자체(COIN-OR 등)가 전체 속도의 핵심 변수</li>
+            </ul>
+          </div>
+          <div class="content-block">
+            <strong>파울링 팩터 계산 특이사항</strong>
+            <ul class="dot-list">
+              <li>온도 프로파일에 따른 Cp, 밀도, 점도, 레이놀즈 수, H값 전부 계산 필요 → 기존 벤더 다수가 간략 공식 사용으로 오류 발생</li>
+              <li>CGD 내 열교환기 ~20기의 5년 트렌드를 정확히 산출 → "파울링 진행/미진행" 명확 구별</li>
+              <li>미국 기술 페이퍼 투고 완료</li>
+            </ul>
+          </div>
+          <div class="insight-box">
+            <div class="insight-title">💡 인사이트</div>
+            <div class="insight-item"><div class="i-num">1</div><div>특허화된 3-Step DVR은 시중 미공개 솔루션으로 <span class="highlight">명확한 기술 진입 장벽</span> 형성</div></div>
+            <div class="insight-item"><div class="i-num">2</div><div>파울링 트렌드 정확도 향상은 <span class="highlight">유지보수 의사결정 비용 절감</span>에 직결 — 즉각적인 B2B 가치 제시 가능</div></div>
+            <div class="insight-item"><div class="i-num">3</div><div>COIN-OR 등 오픈소스 솔버 통합은 <span class="highlight">라이선스 비용 없이 상용 수준 성능 확보</span> 가능성 확인</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>2-3. DWSim 클라우드/리눅스 구동 실험</span>
+          <span class="agenda-tag tag-tech">기술</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>결론</strong>
+            <ul class="dot-list">
+              <li>DWSim은 C# / .NET 기반 → Windows에서는 원활, Linux/Cloud에서 DLL 로딩 실패 및 다수 오류</li>
+              <li>버전 호환성 문제 지속 발생 → 단기간 내 안정적 클라우드 구동 어려움 판단</li>
+              <li>컬럼(증류탑) 시뮬레이션은 현재도 실패 상태</li>
+              <li>실용적 결론 : 복잡 프로세스 시뮬레이션은 <span class="highlight">HYSYS(Windows 전용) 사용이 현실적</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== AGENDA 3 ===== -->
+  <div class="card" id="agenda3">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="section-num">3</div>
+      <h2>안건 3 — AI 에이전틱 오케스트레이션 구조 논의</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="card-body open">
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>3-1. SnapScale HYSYS 자동화 데모 설명</span>
+          <span class="agenda-tag tag-tech">기술</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>시스템 구조</strong>
+            <ul class="dot-list">
+              <li>RFP 문서(PSA, 응축기 등 키워드 포함) → Ontology DB에 기본 조건 등록</li>
+              <li>LLM이 Ontology를 참조하여 HYSYS MCP 툴을 순차 호출 → 스트림 추가 → 장비 추가 → 수렴 시도</li>
+              <li>수렴 실패 시 에러 메시지를 Ontology에 매핑 → 대응 방법 검색 → 장비 파라미터 조작 → 재수렴</li>
+              <li>HYSYS Python API + XML 추출 방식 병행 → 공개되지 않은 변수/함수까지 접근 가능</li>
+              <li>Google ADK(에이전틱 개발 키트) 활용 — 코딩 기반 오케스트레이션 프레임워크</li>
+            </ul>
+          </div>
+          <div class="content-block">
+            <strong>온톨로지 역할</strong>
+            <ul class="dot-list">
+              <li>PI 시스템, 설계 도면, Feed 파일 등 파편화된 데이터 소스를 단일 지식체계로 통합</li>
+              <li>SHACL/SPARQL 쿼리 언어로 TTL/XML 형식 온톨로지 검증</li>
+              <li>LLM이 공정 맥락을 이해한 상태에서 MCP 툴 호출 → 정확도 향상</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>3-2. 디지털 트윈 기반 오케스트레이션 시나리오</span>
+          <span class="agenda-tag tag-tech">기술</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>시나리오: "E1 열교환기 열효율 저하 원인 분석"</strong>
+            <ul class="dot-list">
+              <li>① RTDB(PI 시스템) MCP 툴 → 2주간 E1 태그 데이터 수집</li>
+              <li>② 리콘실리에이션 MCP 툴 → 결측치 처리 및 제로 밸런스 달성</li>
+              <li>③ 파울링 팩터 계산 MCP 툴 → 이상 구간 탐지</li>
+              <li>④ DWSim/HYSYS MCP 툴 → 파울링 조건 하 시뮬레이션 실행</li>
+              <li>⑤ Python 알고리즘 → 열회수 가능 열량 및 연간 절감액 산출</li>
+              <li>⑥ LLM 최종 보고 생성</li>
+            </ul>
+          </div>
+          <div class="content-block">
+            <strong>오케스트레이션 핵심 원리</strong>
+            <ul class="dot-list">
+              <li>각 MCP 함수에 주석으로 역할·입력·출력 정의 → ADK가 JSON으로 변환 → LLM 시스템 프롬프트로 주입</li>
+              <li>LLM은 코드 생성 역할이 아닌 <strong>툴 선택 및 호출 순서 결정</strong> 역할</li>
+              <li>솔버(Aspen 등)의 에러 메시지 → Ontology DB 조회 → 파라미터 수정 → 재시도 루프</li>
+            </ul>
+          </div>
+          <div class="insight-box">
+            <div class="insight-title">💡 인사이트</div>
+            <div class="insight-item"><div class="i-num">1</div><div>장 선생님 평가: <span class="highlight">"어프로치가 제대로 되어 있다"</span> — 기술 방향성 외부 검증 완료</div></div>
+            <div class="insight-item"><div class="i-num">2</div><div>LLM이 솔버를 '내장'하는 것이 아니라 <span class="highlight">'도구로 호출'</span>하는 구조 → MCP 방식이 현실적 경로임을 재확인</div></div>
+            <div class="insight-item"><div class="i-num">3</div><div>온톨로지 기반 맥락 주입 없이는 LLM의 툴 호출 정확도 보장 불가 → <span class="highlight">온톨로지가 플랫폼 핵심 자산</span></div></div>
+            <div class="insight-item"><div class="i-num">4</div><div>GPU 워크스테이션(Windows)에 HYSYS/DWSim 설치 → 사용자 PC 라이선스 불필요 구조 가능</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>3-3. 최적화 모델링 방법론 공유</span>
+          <span class="agenda-tag tag-tech">기술</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>주요 내용</strong>
+            <ul class="dot-list">
+              <li>물질 수지 / 에너지 수지 / 배출 수지(Emission Balance) 최적화 — 탱크 인벤토리 포함(Aspen PIMS 유사)</li>
+              <li>Circular Reference 문제 → 루프 구조 절단(Tear Stream) 필요, AI도 현재는 이 부분 오류 多</li>
+              <li>GEKKO 선호 이유 : 디버깅 정보 출력 → 수식 오류 위치 파악 용이</li>
+              <li>LCE(Line-up Cost Estimation) 1.5년 공부 → 실제 공장 데이터 최적화 수행</li>
+              <li>백준 코딩 테스트 어려운 문제 해결 가능 수준의 알고리즘 역량 = 솔버 모델링 역량과 상관관계</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== AGENDA 4 ===== -->
+  <div class="card" id="agenda4">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="section-num">4</div>
+      <h2>안건 4 — 협업 구조 및 비즈니스 모델 논의</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="card-body open">
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>4-1. 엔지니어링 특화 MCP 마켓플레이스 구상</span>
+          <span class="agenda-tag tag-biz">비즈니스</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>핵심 논의</strong>
+            <ul class="dot-list">
+              <li>장 선생님 : Task-level(단일 기능) MCP 개발에 집중, 현재 약 20개 → 목표 50~100개</li>
+              <li>SnapScale : 개별 MCP들을 플랫폼으로 묶어 오케스트레이션하는 역할</li>
+              <li>수익 구조 : 장 선생님 MCP → SnapScale 플랫폼 연동 → 사용 수수료 배분</li>
+              <li>현재 MCP 마켓 (Smithery 등)은 아직 결제 인프라 미완성 → RapidAPI 등 API 마켓 활용 병행</li>
+              <li>SnapScale이 한국형 엔지니어링 특화 MCP 마켓플레이스 역할 수행 가능</li>
+            </ul>
+          </div>
+          <blockquote>
+            "제너럴한 MCP 마켓(엑셀 연동, 노션 연동)보다 <strong>엔지니어링 특화</strong> 마켓이 훨씬 경쟁력 있다. 여기서는 진입 장벽이 있어서 아무나 못 한다." — 장영기 선생님
+          </blockquote>
+          <div class="insight-box">
+            <div class="insight-title">💡 인사이트</div>
+            <div class="insight-item"><div class="i-num">1</div><div>B2C → B2B 퍼널 전략 유효 : C 사용자가 자사 도입 제안 → <span class="highlight">B2C가 B2B의 리드 창출 역할</span></div></div>
+            <div class="insight-item"><div class="i-num">2</div><div>기계·토목 등 타 엔지니어링 분야 MCP 기여자 확보 시 <span class="highlight">플랫폼 풍성함 급격히 증가</span></div></div>
+            <div class="insight-item"><div class="i-num">3</div><div>데이터 리콘실리에이션, 파울링 계산 등 전문 도구의 <span class="highlight">공급자 수가 전 세계적으로 매우 제한적</span> → 조기 선점 가치 높음</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>4-2. 온프레미스/중소기업 배포 전략</span>
+          <span class="agenda-tag tag-biz">비즈니스</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>핵심 논의</strong>
+            <ul class="dot-list">
+              <li>보안 민감도가 낮은 중소기업 → Proxy LLM(무료/저가 모델) 활용 가능</li>
+              <li>월 1~2만 원 수준의 Linux 서버(Hetzner 등)로 충분히 구축 가능</li>
+              <li>SnapScale GPU 워크스테이션(Windows) : HYSYS/DWSim 서버로 활용 → 클라이언트 라이선스 불필요</li>
+              <li>데모 : Claude Desktop + MCP 연동으로 증기 엔탈피, 파울링 팩터 등 계산 성공</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>4-3. 오케스트레이션 한계 및 역할 분담</span>
+          <span class="agenda-tag tag-strat">전략</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>합의 사항</strong>
+            <ul class="dot-list">
+              <li>장 선생님 영역 : Task-level 단위 MCP 제공 (PI 데이터 조회, 리콘실리에이션, 파울링 계산 등)</li>
+              <li>SnapScale 영역 : 복합 명령 해석, 멀티 툴 오케스트레이션, 사용자 경험(UX) 설계</li>
+              <li>"PI 읽기 → 리콘실리에이션 → 밸런스 최적화 → 이메일 보고" 4단계 자동화는 SnapScale이 담당</li>
+              <li>완전 자동 오케스트레이션 시대는 아직 미성숙 → 단계별 접근 필요</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>4-4. HYSYS 컨설팅 단가 정보 공유</span>
+          <span class="agenda-tag tag-biz">비즈니스</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>핵심 정보</strong>
+            <ul class="dot-list">
+              <li>사우디아람코 기준 : 전문 컨설턴트 ~USD 200,000 / 년 (약 2,000시간 기준) → 시간당 USD 100</li>
+              <li>업계 관행 : Aspen Technology 또는 KBC 컨설팅 이외의 외부 용역은 신뢰도 문제로 잘 발생하지 않음</li>
+              <li>중소기업의 경우 김석준 사장님(前 Aspen 전문가) 같은 개인 전문가 활용</li>
+              <li>SnapScale 엔지니어링 수주 시 레퍼런스(Aspen 교육·컨설팅) 중요</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== AGENDA 5 ===== -->
+  <div class="card" id="agenda5">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="section-num">5</div>
+      <h2>안건 5 — 마케팅 전략 및 경쟁 환경 분석</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="card-body open">
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>5-1. 웨비나/커뮤니티 전략</span>
+          <span class="agenda-tag tag-strat">전략</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>핵심 논의</strong>
+            <ul class="dot-list">
+              <li>제안 : 장 선생님이 "AI + 엔지니어링 계산 A to Z" 주제로 웨비나 진행</li>
+              <li>사우디아람코 현직 시니어 엔지니어 발표자 → 업계 신뢰도 및 파급력 극대화</li>
+              <li>타겟층 확장 : 엔지니어 한정이 아닌 AI 활용에 관심 있는 모든 직군</li>
+              <li>LinkedIn 계정 활용 : 일본 엔지니어(Yoshida씨)처럼 짧은 LLM 활용 게시물 → 정기적 노출</li>
+              <li>장 선생님 의향 : 긍정적("재미있을 것 같다"), 시간 여건 조율 필요</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="agenda-item">
+        <div class="agenda-title">
+          <span>5-2. 경쟁사 벤치마킹 — C-Maark</span>
+          <span class="agenda-tag tag-strat">전략</span>
+        </div>
+        <div class="agenda-body">
+          <div class="content-block">
+            <strong>핵심 내용</strong>
+            <ul class="dot-list">
+              <li>C-Maark : Aspen과 협력하여 O&M(운전·유지보수) 최적화 솔루션 개발 중</li>
+              <li>히스토리 데이터 + 태그 데이터 수집 → 열역학 모델 기반 계산 → AI로 공장 최적화/컨트롤</li>
+              <li>SnapScale과 방향 유사하나 타겟 상이 : C-Maark = O&M, SnapScale = 설계(Design)</li>
+              <li>이원석 상무 관여 확인</li>
+            </ul>
+          </div>
+          <div class="insight-box">
+            <div class="insight-title">💡 인사이트</div>
+            <div class="insight-item"><div class="i-num">1</div><div>C-Maark은 경쟁자라기보다 <span class="highlight">생태계 공동 형성 파트너</span>로 인식 전환 필요</div></div>
+            <div class="insight-item"><div class="i-num">2</div><div>Aspen - C-Maark - SnapScale 3각 협업 구조 가능성 존재 → <span class="highlight">Aspen 토큰 소비 증가로 Aspen도 이익</span></div></div>
+            <div class="insight-item"><div class="i-num">3</div><div>SnapScale의 차별화 포인트 : <span class="highlight">설계 단계 AI 자동화 + 글로벌 인바운드 MCP 마켓플레이스</span></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== DECISIONS ===== -->
+  <div class="card" id="decisions">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="section-num">✅</div>
+      <h2>결정사항</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="card-body open">
+      <table class="decision-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>결정 내용</th>
+            <th>근거</th>
+            <th>책임</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>D-1</td>
+            <td>장 선생님 MCP 툴을 SnapScale 플랫폼에 연동하는 수수료 기반 협업 구조 추진</td>
+            <td>기술 보완성 확인, 중복 없는 역할 분담</td>
+            <td>SnapScale + 장 선생님</td>
+          </tr>
+          <tr>
+            <td>D-2</td>
+            <td>SnapScale GPU 워크스테이션(Windows)에 DWSim 설치 검토하여 클라이언트 라이선스 불필요 구조 구현</td>
+            <td>사용자 접근성 향상, DWSim Linux 불안정</td>
+            <td>SnapScale 개발팀</td>
+          </tr>
+          <tr>
+            <td>D-3</td>
+            <td>EngineerScript.com API/MCP 명세서(사용자 매뉴얼) 작성 — LLM 시스템 프롬프트 최적화 목적</td>
+            <td>AI의 툴 선택 정확도 향상 필수</td>
+            <td>장 선생님 (SnapScale 지원)</td>
+          </tr>
+          <tr>
+            <td>D-4</td>
+            <td>C-Maark 홈페이지 정기 모니터링(하루 10분) 및 벤치마킹 수행</td>
+            <td>유사 기술 방향 공유, 협업 가능성 탐색</td>
+            <td>박 부장</td>
+          </tr>
+          <tr>
+            <td>D-5</td>
+            <td>"AI + 엔지니어링 계산 A to Z" 웨비나 기획 착수 (장 선생님 연사)</td>
+            <td>마케팅 파급력, 커뮤니티 형성 효과</td>
+            <td>SnapScale 기획, 장 선생님 강의</td>
+          </tr>
+          <tr>
+            <td>D-6</td>
+            <td>장 선생님 4월/5월 한국 방문 시 대면 심화 미팅 진행 (웨비나 구체화, 협업 계약 포함)</td>
+            <td>현지 상황(중동 지역 불안정) 감안 조건부 확정</td>
+            <td>양측</td>
+          </tr>
+          <tr>
+            <td>D-7</td>
+            <td>SnapScale LinkedIn 계정 개설 및 기술 콘텐츠 정기 게시 전략 수립</td>
+            <td>글로벌 인바운드 마케팅, 일본 사례 참조</td>
+            <td>김상윤 대표</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== ACTION ITEMS ===== -->
+  <div class="card" id="actions">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="section-num">🎯</div>
+      <h2>액션아이템</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="card-body open">
+      <div class="action-grid">
+
+        <div class="action-card priority-high">
+          <span class="action-priority ph">🔴 HIGH</span>
+          <div class="action-task">EngineerScript.com MCP 사용자 매뉴얼 작성</div>
+          <div class="action-meta">
+            <span>👤 장영기 선생님</span>
+            <span>📅 2026-04-15</span>
+            <span>✔ LLM이 툴 목록·입력·출력 이해 가능한 수준</span>
+          </div>
+        </div>
+
+        <div class="action-card priority-high">
+          <span class="action-priority ph">🔴 HIGH</span>
+          <div class="action-task">SnapScale GPU 워크스테이션에 DWSim 설치 및 MCP 연동 테스트

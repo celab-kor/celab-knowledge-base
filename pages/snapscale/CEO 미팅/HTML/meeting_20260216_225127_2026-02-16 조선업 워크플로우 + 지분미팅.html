@@ -1,0 +1,1085 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회의록 | 2026-02-16 조선업 워크플로우 + 지분미팅</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --navy-dark: #0d1b2a;
+            --navy: #1b2a4a;
+            --navy-mid: #1e3a5f;
+            --navy-light: #2e5090;
+            --accent: #3a7bd5;
+            --accent-light: #5b9bd5;
+            --teal: #2a9d8f;
+            --gray-100: #f8f9fb;
+            --gray-200: #eef1f5;
+            --gray-300: #dde3ec;
+            --gray-400: #b0bcc9;
+            --gray-500: #7a8fa6;
+            --gray-600: #4a5e72;
+            --gray-700: #2d3f52;
+            --white: #ffffff;
+            --red: #e63946;
+            --orange: #f4a261;
+            --green: #2a9d8f;
+            --yellow: #e9c46a;
+            --shadow-sm: 0 1px 4px rgba(13,27,42,0.08);
+            --shadow-md: 0 4px 16px rgba(13,27,42,0.12);
+            --shadow-lg: 0 8px 32px rgba(13,27,42,0.16);
+            --radius: 10px;
+            --radius-sm: 6px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* ── TOP HEADER ── */
+        .top-header {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-mid) 100%);
+            color: var(--white);
+            padding: 36px 48px 28px;
+            position: relative;
+            overflow: hidden;
+        }
+        .top-header::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 260px; height: 260px;
+            background: radial-gradient(circle, rgba(58,123,213,0.18) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .top-header::after {
+            content: '';
+            position: absolute;
+            bottom: -40px; left: 30%;
+            width: 180px; height: 180px;
+            background: radial-gradient(circle, rgba(42,157,143,0.12) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header-badge {
+            display: inline-block;
+            background: rgba(58,123,213,0.25);
+            border: 1px solid rgba(91,155,213,0.4);
+            color: #a8d0f5;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+        .header-title {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        .header-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 13px;
+            color: #b8cfe8;
+        }
+        .meta-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+        .meta-label {
+            font-weight: 600;
+            color: #7ab3de;
+            margin-right: 2px;
+        }
+
+        /* ── LAYOUT ── */
+        .page-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px 24px 60px;
+        }
+
+        /* ── TOC ── */
+        .toc-card {
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow-sm);
+        }
+        .toc-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+        }
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--gray-600);
+            font-size: 13px;
+            font-weight: 500;
+            transition: background 0.15s, color 0.15s;
+            border: 1px solid transparent;
+        }
+        .toc-item:hover {
+            background: var(--gray-200);
+            color: var(--accent);
+            border-color: var(--gray-300);
+        }
+        .toc-num {
+            width: 22px;
+            height: 22px;
+            background: var(--navy);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* ── SECTION ── */
+        .section {
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 28px;
+            background: linear-gradient(90deg, var(--navy) 0%, var(--navy-mid) 100%);
+            cursor: pointer;
+            user-select: none;
+        }
+        .section-header:hover { filter: brightness(1.08); }
+        .section-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.12);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .section-title {
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        .section-subtitle {
+            color: rgba(255,255,255,0.55);
+            font-size: 12px;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+        .section-toggle {
+            margin-left: auto;
+            color: rgba(255,255,255,0.5);
+            font-size: 20px;
+            transition: transform 0.25s;
+        }
+        .section-body {
+            padding: 28px;
+        }
+        .section-body.collapsed { display: none; }
+
+        /* ── AGENDA ITEM ── */
+        .agenda-item {
+            border-left: 3px solid var(--accent);
+            padding: 0 0 0 18px;
+            margin-bottom: 30px;
+        }
+        .agenda-item:last-child { margin-bottom: 0; }
+        .agenda-label {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 2px 9px;
+            border-radius: 3px;
+            margin-bottom: 8px;
+        }
+        .agenda-item-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .agenda-content {
+            color: var(--gray-600);
+            font-size: 13.5px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        /* ── SUBSECTION ── */
+        .sub-section {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            margin-top: 14px;
+        }
+        .sub-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--navy-light);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .sub-section-title::before {
+            content: '';
+            display: block;
+            width: 3px;
+            height: 14px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* ── INSIGHT CARDS ── */
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .insight-card {
+            background: linear-gradient(135deg, #f0f5ff 0%, #e8f0fb 100%);
+            border: 1px solid #c8d8f0;
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+        }
+        .insight-num {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+        .insight-text {
+            font-size: 13px;
+            color: var(--navy);
+            font-weight: 500;
+            line-height: 1.6;
+        }
+        .insight-basis {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        /* ── DECISION TABLE ── */
+        .decision-card {
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        .decision-card:last-child { margin-bottom: 0; }
+        .decision-header-row {
+            display: grid;
+            grid-template-columns: 40px 1fr 140px 140px;
+            background: var(--navy);
+            color: rgba(255,255,255,0.8);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 10px 16px;
+            gap: 12px;
+        }
+        .decision-body-row {
+            display: grid;
+            grid-template-columns: 40px 1fr 140px 140px;
+            padding: 14px 16px;
+            gap: 12px;
+            align-items: start;
+            border-top: 1px solid var(--gray-200);
+            background: var(--white);
+        }
+        .decision-body-row:hover { background: var(--gray-100); }
+        .decision-num-cell {
+            width: 26px;
+            height: 26px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .decision-content-cell { font-size: 13.5px; color: var(--gray-700); }
+        .decision-content-cell strong { color: var(--navy); }
+        .decision-tag-cell { font-size: 12px; color: var(--gray-600); }
+
+        /* ── ACTION ITEMS ── */
+        .action-item {
+            display: grid;
+            grid-template-columns: 28px 1fr auto;
+            gap: 14px;
+            align-items: start;
+            padding: 16px 20px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            background: var(--white);
+            margin-bottom: 10px;
+            transition: box-shadow 0.15s;
+        }
+        .action-item:hover { box-shadow: var(--shadow-md); }
+        .action-item:last-child { margin-bottom: 0; }
+        .action-check {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gray-300);
+            border-radius: 6px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .action-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+        .action-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .action-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+        .action-desc {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+        .priority-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .priority-high { background: #fde8ea; color: #c0392b; }
+        .priority-mid { background: #fff3e0; color: #d35400; }
+        .priority-low { background: #e8f5e9; color: #27ae60; }
+
+        /* ── MERMAID ── */
+        .diagram-wrapper {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+            margin-top: 14px;
+            overflow-x: auto;
+        }
+        .diagram-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .diagram-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 16px;
+            background: var(--teal);
+            border-radius: 2px;
+        }
+
+        /* ── TIMELINE ── */
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--teal));
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-dot {
+            position: absolute;
+            left: -24px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 3px solid var(--accent);
+        }
+        .timeline-dot.done { border-color: var(--teal); background: var(--teal); }
+        .timeline-date {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.06em;
+            margin-bottom: 3px;
+        }
+        .timeline-content {
+            font-size: 13.5px;
+            color: var(--navy);
+            font-weight: 500;
+        }
+        .timeline-note {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-top: 3px;
+        }
+
+        /* ── INFO GRID ── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+        }
+        .info-card {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+        }
+        .info-card-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-400);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .info-card-value {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+        .info-card-sub {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-top: 3px;
+        }
+
+        /* ── PARTICIPANT CARDS ── */
+        .participant-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .participant-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            flex: 1;
+            min-width: 200px;
+        }
+        .participant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .avatar-a { background: linear-gradient(135deg, var(--accent), var(--navy-light)); }
+        .avatar-b { background: linear-gradient(135deg, var(--teal), #1a6a60); }
+        .participant-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+        .participant-role { font-size: 12px; color: var(--gray-500); }
+
+        /* ── RISK TABLE ── */
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .risk-table th {
+            background: var(--navy);
+            color: rgba(255,255,255,0.85);
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+        .risk-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--gray-200);
+            color: var(--gray-700);
+            vertical-align: top;
+        }
+        .risk-table tr:last-child td { border-bottom: none; }
+        .risk-table tr:hover td { background: var(--gray-100); }
+        .risk-level {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .risk-high { background: #fde8ea; color: #c0392b; }
+        .risk-mid { background: #fff3e0; color: #d35400; }
+        .risk-low { background: #e8f5e9; color: #27ae60; }
+
+        /* ── QUOTE ── */
+        .quote-box {
+            border-left: 4px solid var(--accent-light);
+            background: linear-gradient(90deg, #f0f5ff, #f8f9fb);
+            padding: 14px 18px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin: 12px 0;
+            font-size: 13px;
+            color: var(--gray-700);
+            font-style: italic;
+            line-height: 1.7;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            height: 1px;
+            background: var(--gray-200);
+            margin: 24px 0;
+        }
+
+        /* ── TAG CHIPS ── */
+        .tag-chip {
+            display: inline-block;
+            background: var(--gray-200);
+            color: var(--gray-600);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 20px;
+            margin: 2px;
+        }
+        .tag-chip.blue { background: #dbeafe; color: #1e40af; }
+        .tag-chip.green { background: #d1fae5; color: #065f46; }
+        .tag-chip.orange { background: #ffedd5; color: #9a3412; }
+
+        /* ── FOOTER ── */
+        .page-footer {
+            background: var(--navy-dark);
+            color: rgba(255,255,255,0.45);
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            margin-top: 40px;
+        }
+
+        /* ── PRINT ── */
+        @media print {
+            .top-header { background: var(--navy-dark) !important; }
+            .section-body.collapsed { display: block !important; }
+            .page-footer { display: none; }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .top-header { padding: 24px 20px 20px; }
+            .header-title { font-size: 20px; }
+            .page-wrapper { padding: 20px 14px 40px; }
+            .section-body { padding: 18px; }
+            .decision-header-row,
+            .decision-body-row { grid-template-columns: 36px 1fr; }
+            .decision-tag-cell { display: none; }
+            .info-grid { grid-template-columns: 1fr 1fr; }
+            .action-item { grid-template-columns: 28px 1fr; }
+            .priority-badge { display: none; }
+        }
+
+        /* ── STATUS PILLS ── */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        .status-pill::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        .status-confirmed { background: #d1fae5; color: #065f46; }
+        .status-confirmed::before { background: #10b981; }
+        .status-pending { background: #fff3e0; color: #92400e; }
+        .status-pending::before { background: #f59e0b; }
+        .status-review { background: #dbeafe; color: #1e3a8a; }
+        .status-review::before { background: #3b82f6; }
+
+        /* toggle arrow */
+        .rotate-up { transform: rotate(180deg); }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     TOP HEADER
+════════════════════════════════════════ -->
+<header class="top-header">
+    <div class="header-badge">MINUTES OF MEETING</div>
+    <h1 class="header-title">조선업 워크플로우 분석 &amp; 지분 구조 협의</h1>
+    <div class="header-meta">
+        <span class="meta-item">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span><span class="meta-label">일시</span>2026-02-16 &nbsp;22:51</span>
+        </span>
+        <span class="meta-item">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span><span class="meta-label">장소</span>온라인 화상 (비대면)</span>
+        </span>
+        <span class="meta-item">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <span><span class="meta-label">참석자</span>대표 (AI/기술), 부장 (조선업 도메인 전문가)</span>
+        </span>
+        <span class="meta-item">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span><span class="meta-label">파일</span>2026-02-16 조선업 워크플로우 + 지분미팅.txt</span>
+        </span>
+    </div>
+</header>
+
+<!-- ════════════════════════════════════════
+     PAGE WRAPPER
+════════════════════════════════════════ -->
+<main class="page-wrapper">
+
+    <!-- ── 목차 ── -->
+    <nav class="toc-card">
+        <div class="toc-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            목차
+        </div>
+        <div class="toc-grid">
+            <a href="#sec-overview" class="toc-item"><span class="toc-num">1</span>회의 개요</a>
+            <a href="#sec-agenda1" class="toc-item"><span class="toc-num">2</span>조선업 워크플로우 분석</a>
+            <a href="#sec-agenda2" class="toc-item"><span class="toc-num">3</span>지분 구조 협의</a>
+            <a href="#sec-decisions" class="toc-item"><span class="toc-num">4</span>결정사항</a>
+            <a href="#sec-actions" class="toc-item"><span class="toc-num">5</span>액션아이템</a>
+            <a href="#sec-diagrams" class="toc-item"><span class="toc-num">6</span>다이어그램</a>
+            <a href="#sec-risks" class="toc-item"><span class="toc-num">7</span>리스크 &amp; 기회</a>
+            <a href="#sec-followup" class="toc-item"><span class="toc-num">8</span>후속 계획</a>
+        </div>
+    </nav>
+
+    <!-- ════════════════════════════════════
+         SECTION 1 : 회의 개요
+    ════════════════════════════════════ -->
+    <section class="section" id="sec-overview">
+        <div class="section-header" onclick="toggleSection(this)">
+            <div class="section-icon">📋</div>
+            <div>
+                <div class="section-title">1. 회의 개요</div>
+                <div class="section-subtitle">Meeting Overview</div>
+            </div>
+            <span class="section-toggle">▾</span>
+        </div>
+        <div class="section-body">
+            <!-- 참석자 -->
+            <div class="sub-section-title" style="margin-bottom:12px;">참석자</div>
+            <div class="participant-row" style="margin-bottom:24px;">
+                <div class="participant-card">
+                    <div class="participant-avatar avatar-a">대</div>
+                    <div>
+                        <div class="participant-name">대표 (CEO)</div>
+                        <div class="participant-role">AI/기술 · 창업 주도 · 최종 의사결정권자</div>
+                    </div>
+                </div>
+                <div class="participant-card">
+                    <div class="participant-avatar avatar-b">부</div>
+                    <div>
+                        <div class="participant-name">부장 (CBDO 후보)</div>
+                        <div class="participant-role">조선업 도메인 전문가 · 현중 백완 출신 · 공동창업자 후보</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 핵심 정보 -->
+            <div class="sub-section-title" style="margin-bottom:12px;">핵심 정보</div>
+            <div class="info-grid" style="margin-bottom:24px;">
+                <div class="info-card">
+                    <div class="info-card-label">회의 목적</div>
+                    <div class="info-card-value">2가지 복합 안건</div>
+                    <div class="info-card-sub">① 조선업 워크플로우 자료 공유<br>② 주주간 계약 조건 협의</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-label">회사</div>
+                    <div class="info-card-value">스내스케일 (가칭)</div>
+                    <div class="info-card-sub">플랜트·조선 엔지니어링 AI 솔루션</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-label">주요 고객사 타겟</div>
+                    <div class="info-card-value">가스선 기본설계팀</div>
+                    <div class="info-card-sub">현중(HHI) 백완(配管) 부서</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-label">현재 투자 단계</div>
+                    <div class="info-card-value">Pre-Seed / POC 진행 중</div>
+                    <div class="info-card-sub">2월 말~3월 말 시드 라운드 검토</div>
+                </div>
+            </div>
+
+            <!-- 회의 배경 -->
+            <div class="sub-section-title" style="margin-bottom:10px;">회의 배경 &amp; 목적</div>
+            <div class="agenda-content">
+                본 회의는 크게 두 가지 목적으로 진행되었다.
+                첫째, 조선업 가스선 기본설계 프로세스와 관련 레퍼런스 자료(현중 백완 폴더)를 공유하고,
+                향후 AI POC 미팅에 앞서 도메인 이해도를 제고하기 위한 지식 이전(Knowledge Transfer)이 이루어졌다.
+                둘째, 회사 설립에 앞서 공동창업자 간 주주간 계약서의 핵심 조항—지분 매각 조건, 직함·거버넌스 구조—을 사전 협의하여 법무 검토 일정에 맞추기 위한 목적으로 진행되었다.
+            </div>
+            <div class="quote-box">
+                "공동창업자가 겪는 가장 큰 문제가 바로 이 지분 관련 이슈입니다. 최대한 명기를 상호 협의 하에 남겨두는 것이 저희가 뒤에서 일만 할 수 있는 길이라고 생각합니다."
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION 2 : 안건 1 — 조선업 워크플로우
+    ════════════════════════════════════ -->
+    <section class="section" id="sec-agenda1">
+        <div class="section-header" onclick="toggleSection(this)">
+            <div class="section-icon">🚢</div>
+            <div>
+                <div class="section-title">2. 조선업 워크플로우 분석</div>
+                <div class="section-subtitle">Agenda 1 · Gas Carrier Basic Design Process</div>
+            </div>
+            <span class="section-toggle">▾</span>
+        </div>
+        <div class="section-body">
+
+            <!-- 안건 1-1 -->
+            <div class="agenda-item">
+                <span class="agenda-label">AGENDA 1-1</span>
+                <div class="agenda-item-title">가스선 프로젝트 수주 구조 및 이해관계자 체계</div>
+                <div class="agenda-content">
+                    부장은 화공 플랜트와 조선업의 근본적인 구조 차이를 설명하였다.
+                    <br><br>
+                    <strong>화공 플랜트 구조:</strong> 라이센서사 → 오일 메이저(오너사) → EPC사 순으로 발주가 이루어지며, 라이센스를 구매하여 운영하려는 오너사가 EPC사를 선정하는 구조이다.
+                    <br><br>
+                    <strong>조선업(가스선) 구조:</strong> LNG/LPG 개발 오일 메이저(예: 알래스카 → 아시아 물동량 계획) → 해운사(Ship Owner) → 조선삼사(현대·삼성·한화 등) 순으로 발주가 진행된다.
+                    조선삼사는 각자의 <strong>표준 선형(Standard Ship Design)</strong>을 보유하고 있어, 선주인퀘어리(Inquiry) 접수 후 일주일 내외에 대응 견적을 제출해야 한다.
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-section-title">인사이트</div>
+                    <div class="insight-grid">
+                        <div class="insight-card">
+                            <div class="insight-num">INSIGHT 01</div>
+                            <div class="insight-text">표준 선형 기반의 빠른 견적 대응이 핵심 경쟁력</div>
+                            <div class="insight-basis">근거: 선주인퀘어리 접수~견적 제출이 약 1주일 내 완료 필요. 레슨스런드 500개 이상 활용</div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-num">INSIGHT 02</div>
+                            <div class="insight-text">AI가 견적 자동화 시 경쟁 입찰 우위 확보 가능</div>
+                            <div class="insight-basis">근거: 현재 매뉴얼 스케일업 작업에 막대한 Man-hour 소요, AI로 대체 시 속도·정확도 개선</div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-num">INSIGHT 03</div>
+                            <div class="insight-text">화공 소프트웨어(HYSYS 등) 수요 증가 배경 이해</div>
+                            <div class="insight-basis">근거: CHS·FGSS 등 극저온·고압 공정 설계에 화공 지식 필수 → 조선사의 하이시스 도입 증가</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- 안건 1-2 -->
+            <div class="agenda-item">
+                <span class="agenda-label">AGENDA 1-2</span>
+                <div class="agenda-item-title">가스선 핵심 시스템 구성 — FGSS / CHS / Hull Piping</div>
+                <div class="agenda-content">
+                    부장은 가스선 기본설계에서 취급하는 세 가지 핵심 시스템을 상세히 설명하였다.
+                </div>
+
+                <div class="sub-section" style="margin-bottom:12px;">
+                    <div class="sub-section-title">① FGSS (Fuel Gas Supply System)</div>
+                    <div class="agenda-content" style="margin-bottom:0;">
+                        LNG(마이너스 160°C) 또는 LPG(마이너스 50°C 압력 유지)를 엔진에 연소 가능한 상태로 공급하기 위한 공정 설계 시스템.
+                        LNG 사용 시 <em>FGSS</em>, LPG 사용 시 <em>LFSS</em>로 명칭이 달라진다.
+                        PFD(Process Flow Diagram) 기반의 표준 설계 문서로 관리되며, 어떤 장비가 어떻게 배치되어 탱크에서 엔진까지 연결되는지를 규정한다.
+                    </div>
+                </div>
+
+                <div class="sub-section" style="margin-bottom:12px;">
+                    <div class="sub-section-title">② CHS (Cargo Handling System)</div>
+                    <div class="agenda-content" style="margin-bottom:0;">
+                        선박 운항 중 외기 열 유입·마찰로 인해 발생하는 BOG(Boil-Off Gas, 기화 증기)를 재액화하여 탱크 내 압력을 안전하게 유지하는 공정 시스템.
+                        LNG는 기화 시 160배 부피 팽창이 발생하므로 재액화 공정이 필수적이다.
+                        두 시스템(FGSS + CHS) 모두 화공 플랜트 지식(하이시스 등 공정 해석 S/W)이 필요한 핵심 영역이다.
+                    </div>
+                </div>
+
+                <div class="sub-section" style="margin-bottom:12px;">
+                    <div class="sub-section-title">③ Hull Piping System (헐 배관 시스템)</div>
+                    <div class="agenda-content" style="margin-bottom:0;">
+                        선박 운영에 필요한 모든 보조 시스템의 총칭. 주요 구성:
+                        <br>• 워터 밸러스트(Water Ballast) — 선박 흘수 조절
+                        <br>• 빌지(Bilge) — 선내 누수·배수 처리
+                        <br>• FO/MGO — 이중연료(Dual-Fuel) 엔진용 석유 공급
+                        <br>• Compressed Air, Inert Gas, Cargo Compressor, Scrubber 등
+                        <br><br>
+                        화공 플랜트 P&ID와 달리, <strong>GA(General Arrangement) 도면 위에 실제 배관 위치(X·Y·Z축) 좌표가 명시된 위치 지정형 P&ID</strong>로 관리된다. 이를 통해 파이프 물량(길이·재질·구경)이 자동으로 산출된다.
+                    </div>
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-section-title">인사이트</div>
+                    <div class="insight-grid">
+                        <div class="insight-card">
+                            <div class="insight-num">INSIGHT 04</div>
+                            <div class="insight-text">위치 기반 P&ID는 AI 자동화의 핵심 타겟 포인트</div>
+                            <div class="insight-basis">근거: GA 도면 변경 시 파이프 길이 수작업 수정 → AI 연동으로 실시간 물량·비용 자동 업데이트 가능</div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-num">INSIGHT 05</div>
+                            <div class="insight-text">FGSS/CHS가 백완(配管) 부서의 주요 견적 대상</div>
+                            <div class="insight-basis">근거: 현중 백완 부서에서 CHS·FGSS 담당, HMB·PFD·Hydraulic Calc 수행</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- 안건 1-3 -->
+            <div class="agenda-item">
+                <span class="agenda-label">AGENDA 1-3</span>
+                <div class="agenda-item-title">선주 코멘트 대응 프로세스 및 AI 적용 포인트</div>
+                <div class="agenda-content">
+                    수주 협상 과정에서 선주로부터 500~1,000개에 달하는 코멘트가 접수된다.
+                    PM이 이를 각 부서(배관·전장·개장 등)에 분배하면, 각 부서는 다음을 수행한다:
+                    <br><br>
+                    <strong>1단계</strong> 코멘트 분류: 메이커 문의 / 선장 설계 해석 / 타직능 문의 / 백완 자체 처리
+                    <br>
+                    <strong>2단계</strong> 비용 영향 분석: 각 코멘트별 공수(+/-), 자재비(+/-), DMT 물량(+/-) 산출
+                    <br>
+                    <strong>3단계</strong> 스펙 문서 갱신: 표준 스펙 문구 개정 → PM 취합 → 부서장·담당임원·부문장 사인
+                    <br>
+                    <strong>4단계</strong> 대선주 미팅: 1:1 코멘트 처리 결과 발표 → 계약 체결 → 상세설계팀(울산) 세비(SEBI) 시스템 입력
+                    <br><br>
+                    현재 이 모든 과정이 <strong>엑셀 + V-LOOKUP 기반 수작업</strong>으로 처리되어 Man-hour 낭비와 오류 위험이 크다.
+                    2TB 규모의 레슨스런드(Lessons Learned) DB를 AI가 검색·추천함으로써 코멘트 대응 자동화 및 파인튜닝/온톨로지 구축에 활용 가능하다.
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-section-title">인사이트</div>
+                    <div class="insight-grid">
+                        <div class="insight-card">
+                            <div class="insight-num">INSIGHT 06</div>
+                            <div class="insight-text">2TB 레슨스런드 DB = AI 파인튜닝·온톨로지의 핵심 소스</div>
+                            <div class="insight-basis">근거: 현중 백완 부서의 코멘트 답변 히스토리 전수 → POC 전 활용 방안 정의 필요</div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-num">INSIGHT 07</div>
+                            <div class="insight-text">GA↔물량↔비용 자동 연동이 Killer Feature</div>
+                            <div class="insight-basis">근거: 스케일업 시 수작업 오류·공수 최소화, 적자 방지. 배우현 부서장도 동일한 니즈 확인</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════
+         SECTION 3 : 안건 2 — 지분 협의
+    ════════════════════════════════════ -->
+    <section class="section" id="sec-agenda2">
+        <div class="section-header" onclick="toggleSection(this)">
+            <div class="section-icon">🤝</div>
+            <div>
+                <div class="section-title">3. 지분 구조 &amp; 거버넌스 협의</div>
+                <div class="section-subtitle">Agenda 2 · Shareholder Agreement &amp; Governance</div>
+            </div>
+            <span class="section-toggle">▾</span>
+        </div>
+        <div class="section-body">
+
+            <!-- 지분 구조 -->
+            <div class="agenda-item">
+                <span class="agenda-label">AGENDA 2-1</span>
+                <div class="agenda-item-title">지분 매각 가능 시점 및 조건 (풋옵션·콜옵션)</div>
+                <div class="agenda-content">
+                    초기 주주(대표·부장)의 지분 일부 매각 가능 시점에 대한 논의가 이루어졌다.
+                    <br><br>
+                    <strong>현황 인식:</strong> 지분 매각 상대방은 사실상 투자자(신규 라운드 참여자)로 한정된다.
+                    스내스케일 법인 자금으로 재매입하거나 대표 개인이 구매하는 방식은 초기 운영 자금 부족 및 현실적 한계로 불가능에 가깝다.
+                    <br><br>
+                    <strong>통상적 관행 (조사 결과):</strong>
+                    <br>
+                    — 시드 투자 완료 후 시리즈 A 라운드 시 <strong>5~10%</strong> 매각 허용(투자 계약서 명기)
+                    <br>
+                    — 시리즈 B 라운드 시 <strong>2~3%</strong> 추가 매각 허용
+                    <br>
+                    — 이후 EXIT(M&A·IPO)까지 매각 제한으로 인센티브 구조 유지
+                    <br><br>
+                    <strong>합의 방향:</strong> 주주간 계약서에 구체적 퍼센트를 명기하는 것보다, <em>"투자 계약서 조건에 따른다"</em>는 위임 조항을 삽입하는 방식이 적절하다. 양측 모두 중간 대규모 EXIT보다 회사 성장 이후 EXIT을 목표로 한다는 점에서 이해 일치.
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-section-title">현재 지분 구조 (합의 기준)</div>
+                    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;">
+                        <div style="flex:1;min-width:160px;background:linear-gradient(135deg,#1b2a4a,#2e5090);color:#fff;border-radius:8px;padding:16px 20px;text-align:center;">
+                            <div style="font-size:11px;opacity:0.6;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">대표 (CEO)</div>
+                            <div style="font-size:32px;font-weight:800;">70%</div>
+                            <div style="font-size:12px;opacity:0.7;margin-top:4px;">700주</div>
+                        </div>
+                        <div style="flex:1;min-width:160px;background:linear-gradient(135deg,#1a6a60,#2a9d8f);color:#fff;border-radius:8px;padding:16px 20px;text-align:center;">
+                            <div style="font-size:11px;opacity:0.6;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">부장 (CBDO)</div>
+                            <div style="font-size:32px;font-weight:800;">30%</div>
+                            <div style="font-size:12px;opacity:0.7;margin-top:4px;">300주</div>
+                        </div>
+                        <div style="flex:1;min-width:160px;background:var(--gray-200);border-radius:8px;padding:16px 20px;text-align:center;border:1px dashed var(--gray-400);">
+                            <div style="font-size:11px;color:var(--gray-500);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">투자자 (향후)</div>
+                            <div style="font-size:32px;font-weight:800;color:var(--gray-500);">~10%</div>
+                            <div style="font-size:12px;color:var(--gray-400);margin-top:4px;">시드 라운드 / 스톡옵션 풀 검토</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:12px;padding:10px 14px;background:#fff3e0;border-radius:6px;font-size:12px;color:#92400e;">
+                        ⚠️ 스톡옵션 별도 주식 풀 발행은 미확정. 대표 700주 중 약 100주를 1차 투자 및 스톡옵션으로 배분 검토 중.
+                    </div>
+                </div>
+
+                <div class="sub-section" style="margin-top:14px;">
+                    <div class="sub-section-title">인사이트</div>
+                    <div class="insight-grid">
+                        <div class="insight-card">
+                            <div class="insight-num">INSIGHT 08</div>
+                            <div class="insight-text">매각 조건을 투자 계약서에 위임하는 방식이 리스크 최소화</div>
+                            <div class="insight-basis">근거: 현재 시점에서 투자자 조건을 예단하기 어려우므로 유연성 확보 필요</div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-num">INSIGHT 09</div>
+                            <div class="insight-text">시리즈A 부분 매각으로 공동창업자 초기 보상·동기 유지</div>
+                            <div class="insight-basis">근거: 장기 런웨이를 위한 적정 인센티브 설계. 완전한 EXIT보다 단계적 유동성 확보</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- 직함 & 거버넌스 -->
+            <div class="agenda-item">
+                <span class="agenda-label">AGENDA 2-2</span>
+                <div class="agenda-item-title">부장의 직함 &amp; 거버넌스 구조 설계</div>
+                <div class="agenda-content">
+                    <strong>대표 제안:</strong> 부장에게 <em>부대표 (Co-President)</em> + <em>CBDO (Chief Business and Domain Officer)</em> 직함 부여. 최종 의사결정권은 대표가 보유하되, 도메인 지식 기반 경영 공동 참여.
+                    <br><br>
+                    <strong>부장 의견:</strong> 직함보다 실질적 역할 강화가 중요. 대외적으로 <em>"Co-founder (공동창업자)"</em>를 전면에 내세워야 신뢰도·세일즈 파워 제고 가능. 30% 지분 보유 + 이사회 등재 시 주요 결정사항에 대한 공식 결정 참여 권한 필요.
+                    <br><br>
+                    <strong>대표 수용:</strong> "Co-founder" 타이틀을 CBDO 앞에 병기하는 방식에 동의. 이사회 등재는 정관 및 주주간 계약서에 기본 포함되는 사항임을 확인.
+                </div>
+
+                <div class="sub-section" style="margin-bottom:12px;">
+                    <div class="sub-section-title">직함 구조 최종 합의안</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
+                        <div style="background:linear-gradient(135deg,#f0f5ff,#e8f0fb);border:1px solid #c8d8f0;border-radius:8px;padding:16px;">
+                            <div style="font-size:11px;font-weight:700;color:var(--accent);letter-spacing:0.08em;margin-bottom:8px;">대표</div>
+                            <div style="font-size:15px;font-weight:700;color:var(--navy);">CEO &amp; Co-founder</div>
+                            <ul style="font-size:12px;color:var(--gray-600);margin-top:8px;padding-left:16px;">
+                                <li>최종 의사결정권 보유</li>
+                                <li>기술·AI 개발 주도</li>
+                                <li>투자 유치 대표</li>
+                            </ul>
+                        </div>
+                        <div style="background:linear-gradient(135deg,#e6f9f7,#d1f5f2);border:1px solid #a8e6e0;border-radius:8px;padding:16px;">
+                            <div style="font-size:11px;font-weight:700;color:var(--teal);letter-spacing:0.08em;margin-bottom:8px;">부장</div>
+                            <div style="font-size:15px;font-weight:700;color:var(--navy);">Co-founder &amp; CBDO</div>
+                            <ul style="font-size:12px;color:var(--gray-600);margin-top:8px;padding-left:16px;">
+                                <li>도메인 지식 기반 경영 참여</li>
+                                <li>고객사 세일즈·기술 대응</li>
+                                <li>이사회 등재, 주요 결정 참여</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div

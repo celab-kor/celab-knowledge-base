@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapScale 전체 미팅 1회 회의록 - 2025.12.27</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            font-size: 1em;
+        }
+
+        .header-info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-info-item::before {
+            content: "●";
+            color: #4FC3F7;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .nav-section {
+            background: #f8f9fa;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            border-left: 4px solid #2a5298;
+        }
+
+        .nav-section h2 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .nav-links a {
+            padding: 8px 16px;
+            background: white;
+            color: #2a5298;
+            text-decoration: none;
+            border-radius: 20px;
+            border: 1px solid #2a5298;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+
+        .nav-links a:hover {
+            background: #2a5298;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(42,82,152,0.3);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            color: #1e3c72;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #2a5298;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 6px;
+            height: 30px;
+            background: linear-gradient(180deg, #2a5298 0%, #4FC3F7 100%);
+            border-radius: 3px;
+        }
+
+        .attendees {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .attendee-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #4FC3F7;
+        }
+
+        .attendee-name {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+
+        .attendee-role {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .agenda-item {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: #fafbfc;
+            border-radius: 8px;
+            border-left: 4px solid #4FC3F7;
+        }
+
+        .agenda-title {
+            font-size: 1.4em;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .agenda-content {
+            margin: 15px 0;
+            line-height: 2;
+            color: #34495e;
+        }
+
+        .agenda-content ul, .agenda-content ol {
+            margin-left: 25px;
+            margin-top: 12px;
+        }
+
+        .agenda-content li {
+            margin-bottom: 10px;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe6cc 100%);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .insight-title {
+            font-weight: bold;
+            color: #e67e22;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .insight-title::before {
+            content: "💡";
+            font-size: 1.2em;
+        }
+
+        .insight-item {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .insight-item::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #e67e22;
+            font-weight: bold;
+        }
+
+        .action-item {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .action-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .action-title {
+            font-weight: bold;
+            color: #27ae60;
+            font-size: 1.1em;
+        }
+
+        .action-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .action-tag {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .priority-high {
+            background: #fee;
+            color: #c00;
+        }
+
+        .priority-medium {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .priority-low {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .action-owner {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .action-deadline {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .decision-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .decision-title {
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .decision-title::before {
+            content: "✓";
+            background: #4caf50;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .mermaid-container {
+            margin: 25px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .quote {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-left: 4px solid #7f8c8d;
+            font-style: italic;
+            color: #555;
+        }
+
+        .highlight {
+            background: linear-gradient(transparent 60%, #fff59d 60%);
+            padding: 2px 4px;
+            font-weight: 500;
+        }
+
+        .collapsible {
+            cursor: pointer;
+            padding: 15px;
+            background: #ecf0f1;
+            border: none;
+            text-align: left;
+            width: 100%;
+            font-size: 1em;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-weight: 500;
+            color: #2c3e50;
+            transition: all 0.3s;
+        }
+
+        .collapsible:hover {
+            background: #d5dbdb;
+        }
+
+        .collapsible:after {
+            content: '▼';
+            float: right;
+            margin-left: 10px;
+            transition: transform 0.3s;
+        }
+
+        .collapsible.active:after {
+            transform: rotate(-180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: white;
+            border-radius: 0 0 6px 6px;
+        }
+
+        .collapsible-content-inner {
+            padding: 20px;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .timestamp {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .collapsible-content {
+                max-height: none !important;
+            }
+            .nav-section {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 1.6em;
+            }
+            .section-title {
+                font-size: 1.4em;
+            }
+            .attendees {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 SnapScale 전체 미팅 1회 회의록</h1>
+            <div class="header-info">
+                <div class="header-info-item">일시: 2025년 12월 27일 (토) 21:00</div>
+                <div class="header-info-item">장소: 온라인 화상회의</div>
+                <div class="header-info-item">소요시간: 약 2시간 30분</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- 목차 -->
+            <div class="nav-section">
+                <h2>📋 목차 (Quick Navigation)</h2>
+                <div class="nav-links">
+                    <a href="#participants">참석자</a>
+                    <a href="#summary">회의 개요</a>
+                    <a href="#agenda1">팀 구성 및 공지</a>
+                    <a href="#agenda2">협업툴 선정</a>
+                    <a href="#agenda3">울산 미팅 및 투자</a>
+                    <a href="#agenda4">제품 솔루션 소개</a>
+                    <a href="#agenda5">기술 백본 및 온톨로지</a>
+                    <a href="#agenda6">API 문서 활용</a>
+                    <a href="#agenda7">실무 질문 토론</a>
+                    <a href="#decisions">결정사항</a>
+                    <a href="#actions">액션아이템</a>
+                    <a href="#next">후속 계획</a>
+                </div>
+            </div>
+
+            <!-- 참석자 -->
+            <section id="participants" class="section">
+                <h2 class="section-title">👥 참석자</h2>
+                <div class="attendees">
+                    <div class="attendee-card">
+                        <div class="attendee-name">김상윤</div>
+                        <div class="attendee-role">대표이사 / CEO</div>
+                    </div>
+                    <div class="attendee-card">
+                        <div class="attendee-name">이종현 부장</div>
+                        <div class="attendee-role">화공 엔지니어링 전문가</div>
+                    </div>
+                    <div class="attendee-card">
+                        <div class="attendee-name">박규호 부장</div>
+                        <div class="attendee-role">화공 엔지니어링 전문가</div>
+                    </div>
+                    <div class="attendee-card">
+                        <div class="attendee-name">이재윤</div>
+                        <div class="attendee-role">개발자</div>
+                    </div>
+                    <div class="attendee-card">
+                        <div class="attendee-name">다소 (인턴)</div>
+                        <div class="attendee-role">계산 시트 개발</div>
+                    </div>
+                    <div class="attendee-card">
+                        <div class="attendee-name">태현 (인턴)</div>
+                        <div class="attendee-role">API 문서 분석 및 온톨로지</div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px;">
+                    <strong>추가 참여 예정:</strong> 노은아 (고려대 학생, 시장조사 담당, 2월 말까지 참여)
+                </div>
+            </section>
+
+            <!-- 회의 개요 -->
+            <section id="summary" class="section">
+                <h2 class="section-title">📌 회의 개요 및 배경</h2>
+                <div class="agenda-content">
+                    <p><strong>회의 목적:</strong></p>
+                    <ul>
+                        <li>1월 1일부터 고려대에서 업무 시작, 2월 중순~3월 전 역삼으로 이전 예정에 따른 팀 정비</li>
+                        <li>2026년 사업 방향성 및 전략 공유</li>
+                        <li>제품 솔루션(P&ID 자동화) 및 기술 백본(온톨로지) 상세 설명</li>
+                        <li>팀원 간 협업 방식 및 도구 결정</li>
+                    </ul>
+
+                    <p style="margin-top: 20px;"><strong>회의 진행 구조:</strong></p>
+                    <ol>
+                        <li>공지사항 및 팀 구성 안내</li>
+                        <li>제품 솔루션 데모 및 설명 (김상윤 대표)</li>
+                        <li>기술적 질문 및 토론 (이재윤 개발자, 태현 인턴)</li>
+                        <li>실무 전문가 피드백 (이종현, 박규호 부장)</li>
+                    </ol>
+
+                    <div class="quote">
+                        "앞으로 우리가 2026년도에 어떻게 갈 거냐를 한번 딱 정리해서 말씀을 드리고 시작을 해야 방향을 잡고 다같이 잘 갈 수 있을 것 같다" - 김상윤 대표
+                    </div>
+                </div>
+            </section>
+
+            <!-- 안건 1: 팀 구성 및 공지 -->
+            <section id="agenda1" class="section">
+                <h2 class="section-title">📢 안건 1. 팀 구성 및 주요 공지사항</h2>
+                
+                <div class="agenda-item">
+                    <div class="agenda-title">1.1 사무실 이전 및 근무 방식</div>
+                    <div class="agenda-content">
+                        <ul>
+                            <li><strong>1월 1일:</strong> 고려대에서 업무 시작</li>
+                            <li><strong>2월 중순~3월 전:</strong> 역삼으로 사무실 이전 예정</li>
+                            <li><strong>근무 형태:</strong> 김상윤 대표 + 개발팀 4명(이재윤, 다소, 태현, 노은아) 오프라인 근무, 부장님들은 리모트/방문</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">1.2 신규 팀원 합류</div>
+                    <div class="agenda-content">
+                        <ul>
+                            <li><strong>노은아:</strong> 고려대 학생, 25년 초~중반 팀 활동 경력, 시장조사 담당으로 2월 말까지 참여</li>
+                            <li>태현과 동일한 참여 기간 (2월 말까지)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">1.3 글로벌 시장조사 사업</div>
+                    <div class="agenda-content">
+                        <ul>
+                            <li><strong>지원기관:</strong> ICON(아이콘) 25년도 참여 사업 멘토 (Krist 유티코리아, 텍사스 오스틴 소재)</li>
+                            <li><strong>조사 지역:</strong> 미국, 동남아, 인도 시장</li>
+                            <li><strong>행정사항:</strong> 충북대 우편주소 지사 설치 필요 (사업 요건)</li>
+                            <li><strong>진행상황:</strong> 신청 완료, 남은 사업비로 진행 예정</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-title">핵심 인사이트</div>
+                    <div class="insight-item"><strong>팀 규모 확대:</strong> 핵심 개발팀 4명 + 부장님 2명 체제로 본격적인 제품 개발 및 POC 추진 가능한 조직 구성</div>
+                    <div class="insight-item"><strong>글로벌 확장 준비:</strong> 국내 POC와 병행하여 해외 시장조사를 통한 글로벌 진출 기반 마련</div>
+                    <div class="insight-item"><strong>오프라인 협업 강화:</strong> 고려대 → 역삼 이전을 통해 스타트업 생태계 접근성 향상 및 투자 유치 용이성 확보</div>
+                </div>
+            </section>
+
+            <!-- 안건 2: 협업툴 선정 -->
+            <section id="agenda2" class="section">
+                <h2 class="section-title">💬 안건 2. 협업툴 선정 (Slack)</h2>
+                
+                <div class="agenda-item">
+                    <div class="agenda-title">2.1 협업툴 필요성 및 후보 검토</div>
+                    <div class="agenda-content">
+                        <p><strong>배경:</strong> 카카오톡으로만 소통하기에는 파일 관리, 공지, 개발자-부장님 간 기술 소통에 한계</p>
+                        
+                        <p style="margin-top: 15px;"><strong>검토 결과:</strong></p>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                            <tr style="background: #f8f9fa;">
+                                <th style="padding: 12px; border: 1px solid #ddd;">도구</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">이종현 부장</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">박규호 부장</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">개발팀</th>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #ddd;"><strong>Slack</strong></td>
+                                <td style="padding: 12px; border: 1px solid #ddd;">처음 접함</td>
+                                <td style="padding: 12px; border: 1px solid #ddd;">현재 사용 중 ✓</td>
+                                <td style="padding: 12px; border: 1px solid #ddd;">이재윤: 연구실 사용 경험 ✓</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #ddd;"><strong>MS Teams</strong></td>
+                                <td style="padding: 12px; border: 1px solid #ddd;">회사 사용 중</td>
+                                <td style="padding: 12px; border: 1px solid #ddd;">-</td>
+                                <td style="padding: 12px; border: 1px solid #ddd;">사용 경험 없음</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="decision-box">
+                    <div class="decision-title">최종 결정: Slack 채택</div>
+                    <div class="agenda-content">
+                        <p><strong>선정 이유:</strong></p>
+                        <ul>
+                            <li>더 많은 팀원이 경험 보유 (박규호 부장, 이재윤)</li>
+                            <li>MS Teams는 유료 계정 필요 (인당 비용 발생)</li>
+                            <li>스타트업 생태계 표준 도구로 외부 협업 시 호환성 우수</li>
+                        </ul>
+                        
+                        <p style="margin-top: 15px;"><strong>사용 방침:</strong></p>
+                        <ul>
+                            <li>카카오톡 단톡방을 여러 개 운영하는 방식으로 활용</li>
+                            <li>중심 소통보다는 <span class="highlight">공지 및 파일 로그 관리</span>에 초점</li>
+                            <li>채널별로 주제 분리 예정 (개발, 영업, 전체 등)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="action-item">
+                    <div class="action-header">
+                        <div class="action-title">전원 Slack 계정 생성 및 초대</div>
+                        <div class="action-meta">
+                            <span class="action-tag priority-high">High</span>
+                            <span class="action-tag action-owner">담당: 김상윤 대표</span>
+                            <span class="action-tag action-deadline">기한: 1월 1일 전</span>
+                        </div>
+                    </div>
+                    <div class="agenda-content">
+                        <strong>세부사항:</strong>
+                        <ul>
+                            <li>Slack 워크스페이스 생성 및 팀원 초대 링크 발송</li>
+                            <li>채널 구조 설계 및 권한 설정</li>
+                            <li>간단한 사용 가이드 공유 (특히 이종현 부장님 대상)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-title">핵심 인사이트</div>
+                    <div class="insight-item"><strong>협업 효율성 개선:</strong> 실시간 메시징(카톡) + 체계적 문서화(Slack)의 이원화 전략으로 업무 연속성 확보</div>
+                    <div class="insight-item"><strong>기술 부채 최소화:</strong> 초기부터 표준 도구 도입으로 향후 팀 확장 시 온보딩 비용 절감</div>
+                    <div class="insight-item"><strong>투자사 소통 준비:</strong> VC 및 파트너사와의 외부 소통 시 전문성 있는 이미지 제고</div>
+                </div>
+            </section>
+
+            <!-- 안건 3: 울산 미팅 및 투자 -->
+            <section id="agenda3" class="section">
+                <h2 class="section-title">🏭 안건 3. 울산 미팅 및 투자 전략</h2>
+                
+                <div class="agenda-item">
+                    <div class="agenda-title">3.1 1월 7일 울산 미팅 계획</div>
+                    <div class="agenda-content">
+                        <p><strong>방문 기관:</strong></p>
+                        <ul>
+                            <li><strong>삼두종합기술:</strong> 울산 소재 화공 엔지니어링 기업, POC 논의 예정</li>
+                            <li><strong>울산창조경제혁신센터:</strong> 지역 투자기관, 적극적 투자 의사 표명</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>울산창조경제혁신센터 투자 검토:</strong></p>
+                        <div class="quote">
+                            "되게 적극적으로 투자를 하고 싶다고 말씀을 하시더라고요. 되게 적극적으로 같이 가고 싶다고 많이 말씀을 하셔가지고" - 김상윤 대표
+                        </div>
+                        <ul>
+                            <li><strong>장점:</strong> 투자 + 지역 네트워크 + 울산 석유화학단지 접근성</li>
+                            <li><strong>단점:</strong> 본사/지사를 울산에 설치해야 하는 조건 (서울 업무 시 제약)</li>
+                            <li><strong>고려사항:</strong> 지분율, 밸류에이션 등 구체적 조건 미협의</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">3.2 울산 석유화학단지 분석 (전문가 의견)</div>
+                    <div class="agenda-content">
+                        <p><strong>이종현 부장 분석:</strong></p>
+                        <ul>
+                            <li><span class="highlight">울산은 한국 3대 석유화학단지 중 하나</span> (여수, 대산과 함께)</li>
+                            <li><strong>주요 기업:</strong> SK, 현대 계열사 위주</li>
+                            <li><strong>GS 계열 없음:</strong> GS건설/GS계열사는 <span class="highlight">여수에 집중</span></li>
+                        </ul>
+
+                        <div style="margin-top: 20px; padding: 15px; background: #fff3e0; border-radius: 8px; border-left: 4px solid #ff9800;">
+                            <strong>⚠️ 전략적 딜레마:</strong>
+                            <p style="margin-top: 10px;">SnapScale은 GS건설 CVC와 컨택 포인트가 있고(X-FLOW 통한 NDA 체결), GS건설 계열사 네트워크 활용이 핵심 전략이었으나, 울산 투자 수용 시 GS가 없는 지역에 묶이는 모순 발생</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">3.3 투자 전략 재검토</div>
+                    <div class="agenda-content">
+                        <p><strong>고려 요소:</strong></p>
+                        <ol>
+                            <li><strong>지역 전략:</strong>
+                                <ul>
+                                    <li>울산 = SK/현대 네트워크 (창조경제혁신센터 투자 가능)</li>
+                                    <li>여수 = GS 네트워크 (GS건설 CVC 연계 가능)</li>
+                                </ul>
+                            </li>
+                            <li><strong>투자 우선순위:</strong>
+                                <ul>
+                                    <li>GS건설 CVC 미팅 결과 대기 중</li>
+                                    <li>울산창조경제혁신센터는 백업 옵션으로 고려</li>
+                                </ul>
+                            </li>
+                            <li><strong>POC 전략:</strong>
+                                <ul>
+                                    <li>삼두종합기술과의 POC를 빠르게 진행하여 레퍼런스 확보</li>
+                                    <li>지역 투자는 POC 성공 후 협상력 갖춘 상태에서 재검토</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-title">핵심 인사이트</div>
+                    <div class="insight-item"><strong>지역-기업 매칭의 중요성:</strong> 석유화학 산업은 지역별로 특정 대기업 계열사가 지배적이므로, 투자 지역 선택이 곧 고객사 네트워크 결정과 직결됨</div>
+                    <div class="insight-item"><strong>POC 우선 전략 유효성:</strong> 투자 조건보다 제품 검증을 먼저 완료하여 협상력을 높이는 전략이 현 시점에서 더 유리</div>
+                    <div class="insight-item"><strong>다각화된 투자 옵션 필요:</strong> 단일 투자처 의존보다는 GS건설 CVC, 울산창조경제혁신센터, 기타 VC 등 복수 채널 확보가 리스크 관리 측면에서 중요</div>
+                    <div class="insight-item"><strong>본사 위치의 전략적 가치:</strong> 서울(역삼) 본사 유지는 투자사 접근성, 인재 채용, 스타트업 생태계 참여 측면에서 핵심 자산이므로 지역 투자 조건 신중 검토 필요</div>
+                </div>
+
+                <div class="action-item">
+                    <div class="action-header">
+                        <div class="action-title">1월 7일 울산 미팅 준비</div>
+                        <div class="action-meta">
+                            <span class="action-tag priority-high">High</span>
+                            <span class="action-tag action-owner">담당: 김상윤 대표</span>
+                            <span class="action-tag action-deadline">기한: 1월 6일</span>
+                        </div>
+                    </div>
+                    <div class="agenda-content">
+                        <strong>준비사항:</strong>
+                        <ul>
+                            <li>삼두종합기술 POC 제안서 준비 (제품 데모 포함)</li>
+                            <li>울산창조경제혁신센터 투자 논의 자료 (단, 구체적 조건 협의는 보류)</li>
+                            <li>GS건설 미팅 일정 확인 후 울산 투자 전략 최종 결정</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 안건 4: 제품 솔루션 소개 -->
+            <section id="agenda4" class="section">
+                <h2 class="section-title">💡 안건 4. 제품 솔루션 소개 (P&ID 자동화)</h2>
+                
+                <div class="agenda-item">
+                    <div class="agenda-title">4.1 제품 컨셉 및 사용자 시나리오</div>
+                    <div class="agenda-content">
+                        <p><strong>목표:</strong> 엔지니어가 프로젝트 작업 시 자연스럽게 사용할 수 있는 통합 자동화 솔루션</p>
+
+                        <p style="margin-top: 15px;"><strong>핵심 기능 시나리오 (예: 이종현 부장님 사용 케이스):</strong></p>
+                        <ol>
+                            <li><strong>프로젝트 등록:</strong> 새 프로젝트 또는 기존 프로젝트 선택</li>
+                            <li><strong>문서 업로드:</strong> PFD(Process Flow Diagram), P&ID 초안, 사양서 등 업로드</li>
+                            <li><strong>자동 분석:</strong> AI가 문서를 읽고 구성요소 추출
+                                <ul>
+                                    <li>장비 목록 (펌프, 탱크, 열교환기 등)</li>
+                                    <li>파이프라인 구성</li>
+                                    <li>계기 및 밸브 배치</li>
+                                </ul>
+                            </li>
+                            <li><strong>Line List 자동 생성:</strong> 각 파이프라인의 상세 정보 시트 작성</li>
+                            <li><strong>API 룰 검증:</strong> 설계가 API, ASME 등 산업 표준 준수 여부 자동 체크</li>
+                            <li><strong>이슈 리포팅:</strong> 위반사항(Violation), 경고(Warning), 권장사항 구분 표시</li>
+                        </ol>
+
+                        <div class="quote">
+                            "이종현 부장님께서 참여하고 계신 프로젝트가 이렇게 뜨고 있다. 여기에 내가 PFD를 쭉 올렸고, P&ID 초안을 올렸고, 사양서를 올렸고... 그러면 우리 솔루션이 이걸 읽고 알아서 뭔가를 해줄 것이다" - 김상윤 대표 (제품 데모 중)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">4.2 Line List 자동화 기능 상세</div>
+                    <div class="agenda-content">
+                        <p><strong>현재 수작업 프로세스의 문제점:</strong></p>
+                        <ul>
+                            <li>P&ID에서 라인 정보를 엑셀로 일일이 옮겨 적기 (수백~수천 라인)</li>
+                            <li>오타 및 누락 발생 빈번</li>
+                            <li>업데이트 시 동기화 어려움</li>
+                            <li>검증 프로세스 부재</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>SnapScale 솔루션:</strong></p>
+                        <ul>
+                            <li><span class="highlight">SnapScale 자체 인식 기술로 P&ID 자동 읽기</span></li>
+                            <li>라인 번호(Line Number), 유체 종류(Fluid Service), 사이즈(Size), 압력등급(Pressure Rating) 등 자동 추출</li>
+                            <li>표준 엑셀 템플릿(Line List)으로 바로 출력</li>
+                            <li>P&ID의 경우 AutoCAD 파일로 결과 출력</li>
+                            <li>부장님들의 기존 계산 시트와 호환되도록 설계</li>
+                        </ul>
+
+                        <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 8px;">
+                            <strong>✅ 부장님들 피드백 (긍정적):</strong>
+                            <p style="margin-top: 10px;">"이게 있으면 정말 편할 것 같다", "이렇게 나오면 바로 우리 계산 시트에 넣어서 쓸 수 있겠네요"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">4.3 API 룰 검증 기능</div>
+                    <div class="agenda-content">
+                        <p><strong>검증 항목 예시:</strong></p>
+                        <ul>
+                            <li><strong>PSV(압력안전밸브) 위치:</strong> API 520 기준 준수 여부</li>
+                            <li><strong>파이프 두께:</strong> ASME B31.3 계산식 적용 결과</li>
+                            <li><strong>간격(Spacing):</strong> 소방법, 산업안전규정 준수</li>
+                            <li><strong>벤트/드레인:</strong> 필수 설치 위치 누락 체크</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>출력 형식:</strong></p>
+                        <ul>
+                            <li><strong style="color: #c00;">🔴 Violation:</strong> 반드시 수정 필요 (SHALL 조항 위반)</li>
+                            <li><strong style="color: #f57c00;">🟠 Warning:</strong> 검토 권장 (SHOULD 조항)</li>
+                            <li><strong style="color: #2e7d32;">🟢 OK:</strong> 기준 충족</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>레퍼런스 자동 제공:</strong></p>
+                        <div class="quote">
+                            "각 이슈에 API 520 Section 4.3.2.1 같은 정확한 출처를 클릭 가능한 링크로 제공하여, 엔지니어가 바로 해당 조항을 확인하고 클라이언트/발주처와 협의할 수 있게 함"
+                        </div>
+                    </div>
+                </div>
+
+                <button class="collapsible">📊 제품 아키텍처 다이어그램 보기</button>
+                <div class="collapsible-content">
+                    <div class="collapsible-content-inner">
+                        <div class="mermaid-container">
+                            <div class="mermaid">
+                            graph TB
+                                A[엔지니어 사용자] -->|문서 업로드| B[SnapScale Platform]
+                                B --> C{AI 문서 분석}
+                                C --> D[SnapScale 인식 엔진]
+                                C --> E[온톨로지 매칭]
+                                D --> F[구성요소 추출]
+                                E --> G[API 룰 검증]
+                                F --> H[예시 Line List 생성]
+                                G --> I[Violation/Warning 리스트]
+                                H --> J[엑셀 출력]
+                                I --> J
+                                H --> K[P&ID: AutoCAD 파일]
+                                J --> L[기존 계산 시트 연동]
+                                K --> L
+                                L --> A
+                                
+                                style B fill:#2a5298,color:#fff
+                                style C fill:#4FC3F7,color:#fff
+                                style G fill:#ff9800,color:#fff
+                                style L fill:#4caf50,color:#fff
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-title">핵심 인사이트</div>
+                    <div class="insight-item"><strong>기존 워크플로우 존중:</strong> 엔지니어들의 기존 엑셀 계산 시트를 대체하지 않고 <span class="highlight">보완하는 전략</span>이 수용성 제고에 결정적</div>
+                    <div class="insight-item"><strong>자동화의 실질적 가치:</strong> 단순 노동력 절감보다 <span class="highlight">"오류 방지"와 "검증 자동화"</span>가 엔지니어에게 더 큰 가치 제공</div>
+                    <div class="insight-item"><strong>레퍼런스 투명성:</strong> AI 판단의 근거를 명확히 제시하는 것이 신뢰 구축의 핵심 (블랙박스 방지)</div>
+                    <div class="insight-item"><strong>시장 차별화 포인트:</strong> Palantir나 타 솔루션이 제공하지 못하는 <span class="highlight">화공 특화 도메인 지식 + 최신 API 룰 자동 업데이트</span>가 경쟁력</div>
+                </div>
+            </section>
+
+            <!-- 안건 5: 기술 백본 및 온톨로지 -->
+            <section id="agenda5" class="section">
+                <h2 class="section-title">🧠 안건 5. 기술 백본: 온톨로지 및 LLM 아키텍처</h2>
+                
+                <div class="agenda-item">
+                    <div class="agenda-title">5.1 온톨로지(Ontology) 구조 개요</div>
+                    <div class="agenda-content">
+                        <p><strong>온톨로지란?</strong></p>
+                        <p>화공 엔지니어링 도메인의 개념(Concepts), 관계(Relations), 규칙(Rules)을 구조화한 지식 그래프</p>
+
+                        <p style="margin-top: 15px;"><strong>SnapScale 온톨로지 구조:</strong></p>
+                        <ul>
+                            <li><strong>T-Box (Terminological Box):</strong> 개념 정의
+                                <ul>
+                                    <li>예: "PSV는 압력안전밸브의 일종이다", "펌프는 회전기기다"</li>
+                                </ul>
+                            </li>
+                            <li><strong>A-Box (Assertion Box):</strong> 실제 인스턴스
+                                <ul>
+                                    <li>예: "P-101은 원심펌프다", "V-201은 수직 탱크다"</li>
+                                </ul>
+                            </li>
+                            <li><strong>규칙(Rules):</strong> API/ASME 룰을 온톨로지 쿼리 언어로 변환
+                                <ul>
+                                    <li>예: "IF 유체=가연성 AND 압력>10bar THEN PSV 필수"</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <div class="quote">
+                            "우리가 구축해놓은 API 문서가 온톨로지로 다 연결이 되어있다면, 엔지니어가 질문했을 때 정확한 레퍼런스와 함께 답변을 줄 수 있다" - 박규호 부장
+                        </div>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">5.2 API 문서의 온톨로지 변환 작업 (태현 인턴)</div>
+                    <div class="agenda-content">
+                        <p><strong>현재 진행 상황:</strong></p>
+                        <ul>
+                            <li>API 520 (PSV 사이징), API 521 (화재 케이스) 등 주요 문서 분석 중</li>
+                            <li>자연어로 된 룰을 <span class="highlight">검증 가능한 로직 언어</span>로 변환</li>
+                            <li>SHALL, SHOULD, MAY 등 의무 수준에 따라 Violation/Warning 구분</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>핵심 질문 (태현 → 부장님들):</strong></p>
+                        <ol>
+                            <li><strong>API 문서 참조 빈도:</strong> 실무에서 얼마나 자주 직접 보는가?
+                                <ul>
+                                    <li><strong>답변:</strong> "일일이 안 본다. 계산 시트에 이미 반영되어 있고, 이슈 발생 시에만 확인"</li>
+                                </ul>
+                            </li>
+                            <li><strong>SHALL/SHOULD/MAY 해석:</strong> 엔지니어가 이를 어떻게 활용하는가?
+                                <ul>
+                                    <li><strong>답변:</strong> "SHALL은 무조건, SHOULD도 거의 필수, MAY는 유리하게 해석 가능 → 이때 근거 찾으려고 API 문서 찾아봄"</li>
+                                </ul>
+                            </li>
+                            <li><strong>LLM에게 할 질문 유형:</strong> 엔지니어가 실제로 물어볼 내용은?
+                                <ul>
+                                    <li><strong>답변:</strong> 처음엔 "PSV가 뭐야?" 같은 기본 질문으로 검증, 이후 "Fire Case PRD 어떻게 계산해?" 등 실무 질문</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">5.3 계산 시트와의 통합 (다소 인턴)</div>
+                    <div class="agenda-content">
+                        <p><strong>현재 작업:</strong></p>
+                        <ul>
+                            <li>부장님들이 제공한 Line List, Hydraulic Calculation 엑셀 시트 분석</li>
+                            <li>시트 내 수식과 온톨로지 규칙 매칭</li>
+                            <li>API 문서와 계산 시트의 연결 고리 파악</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>기술적 이슈 및 해결:</strong></p>
+                        <ul>
+                            <li><strong>이슈:</strong> Equivalence Length 시트가 무겁고 느림
+                                <ul>
+                                    <li><strong>원인:</strong> 데이터베이스에서 파이프 사이즈별 값을 실시간 조회</li>
+                                    <li><strong>해결방안:</strong> 주요 사이즈(3", 6" 이상)만 우선 처리, 1" 같은 minor 사이즈는 후순위</li>
+                                </ul>
+                            </li>
+                            <li><strong>이슈:</strong> Nominal Pipe Size가 인치 단위이나 ISO에는 1"로 표기되어 시트에 입력 불가
+                                <ul>
+                                    <li><strong>부장님 답변:</strong> "1인치는 너무 작아서 중요한 라인 아님. 3인치 이상만 신경 쓰면 됨"</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px;">
+                            <strong>📌 향후 확장:</strong>
+                            <p style="margin-top: 10px;">현재는 Line 중심이나, Pump Calculation 시트(더 복잡)도 동일한 방식으로 통합 예정. "라인 작업을 응용하면 펌프도 가능" - 박규호 부장</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="collapsible">🏗️ 온톨로지 아키텍처 다이어그램 보기</button>
+                <div class="collapsible-content">
+                    <div class="collapsible-content-inner">
+                        <div class="mermaid-container">
+                            <div class="mermaid">
+                            graph LR
+                                A[API 문서<br/>PDF] --> B[자연어 규칙<br/>추출]
+                                B --> C[온톨로지<br/>변환]
+                                C --> D[T-Box<br/>개념 정의]
+                                C --> E[A-Box<br/>인스턴스]
+                                C --> F[Rules<br/>검증 로직]
+                                
+                                G[P&ID<br/>도면] --> H[SnapScale 인식<br/>Entity 추출]
+                                H --> E
+                                
+                                I[계산 시트<br/>엑셀] --> J[수식<br/>매핑]
+                                J --> F
+                                
+                                D --> K[LLM<br/>Context]
+                                E --> K
+                                F --> K
+                                
+                                K --> L[사용자<br/>질의 응답]
+                                K --> M[자동<br/>검증]
+                                K --> N[예시 Line List<br/>생성]
+                                
+                                style C fill:#2a5298,color:#fff
+                                style K fill:#4FC3F7,color:#fff
+                                style M fill:#ff9800,color:#fff
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-title">핵심 인사이트</div>
+                    <div class="insight-item"><strong>온톨로지 = 경쟁력의 핵심:</strong> OpenAI GPT는 범용 지식만 갖고 있으나, SnapScale의 화공 특화 온톨로지는 <span class="highlight">최신 API 룰 + 실무 계산 시트 + 프로젝트 경험</span>을 통합한 독자적 자산</div>
+                    <div class="insight-item"><strong>Rule-Based + LLM 하이브리드:</strong> 순수 AI보다 <span class="highlight">규칙 기반 검증 + LLM 자연어 인터페이스</span> 조합이 엔지니어링 도메인에서 신뢰성과 사용성 모두 충족</div>
+                    <div class="insight-item"><strong>실무 피드백의 중요성:</strong> "1인치는 안 중요하다", "SHALL은 무조건이다" 같은 실무 지식이 온톨로지 우선순위와 검증 로직 설계에 필수적</div>
+                    <div class="insight-item"><strong>기술 부채 관리 전략:</strong> 완벽한 전체 API 구현보다 <span class="highlight">핵심 유스케이스(3인치 이상 라인, Fire Case PSV 등) 우선 구현</span> 후 점진적 확장이 현실적</div>
+                </div>
+            </section>
+
+            <!-- 안건 6: API 문서 활용 -->
+            <section id="agenda6" class="section">
+                <h2 class="section-title">📚 안건 6. API 문서 활용 및 실무 접근법</h2>
+                
+                <div class="agenda-item">
+                    <div class="agenda-title">6.1 ChemCalc 사례 분석</div>
+                    <div class="agenda-content">
+                        <p><strong>ChemCalc (www.chekcalc.com):</strong> 화공 엔지니어들이 널리 사용하는 무료 계산 도구</p>
+
+                        <p style="margin-top: 15px;"><strong>제공 기능:</strong></p>
+                        <ul>
+                            <li>PSV 사이징 (API 520, NFPA 기준 선택 가능)</li>
+                            <li>Hydraulic 계산 (Line, Pump 등)</li>
+                            <li>탱크, 베셀 설계</li>
+                            <li>각 계산에 사용된 <span class="highlight">수식과 코드 출처 명시</span></li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>부장님들 평가:</strong></p>
+                        <div class="quote">
+                            "이거 엄청 좋아요. 정확해요. 나도 이걸로 탱크랑 베셀 몇 개 많이 했는데" - 이종현 부장
+                        </div>
+                        <div class="quote">
+                            "여기 설명도 다 해줘요. 수식도 다 나와 있고, API나 NFPA 같은 산업 표준 코드를 선택할 수 있게 되어 있어서" - 박규호 부장
+                        </div>
+
+                        <p style="margin-top: 15px;"><strong>SnapScale에 시사하는 점:</strong></p>
+                        <ul>
+                            <li>✅ 이미 검증된 UX 패턴: 인풋 → 계산 → 결과 + 수식 출처</li>
+                            <li>✅ 산업 표준 선택 옵션 제공 (API, ASME, NFPA 등)</li>
+                            <li>✅ 투명성: 수식과 코드 출처 명시로 신뢰 확보</li>
+                            <li>⚠️ 한계: 선행 지식 필요 (초보자는 어떤 인풋이 필요한지 모름)</li>
+                            <li>🎯 SnapScale 차별화: <span class="highlight">LLM 인터페이스로 설명 + 가이드 + 계산을 통합 제공</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">6.2 Fire Case 예시: Wetted Area 논쟁</div>
+                    <div class="agenda-content">
+                        <p><strong>배경:</strong> PSV 사이징 시 Fire Case는 가장 복잡하고 논쟁이 많은 케이스</p>
+
+                        <p style="margin-top: 15px;"><strong>실제 미팅 토론 내용:</strong></p>
+                        <div class="quote">
+                            <strong>태현:</strong> "ChemCalc에서 'Calculated Area'와 'Wetted Area'를 선택하라고 하는데, 이게 뭔가요?"<br><br>
+                            <strong>이종현 부장:</strong> "간단하게 설명하면, 불이 난 케이스는 밑에 불이 있고 열원이 무한대로 있고 그 위에 베셀이 있다고 생각하는 거예요. 불구덩이 위에 베셀이 있다고 생각해서 거기 안에 있는 게 다 끓어 나간다는 시나리오거든요. 그때 그 베셀 안에 있는 액체 면적이 얼만큼 넓으냐, 그 얘기를 하는 거예요."<br><br>
+                            <strong>이종현 부장:</strong> "같은 1리터라도 이렇게 얇고 넓게 있으면 증발 속도가 빠르니까 PSV가 커져야 하고, 1리터가 이렇게 날씬하게 높이 있으면 증발 속도가 느리니까 PSV가 작아도 돼요. 집에서 라면 끓일 때 생각해보세요. 얇은 냄비는 빨리 끓고, 깊은 냄비는 늦게 끓잖아요."
+                        </div>
+
+                        <p style="margin-top: 15px;"><strong>인사이트:</strong></p>
+                        <ul>
+                            <li><span class="highlight">경험에서 나온 직관</span>: 계산식만 알아도 놓칠 수 있는 물리적 원리</li>
+                            <li>이런 설명을 LLM이 제공할 수 있다면 → <strong>주니어 엔지니어 교육 효과</strong></li>
+                            <li>SnapScale의 가치: 단순 계산 도구가 아닌 <strong>"설명하는 도구"</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">6.3 엔지니어의 실제 질문 패턴</div>
+                    <div class="agenda-content">
+                        <p><strong>1단계 (검증 단계):</strong> 기본 질문으로 도구 신뢰성 확인</p>
+                        <ul>
+                            <li>"PSV가 뭐야?"</li>
+                            <li>"Hydraulic Calculation은 어떻게 해?"</li>
+                            <li>"소방법에서 스프링클러 필수인 경우는?"</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>2단계 (실무 적용):</strong> 구체적 계산 요청</p>
+                        <ul>
+                            <li>"Fire Case PRD 점검해줘"</li>
+                            <li>"이 파이프 사이즈에서 압력 손실 얼마?"</li>
+                            <li>"PSV 오리피스 사이즈 추천해줘"</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>3단계 (의사결정 지원):</strong> 규정 해석 및 근거 제공</p>
+                        <div class="quote">
+                            "소방법에서는 달아야 한다고 하는데, 나는 안 달고 싶다. 안 다는 케이스를 찾아야지. API나 어디에 '이럴 때는 생략 가능' 같은 거 찾아서 근거를 만들어 가고 싶은 거지" - 이종현 부장
+                        </div>
+
+                        <p style="margin-top: 15px;"><strong>SnapScale의 대응 전략:</strong></p>
+                        <ul>
+                            <li><strong>1단계:</strong> 기본 개념 설명 + 관련 API 문서 링크 (신뢰 구축)</li>
+                            <li><strong>2단계:</strong> 계산 자동 수행 + 수식 출처 명시 (실용성)</li>
+                            <li><strong>3단계:</strong> SHALL/SHOULD/MAY 조항 분석 + 예외 케이스 검색 (고급 가치)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-title">핵심 인사이트</div>
+                    <div class="insight-item"><strong>엔지니어의 신뢰 구축 프로세스:</strong> 첫 질문(PSV가 뭐야?)에 제대로 답하지 못하면 이후 사용 안 함. <span class="highlight">초기 인상이 제품 성패 좌우</span></div>
+                    <div class="insight-item"><strong>ChemCalc의 성공 요인:</strong> 무료 + 정확성 + 투명성(수식 공개). SnapScale은 여기에 <span class="highlight">설명력(LLM) + 자동화(P&ID 연동)</span> 추가로 차별화</div>
+                    <div class="insight-item"><strong>경험 지식의 가치:</strong> "얇은 냄비는 빨리 끓는다" 같은 직관적 비유가 수식보다 이해 쉬움. 온톨로지에 이런 설명도 포함 필요</div>
+                    <div class="insight-item"><strong>규정 해석의 회색지대:</strong> 엔지니어가 비용 절감 위해 "예외 조항"을 찾는 것은 합법적 업무. SnapScale이 이를 지원하면 <span class="highlight">큰 부가가치</span></div>
+                    <div class="insight-item"><strong>주니어-시니어 간극 해소:</strong> 15~20년차가 현장에서 즉답하는 지식(API 4.3.3.5.2 90%)을 데이터베이스화하면 주니어도 접근 가능 → <strong>조직 생산성 향상</strong></div>
+                </div>
+            </section>
+
+            <!-- 안건 7: 실무 질문 토론 -->
+            <section id="agenda7" class="section">
+                <h2 class="section-title">💬 안건 7. 실무 전문가 토론 및 피드백</h2>
+                
+                <div class="agenda-item">
+                    <div class="agenda-title">7.1 코드 우선순위 및 지역별 규정</div>
+                    <div class="agenda-content">
+                        <p><strong>질문 (김상윤 대표):</strong> "API 룰이 있고 각 나라 로컬 룰(예: 한국 소방법, 사우디 규정)이 있을 때, 무엇이 선행하나요?"</p>
+
+                        <p style="margin-top: 15px;"><strong>답변 (이종현 부장):</strong></p>
+                        <div class="quote">
+                            "BID 때 다 와요. 사업주가 처음 발주를 낼 때 '무조건 PSV는 API 코드를 쓴 걸 받겠다' 이렇게 오니까, 그걸 가지고 가면 이제 그 나라 법이랑 안 맞는 걸 찾아서 해결을 해야 되는 거죠."
+                        </div>
+
+                        <p style="margin-top: 15px;"><strong>실무 전략:</strong></p>
+                        <ol>
+                            <li><strong>보수적 작전:</strong> 일단 그 나라 법대로 엄청 보수적으로 계산 (예: 100개 스프링클러 필요)</li>
+                            <li><strong>협상:</strong> "100개 달면 돈이 많이 나옵니다. 그런데 API 문서에 이런 문구가 있는데, 이렇게 해석하면 80개 뺄 수 있는데 OK하시겠어요?"</li>
+                            <li><strong>미국 우선 원칙:</strong> 미국 규정(API, ASME)이 가장 엄격하므로, 미국 기준 통과하면 대부분 국가에서 문제없음</li>
+                        </ol>
+
+                        <div class="quote">
+                            "멕시코, 리비아 같은 데는 '니네 법 갖고 와봐' 하면 걸네도 못 갖고 온다고. '이거 미국 NFPA 기준이야' 하면 그냥 다들 의심 안 하죠" - 이종현 부장
+                        </div>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">7.2 Lesson Learned 문서의 역할</div>
+                    <div class="agenda-content">
+                        <p><strong>질문 (김상윤 대표):</strong> "회사에서 이런 규정 논쟁 사례를 Lesson Learned로 문서화하나요?"</p>
+
+                        <p style="margin-top: 15px;"><strong>답변 (이종현 부장):</strong></p>
+                        <ul>
+                            <li><strong>주요 시장 (사우디 등):</strong> Lesson Learned 많이 남아 있음 (프로젝트 많아서)</li>
+                            <li><strong>신흥/소규모 시장 (브라질, 러시아, 멕시코 등):</strong> 레퍼런스 거의 없음</li>
+                        </ul>
+
+                        <p style="margin-top: 15px;"><strong>SnapScale 전략:</strong></p>
+                        <div class="quote">
+                            "레퍼런스를 모으려면 미국 거를 얻어야지. 차라리 미국 프로젝트의 Lesson Learned를 학습시키는 게 더 범용적" - 박규호 부장
+                        </div>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">7.3 API 버전 업데이트의 실무 영향</div>
+                    <div class="agenda-content">
+                        <p><strong>논점:</strong> SnapScale이 "최신 API 버전 자동 업데이트"를 강조하는데, 실무에서 얼마나 중요한가?</p>
+
+                        <p style="margin-top: 15px;"><strong>박규호 부장 의견:</strong></p>
+                        <div class="quote">
+                            "최신 버전이 나와도 실무에서는 그렇게 급하게 적용 안 해요. 왜냐하면 이미 수백 개 공장이 예전 버전으로 지어졌고 잘 돌아가고 있거든요. 최신 버전이라는 건 그냥 최신 경향을 따라간다는 정도지, 안 지킨다고 공장 못 짓는 것도 아니고."
+                        </div>
+
+                        <p style="margin-top: 15px;"><strong>이종현 부장 의견:</strong></p>
+                        <div class="quote">
+                            "하지만 상윤님이 만드는 프로그램에서는 그 말이 꼭 필요하긴 하지. 실무에서는 의미가 적어도, 마케팅 포인트로는 중요해요."
+                        </div>
+
+                        <p style="margin-top: 15px;"><strong>결론:</strong></p>
+                        <ul>
+                            <li>✅ <strong>마케팅 가치:</strong> "항상 최신 버전 반영"은 제품 차별화 포인트</li>
+                            <li>⚠️ <strong>실무 우선순위:</strong> 최신 버전보다 <span class="highlight">"정확성"과 "사용 편의성"</span>이 더 중요</li>
+                            <li>🎯 <strong>개발 전략:</strong> 최신 버전 반영은 기능으로 갖추되, 핵심 리소스는 다른 곳에 투입</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">7.4 커뮤니티 및 외부 리소스</div>
+                    <div class="agenda-content">
+                        <p><strong>박규호 부장 제안:</strong> 화공 엔지니어링 온라인 커뮤니티 참조 권장</p>
+                        <ul>
+                            <li>국내: 화학공학 커뮤니티 사이트 (링크 제공 예정)</li>
+                            <li>해외: Eng-Tips, ChemicalForums 등</li>
+                            <li>엔지니어들이 실제로 어떤 질문을 하고 어떤 답변을 신뢰하는지 관찰 가능</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-title">핵심 인사이트</div>
+                    <div class="insight-item"><strong>규정 간 충돌은 협상 카드:</strong> 엔지니어는 로컬 규정 vs API를 대립시켜 <span class="highlight">비용 절감 여지를 만드는 게 핵심 역량</span>. SnapScale이 이를 지원하면 고급 기능</div>
+                    <div class="insight-item"><strong>미국 중심주의의 실용성:</strong> 미국 규정만 정확히 구현해도 글로벌 대부분 시장 커버 가능 (리소스 집중 전략 가능)</div>
+                    <div class="insight-item"><strong>마케팅 vs 실무의 괴리:</strong> "최신 버전"은 영업에 필수지만 현장에선 부차적. <span class="highlight">이 gap을 이해하고 리소스 배분</span> 필요</div>
+                    <div class="insight-item"><strong>커뮤니티 데이터의 가치:</strong> 실제 엔지니어들의 질문 패턴과 신뢰하는 답변 스타일을 분석하면 LLM 학습 데이터로 활용 가능</div>
+                </div>
+            </section>
+
+            <!-- 결정사항 -->
+            <section id="decisions" class="section">
+                <h2 class="section-title">✅ 주요 결정사항</h2>
+                
+                <div class="decision-box">
+                    <div class="decision-title">결정 1: 협업툴 Slack 채택</div>
+                    <div class="agenda-content">
+                        <p><strong>결정 내용:</strong> 팀 협업 도구로 Slack 공식 도입</p>
+                        <p><strong>결정 근거:</strong></p>
+                        <ul>
+                            <li>팀원 중 사용 경험자 많음 (박규호, 이재윤)</li>
+                            <li>MS Teams 대비 비용 효율적 (무료 플랜 활용 가능)</li>
+                            <li>스타트업 생태계 표준 도구로 외부 협업 시 호환성 우수</li>
+                        </ul>
+                        <p><strong>실행 책임:</strong> 김상윤 대표 (워크스페이스 생성 및 초대)</p>
+                        <p><strong>기한:</strong> 1월 1일 업무 시작 전 완료</p>
+                    </div>
+                </div>
+
+                <div class="decision-box">
+                    <div class="decision-title">결정 2: 울산 투자 신중 검토, POC 우선 전략</div>
+                    <div class="agenda-content">
+                        <p><strong>결정 내용:</strong> 울산창조경제혁신센터 투자 제안은 보류하고, 삼두종합기술 POC 완료 우선</p>
+                        <p><strong>결정 근거:</strong></p>
+                        <ul>
+                            <li>울산은 SK/현대 중심으로 GS 네트워크 없음 (전략적 미스매치)</li>
+                            <li>POC 성공 후 협상력 갖춘 상태에서 투자 논의가 유리</li>
+                            <li>GS건설 CVC 미팅 결과를 먼저 확인 필요</li>
+                        </ul>
+                        <p><strong>다음 단계:</strong> 1월 7일 울산 미팅에서는 POC에만 집중, 투자 논의는 가능성만 열어두기</p>
+                    </div>
+                </div>
+
+                <div class="decision-box">
+                    <div class="decision-title">결정 3: 온톨로지 구조 유지, T-Box 수정 가능성 열어두기</div>
+                    <div class="agenda-content">
+                        <p><strong>결정 내용:</strong> 현재 개발 중인 T-Box(개념 체계) 구조를 기본으로 하되, 월요일 회의에서 수정 가능성 논의</p>
+                        <p><strong>결정 근거:</strong></p>
+                        <ul>
+                            <li>태현의 API 문서 온톨로지 변환 작업이 현 T-Box 기준으로 진행 중</li>
+                            <li>부장님들 피드백 반영하여 실무 적합성 높일 필요</li>
+                        </ul>
+                        <p><strong>다음 단계:</strong> 12월 30일(월) 회의에서 T-Box 구조 상세 검토</p>
+                    </div>
+                </div>
+
+                <div class="decision-box">
+                    <div class="decision-title">결정 4: 계산 시트 통합 우선순위 설정</div>
+                    <div class="agenda-content">
+                        <p><strong>결정 내용:</strong> Line List → Pump Calculation 순서로 단계적 개발</p>
+                        <p><strong>결정 근거:</strong></p>
+                        <ul>
+                            <li>Line List가 상대적으로 단순하고 빈도 높음</li>
+                            <li>Pump는 복잡도 높아 Line 작업 완료 후 응용</li>
+                            <li>1인치 같은 minor 사이즈는 후순위 (실무 중요도 낮음)</li>
+                        </ul>
+                        <p><strong>실행 책임:</strong> 다소 (계산 시트 개발), 이재윤 (시스템 통합)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 액션아이템 -->
+            <section id="actions" class="section">
+                <h2 class="section-title">📋 액션아이템 (Action Items)</h2>
+
+                <div class="action-item">
+                    <div class="action-header">
+                        <div class="action-title">AI-1. Slack 워크스페이스 생성 및 팀원 초대</div>
+                        <div class="action-meta">
+                            <span class="action-tag priority-high">High</span>
+                            <span class="action-tag action-owner">김상윤 대표</span>
+                            <span class="action-tag action-deadline">12월 31일</span>
+                        </div>
+                    </div>
+                    <div class="agenda-content">
+                        <strong>세부 작업:</strong>
+                        <ul>
+                            <li>SnapScale 워크스페이스 생성</li>
+                            <li>채널 구조 설계 (예: #general, #dev, #sales, #부장님-qa)</li>
+                            <li>전원 초대 링크 발송 (특히 이종현 부장님 온보딩 지원)</li>
+                            <li>간단한 사용 가이드 문서 작성</li>
+                        </ul>
+                        <strong>완료 기준:</strong> 전원이 Slack에 접속하여 첫 메시지 송수신 가능
+                    </div>
+                </div>
+
+                <div class="action-item">
+                    <div class="action-header">
+                        <div class="action-title">AI-2. 1월 7일 울산 미팅 준비 (삼두종합기술 + 창조경제혁신센터)</div>
+                        <div class="action-meta">
+                            <span class="action-tag priority-high">High</span>
+                            <span class="action-tag action-owner">김상윤 대표</span>
+                            <span class="action-tag action-deadline">1월 6일</span>
+                        </div>
+                    </div>
+                    <div class="agenda-content">
+                        <strong>세부 작업:</strong>
+                        <ul>
+                            <li><strong>삼두종합기술:</strong> POC 제안서 + 제품 데모 준비 (Line List 자동화 중심)</li>
+                            <li><strong>창조경제혁신센터:</strong> 투자 논의 자료 준비 (단, 구체적 조건은 보류)</li>
+                            <li>GS건설 CVC 미팅 일정 확인 및 전략 수립</li>
+                        </ul>
+                        <strong>완료 기준:</strong> 프레젠테이션 자료 + 데모 환경 준비 완료
+                    </div>
+                </div>
+
+                <div class="action-item">
+                    <div class="action-header">
+                        <div class="action-title">AI-3. Line List 계산 시트 1차 프로토타입 완성</div>
+                        <div class="action-meta">
+                            <span class="action-tag priority-medium">Medium</span>
+                            <span class="action-tag action-owner">다소 (인턴)</span>
+                            <span class="action-tag action-deadline">1월 15일</span>
+                        </div>
+                    </div>
+                    <div class="agenda-content">
+                        <strong>세부 작업:</strong>
+                        <ul>
+                            <li>부장님 제공 엑셀 시트 기반 데이터 구조 파악</li>
+                            <li>Equivalence Length, Hydraulic 계산 로직 코드화</li>
+                            <li>3인치 이상 주요 파이프 사이즈 우선 처리</li>
+                            <li>펌프 계산은 2월 이후로 연기</li>
+                        </ul>
+                        <strong>완료 기준:</strong> 샘플 P&ID 입력 시 Line List 자동 생성 가능
+                    </div>
+                </div>
+
+                <div class="action-item">
+                    <div class="action-header">
+                        <div class="action-title">AI-4. API 문서 온톨로지 변환 지속 (SHALL/SHOULD/MAY 구분)</div>
+                        <div class="action-meta">
+                            <span class="action-tag priority-medium">Medium</span>
+                            <span class="action-tag action-owner">태현 (인턴)</span>
+                            <span class="action-tag action-deadline">1월 20일</span>
+                        </div>
+                    </div>
+                    <div class="agenda-content">
+                        <strong>세부 작업:</strong>
+                        <ul>
+                            <li>API 520, 521 문서 계속 분석</li>
+                            <li>각 룰을 Violation/Warning/OK로 분류</li>
+                            <li>ChemCalc 계산식과 매핑 (레퍼런스 일관성 확보)</li>
+                            <li>월요일 회의에서 T-Box 수정사항 반영</li>
+                        </ul>
+                        <strong>완료 기준:</strong> 주요 PSV 관련 룰 50개 이상 온톨로지 변환 완료
+                    </div>
+                </div>
+
+                <div class="action-item">
+                    <div class="action-header">
+                        <div class="action-title">AI-5. 화공 엔지니어링 커뮤니티 조사 및 질문 패턴 분석</div>
+                        <div class="action-meta">
+                            <span class="action-tag priority-low">Low</span>
+                            <span class="action-tag action-owner">노은아 (시장조사)</span>
+                            <span class="action-tag action-deadline">1월 말</span>
+                        </div>
+                    </div>
+                    <div class="agenda-content">
+                        <strong>세부 작업:</strong>
+                        <ul>
+                            <li>박규호 부장님이 제공한 커뮤니티 사이트 조사</li>
+                            <li>국내/해외 엔지니어들의 자주 묻는 질문(FAQ) 100개 수집</li>
+                            <li>질문 카테고리 분류 (기본 개념, 계산, 규정 해석 등)</li>
+                            <li>LLM 학습 데이터 후보로 정리</li>
+                        </ul>
+                        <strong>완료 기준:</strong> FAQ 데이터베이스 초안 작성
+                    </div>
+                </div>
+
+                <div class="action-item">
+                    <div class="action-header">
+                        <div class="action-title">AI-6. 글로벌 시장조사 사업 행정 처리 (충북대 지사 설립)</div>
+                        <div class="action-meta">
+                            <span class="action-tag priority-low">Low</span>
+                            <span class="action-tag action-owner">김상윤 대표</span>
+                            <span class="action-tag action-deadline">1월 중순</span>
+                        </div>
+                    </div>
+                    <div class="agenda-content">
+                        <strong>세부 작업:</strong>
+                        <ul>
+                            <li>충북대 우편주소 지사 설립 서류 준비</li>
+                            <li>ICON(아이콘) 사업 신청 마무리</li>
+                            <li>미국, 동남아, 인도 시장조사 계획 수립</li>
+                        </ul>
+                        <strong>완료 기준:</strong> 사업 승인 및 예산 집행 가능 상태
+                    </div>
+                </div>
+            </section>
+
+            <!-- 후속 계획 -->
+            <section id="next" class="section">
+                <h2 class="section-title">🔜 후속 계획 및 다음 회의</h2>
+                
+                <div class="agenda-item">
+                    <div class="agenda-title">다음 회의: 12월 30일 (월) 오후 9시</div>
+                    <div class="agenda-content">
+                        <p><strong>회의 주제:</strong> 전체 스케줄 및 2026년 로드맵 상세 논의</p>
+                        
+                        <p style="margin-top: 15px;"><strong>안건 (예정):</strong></p>
+                        <ol>
+                            <li><strong>2026년 마일스톤:</strong> Q1~Q4 목표 설정
+                                <ul>
+                                    <li>POC 완료 시점</li>
+                                    <li>Series A 준비 및 투자 유치 타임라인</li>
+                                    <li>제품 출시(MVP) 일정</li>
+                                </ul>
+                            </li>
+                            <li><strong>팀 운영 방식:</strong> 오프라인 협업 규칙
+                                <ul>
+                                    <li>코어타임, 회의 주기</li>
+                                    <li>스프린트 구조 (2주? 4주?)</li>
+                                    <li>부장님들과의 정기 리뷰 주기</li>
+                                </ul>
+                            </li>
+                            <li><strong>온톨로지 T-Box 재검토:</strong> 부장님 피드백 반영
+                                <ul>
+                                    <li>개념 체계 수정 필요 여부</li>
+                                    <li>우선순위 룰 선정 (어떤 API부터?)</li>
+                                </ul>
+                            </li>
+                            <li><strong>POC 전략:</strong> 삼두종합기술 외 추가 타겟 검토
+                                <ul>
+                                    <li>POC 동시 진행 가능 업체 탐색</li>
+                                    <li>성공 기준 정의 (KPI)</li>
+                                </ul>
+                            </li>
+                        </ol>
+
+                        <p style="margin-top: 15px;"><strong>참석 확인:</strong></p>
+                        <ul>
+                            <li>✅ 김상윤 대표</li>
+                            <li>✅ 이종현 부장 (확정)</li>
+                            <li>✅ 박규호 부장 (이사 후 참여 가능)</li>
+                            <li>✅ 이재윤, 다소, 태현 (전원 참석)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="agenda-item">
+                    <div class="agenda-title">미해결 이슈 및 추가 논의 필요사항</div>
+                    <div class="agenda-content">
+                        <ol>
+                            <li><strong>GS건설 CVC 미팅 일정:</strong> 아직 미확정 → 확정 시 울산 투자 전략 재평가</li>
+                            <li><strong>노은아 온보딩:</strong> Slack 초대 및 시장조사 업무 배정</li>
+                            <li><strong>개발 환경 통일:</strong> Git, IDE, 라이브러리 버전 등 표준화 필요</li>
+                            <li><strong>POC 계약 템플릿:</strong> 법무 검토 필요 (지적재산권, 데이터 소유권 등)</li>
+                            <li><strong>화공 커뮤니티 리스트:</strong> 박규호 부장님이 제공 약속 (Slack으로 공유 예정)</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <button class="collapsible">📅 2026년 예상 타임라인 (Mermaid 차트)</button>
+                <div class="collapsible-content">
+                    <div class="collapsible-content-inner">
+                        <div class="mermaid-container">
+                            <div class="mermaid">
+                            gantt
+                                title SnapScale 2026 로드맵 (예상)
+                                dateFormat YYYY-MM-DD
+                                
+                                section 조직
+                                고려대 업무 시작           :done, 2026-01-01, 2026-02-15
+                                역삼 사무실 이전          :active, 2026-02-15, 2026-03-01
+                                
+                                section POC
+                                삼두종합기술 POC          :active, 2026-01-07, 2026-03-31
+                                추가 POC 1-2곳            :2026-02-01, 2026-04-30
+                                
+                                section 제품개발
+                                Line List 자동화 MVP      :active, 2025-12-27, 2026-02-28
+                                API 룰 검증 엔진          :2026-01-15, 2026-03-31
+                                LLM 챗봇 통합             :2026-02-01, 2026-04-30
+                                Pump 계산 확장            :2026-03-01, 2026-05-31
+                                
+                                section 투자유치
+                                GS건설 CVC 미팅           :milestone, 2026-01-15, 0d
+                                Series A 준비             :2026-02-01, 2026-05-31
+                                Series A 클로징           :milestone, 2026-06-30, 0d
+                            </div>
+                        </div>
+                        <p style="margin-top: 15px; color: #7f8c8d; font-size: 0.9em;">
+                            * 위 타임라인은 회의 내용을 기반으로 한 예상 일정이며, 12월 30일 회의에서 확정 예정
+                        </p>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <div class="insight-title">핵심 인사이트 및 향후 전략 방향</div>
+                    <div class="insight-item"><strong>POC 성공이 모든 것의 시작:</strong> 투자 유치, 인재 채용, 추가 고객 확보 모두 첫 POC 성공 사례에 달려있음. 삼두종합기술 POC에 최대 리소스 집중 필요</div>
+                    <div class="insight-item"><strong>엔지니어 신뢰 = 제품 성공:</strong> 부장님들의 "이거 있으면 편하겠다" 반응이 시장 검증. 계속 피드백 루프 유지하며 실무 적합성 높이기</div>
+                    <div class="insight-item"><strong>기술 vs 마케팅 균형:</strong> "최신 API 버전"처럼 실무보다 영업에 중요한 요소도 인지하고 적절히 강조. 단, 핵심은 정확성과 사용성</div>
+                    <div class="insight-item"><strong>지역 전략 재검토:</strong> GS건설 CVC 결과에 따라 울산 투자 재평가. 서울 본사 유지가 장기적으로 더 유리할 수 있음</div>
+                    <div class="insight-item"><strong>팀 확장 준비:</strong> Slack 도입, 온톨로지 구조화, 개발 프로세스 정립 등 조직 성장 기반 마련 중. 2026년 중반 이후 추가 채용 대비</div>
+                </div>
+            </section>
+
+        </div>
+
+        <div class="footer">
+            <p><strong>SnapScale</strong> | 화공 엔지니어링 AI 자동화 솔루션</p>
+            <p class="timestamp">
+                문서 생성: 2025년 12월 28일<br>
+                작성자: Claude (AI Assistant) | 검토: 필요 시 팀원 확인 요망
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Collapsible 기능
+        var coll = document.getElementsByClassName("collapsible");
+        for (var i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        }
+
+        // 부드러운 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

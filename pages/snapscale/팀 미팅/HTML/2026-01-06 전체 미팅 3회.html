@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삼두종합건설 POC 미팅 최종 준비 회의록 | 2026.01.06</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.95;
+            font-weight: 300;
+            margin-top: 10px;
+        }
+        
+        .warning-banner {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 40px;
+            margin: 0;
+            font-size: 0.9em;
+            color: #856404;
+        }
+        
+        .meta-info {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            border-bottom: 3px solid #e9ecef;
+        }
+        
+        .meta-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #2a5298;
+        }
+        
+        .meta-item strong {
+            color: #1e3c72;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .meta-item span {
+            color: #495057;
+            font-size: 1em;
+        }
+        
+        .toc {
+            background: #fff;
+            padding: 30px 40px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .toc h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .toc ul {
+            list-style: none;
+        }
+        
+        .toc li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f3f5;
+        }
+        
+        .toc a {
+            color: #2a5298;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .toc a:hover {
+            color: #1e3c72;
+            padding-left: 10px;
+        }
+        
+        .toc a::before {
+            content: "▸";
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            scroll-margin-top: 20px;
+        }
+        
+        .section-header {
+            background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px 25px;
+            margin: 0 -40px 30px -40px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-number {
+            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+        
+        .subsection {
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-left: 4px solid #2a5298;
+            border-radius: 8px;
+        }
+        
+        .subsection h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .insight-box {
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe0b3 100%);
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .insight-box h4 {
+            color: #e65100;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .insight-box h4::before {
+            content: "💡";
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+        
+        .decision-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .decision-box h4 {
+            color: #2e7d32;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .decision-box h4::before {
+            content: "✓";
+            margin-right: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .action-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .action-box h4 {
+            color: #1565c0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .action-box h4::before {
+            content: "→";
+            margin-right: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .risk-box {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .risk-box h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .risk-box h4::before {
+            content: "⚠";
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+        
+        .content-list {
+            margin: 15px 0;
+            padding-left: 0;
+        }
+        
+        .content-list li {
+            margin: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .content-list li::before {
+            content: "•";
+            color: #2a5298;
+            font-weight: bold;
+            position: absolute;
+            left: 10px;
+        }
+        
+        .price-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .price-table th {
+            background: #1e3c72;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .price-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .price-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .diagram-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .diagram-title {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        .footer p {
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+        
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .collapsible::after {
+            content: " [펼치기]";
+            font-size: 0.9em;
+            color: #2a5298;
+            font-weight: normal;
+        }
+        
+        .collapsible.active::after {
+            content: " [접기]";
+        }
+        
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .collapsible-content.active {
+            max-height: 5000px;
+        }
+        
+        .quote-box {
+            background: #f8f9fa;
+            border-left: 4px solid #6c757d;
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>삼두종합건설 POC 미팅 최종 준비 회의록</h1>
+            <div class="subtitle">발표 전략 수립 및 세부사항 점검</div>
+            <div class="subtitle" style="margin-top: 15px; font-size: 0.9em; opacity: 0.85;">
+                본 회의록은 AI 기술을 활용하여 녹취록을 기반으로 작성되었으며, 일부 정확도가 떨어질 수 있습니다.
+            </div>
+        </div>
+        
+        <div class="warning-banner">
+            <strong>⚠️ 안내사항:</strong> 본 회의록은 AI 기술을 활용하여 녹취록을 기반으로 작성되었으며, 일부 정확도가 떨어질 수 있습니다.
+        </div>
+        
+        <div class="meta-info">
+            <div class="meta-item">
+                <strong>회의 일시</strong>
+                <span>2026년 1월 6일 (월)</span>
+            </div>
+            <div class="meta-item">
+                <strong>회의 장소</strong>
+                <span>온라인 미팅</span>
+            </div>
+            <div class="meta-item">
+                <strong>회의 유형</strong>
+                <span>POC 미팅 최종 준비</span>
+            </div>
+            <div class="meta-item">
+                <strong>참석자</strong>
+                <span>김상윤(CEO), 박규호, 이종현, 정다소, 안태현</span>
+            </div>
+        </div>
+        
+        <div class="toc">
+            <h2>목차</h2>
+            <ul>
+                <li><a href="#section1">1. 발표 구성 및 데모 검토</a></li>
+                <li><a href="#section2">2. 장표 수정사항 및 피드백</a></li>
+                <li><a href="#section3">3. 가격 전략 및 베네핏 설계</a></li>
+                <li><a href="#section4">4. 정확도 보장 및 기술적 신뢰성</a></li>
+                <li><a href="#section5">5. Q&A 준비 및 예상 질문</a></li>
+                <li><a href="#section6">6. 브랜딩 및 세부 사항</a></li>
+                <li><a href="#section7">7. 결정사항 및 액션아이템</a></li>
+                <li><a href="#section8">8. 전략적 인사이트</a></li>
+            </ul>
+        </div>
+        
+        <div class="content">
+            <!-- Section 1 -->
+            <section id="section1" class="section">
+                <div class="section-header">
+                    <div class="section-number">1</div>
+                    <div class="section-title">발표 구성 및 데모 검토</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>1.1 발표 전략: 도메인 전문성 강조</h3>
+                    <p>투자자 대상 피칭과 달리, 삼두종합건설은 도메인 전문가들이므로 전문 용어를 자유롭게 사용하고 구체적인 기능을 명확히 제시하는 전략을 채택했습니다.</p>
+                    
+                    <div class="decision-box">
+                        <h4>핵심 전략</h4>
+                        <ul class="content-list">
+                            <li><strong>Auto Design for Engineers</strong>: 엔지니어를 위한 자동 디자인으로 포지셔닝</li>
+                            <li><strong>실무 문제 공감</strong>: P&ID 리스트 작업, 딜리버러블 간 컨시스턴시 체크, 마크업 CAD 변환, Hydraulic, PSV 등 실제 업무 나열</li>
+                            <li><strong>해결책 제시</strong>: 프롬프트만으로 모든 작업이 자동화되는 시연</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>1.2 데모 영상 구성</h3>
+                    
+                    <div class="diagram-container">
+                        <div class="diagram-title">데모 시연 순서</div>
+                        <div class="mermaid">
+                        graph LR
+                            A[P&ID to List] --> B[Hydraulic Calculation]
+                            B --> C[PSV Case Study]
+                            C --> D[Aspen Simulation]
+                            D --> E[마크업 CAD 변환]
+                            E --> F[버전 관리 소개]
+                            
+                            style A fill:#e3f2fd
+                            style B fill:#e8f5e9
+                            style C fill:#fff3e0
+                            style D fill:#f3e5f5
+                            style E fill:#e0f2f1
+                            style F fill:#fce4ec
+                        </div>
+                    </div>
+                    
+                    <h4 class="collapsible">▼ 데모 영상 세부 내용</h4>
+                    <div class="collapsible-content">
+                        <table class="price-table">
+                            <thead>
+                                <tr>
+                                    <th>기능</th>
+                                    <th>시연 내용</th>
+                                    <th>강조 포인트</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>P&ID to List</strong></td>
+                                    <td>챗봇에 프롬프트 입력만으로 현재 열린 AutoCAD, Excel, Aspen Plus 파일 자동 인식하여 빈 리스트를 자동 완성</td>
+                                    <td>PFD, HMB, Equipment 데이터 시트 등 모든 관련 딜리버러블 자동 연동 및 크로스 체크</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Line List</strong></td>
+                                    <td>빈 양식에서 P&ID, PFD, 데이터 시트, HMB 참조하여 완전히 채워진 Line List 생성</td>
+                                    <td>수동 작업 없이 모든 필드 자동 완성</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Hydraulic Calculation</strong></td>
+                                    <td>"104번 라인 Hydraulic 수행해달라" 프롬프트로 아이소 드로잉 분석, 유체 물성 계산, 결과 시트 자동 완성</td>
+                                    <td>계산 과정 설명 제공 및 근거 명시</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PSV Case Study</strong></td>
+                                    <td>"밸브 101 크리스탈라이저 PSV Case Study, 파이어 케이스 위주로 모든 케이스 계산" 프롬프트로 엘리베이션 드로잉, API 520/522 참조하여 PSV 시트 완성</td>
+                                    <td>파일명도 리비전 관리 (_1 추가 등)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Aspen Simulation</strong></td>
+                                    <td>자연어로 시뮬레이션 종류 입력하면 Aspen 자동 실행, PFD 그리고 시뮬레이션 수행 후 결과 설명</td>
+                                    <td>결과를 협업툴에 자동 반영</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>마크업 CAD 변환</strong></td>
+                                    <td>PDF 마크업과 CAD 파일을 입력하면 자동으로 CAD에 변경사항(밸브 추가 등) 반영</td>
+                                    <td>근거 설명 제공 및 PSV 설치 등에 활용 가능</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>1.3 협업툴 및 버전 관리</h3>
+                    <p>AutoFlow를 중심으로 한 통합 협업 플랫폼을 소개하며, 마크업 수정, 코멘트 히스토리, 관련 리스트 수정, 버전 관리 기능을 간단히 시연합니다.</p>
+                    
+                    <div class="insight-box">
+                        <h4>차별화 전략</h4>
+                        <ul class="content-list">
+                            <li><strong>오각형에서 원형으로</strong>: 기존 각 부서 간 확변 소통 → AutoFlow 중심 일방향 소통으로 커뮤니케이션 병목 최소화</li>
+                            <li><strong>설계 시간 50% 이상 절감</strong>: 명확한 정량적 목표 제시</li>
+                            <li><strong>스마트 P&ID 이상</strong>: P&ID, 리스트, 데이터 시트뿐만 아니라 페이스북 히스토리 시트 등 모든 딜리버러블 통합</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 2 -->
+            <section id="section2" class="section">
+                <div class="section-header">
+                    <div class="section-number">2</div>
+                    <div class="section-title">장표 수정사항 및 피드백</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>2.1 오각형 다이어그램 수정</h3>
+                    <div class="decision-box">
+                        <h4>수정 내용</h4>
+                        <ul class="content-list">
+                            <li><strong>동그라미 5개 → 6개</strong>: 기존 Equipment 대신 "장치/회전" 추가, "배관" 추가</li>
+                            <li><strong>개장(改裝) 항목 추가</strong>: 설계 변경 관리 업무 반영</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>2.2 용어 및 표현 수정</h3>
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>기존 표현</th>
+                                <th>수정 표현</th>
+                                <th>사유</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"할인"</td>
+                                <td>"협의 가능"</td>
+                                <td>할인은 마트 같은 느낌, 전문성 저하</td>
+                            </tr>
+                            <tr>
+                                <td>"환불 해줘야 돼?"</td>
+                                <td>삭제</td>
+                                <td>굳이 언급할 필요 없음, 후불 계약이므로</td>
+                            </tr>
+                            <tr>
+                                <td>"바쁠 때/참할 때"</td>
+                                <td>"호황기/불황기"</td>
+                                <td>더 전문적인 용어</td>
+                            </tr>
+                            <tr>
+                                <td>"조달"</td>
+                                <td>"추가 채용"</td>
+                                <td>명확성 제고</td>
+                            </tr>
+                            <tr>
+                                <td>"감축"</td>
+                                <td>"감원"</td>
+                                <td>정확한 용어 사용</td>
+                            </tr>
+                            <tr>
+                                <td>"커스텀하여"</td>
+                                <td>"Customize"</td>
+                                <td>영어 용어로 통일</td>
+                            </tr>
+                            <tr>
+                                <td>"레슨런드"</td>
+                                <td>"Lessons Learned"</td>
+                                <td>스펠링 오류 수정 (D 빠짐)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3>2.3 세부 포맷 수정</h3>
+                    <ul class="content-list">
+                        <li><strong>ISO Drawing</strong>: 띄어쓰기 추가, 앞 세 글자 대문자로 (ISO)</li>
+                        <li><strong>API 520/521</strong>: 순서대로 표기 (520, 521)</li>
+                        <li><strong>Orifice, In/Out</strong>: 대문자 통일 필요</li>
+                        <li><strong>블루빔(Bluebeam)</strong>: 스펠링 확인</li>
+                        <li><strong>글자 크기</strong>: 11페이지, 10페이지 글씨가 너무 많아 가독성 저하 → 사진 위주로 재구성 고려</li>
+                    </ul>
+                    
+                    <div class="risk-box">
+                        <h4>프레젠테이션 주의사항</h4>
+                        <ul class="content-list">
+                            <li><strong>글자 크기 고려</strong>: 대표님 이상 고위 임원진 참석 가능성, 시력 고려하여 큰 글씨와 적은 텍스트</li>
+                            <li><strong>시각 자료 우선</strong>: 정창경 발표 때처럼 사진과 이미지로 임팩트 전달</li>
+                            <li><strong>3장으로 분할</strong>: 텍스트 많은 슬라이드는 각 항목별로 사진을 부각하는 방향으로 재구성</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 3 -->
+            <section id="section3" class="section">
+                <div class="section-header">
+                    <div class="section-number">3</div>
+                    <div class="section-title">가격 전략 및 베네핏 설계</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>3.1 가격 책정</h3>
+                    
+                    <div class="decision-box">
+                        <h4>최종 가격 전략</h4>
+                        <ul class="content-list">
+                            <li><strong>POC 가격</strong>: 3,000만원 (4주 테스트)</li>
+                            <li><strong>정식 계약 가격</strong>: 5,000만원 (1년 기준)</li>
+                            <li><strong>착수비/완수금 분할</strong>: 후불 계약이지만 착수비와 완수금으로 나누어 리스크 분산</li>
+                            <li><strong>POC 차감</strong>: POC에서 지불한 3,000만원은 정식 계약금에서 차감</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <h4>가격 정당화 논리</h4>
+                        <p>AspenTech 1 copy 연간 비용이 3,000~4,000만원임을 고려할 때, SnapScale의 통합 솔루션은 여러 소프트웨어를 대체하므로 5,000만원은 합리적</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>3.2 베네핏 설계: 할인 vs 레슨런드 커스텀</h3>
+                    
+                    <div class="diagram-container">
+                        <div class="diagram-title">베네핏 옵션 비교</div>
+                        <div class="mermaid">
+                        graph TB
+                            A[초기 계약 베네핏] --> B[Option 1: 금액 할인]
+                            A --> C[Option 2: 서비스 추가]
+                            
+                            B --> D[3년간 정책금액 할인]
+                            B --> E[회사 돈이라 감흥 적음]
+                            
+                            C --> F[레슨런드 커스텀 무료/50% 할인]
+                            C --> G[실질적 가치 제공]
+                            
+                            style A fill:#1e3c72,color:#fff
+                            style B fill:#ffebee
+                            style C fill:#e8f5e9
+                            style F fill:#c8e6c9
+                            style G fill:#c8e6c9
+                        </div>
+                    </div>
+                    
+                    <div class="decision-box">
+                        <h4>최종 결정: 서비스 추가 베네핏</h4>
+                        <ul class="content-list">
+                            <li><strong>금액 할인의 한계</strong>: "회사 돈으로 소고기 먹어도 감흥 없는 것처럼" 금액 할인은 임팩트가 약함</li>
+                            <li><strong>커스텀 개발 베네핏</strong>: 제너럴 솔루션 사용 + 레슨런드 커스텀 개발 50% 할인 또는 무료 제공</li>
+                            <li><strong>장표 전략</strong>: 3,000만원을 노란색으로 칠해두고, 쉬는 시간에 내용 조정 가능하도록 준비</li>
+                            <li><strong>협의 사항</strong>: 분위기 보고 담배 피러/커피 마시러 나가는 타이밍에 수정</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <h4>핵심 논리</h4>
+                        <p>"기업 입장에서는 지불할 수 있는 금액대 내에 있느냐가 결정 요소. 할인은 기분 좋은 정도. 최종 금액이 지불 가능 범위 내에 있으면 서비스 추가가 더 효과적."</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 4 -->
+            <section id="section4" class="section">
+                <div class="section-header">
+                    <div class="section-number">4</div>
+                    <div class="section-title">정확도 보장 및 기술적 신뢰성</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>4.1 정확도 보장 장표 추가 필요성</h3>
+                    <p>박규호 부장님 지적: 기존 장표가 정확도를 충분히 설명하지 못함. 중간중간 설명하면 의문이 완전히 해소되지 않은 채 넘어갈 위험.</p>
+                    
+                    <div class="decision-box">
+                        <h4>해결 방안</h4>
+                        <ul class="content-list">
+                            <li><strong>별도 장표 추가</strong>: 기능 설명 후 마지막에 "정확도 100% 보장" 장표로 의문 해소</li>
+                            <li><strong>온톨로지 강조</strong>: 계산 코드, 롤앤레귤레이션 기준을 온톨로지로 정확하게 구별하고 반영</li>
+                            <li><strong>HTML 아레나 활용</strong>: 베슬 코드, PSV 코드, 배관 코드 등이 잘 정리된 자료 기반으로 설명</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>4.2 온톨로지 기반 정확도 확보</h3>
+                    <div class="diagram-container">
+                        <div class="diagram-title">정확도 보장 체계</div>
+                        <div class="mermaid">
+                        graph TD
+                            A[계산 기준/롤앤레귤레이션] --> B[온톨로지 구성]
+                            B --> C[코드화/구조화]
+                            C --> D[AI 자동화 엔진]
+                            D --> E[정확도 검증]
+                            E --> F[95% 이상 정확도]
+                            
+                            style A fill:#ffebee
+                            style B fill:#e1f5fe
+                            style C fill:#f3e5f5
+                            style D fill:#e8f5e9
+                            style E fill:#fff9c4
+                            style F fill:#c8e6c9
+                        </div>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <h4>95% 딜레마</h4>
+                        <p>박규호 부장님: "95%가 돼도 안 쓴다고 했잖아요. 5% 때문에 다시 확인해야 되는 순간 일이 두 번 되기 때문에."</p>
+                        <p><strong>해결책</strong>: 각 사가 가지고 있는 계산 기준을 반영하고, 온톨로지 개념도를 명확히 제시하여 신뢰 확보</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>4.3 데이터 보안</h3>
+                    <ul class="content-list">
+                        <li><strong>역설계 우려</strong>: AI + 설계도 = 역설계 가능성 우려 예상</li>
+                        <li><strong>데이터 보안 장표 준비</strong>: 데이터 암호화, 접근 제어, 역설계 불가능 구조 설명</li>
+                        <li><strong>예상 질문 대응</strong>: Appendix에 데이터 보안 관련 상세 자료 준비</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Section 5 -->
+            <section id="section5" class="section">
+                <div class="section-header">
+                    <div class="section-number">5</div>
+                    <div class="section-title">Q&A 준비 및 예상 질문</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>5.1 Appendix 준비 항목</h3>
+                    
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>질문 카테고리</th>
+                                <th>대응 장표/자료</th>
+                                <th>핵심 메시지</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>버전 관리</strong></td>
+                                <td>협업툴 데모 영상 재활용</td>
+                                <td>앞에서 소개한 내용으로 충분히 설명 가능</td>
+                            </tr>
+                            <tr>
+                                <td><strong>계약 시 제공 자료</strong></td>
+                                <td>IP 주소, 통신 설정, 컴퓨터 환경 등 구체적 리스트</td>
+                                <td>복사해서 보내주시면 되고, 명령어로 확인 가능한 것들 안내</td>
+                            </tr>
+                            <tr>
+                                <td><strong>데이터 보안</strong></td>
+                                <td>암호화, 접근 제어, 역설계 방지 체계</td>
+                                <td>AI와 설계도로 역설계 불가능함을 입증</td>
+                            </tr>
+                            <tr>
+                                <td><strong>실무자 저항</strong></td>
+                                <td>일자리 대체 우려 해소 논리</td>
+                                <td>AI는 도구, 고부가가치 업무 집중 가능, 워라밸 개선</td>
+                            </tr>
+                            <tr>
+                                <td><strong>어중교수 협의</strong></td>
+                                <td>Aspen 기능 관련 협의 필요 시</td>
+                                <td>한 기능 때문에 전체 지연보다 지금 진행 가능한 것부터 시작 제안</td>
+                            </tr>
+                            <tr>
+                                <td><strong>표준 계약서</strong></td>
+                                <td>계약서 및 NDA 샘플</td>
+                                <td>미리 준비했으니 궁금하시면 제공 가능</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3>5.2 실무자 저항 시나리오</h3>
+                    
+                    <div class="insight-box">
+                        <h4>설득 논리 (세종 때 준비했던 내용 재활용)</h4>
+                        <ul class="content-list">
+                            <li><strong>도구의 본질</strong>: AI는 도구일 뿐, 판단과 책임은 사람의 몫</li>
+                            <li><strong>업무 가치 상승</strong>: 반복 작업 대신 고부가가치 업무에 집중 가능</li>
+                            <li><strong>경쟁력 확보</strong>: 회사가 더 많은 프로젝트를 수주하면 개인의 기회도 증가</li>
+                            <li><strong>워라밸 개선</strong>: 주말 야근 없이 가족과 시간 보낼 수 있음</li>
+                            <li><strong>불가피성 인식</strong>: 내가 안 하면 경쟁사가 먼저 도입</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>5.3 삼두 관련 정보 수집</h3>
+                    <p>회의 후반부 Q&A 타이밍에 삼두 홈페이지의 소프트웨어 활용 현황, 프로젝트 종류, 레슨런드 등을 자연스럽게 질문하여 향후 커스텀 개발 방향 설정</p>
+                    
+                    <div class="action-box">
+                        <h4>질문 전략</h4>
+                        <ul class="content-list">
+                            <li>어느 플랜트 주로 하시나요? (유틸리티, 패키지, 리뱀프 등)</li>
+                            <li>어떤 프로젝트들을 해보셨나요?</li>
+                            <li>어느 공정이나 시스템을 주로 다루시나요?</li>
+                            <li><strong>주의</strong>: 레슨런드 직접 요청은 꺼릴 수 있으므로 친해진 후 또는 간접적으로 접근</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 6 -->
+            <section id="section6" class="section">
+                <div class="section-header">
+                    <div class="section-number">6</div>
+                    <div class="section-title">브랜딩 및 세부 사항</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>6.1 브랜드 컬러: 연두색 vs 파란색</h3>
+                    
+                    <div class="insight-box">
+                        <h4>연두색 선택 배경</h4>
+                        <ul class="content-list">
+                            <li><strong>기후위기 메시지</strong>: 그린의 기운으로 기후위기 대응 강조</li>
+                            <li><strong>혁신감</strong>: 그라데이션으로 혁신적 느낌 표현</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="risk-box">
+                        <h4>우려 사항</h4>
+                        <ul class="content-list">
+                            <li><strong>힘 빠지는 느낌</strong>: 연한 연두색이 신뢰감 부족</li>
+                            <li><strong>업계 관행</strong>: 신뢰감 필요한 B2B는 보통 파란색(AspenTech, Autodesk 등)</li>
+                            <li><strong>결론</strong>: 명분(기후위기)이 있으므로 현행 유지, 향후 재검토 가능</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>6.2 비주얼 레퍼런스 준비</h3>
+                    <p>조선일보 기사 등 언론 보도 스크린샷을 마지막 슬라이드에 배치하여 "한국 화학공학을 불화시키고자 하는 열망" 강조</p>
+                    
+                    <div class="action-box">
+                        <h4>링크드인 바이럴 활용</h4>
+                        <ul class="content-list">
+                            <li>전세계 300~600명씩 공유되는 링크드인 포스트 언급</li>
+                            <li>"전세계 엔지니어들이 이미 다음 스텝(개념/기본 설계)으로 가려고 움직이는 상황"</li>
+                            <li>"물고기들이 모여서 움직이는 상황에서 그들이 원하는 밥을 우리가 만들고 있다"</li>
+                            <li><strong>타이밍</strong>: 적세적소에 자연스럽게 언급 (너무 강하게 밀지 말 것)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 7 -->
+            <section id="section7" class="section">
+                <div class="section-header">
+                    <div class="section-number">7</div>
+                    <div class="section-title">결정사항 및 액션아이템</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>7.1 최종 수정 체크리스트</h3>
+                    
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>수정 내용</th>
+                                <th>담당</th>
+                                <th>마감</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>오각형 → 육각형</td>
+                                <td>장치/회전, 배관 추가, 개장 항목 추가</td>
+                                <td>김상윤</td>
+                                <td><span class="highlight">미팅 전</span></td>
+                            </tr>
+                            <tr>
+                                <td>용어 수정</td>
+                                <td>할인→협의가능, 조달→추가채용, 감축→감원, 커스텀→Customize</td>
+                                <td>김상윤</td>
+                                <td><span class="highlight">미팅 전</span></td>
+                            </tr>
+                            <tr>
+                                <td>스펠링 수정</td>
+                                <td>레슨런드→Lessons Learned (D 추가)</td>
+                                <td>김상윤</td>
+                                <td><span class="highlight">미팅 전</span></td>
+                            </tr>
+                            <tr>
+                                <td>포맷 통일</td>
+                                <td>ISO Drawing, API 520/521, Orifice/In/Out 대문자</td>
+                                <td>김상윤</td>
+                                <td><span class="highlight">미팅 전</span></td>
+                            </tr>
+                            <tr>
+                                <td>정확도 장표 추가</td>
+                                <td>온톨로지 기반 정확도 보장 설명, HTML 아레나 활용</td>
+                                <td>김상윤</td>
+                                <td><span class="highlight">미팅 전</span></td>
+                            </tr>
+                            <tr>
+                                <td>Appendix 완성</td>
+                                <td>버전관리, 데이터보안, 실무자저항, 계약서/NDA 샘플</td>
+                                <td>김상윤</td>
+                                <td><span class="highlight">미팅 전</span></td>
+                            </tr>
+                            <tr>
+                                <td>3,000만원 노란색</td>
+                                <td>쉬는 시간에 조정 가능하도록 준비</td>
+                                <td>김상윤</td>
+                                <td>미팅 중</td>
+                            </tr>
+                            <tr>
+                                <td>글자 크기 조정</td>
+                                <td>11페이지, 10페이지 텍스트 줄이고 사진 위주로</td>
+                                <td>김상윤</td>
+                                <td>미팅 전</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3>7.2 미팅 당일 전략</h3>
+                    
+                    <div class="action-box">
+                        <h4>발표 태도</h4>
+                        <ul class="content-list">
+                            <li><strong>진중함 유지</strong>: 투자자 미팅의 서글서글함 대신 대표로서의 무게감</li>
+                            <li><strong>침묵의 힘</strong>: "말하다 꼬였다 싶으면 가만히 있어요. 중간은 가."</li>
+                            <li><strong>3초 세기</strong>: 속으로 3초 세고 이종현 부장님 조언 떠올리기</li>
+                            <li><strong>지식 있을 때만 발언</strong>: 모르면 가만히 있고, 아는 것만 정확히 말하기</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="action-box">
+                        <h4>쉬는 시간 활용</h4>
+                        <ul class="content-list">
+                            <li>11번 슬라이드까지 발표 후 "잠깐 쉬자" 제안</li>
+                            <li>커피 마시러/화장실 가는 타이밍에 12번 슬라이드 베네핏 내용 조정</li>
+                            <li><strong>주의</strong>: 담배 피러 나가는 것은 불필요 (김상윤 담배 잘 못 피움)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>7.3 후속 미팅 계획</h3>
+                    <div class="decision-box">
+                        <h4>스케줄</h4>
+                        <ul class="content-list">
+                            <li><strong>1차 미팅</strong>: 2026.01.07 (화) - 발표 및 POC 제안</li>
+                            <li><strong>데모 데이</strong>: 2026.01.08 (수) - 별도 행사</li>
+                            <li><strong>피드백 미팅</strong>: 2026.01.09 (금) - 1차 미팅 결과 정리 및 조율</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="action-box">
+                        <h4>녹음 및 기록</h4>
+                        <ul class="content-list">
+                            <li>핸드폰 녹음기 켜고 엎어두기 (녹음에 집중, 다른 것 신경 안 쓰기)</li>
+                            <li>회의 종료 후 즉시 회의록 작성 및 팀 공유</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 8 -->
+            <section id="section8" class="section">
+                <div class="section-header">
+                    <div class="section-number">8</div>
+                    <div class="section-title">전략적 인사이트</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>8.1 핵심 인사이트</h3>
+                    
+                    <div class="insight-box">
+                        <h4>1. 고가 전략의 중요성</h4>
+                        <p>AspenTech 등 업계 표준 소프트웨어가 3,000~4,000만원인 시장에서 5,000만원은 오히려 신뢰감을 준다. 너무 저렴하면 품질에 대한 의구심 발생.</p>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <h4>2. 베네핏의 실질적 가치</h4>
+                        <p>"회사 돈으로 소고기 먹어도 감흥 없는 것처럼" 금액 할인보다 레슨런드 커스텀 무료 제공 등 실질적 서비스가 더 효과적이다.</p>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <h4>3. 95%의 함정</h4>
+                        <p>정확도 95%는 의미 없다. 5% 때문에 재확인해야 하면 일이 두 배가 되므로 오히려 역효과. 거의 100%에 가까운 정확도를 보장하거나, 명확한 검증 프로세스를 제시해야 한다.</p>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <h4>4. 첫 고객의 전략적 가치</h4>
+                        <p>삼두와의 계약은 단순 매출이 아니라 검증된 레퍼런스 확보다. 향후 포스코, 현대건설, GS건설 등 대기업 영업에서 결정적인 신뢰 자산이 될 것이다.</p>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <h4>5. 글로벌 트렌드 활용</h4>
+                        <p>링크드인에서 전세계 엔지니어들이 AI 자동화를 논의하고 있는 상황을 언급하여 "우리만의 이야기가 아니라 글로벌 흐름"임을 강조. 이는 삼두가 먼저 움직이지 않으면 경쟁에서 뒤처질 수 있다는 FOMO 자극.</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>8.2 리스크 및 완화 방안</h3>
+                    
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>리스크</th>
+                                <th>영향</th>
+                                <th>완화 방안</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>실무자 저항</strong></td>
+                                <td>POC 테스트 비협조, 결과 조작 가능성</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>워라밸 개선 메시지 전달</li>
+                                        <li>고부가가치 업무 집중 강조</li>
+                                        <li>불가피성 인식 유도</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>정확도 의심</strong></td>
+                                <td>계약 불발 또는 조건 강화</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>온톨로지 기반 설명</li>
+                                        <li>HTML 아레나 자료 제시</li>
+                                        <li>각 사 계산 기준 반영 약속</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>데이터 보안 우려</strong></td>
+                                <td>계약 조건 까다로워짐</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>암호화 및 접근 제어 설명</li>
+                                        <li>역설계 불가능 구조 입증</li>
+                                        <li>NDA 및 보안 약정서 제시</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Aspen 협의 지연</strong></td>
+                                <td>POC 범위 축소 또는 연기</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>3개 기능으로 먼저 진행 제안</li>
+                                        <li>Aspen은 어중교수 협의 후 추가</li>
+                                        <li>한 기능 때문에 전체 지연 방지</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>가격 저항</strong></td>
+                                <td>계약 규모 축소 또는 불발</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>AspenTech 가격과 비교</li>
+                                        <li>통합 솔루션의 가치 강조</li>
+                                        <li>커스텀 베네핏으로 유연성 제시</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3>8.3 향후 전략 방향</h3>
+                    
+                    <div class="diagram-container">
+                        <div class="diagram-title">삼두 계약 후 확장 전략</div>
+                        <div class="mermaid">
+                        graph TB
+                            A[삼두 POC 성공] --> B[레퍼런스 확보]
+                            B --> C[포스코 미팅]
+                            B --> D[현대건설 미팅]
+                            B --> E[GS건설 미팅]
+                            C --> F[대기업 계약]
+                            D --> F
+                            E --> F
+                            F --> G[Series A 투자유치]
+                            G --> H[글로벌 확장]
+                            
+                            style A fill:#e8f5e9
+                            style B fill:#fff9c4
+                            style F fill:#c8e6c9
+                            style G fill:#bbdefb
+                            style H fill:#f3e5f5
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 최종 요약 섹션 -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-number">9</div>
+                    <div class="section-title">회의 결론</div>
+                </div>
+                
+                <div class="subsection">
+                    <div class="decision-box">
+                        <h4>핵심 합의사항</h4>
+                        <ol style="padding-left: 20px; margin: 15px 0;">
+                            <li style="margin: 10px 0;"><strong>도메인 전문성 강조 전략</strong>: 투자자 대상이 아닌 엔지니어 대상이므로 전문 용어 자유롭게 사용하고 구체적 기능 명시</li>
+                            <li style="margin: 10px 0;"><strong>데모 중심 발표</strong>: 챗봇 프롬프트만으로 모든 작업 자동화되는 영상 시연</li>
+                            <li style="margin: 10px 0;"><strong>고가 전략 유지</strong>: POC 3,000만원, 정식 5,000만원으로 신뢰감 확보</li>
+                            <li style="margin: 10px 0;"><strong>서비스 베네핏 제공</strong>: 금액 할인보다 레슨런드 커스텀 무료/50% 할인</li>
+                            <li style="margin: 10px 0;"><strong>정확도 별도 장표</strong>: 온톨로지 기반 정확도 보장 체계 명확히 설명</li>
+                            <li style="margin: 10px 0;"><strong>실무자 설득 준비</strong>: 일자리 대체 우려 해소 논리 정리</li>
+                            <li style="margin: 10px 0;"><strong>진중한 태도</strong>: 침묵의 힘 활용, 아는 것만 정확히 발언</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <div class="quote-box">
+                        <p><strong>팀원들의 조언</strong></p>
+                        <ul class="content-list">
+                            <li><strong>이종현 부장님</strong>: "말하다 꼬였다 싶으면 그냥 가만히 있어요. 중간은 가."</li>
+                            <li><strong>박규호 부장님</strong>: "95%가 돼도 안 쓴다고 했잖아요. 5% 때문에 다시 확인해야 되는 순간 일이 두 번 되기 때문에."</li>
+                            <li><strong>정다소</strong>: "전세계의 흐름이 이미 이렇게 가고 있다는 큰 그림을 적세적소에 언급하세요."</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <p style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-left: 4px solid #2a5298; border-radius: 8px;">
+                        <strong style="color: #1e3c72; display: block; margin-bottom: 10px;">최종 메시지</strong>
+                        삼두종합건설과의 POC는 단순한 영업 기회를 넘어 SnapScale의 기술력을 실전에서 검증하고 대기업 진출의 교두보를 마련하는 전략적 마일스톤입니다. 고가 전략은 신뢰감의 표현이며, 서비스 베네핏은 실질적 가치 제공의 증거입니다. 무엇보다 중요한 것은 "AI가 일자리를 빼앗는 것이 아니라, 엔지니어들이 더 가치 있는 일에 집중할 수 있게 돕는 도구"라는 메시지를 일관되게 전달하는 것입니다.
+                    </p>
+                </div>
+            </section>
+        </div>
+        
+        <div class="footer">
+            <p><strong>SnapScale</strong> | Climate Tech Startup</p>
+            <p>문서 생성일: 2026년 1월 6일</p>
+            <p>Confidential & Proprietary | SnapScale Internal Use Only</p>
+        </div>
+    </div>
+    
+    <script>
+        // Mermaid 초기화
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#e3f2fd',
+                primaryTextColor: '#1e3c72',
+                primaryBorderColor: '#2a5298',
+                lineColor: '#2a5298',
+                secondaryColor: '#f8f9fa',
+                tertiaryColor: '#fff'
+            }
+        });
+        
+        // Collapsible 기능
+        document.addEventListener('DOMContentLoaded', function() {
+            const collapsibles = document.querySelectorAll('.collapsible');
+            
+            collapsibles.forEach(function(collapsible) {
+                // 초기 상태를 active로 설정
+                collapsible.classList.add('active');
+                const content = collapsible.nextElementSibling;
+                if (content && content.classList.contains('collapsible-content')) {
+                    content.classList.add('active');
+                }
+                
+                collapsible.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    if (content && content.classList.contains('collapsible-content')) {
+                        content.classList.toggle('active');
+                    }
+                });
+            });
+        });
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

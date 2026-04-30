@@ -1,0 +1,1049 @@
+회의 녹음 텍스트를 분석하여 전문적인 HTML 회의록을 작성해드리겠습니다.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회의록 | 2026-03-14 지분미팅</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a2e4a;
+            --primary-light: #2c4a6e;
+            --accent: #2e7d9f;
+            --accent-light: #4a9abb;
+            --bg-main: #f4f6f9;
+            --bg-card: #ffffff;
+            --bg-section: #eef2f7;
+            --text-main: #1e2a38;
+            --text-sub: #4a5568;
+            --text-muted: #718096;
+            --border: #d0dae8;
+            --border-light: #e8eef5;
+            --success: #276749;
+            --success-bg: #e6f4ee;
+            --warning: #744210;
+            --warning-bg: #fef3c7;
+            --danger: #742a2a;
+            --danger-bg: #fff5f5;
+            --info: #1a365d;
+            --info-bg: #ebf4ff;
+            --high: #c53030;
+            --high-bg: #fff5f5;
+            --medium: #b7791f;
+            --medium-bg: #fefcbf;
+            --low: #276749;
+            --low-bg: #f0fff4;
+            --shadow: 0 2px 12px rgba(26,46,74,0.08);
+            --shadow-md: 0 4px 20px rgba(26,46,74,0.12);
+            --radius: 10px;
+            --radius-sm: 6px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* ── 헤더 ── */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 60%, var(--accent) 100%);
+            color: #fff;
+            padding: 48px 40px 36px;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-header::before {
+            content: '';
+            position: absolute; top: -60px; right: -60px;
+            width: 260px; height: 260px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50%;
+        }
+        .page-header::after {
+            content: '';
+            position: absolute; bottom: -40px; left: 30%;
+            width: 180px; height: 180px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+        }
+        .header-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #e8f4ff;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            position: relative;
+        }
+        .meta-item {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+        }
+        .meta-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.65);
+            margin-bottom: 4px;
+        }
+        .meta-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* ── 네비게이션 ── */
+        .toc-bar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .toc-inner {
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .toc-inner::-webkit-scrollbar { display: none; }
+        .toc-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 14px 18px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-sub);
+            text-decoration: none;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .toc-link:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .toc-num {
+            background: var(--bg-section);
+            color: var(--text-muted);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* ── 레이아웃 ── */
+        .container { max-width: 1100px; margin: 0 auto; padding: 36px 24px 60px; }
+
+        /* ── 섹션 공통 ── */
+        .section { margin-bottom: 36px; }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .section-icon {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            background: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+        }
+        .section-divider {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--border), transparent);
+        }
+
+        /* ── 카드 ── */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+        .card + .card { margin-top: 16px; }
+
+        /* ── 요약 박스 ── */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .summary-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-top: 3px solid var(--accent);
+        }
+        .summary-num {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        .summary-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        /* ── 안건 카드 ── */
+        .agenda-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        .agenda-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: #fff;
+            padding: 18px 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+        }
+        .agenda-header:hover { filter: brightness(1.08); }
+        .agenda-title-wrap { display: flex; align-items: center; gap: 12px; }
+        .agenda-num {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+        .agenda-title-text { font-size: 17px; font-weight: 700; letter-spacing: -0.2px; }
+        .toggle-icon { font-size: 18px; transition: transform 0.3s; }
+        .agenda-body { padding: 24px; }
+        .agenda-body.collapsed { display: none; }
+
+        .sub-section { margin-bottom: 22px; }
+        .sub-title {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sub-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-light);
+        }
+
+        .content-text {
+            color: var(--text-sub);
+            line-height: 1.85;
+            font-size: 14.5px;
+        }
+        .content-text p { margin-bottom: 10px; }
+        .content-text p:last-child { margin-bottom: 0; }
+
+        .bullet-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .bullet-list li {
+            padding: 10px 14px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--accent);
+            font-size: 14px;
+            color: var(--text-sub);
+            line-height: 1.6;
+        }
+
+        /* ── 인사이트 ── */
+        .insight-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .insight-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 14px 16px;
+            background: var(--info-bg);
+            border-radius: var(--radius-sm);
+            border: 1px solid #bee3f8;
+        }
+        .insight-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .insight-content { flex: 1; }
+        .insight-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--info);
+            margin-bottom: 3px;
+        }
+        .insight-desc {
+            font-size: 13px;
+            color: #2d4a6e;
+            line-height: 1.6;
+        }
+
+        /* ── 타임라인 테이블 ── */
+        .timeline-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+        }
+        .timeline-table thead tr {
+            background: var(--primary);
+            color: #fff;
+        }
+        .timeline-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+        .timeline-table tbody tr:nth-child(even) { background: var(--bg-section); }
+        .timeline-table tbody tr:hover { background: #dbeafe; }
+        .timeline-table td {
+            padding: 11px 16px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-sub);
+            vertical-align: top;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .badge-blue { background: var(--info-bg); color: var(--info); border: 1px solid #90cdf4; }
+        .badge-green { background: var(--success-bg); color: var(--success); border: 1px solid #9ae6b4; }
+        .badge-orange { background: var(--warning-bg); color: var(--warning); border: 1px solid #f6ad55; }
+        .badge-red { background: var(--danger-bg); color: var(--danger); border: 1px solid #fc8181; }
+
+        /* ── 결정사항 ── */
+        .decision-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--success);
+        }
+        .decision-num {
+            display: inline-block;
+            background: var(--success-bg);
+            color: var(--success);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+        .decision-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+        .decision-body { font-size: 13.5px; color: var(--text-sub); line-height: 1.7; }
+        .decision-meta {
+            display: flex; gap: 10px; flex-wrap: wrap;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-light);
+        }
+        .decision-meta-item {
+            display: flex; gap: 5px; align-items: center;
+            font-size: 12px; color: var(--text-muted);
+        }
+        .decision-meta-item strong { color: var(--text-sub); }
+
+        /* ── 액션 아이템 ── */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+        }
+        .action-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .action-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+        .action-card.high::before { background: var(--high); }
+        .action-card.medium::before { background: var(--medium); }
+        .action-card.low::before { background: var(--low); }
+
+        .action-top {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .priority-badge {
+            font-size: 10px; font-weight: 700; padding: 3px 9px;
+            border-radius: 10px; letter-spacing: 0.5px; white-space: nowrap;
+        }
+        .priority-high { background: var(--high-bg); color: var(--high); border: 1px solid #fc8181; }
+        .priority-medium { background: var(--medium-bg); color: var(--medium); border: 1px solid #f6ad55; }
+        .priority-low { background: var(--low-bg); color: var(--low); border: 1px solid #68d391; }
+
+        .action-title { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+        .action-desc { font-size: 13px; color: var(--text-sub); line-height: 1.6; margin-bottom: 12px; }
+        .action-footer {
+            display: flex; gap: 12px; flex-wrap: wrap;
+            padding-top: 10px; border-top: 1px dashed var(--border-light);
+        }
+        .action-meta { font-size: 12px; color: var(--text-muted); display: flex; gap: 4px; align-items: center; }
+        .action-meta strong { color: var(--text-sub); }
+        .checkbox {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 20px; height: 20px;
+            border: 2px solid var(--border); border-radius: 4px;
+            flex-shrink: 0; margin-top: 2px;
+            cursor: pointer; background: #fff;
+        }
+
+        /* ── 다이어그램 ── */
+        .diagram-wrap {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        .diagram-title {
+            font-size: 14px; font-weight: 700;
+            color: var(--primary); margin-bottom: 20px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .diagram-title span {
+            background: var(--primary); color: #fff;
+            font-size: 11px; padding: 3px 10px; border-radius: 10px;
+        }
+        .mermaid { display: flex; justify-content: center; }
+
+        /* ── 후속 계획 ── */
+        .followup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .followup-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+        .followup-icon-wrap {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+        .followup-card-title {
+            font-size: 14px; font-weight: 700;
+            color: var(--text-main); margin-bottom: 10px;
+        }
+        .followup-items { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+        .followup-items li {
+            font-size: 13px; color: var(--text-sub);
+            padding: 7px 10px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            display: flex; gap: 8px; align-items: flex-start;
+        }
+        .followup-items li::before {
+            content: '→';
+            color: var(--accent);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ── 참석자 ── */
+        .participant-grid {
+            display: flex; flex-wrap: wrap; gap: 12px;
+        }
+        .participant-card {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--bg-section);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 18px;
+        }
+        .avatar {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700;
+            flex-shrink: 0;
+        }
+        .p-name { font-size: 14px; font-weight: 700; color: var(--text-main); }
+        .p-role { font-size: 12px; color: var(--text-muted); }
+
+        /* ── 리스크 ── */
+        .risk-list { display: flex; flex-direction: column; gap: 10px; }
+        .risk-item {
+            display: flex; gap: 12px; align-items: flex-start;
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid;
+        }
+        .risk-high { background: var(--high-bg); border-color: #fc8181; }
+        .risk-medium { background: var(--medium-bg); border-color: #f6ad55; }
+        .risk-icon { font-size: 18px; flex-shrink: 0; }
+        .risk-body .risk-title { font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 3px; }
+        .risk-body .risk-desc { font-size: 12.5px; color: var(--text-sub); line-height: 1.6; }
+
+        /* ── 푸터 ── */
+        .page-footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 24px;
+            font-size: 12px;
+            margin-top: 48px;
+        }
+        .page-footer strong { color: #fff; }
+
+        /* ── 반응형 ── */
+        @media (max-width: 768px) {
+            .page-header { padding: 32px 20px 28px; }
+            .page-header h1 { font-size: 22px; }
+            .toc-bar { padding: 0 16px; }
+            .container { padding: 24px 16px 48px; }
+            .action-grid { grid-template-columns: 1fr; }
+            .meta-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media print {
+            .toc-bar { display: none; }
+            .agenda-body.collapsed { display: block !important; }
+            .page-header { break-inside: avoid; }
+            .card, .agenda-card, .decision-card, .action-card { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════ 헤더 ════════════════════ -->
+<header class="page-header">
+    <div class="header-tag">MEETING MINUTES</div>
+    <h1>🤝 지분구조 및 공동창업자 조인 전략 미팅</h1>
+    <div class="meta-grid">
+        <div class="meta-item">
+            <div class="meta-label">📅 일시</div>
+            <div class="meta-value">2026년 3월 14일 (토) 11:26</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">📂 파일</div>
+            <div class="meta-value">2026-03-14 지분미팅.txt</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">🎯 미팅 유형</div>
+            <div class="meta-value">지분구조 · 투자전략 협의</div>
+        </div>
+        <div class="meta-item">
+            <div class="meta-label">📍 형태</div>
+            <div class="meta-value">화상 회의</div>
+        </div>
+    </div>
+</header>
+
+<!-- ════════════════════ TOC ════════════════════ -->
+<nav class="toc-bar">
+    <div class="toc-inner">
+        <a href="#overview" class="toc-link">📋 회의개요</a>
+        <a href="#agenda1" class="toc-link">🔧 안건1 <span class="toc-num">기술</span></a>
+        <a href="#agenda2" class="toc-link">💰 안건2 <span class="toc-num">지분</span></a>
+        <a href="#agenda3" class="toc-link">🏢 안건3 <span class="toc-num">조인</span></a>
+        <a href="#agenda4" class="toc-link">📈 안건4 <span class="toc-num">투자</span></a>
+        <a href="#decisions" class="toc-link">✅ 결정사항</a>
+        <a href="#actions" class="toc-link">🎯 액션아이템</a>
+        <a href="#diagrams" class="toc-link">📊 다이어그램</a>
+        <a href="#followup" class="toc-link">🔜 후속계획</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- ════════════════════ 요약 통계 ════════════════════ -->
+    <div class="summary-grid">
+        <div class="summary-card">
+            <div class="summary-num">4</div>
+            <div class="summary-label">주요 안건</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-num">5</div>
+            <div class="summary-label">핵심 결정사항</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-num">8</div>
+            <div class="summary-label">액션 아이템</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-num">30%</div>
+            <div class="summary-label">협의 중인 공동창업자 지분</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-num">9개월</div>
+            <div class="summary-label">시드 투자 후 조인 유예기간</div>
+        </div>
+    </div>
+
+    <!-- ════════════════════ 회의 개요 ════════════════════ -->
+    <section class="section" id="overview">
+        <div class="section-header">
+            <div class="section-icon">📋</div>
+            <h2 class="section-title">회의 개요</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- 참석자 -->
+        <div class="card" style="margin-bottom:16px;">
+            <div class="sub-title">참석자</div>
+            <div class="participant-grid">
+                <div class="participant-card">
+                    <div class="avatar">대</div>
+                    <div>
+                        <div class="p-name">대표 (스냅스케일)</div>
+                        <div class="p-role">CEO · 기술개발 총괄</div>
+                    </div>
+                </div>
+                <div class="participant-card">
+                    <div class="avatar">박</div>
+                    <div>
+                        <div class="p-name">이중현 부장</div>
+                        <div class="p-role">공동창업자 후보 · 도메인 전문가</div>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top:12px; font-size:13px; color:var(--text-muted);">
+                ※ 별도 언급: 재윤 (개발팀), 다손 (개발팀), 안준일/안준영 이사님 (투자자·멘토), 정연우 (학교 선배, 슬랙 신규 합류)
+            </p>
+        </div>
+
+        <!-- 회의 목적 -->
+        <div class="card">
+            <div class="sub-title">회의 목적 및 배경</div>
+            <div class="content-text">
+                <p>
+                    스냅스케일(SnapScale)의 <strong>공동창업자 지분구조(역베스팅) 최종 설계</strong>를 위해 지난주 논의를 이어가는 후속 미팅입니다.
+                    현대엔지니어링 POC 기술 진행 상황을 공유하고, 투자 라운드 타임라인과 연동된 지분 베스팅 구조를 확정하며,
+                    이중현 부장님의 공식 조인 시점에 관한 전략적 판단을 내리는 것이 핵심 목적입니다.
+                </p>
+                <p>
+                    특히 투자 이전·이후에 따른 지분 취득 방식의 법적·세무적 차이, 구주매각 시 베스팅 잔여 지분의 영향,
+                    그리고 회사 제품화 로드맵과 조인 시점 간의 상관관계를 명확히 정리하는 것을 목표로 했습니다.
+                </p>
+            </div>
+
+            <div style="margin-top:16px;">
+                <div class="sub-title">사전 논의 배경</div>
+                <ul class="bullet-list">
+                    <li>이중현 부장님을 공동창업자로 영입하기 위한 <strong>지분 30% 역베스팅</strong> 구조 협의 진행 중</li>
+                    <li>투자 라운드(CD → 시리즈A → 시리즈B)별 지분 지급 타임라인 사전 설계</li>
+                    <li>현대엔지니어링 무상 POC 진행 중 (마감 예정: 4월 말)</li>
+                    <li>안준일/안준영 이사님, 포스텍 홀딩스와의 투자 논의 병렬 진행</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════ 안건 1 ════════════════════ -->
+    <section class="section" id="agenda1">
+        <div class="section-header">
+            <div class="section-icon">🔧</div>
+            <h2 class="section-title">안건별 상세 분석</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="agenda-card">
+            <div class="agenda-header" onclick="toggleAgenda(this)">
+                <div class="agenda-title-wrap">
+                    <span class="agenda-num">AGENDA 01</span>
+                    <span class="agenda-title-text">현대엔지니어링 POC 기술 현황 – P&ID 인식 및 필로소피 적용</span>
+                </div>
+                <span class="toggle-icon">▾</span>
+            </div>
+            <div class="agenda-body">
+                <div class="sub-section">
+                    <div class="sub-title">주요 논의 내용</div>
+                    <div class="content-text">
+                        <p>
+                            현대엔지니어링의 P&ID(배관계장도면) 인식 작업의 기술적 복잡도를 공유했습니다.
+                            일반적인 단순 도면과 달리, 현대엔지니어링 도면은 CAD 벡터 데이터와 이미지(픽셀) 데이터가 혼재되어 있어
+                            인식 난이도가 높습니다.
+                        </p>
+                        <p>
+                            특히 <strong>필로소피(Philosophy) 문서</strong>는 기업 고유의 배관·계장 설치 기준을 담고 있으며, 
+                            텍스트 조건과 CAD 그림이 혼합되어 있습니다. 
+                            총 43페이지 이상의 복잡한 연결 구조를 가지며, 일부 그림은 래스터 이미지로만 존재해 벡터 추출이 불가능합니다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-title">핵심 기술 이슈</div>
+                    <ul class="bullet-list">
+                        <li><strong>[인식 문제]</strong> 기호가 밀집된 구간에서 주변 기호까지 함께 인식하는 오인식 문제 발생 → 기술적 해결 방향 구상 완료, 구현 단계</li>
+                        <li><strong>[데이터 타입 혼재]</strong> CAD 벡터 레이어 위에 래스터 이미지가 덮여 있어 벡터 추출 불가 구간 존재 → 벡터↔픽셀 변환 방법 적용 검토</li>
+                        <li><strong>[필로소피 구조]</strong> 상단 텍스트(조건) + CAD 그림(예시) + 하단 텍스트(부가 조건) 3단 구성 → P&ID와 동일한 인식 파이프라인 필요</li>
+                        <li><strong>[인터로킹 로직]</strong> 모터, 펌프, 압력계, 오리피스 리듀서 등 현대 고유의 배관 구성 기준 포함 → 하나의 덩어리(Unit Set)로 학습 필요</li>
+                    </ul>
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-title">💡 인사이트</div>
+                    <div class="insight-list">
+                        <div class="insight-item">
+                            <div class="insight-icon">🧩</div>
+                            <div class="insight-content">
+                                <div class="insight-title">Unit Set 학습 전략이 시스템 완성도의 핵심</div>
+                                <div class="insight-desc">인터로킹 로직을 하나의 덩어리 단위로 학습시키면, 향후 추론 기반 시스템으로 전환 시 시니어 엔지니어급 판단이 가능해짐. 이 데이터베이스 구축이 경쟁 해자(Moat)가 됨.</div>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">⏱️</div>
+                            <div class="insight-content">
+                                <div class="insight-title">픽셀-벡터 변환 작업이 예상보다 공수 큼</div>
+                                <div class="insight-desc">래스터 이미지 필로소피 처리는 추가 개발 시간이 소요됨. 무상 POC 마감(4월 말)까지 완전한 해결은 어려울 수 있어 범위 조정 필요.</div>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🏭</div>
+                            <div class="insight-content">
+                                <div class="insight-title">기업별 필로소피 = 진입장벽이자 수익 모델</div>
+                                <div class="insight-desc">각 기업의 고유 필로소피를 누적하면 업계 전체 표준 데이터베이스가 형성됨. 이는 후발 경쟁사가 단기간에 모사할 수 없는 구조적 우위로 이어짐.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════ 안건 2 ════ -->
+        <div class="agenda-card" id="agenda2">
+            <div class="agenda-header" onclick="toggleAgenda(this)">
+                <div class="agenda-title-wrap">
+                    <span class="agenda-num">AGENDA 02</span>
+                    <span class="agenda-title-text">역베스팅 지분 구조 설계 – 투자 라운드별 + 기간별 하이브리드</span>
+                </div>
+                <span class="toggle-icon">▾</span>
+            </div>
+            <div class="agenda-body">
+                <div class="sub-section">
+                    <div class="sub-title">제안된 역베스팅 구조 (최종안)</div>
+
+                    <p style="font-size:13.5px; color:var(--text-sub); margin-bottom:14px;">
+                        투자 라운드 기준과 경과 기간 기준을 병렬로 운영하여, <strong>둘 중 더 빨리 도달하는 조건</strong>에 따라 지분이 지급됩니다.
+                        시드 투자 시점을 기산점(D-day)으로 설정.
+                    </p>
+
+                    <table class="timeline-table">
+                        <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>조건 (투자 라운드)</th>
+                                <th>조건 (경과 기간)</th>
+                                <th>지급 지분</th>
+                                <th>누적 지분</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-blue">1차</span></td>
+                                <td>CD(전환사채) 투자 후 1년</td>
+                                <td>시드 투자 후 1년</td>
+                                <td>+2%</td>
+                                <td><strong>2%</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-blue">2차</span></td>
+                                <td>시리즈 A 클로징 시점</td>
+                                <td>시드 후 약 2년 6개월</td>
+                                <td>+3%</td>
+                                <td><strong>5%</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-green">3차</span></td>
+                                <td>시리즈 A 클로징 후 6개월</td>
+                                <td>시드 후 약 3년</td>
+                                <td>+5%</td>
+                                <td><strong>10%</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-orange">4차</span></td>
+                                <td>시리즈 B 클로징 6개월 前 (조기지급)</td>
+                                <td>시드 후 약 4년 6개월</td>
+                                <td>+5%</td>
+                                <td><strong>15%</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-orange">5차</span></td>
+                                <td>시리즈 B 이후 6개월</td>
+                                <td>시드 후 약 5년</td>
+                                <td>+5%</td>
+                                <td><strong>20%</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-red">6차</span></td>
+                                <td>시리즈 B 이후 12개월</td>
+                                <td>시드 후 약 5년 6개월</td>
+                                <td>+5%</td>
+                                <td><strong>25%</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-red">7차 (완료)</span></td>
+                                <td>시리즈 B 이후 18개월</td>
+                                <td>시드 후 약 6년</td>
+                                <td>+5%</td>
+                                <td><strong>30%</strong> ✅</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="sub-section" style="margin-top:20px;">
+                    <div class="sub-title">설계 근거 (조사 데이터)</div>
+                    <ul class="bullet-list">
+                        <li><strong>[시드 → 시리즈A]</strong> 미국 및 한국 통계 자료 기준 평균 소요 기간: <strong>2년 ~ 2년 4개월</strong></li>
+                        <li><strong>[시리즈A → 시리즈B]</strong> 동일 자료 기준 평균 소요 기간: <strong>2년 ~ 2년 반</strong></li>
+                        <li><strong>[4차 조기지급 이유]</strong> 시리즈B 클로징 시점이 구주매각 협상 시작점 → 그때 베스팅 잔여분이 10%뿐이면 구주매각 금액이 너무 적어 인센티브 효과 미약 → 6개월 앞당겨 15% 확보</li>
+                    </ul>
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-title">구주매각 관련 핵심 확인사항</div>
+                    <div style="background:var(--warning-bg); border:1px solid #f6ad55; border-radius:var(--radius-sm); padding:16px 18px;">
+                        <p style="font-size:13.5px; color:var(--warning); font-weight:700; margin-bottom:8px;">⚠️ 핵심 합의: 구주매각 비율 계산 방식</p>
+                        <p style="font-size:13.5px; color:var(--text-sub); line-height:1.7;">
+                            텀시트 상 구주매각 가능 비율(예: 5%)은 <strong>베스팅 완료 지분(예: 15%)에 적용</strong>됩니다.<br>
+                            즉, 시리즈B 시점에 15% 확보 시 → 구주매각 가능 금액 = 기업가치 × 15% × 5%<br>
+                            30% 전체가 아닌, 베스팅이 완료된 지분에 한해서만 구주매각 권리가 인정됩니다.<br>
+                            <em>(예: 기업가치 1,000억 × 15% × 5% = 약 7.5억)</em>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-title">💡 인사이트</div>
+                    <div class="insight-list">
+                        <div class="insight-item">
+                            <div class="insight-icon">⚖️</div>
+                            <div class="insight-content">
+                                <div class="insight-title">하이브리드 구조가 양측 리스크를 모두 헤징</div>
+                                <div class="insight-desc">투자 라운드가 예상보다 빨리 오면 더 일찍 지분 지급, 늦어지면 시간 기준 보호막 작동. 양 당사자 모두 불확실성을 관리할 수 있는 최적 구조.</div>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🎯</div>
+                            <div class="insight-content">
+                                <div class="insight-title">시리즈B 구주매각을 위한 역산 설계</div>
+                                <div class="insight-desc">4차 지급을 시리즈B 6개월 前으로 앞당긴 것은 구주매각 협상 시 레버리지를 충분히 확보하기 위한 전략적 결정. 엔지니어 출신 공동창업자의 중장기 동기 유지에 필수적.</div>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">📜</div>
+                            <div class="insight-content">
+                                <div class="insight-title">노션 링크로 실시간 업데이트 중 → 최종 컨펌 필요</div>
+                                <div class="insight-desc">이중현 부장님이 노션 링크 재확인 후 내일 중으로 최종 컨펌 예정. 안준일/안준영 이사님과 공유 전 서면 합의 완료 권고.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════ 안건 3 ════ -->
+        <div class="agenda-card" id="agenda3">
+            <div class="agenda-header" onclick="toggleAgenda(this)">
+                <div class="agenda-title-wrap">
+                    <span class="agenda-num">AGENDA 03</span>
+                    <span class="agenda-title-text">공동창업자 조인 시점 전략 – 투자 전/후, 유예기간 설정</span>
+                </div>
+                <span class="toggle-icon">▾</span>
+            </div>
+            <div class="agenda-body">
+                <div class="sub-section">
+                    <div class="sub-title">핵심 이슈: 투자 이전 vs 이후 지분 취득</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+                        <div style="background:var(--success-bg); border:1px solid #9ae6b4; border-radius:var(--radius-sm); padding:16px;">
+                            <p style="font-weight:700; color:var(--success); margin-bottom:8px;">✅ 투자 前 지분 취득</p>
+                            <ul style="list-style:none; font-size:13px; color:var(--text-sub); display:flex; flex-direction:column; gap:6px;">
+                                <li>• 주식 액면가로 취득 가능 (수천~수만 원 수준)</li>
+                                <li>• 세금 부담 최소화</li>
+                                <li>• 30% 지분 확보 사실상 유일한 경로</li>
+                                <li class="text-warning">• 단, 지분 수령 후 즉시 미조인 시 투자자 신뢰 훼손 우려</li>
+                            </ul>
+                        </div>
+                        <div style="background:var(--danger-bg); border:1px solid #fc8181; border-radius:var(--radius-sm); padding:16px;">
+                            <p style="font-weight:700; color:var(--danger); margin-bottom:8px;">❌ 투자 後 지분 취득</p>
+                            <ul style="list-style:none; font-size:13px; color:var(--text-sub); display:flex; flex-direction:column; gap:6px;">
+                                <li>• 공정가치 기준 → 수억 원 매입 필요</li>
+                                <li>• 액면가 처리해도 증여세 수억 원 발생</li>
+                                <li>• 현실적으로 30% 취득 불가</li>
+                                <li>• 안준일 이사님 "방법 있다"고 언급 → 확인 필요</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-title">조인 시점 시나리오별 비교</div>
+                    <ul class="bullet-list">
+                        <li><strong>[시나리오 A: 즉시 조인]</strong> 시드 투자 직후 정식 합류 → 투자자 신뢰도 ↑, 가격 정책·세일즈·도메인 커뮤니티 운영 즉시 착수 가능. 단, 제품화 미완성 시 이중현 부장 리스크 높음.</li>
+                        <li><strong>[시나리오 B: 9개월 유예 후 조인]</strong> 시드 투자 후 최대 9개월 유예 → 출산/육아휴직 기간과 겹쳐 비공식 자문 지속, 제품화 어느 정도 진행 후 합류. 투자자 설득 조항 필요.</li>
+                        <li><strong>[시나리오 C: 9개월 초과 시 지분 재협상]</strong> 9개월 이내 미조인 시 30% 지분 구조 재협상 또는 임명값 전량 회수. 투자자 리스크 최소화 조항.</li>
+                    </ul>
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-title">출산/육아 일정 정리 (이중현 부장)</div>
+                    <ul class="bullet-list">
+                        <li><strong>[출산휴가]</strong> 배우자 출산 후 약 20일 → 업무 사실상 불가 (신생아 집중 돌봄)</li>
+                        <li><strong>[육아휴직]</strong> 이후 약 6개월 → 초반은 집중 육아, 후반부터 짬을 내어 자문·방향성 협의 가능</li>
+                        <li>정식 사무실 상주 풀타임 근무는 육아휴직 기간 중에도 현실적으로 어려움</li>
+                        <li>현재 진행 중인 자문(도메인 지식 제공, IR 분석, 투자 전략 검토)은 지속 가능</li>
+                    </ul>
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-title">💡 인사이트</div>
+                    <div class="insight-list">
+                        <div class="insight-item">
+                            <div class="insight-icon">🔑</div>
+                            <div class="insight-content">
+                                <div class="insight-title">9개월 유예 조항 = 투자자·창업자 모두 보호하는 안전장치</div>
+                                <div class="insight-desc">투자자 입장: "공동창업자 30%가 즉시 미합류해도 9개월 이내 조인 보장" → 리스크 수용 가능. 이중현 부장 입장: 제품화 수준 확인 후 합류 결정 유예 확보.</div>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🍼</div>
+                            <div class="insight-content">
+                                <div class="insight-title">육아휴직 기간 자문 활동 = 사실상 예비 조인 기간</div>
+                                <div class="insight-desc">육아휴직 중 IR 분석, 가격 정책 설계, 투자 전략 검토를 병행하면 정식 조인 시 즉각 풀 기여 가능. 유예기간을 준비 기간으로 활용하는 전략적 접근.</div>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">⚡</div>
+                            <div class="insight-content">
+                                <div class="insight-title">주주간 계약서 체결 타이밍이 가장 시급한 과제</div>
+                                <div class="insight-desc">투자 라운드 시작 전에 반드시 체결 완료해야 함. 안준일 이사님·포스텍 홀딩스 투자 논의 전 선행 완료 필수. 지연 시 30% 지분 취득 경로 영구 차단 위험.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════ 안건 4 ════ -->
+        <div class="agenda-card" id="agenda4">
+            <div class="agenda-header" onclick="toggleAgenda(this)">
+                <div class="agenda-title-wrap">
+                    <span class="agenda-num">AGENDA 04</span>
+                    <span class="agenda-title-text">투자 전략 및 제품화 로드맵 – 시드 라운드 타이밍과 제품화 일정</span>
+                </div>
+                <span class="toggle-icon">▾</span>
+            </div>
+            <div class="agenda-body">
+                <div class="sub-section">
+                    <div class="sub-title">현재 투자 타임라인 예상</div>
+                    <ul class="bullet-list">
+                        <li><strong>[현행 POC 마감]</strong> 2026년 4월 말 → 결과 리포트 + 현대엔지니어링 검수 완료</li>
+                        <li><strong>[투자 라운드 시작]</strong> 4월 말 ~ 5월 → 현행 POC 리포트 기반으로 투자 로드쇼 개시</li>
+                        <li><strong>[시드 클로징 예상]</strong> 6월 초 목표 (단, 중소기업 유상 POC 계약 여부에 따라 변동)</li>
+                        <li><strong>[4월 3일]</strong> 한원 라이브 데모 예정 → 결과에 따라 타임라인 재조정 가능</li>
+                    </ul>
+                </div>
+
+                <div class="sub-section">
+                    <div class="sub-title">제품화 로드맵 현실적 전망</div>
+                    <div style="background:var(--warning-bg); border-left:4px solid var(--medium); border-radius:var(--radius-sm); padding:16px 18px; margin-bottom:12px;">
+                        <p style="font-weight:700; color:var(--warning); margin-bottom:6px;">⚠️ 제품화 시점 재조정 필요</p>
+                        <p style="font-size:13.5px; color:var(--text-sub);">
+                            올해(2026년) 5~6월 정식 계약보다 <strong>유상 POC 계약만 가능</strong>할 가능성 높음.<br>
+                            현행 유상 POC 최소 6개월, 기타 중소기업 3~4개월 → 올해는 POC 계약으로 마감될 수 있음.<br>
+                            <strong>정식 제품화(패키지화) 시점은 2027년 초로 밀릴 가능성 있음.</strong>
+                        </p>
+                    </div>
+                    <ul class="bullet-list">
+                        <li><strong>[제품화 정의]</strong> 어떤 기업과도 동일 포맷으로 즉시 제공 가능한 패키지 완성 상태</li>
+                        <li><strong>[현재 단계]</strong> 기술 개념 증명(POC) → 다수 레퍼런스 축적 → 패키지화 단계 진행 중</li>
+                        <li><strong>[투자금 활용 전략]</strong> 시드 투자금

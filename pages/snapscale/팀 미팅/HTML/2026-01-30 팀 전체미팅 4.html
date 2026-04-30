@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전체 미팅 회의록 - 2026.01.30</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary-navy: #1e3c72;
+            --secondary-navy: #2a5298;
+            --accent-blue: #4a90e2;
+            --light-blue: #e3f2fd;
+            --dark-gray: #2c3e50;
+            --medium-gray: #7f8c8d;
+            --light-gray: #ecf0f1;
+            --white: #ffffff;
+            --success-green: #27ae60;
+            --warning-orange: #f39c12;
+            --danger-red: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: var(--dark-gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
+            color: var(--white);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .meeting-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta-item {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .meta-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .meta-value {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            color: var(--primary-navy);
+            font-size: 32px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .toc {
+            background: var(--light-blue);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--accent-blue);
+        }
+
+        .toc h3 {
+            color: var(--primary-navy);
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .toc li:last-child {
+            border-bottom: none;
+        }
+
+        .toc a {
+            color: var(--secondary-navy);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toc a:hover {
+            color: var(--accent-blue);
+            padding-left: 10px;
+        }
+
+        .agenda-item {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .agenda-item:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .agenda-header {
+            background: linear-gradient(135deg, var(--light-blue) 0%, #bbdefb 100%);
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .agenda-header:hover {
+            background: linear-gradient(135deg, #bbdefb 0%, #90caf9 100%);
+        }
+
+        .agenda-number {
+            background: var(--accent-blue);
+            color: var(--white);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+        }
+
+        .agenda-title {
+            flex: 1;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-navy);
+        }
+
+        .toggle-icon {
+            color: var(--accent-blue);
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .agenda-item.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .agenda-content {
+            padding: 30px 25px;
+            background: var(--white);
+            max-height: 3000px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .agenda-item.collapsed .agenda-content {
+            max-height: 0;
+            padding: 0 25px;
+        }
+
+        .speaker-quote {
+            background: #f8f9fa;
+            border-left: 4px solid var(--accent-blue);
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .speaker-name {
+            font-weight: 700;
+            color: var(--primary-navy);
+            font-style: normal;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+            border-left: 5px solid var(--warning-orange);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .insight-title {
+            color: #d68910;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insight-title::before {
+            content: "💡";
+            font-size: 24px;
+        }
+
+        .insight-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .insight-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .insight-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--warning-orange);
+            font-weight: bold;
+        }
+
+        .decision-card {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border: 2px solid var(--success-green);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.15);
+        }
+
+        .decision-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .decision-badge {
+            background: var(--success-green);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 2px 6px rgba(39, 174, 96, 0.3);
+        }
+
+        .decision-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1b5e20;
+        }
+
+        .decision-content {
+            color: #2e7d32;
+            line-height: 1.8;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .action-card {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--medium-gray);
+        }
+
+        .action-card.high-priority::before {
+            background: var(--danger-red);
+        }
+
+        .action-card.medium-priority::before {
+            background: var(--warning-orange);
+        }
+
+        .action-card.low-priority::before {
+            background: var(--success-green);
+        }
+
+        .action-card:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+        }
+
+        .action-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .action-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            line-height: 1.4;
+        }
+
+        .priority-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .priority-high {
+            background: var(--danger-red);
+            color: var(--white);
+        }
+
+        .priority-medium {
+            background: var(--warning-orange);
+            color: var(--white);
+        }
+
+        .priority-low {
+            background: var(--success-green);
+            color: var(--white);
+        }
+
+        .action-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .action-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .action-meta-label {
+            font-weight: 600;
+            color: var(--medium-gray);
+            min-width: 80px;
+        }
+
+        .action-meta-value {
+            color: var(--dark-gray);
+        }
+
+        .diagram-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: center;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .diagram-container h3 {
+            color: var(--primary-navy);
+            margin-bottom: 25px;
+            font-size: 22px;
+        }
+
+        .diagram-container .mermaid {
+            min-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .info-card h3 {
+            color: var(--primary-navy);
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-blue);
+        }
+
+        .info-card p {
+            color: var(--dark-gray);
+            line-height: 1.8;
+        }
+
+        .participants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .participant-badge {
+            background: linear-gradient(135deg, var(--light-blue) 0%, #bbdefb 100%);
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-navy);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .participant-badge:hover {
+            border-color: var(--accent-blue);
+            transform: scale(1.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
+            color: var(--white);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: var(--light-blue);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 5px solid var(--warning-orange);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .warning-title {
+            color: #e65100;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-title::before {
+            content: "⚠️";
+            font-size: 24px;
+        }
+
+        footer {
+            background: var(--dark-gray);
+            color: var(--white);
+            padding: 30px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .timestamp {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .agenda-item {
+                page-break-inside: avoid;
+            }
+            
+            .toggle-icon {
+                display: none;
+            }
+            
+            .agenda-content {
+                max-height: none !important;
+                padding: 30px 25px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+            
+            .meeting-meta {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-grid,
+            .info-grid,
+            .participants-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏗️ 전체 미팅 회의록</h1>
+            <div class="meeting-meta">
+                <div class="meta-item">
+                    <div class="meta-label">회의 일시</div>
+                    <div class="meta-value">2026년 1월 30일</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">회의 형태</div>
+                    <div class="meta-value">기술 검토 회의</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">참석 인원</div>
+                    <div class="meta-value">6명</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">주요 주제</div>
+                    <div class="meta-value">HiSIS 기술 개발</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- 목차 -->
+            <div class="toc">
+                <h3>📋 목차 (Table of Contents)</h3>
+                <ul>
+                    <li><a href="#section-participants">→ 참석자 정보</a></li>
+                    <li><a href="#section-agendas">→ 안건별 논의 내용</a></li>
+                    <li><a href="#section-decisions">→ 주요 결정 사항</a></li>
+                    <li><a href="#section-actions">→ 액션 아이템</a></li>
+                    <li><a href="#section-next">→ 후속 계획</a></li>
+                </ul>
+            </div>
+
+            <!-- 참석자 정보 -->
+            <section class="section" id="section-participants">
+                <h2 class="section-title">👥 참석자</h2>
+                <div class="participants-grid">
+                    <div class="participant-badge">김상윤 대표</div>
+                    <div class="participant-badge">박규호 부장</div>
+                    <div class="participant-badge">이종현 부장</div>
+                    <div class="participant-badge">이재윤</div>
+                    <div class="participant-badge">안태현</div>
+                    <div class="participant-badge">정다소</div>
+                </div>
+            </section>
+
+            <!-- 회의 개요 -->
+            <section class="section">
+                <h2 class="section-title">📌 회의 개요</h2>
+                <div class="info-card">
+                    <h3>회의 목적</h3>
+                    <p>RFP to Aspen 기술 구현 현황 점검 및 HiSIS 시스템 개발 방향 논의. 대림 ENC와의 미팅을 앞두고 기술적 한계와 구현 범위를 명확히 하고, Navisworks 연동 및 공정 모델링 전략을 수립합니다.</p>
+                </div>
+            </section>
+
+            <!-- 안건별 논의 내용 -->
+            <section class="section" id="section-agendas">
+                <h2 class="section-title">📊 안건별 논의 내용</h2>
+
+                <!-- 안건 1 -->
+                <div class="agenda-item">
+                    <div class="agenda-header" onclick="toggleAgenda(this)">
+                        <div class="agenda-number">1</div>
+                        <div class="agenda-title">RFP to Aspen 공정 모델링 전략</div>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                    <div class="agenda-content">
+                        <div class="speaker-quote">
+                            <span class="speaker-name">김상윤:</span> 
+                            "저희가 받은 정부 과제에 대한 그 공정도와 지금 HiSIS로 구축할 수 있는 공정도 간의 차이는 있다. 저희는 어쨌든 저러한 데이터가 들어왔을 때 HiSIS에서 구축할 수 있는 히트 앤 매테리얼 밸런스를 심플리파이해서 이번에는 공정을 저희 나름대로 해석을 할 거고 그 공정 모델을 지금 주어지는 RFP에서 이렇게 전환이 되는 과정을 보여주는데 집중을 하자."
+                        </div>
+
+                        <p><strong>핵심 논의사항:</strong></p>
+                        <ul style="margin: 15px 0; padding-left: 20px; line-height: 1.8;">
+                            <li><strong>현실적 범위 설정:</strong> 정부 과제 공정도와 HiSIS 구축 가능 공정도 간 차이 인정</li>
+                            <li><strong>단계적 접근:</strong> 완벽한 공정 모델보다는 RFP 데이터 변환 과정 시연에 집중</li>
+                            <li><strong>Desulphurization, Converter 등:</strong> 정확한 Heat Balance, Component 데이터 부재</li>
+                            <li><strong>Text-to-Process 워크플로우:</strong> RFP 텍스트 → 주요 인풋 데이터 추출 → HiSIS 순차 구축</li>
+                            <li><strong>데모 영상 개선:</strong> 처음부터 파일 오픈, 컴포넌트 추가, Property Package 설정 근거 포함</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <div class="warning-title">중요 명시사항</div>
+                            <p>이번 단계에서는 필지(Pilz)가 원하는 완벽한 공정 모델을 만들어주지 않을 것이라는 점을 명시해야 합니다. 현재는 심플리파이 버전에서 RFP to Aspen이 구동 가능하다는 기술 검증에 초점을 맞춥니다.</p>
+                        </div>
+
+                        <div class="insight-box">
+                            <div class="insight-title">핵심 인사이트</div>
+                            <ul class="insight-list">
+                                <li><strong>기술 성숙도의 솔직한 평가:</strong> Phase 1, 2, 3로 단계화하여 현재는 기술 검증 단계임을 명확히 함으로써 과도한 기대를 방지하고 신뢰성을 확보</li>
+                                <li><strong>데모의 스토리텔링:</strong> 단순 결과물이 아닌 '과정'을 보여주는 것이 차별화 포인트. 의사결정 근거까지 제시하는 것이 핵심</li>
+                                <li><strong>최적화는 차기 과제:</strong> 다양한 최적화 작업은 후속 단계로 미루고, 현재는 파이프라인 구축에 집중하는 전략적 판단</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 안건 2 -->
+                <div class="agenda-item">
+                    <div class="agenda-header" onclick="toggleAgenda(this)">
+                        <div class="agenda-number">2</div>
+                        <div class="agenda-title">공정 일관성 체크 및 오류 처리 전략</div>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                    <div class="agenda-content">
+                        <div class="speaker-quote">
+                            <span class="speaker-name">이종현:</span> 
+                            "HiSIS를 자동으로 그려줬다는 건 알겠어요. 근데 HiSIS에서 에러가 발생하거나 저기서 뭔가 에러가 발생되는 인컨시스턴시를 어떻게 수정해서 HiSIS에서 반영할 것인지, HiSIS 안에서 나오는 에러는 어떻게 띄워 줄 것인지 이런 것에 대해서는 조금 더 이야기가 필요할 걸로 보입니다."
+                        </div>
+
+                        <p><strong>예상 질문 및 과제:</strong></p>
+                        <ul style="margin: 15px 0; padding-left: 20px; line-height: 1.8;">
+                            <li><strong>수치 오류 표현:</strong> HiSIS 내부에서 발생하는 오류를 어떻게 시각화할 것인가</li>
+                            <li><strong>Inconsistency 해결:</strong> Over-spec, Under-spec 상황 처리 로직</li>
+                            <li><strong>수렴(Convergence) 문제:</strong> 데이터 입력 후 수렴하지 않는 경우 대응 방안</li>
+                            <li><strong>에러 위치 추적:</strong> 빨간색 표시 외에 정확한 위치 링크 제공 필요</li>
+                        </ul>
+
+                        <div class="speaker-quote">
+                            <span class="speaker-name">박규호:</span> 
+                            "엑셀로 하든 뭐든 링크가 있는 리스트로 나올 것 같고, 수치 오류가 총 15개인데 15개의 리스트는 있고 그걸 링크 누르면 해당 페이지로 전달이 될 거고, 그 다음에 거기에서의 인컨시스턴시 에러 노트는 오른쪽에 있고 그 PDF에도 굵게 나와 있을 건데, 그거를 수정을 반영을 할 때는 체크 표시를 해서 컴플리션이 되면서 그게 리비전 히스토리에 남아 있어야..."
+                        </div>
+
+                        <p><strong>제안된 솔루션:</strong></p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>기능</th>
+                                    <th>구현 방안</th>
+                                    <th>우선순위</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>오류 리스트</td>
+                                    <td>Excel/웹 링크 기반 오류 목록 (총 개수 표시)</td>
+                                    <td>HIGH</td>
+                                </tr>
+                                <tr>
+                                    <td>오류 위치 링크</td>
+                                    <td>클릭 시 해당 페이지로 자동 이동</td>
+                                    <td>HIGH</td>
+                                </tr>
+                                <tr>
+                                    <td>수정 추적</td>
+                                    <td>체크박스 + 리비전 히스토리 로그</td>
+                                    <td>MEDIUM</td>
+                                </tr>
+                                <tr>
+                                    <td>Undo 기능</td>
+                                    <td>Ctrl+Z 지원 (히스토리 기반)</td>
+                                    <td>MEDIUM</td>
+                                </tr>
+                                <tr>
+                                    <td>중복/누락 체크</td>
+                                    <td>자동 검증 시스템</td>
+                                    <td>HIGH</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="decision-card">
+                            <div class="decision-header">
+                                <span class="decision-badge">결정 #1</span>
+                                <span class="decision-title">현재 단계에서는 논리 구조 구축은 다음 단계로 이연</span>
+                            </div>
+                            <div class="decision-content">
+                                <p><strong>결정 내용:</strong> 오류 해결 자동화 로직은 추가 학습과 개발이 필요하므로, 현재는 Text-to-Aspen 기술 검증에 집중합니다.</p>
+                                <p><strong>대응 방안:</strong> 질의가 들어올 경우 "다음 단계에서 학습을 통해 구현 예정"으로 안내</p>
+                            </div>
+                        </div>
+
+                        <div class="insight-box">
+                            <div class="insight-title">핵심 인사이트</div>
+                            <ul class="insight-list">
+                                <li><strong>엔지니어링 맨아워 절감의 핵심:</strong> "중복 없이, 누락 없이"가 가장 큰 과제. 자동 체크리스트 시스템이 실질적 가치 창출의 열쇠</li>
+                                <li><strong>UX/UI의 중요성:</strong> 단순 기능 구현을 넘어 사용자가 직관적으로 오류를 추적하고 수정할 수 있는 경험 설계 필수</li>
+                                <li><strong>히스토리 관리:</strong> 실무에서는 "되돌리기" 기능이 매우 중요. 변경 이력 추적이 품질 보증의 기반</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 안건 3 -->
+                <div class="agenda-item">
+                    <div class="agenda-header" onclick="toggleAgenda(this)">
+                        <div class="agenda-number">3</div>
+                        <div class="agenda-title">PFD/P&ID 심볼 및 스트림 넘버링 인식 로직</div>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                    <div class="agenda-content">
+                        <p><strong>온톨로지 구축 관련 논의:</strong></p>
+                        
+                        <div class="speaker-quote">
+                            <span class="speaker-name">이재윤/안태현:</span> 
+                            "라인 위에 어떤 도형이 있고 그 안에 숫자가 있는 거로 인식해야지, 마름모 안에 들어있는 건 스트림 넘버다라고 하기에는 조금 힘들 것 같아요. 라인 상에 있으니까..."
+                        </div>
+
+                        <div class="speaker-quote">
+                            <span class="speaker-name">김상윤:</span> 
+                            "그 넘버링은 저 밑에 있는 히트 앤 매테리얼 밸런스 테이블에 넘버가 쭉 있잖아요. 그래서 그 넘버와의 컨시스턴시를 맞추면 아 이게 그런 로직에서 히트 앤 매테리얼 밸런스 넘버링이랑 맞으니 더블체크로 이건 스트림 넘버다라고 인식하고 갈 수 있게..."
+                        </div>
+
+                        <p><strong>인식 로직 개발 전략:</strong></p>
+                        <ul style="margin: 15px 0; padding-left: 20px; line-height: 1.8;">
+                            <li><strong>1차 인식:</strong> 라인 위의 특정 도형(세모, 마름모 등) 내부 숫자 감지</li>
+                            <li><strong>2차 검증:</strong> Heat & Material Balance Table의 넘버링과 일관성 확인</li>
+                            <li><strong>리비전 처리:</strong> 도면 좌측 하단 리비전 표기 (예: Revision D) - 업계 표준</li>
+                            <li><strong>디폴트 설정:</strong> 세모 모양을 기본값으로 설정하되, 사용자 커스터마이징 가능</li>
+                            <li><strong>Pre-check Prompt:</strong> 사용자에게 "이 도형이 스트림 넘버 표시인가요?" 확인 단계 추가</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <div class="warning-title">다양성 고려사항</div>
+                            <p>R101에도 1이 있고, TK102에도 102가 있고, 라인 넘버에도 숫자가 있기 때문에, "라인 위 + 특정 도형 내부 + 숫자"라는 복합 조건으로 일관성 있게 인식해야 합니다.</p>
+                        </div>
+
+                        <div class="insight-box">
+                            <div class="insight-title">핵심 인사이트</div>
+                            <ul class="insight-list">
+                                <li><strong>업계 표준의 중요성:</strong> 리비전 표기법 등 업계 국룰(국민 룰)을 디폴트로 설정하되, 유연성 확보가 핵심</li>
+                                <li><strong>이중 검증 시스템:</strong> 시각적 인식 + 데이터 테이블 매칭으로 인식률을 극대화하는 전략적 접근</li>
+                                <li><strong>사용자 중심 설계:</strong> 100% 자동화보다는 중요 판단 시점에 사용자 확인을 받아 신뢰도를 높이는 방식</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 안건 4 -->
+                <div class="agenda-item">
+                    <div class="agenda-header" onclick="toggleAgenda(this)">
+                        <div class="agenda-number">4</div>
+                        <div class="agenda-title">Navisworks 3D 모델 생성 및 배관 루팅</div>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                    <div class="agenda-content">
+                        <div class="speaker-quote">
+                            <span class="speaker-name">박규호:</span> 
+                            "이번에 부장님 말씀하신 대로 페이지를 좀 나누고, 일단 Navisworks가 구동되게끔 할 수 있는 수준에서 좌표 찍고 그림 놓고 배치까지만 보고요. 거기 내부에 커넥션을 자동루틴으로 알고리즘한다 이거는 나름 짜보시는게... 고려할 사항이 진짜 많기는 합니다."
+                        </div>
+
+                        <p><strong>현실적 구현 범위:</strong></p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>단계</th>
+                                    <th>구현 내용</th>
+                                    <th>이번 Phase</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1단계</td>
+                                    <td>Navisworks 파일 생성 및 구동</td>
+                                    <td>✅ 포함</td>
+                                </tr>
+                                <tr>
+                                    <td>2단계</td>
+                                    <td>장비 좌표 설정 및 배치</td>
+                                    <td>✅ 포함</td>
+                                </tr>
+                                <tr>
+                                    <td>3단계</td>
+                                    <td>2D 도면 기반 장비 시각화</td>
+                                    <td>✅ 포함</td>
+                                </tr>
+                                <tr>
+                                    <td>4단계</td>
+                                    <td>자동 배관 루팅 알고리즘</td>
+                                    <td>❌ 차기 Phase</td>
+                                </tr>
+                                <tr>
+                                    <td>5단계</td>
+                                    <td>간섭 체크 및 최적화</td>
+                                    <td>❌ 차기 Phase</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="speaker-quote">
+                            <span class="speaker-name">이종현:</span> 
+                            "배관 설계팀에서 계속 얘기했던게 사실 여기랑 연결이 되는 부분이잖아요. 높이도 있고 hazardous도 있고 또 나중에 이건 패키지니까 사람이 안 지나다니겠지만 그런 것들이 다 들어가거든요. 또 maintenance area, grey area 엄청 많아요. 그래서 보여지는 것만 피해서 간다고는 아니기 때문에..."
+                        </div>
+
+                        <p><strong>배관 자동 루팅의 복잡성:</strong></p>
+                        <ul style="margin: 15px 0; padding-left: 20px; line-height: 1.8;">
+                            <li><strong>3차원 좌표:</strong> 높이(Height) 고려</li>
+                            <li><strong>안전 규정:</strong> Hazardous zone 회피</li>
+                            <li><strong>유지보수:</strong> Maintenance area 확보</li>
+                            <li><strong>통행로:</strong> Grey area (사람 통행 공간)</li>
+                            <li><strong>간섭 회피:</strong> 기존 구조물 및 다른 배관과의 충돌 방지</li>
+                            <li><strong>규격/스펙:</strong> 파이프 직경, 재질, 압력 등급 고려</li>
+                        </ul>
+
+                        <div class="decision-card">
+                            <div class="decision-header">
+                                <span class="decision-badge">결정 #2</span>
+                                <span class="decision-title">배관 전문가 협력 필요성 인정</span>
+                            </div>
+                            <div class="decision-content">
+                                <p><strong>결정 내용:</strong> 자동 배관 루팅은 배관 설계 전문가 한 분의 협력이 필요하며, 현재 단계에서는 장비 배치 시각화까지만 구현합니다.</p>
+                                <p><strong>커뮤니케이션 전략:</strong> "추론 논리 구조는 다음 단계에서 구현 가능하며, 이는 대표님께서 가장 잘하시는 부분"이라고 명시적으로 안내</p>
+                            </div>
+                        </div>
+
+                        <div class="insight-box">
+                            <div class="insight-title">핵심 인사이트</div>
+                            <ul class="insight-list">
+                                <li><strong>도메인 전문성의 한계 인정:</strong> 모든 것을 AI로 해결하려 하기보다, 핵심 전문가와의 협업이 필요한 영역을 명확히 구분하는 성숙한 접근</li>
+                                <li><strong>점진적 가치 제공:</strong> 완벽한 솔루션을 한 번에 제공하기보다, 단계별로 명확한 가치를 전달하는 전략</li>
+                                <li><strong>기술적 솔직함:</strong> "고려할 사항이 진짜 많다"는 솔직한 평가가 오히려 신뢰를 구축</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 안건 5 -->
+                <div class="agenda-item">
+                    <div class="agenda-header" onclick="toggleAgenda(this)">
+                        <div class="agenda-number">5</div>
+                        <div class="agenda-title">PFD와 P&ID 간 장비 개수 불일치 처리</div>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                    <div class="agenda-content">
+                        <div class="speaker-quote">
+                            <span class="speaker-name">이재윤:</span> 
+                            "HiSIS 디자인 할 때 플로우시팅 PFD 그릴 때 저게 원 바이 원(1:1) 실제 플랜트와 매칭되지 않는다라고 하면서... 열교환기가 하나인데 실제로 열교환기가 병렬 두 개거나 직렬 두 개일 수도 있고, 펌프도 저긴 하나인데 실제로는 바이패스로 두 개가 들어갈 수도 있고..."
+                        </div>
+
+                        <div class="speaker-quote">
+                            <span class="speaker-name">이종현:</span> 
+                            "PFD에는 그릴 때 실제로 이게 두 개인지 세 개인지... 열교환기는 사실 열량 계산 용으로 써요. 그래서 그래야만 기계공정이나 벤더한테 열교환기 디자인을 맡기거든요. 그런데 절대적으로 무조건 크게 만들 수는 없잖아요. 그래서 그 용량을 만들기 위해 이게 두 개가 되기도 하고 세 개가 되기도 합니다."
+                        </div>
+
+                        <p><strong>실무 케이스:</strong></p>
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <h3>열교환기 분할</h3>
+                                <p>• PFD: E-101 (1개로 표시)<br>
+                                • P&ID: E-101A, E-101B, E-101C (3개로 분할)<br>
+                                • 이유: 열량 계산 결과 단일 장비로는 너무 커서 분할 설치</p>
+                            </div>
+                            <div class="info-card">
+                                <h3>펌프 이중화</h3>
+                                <p>• PFD: P-201 (1개로 표시)<br>
+                                • P&ID: P-201A, P-201B (2개 + 바이패스)<br>
+                                • 이유: 백업 및 유지보수 고려</p>
+                            </div>
+                            <div class="info-card">
+                                <h3>파이프라인 분기</h3>
+                                <p>• PFD: 단일 라인<br>
+                                • P&ID: 병렬 라인 또는 직렬 연결<br>
+                                • 이유: 유량/압력 분배 및 안전성</p>
+                            </div>
+                        </div>
+
+                        <p><strong>온톨로지 매핑 전략:</strong></p>
+                        <ul style="margin: 15px 0; padding-left: 20px; line-height: 1.8;">
+                            <li><strong>넘버링 패턴 인식:</strong> E-101A-B → A, B 서픽스로 2개 장비임을 자동 인식</li>
+                            <li><strong>PFD 업데이트:</strong> P&ID에서 장비 개수 확정 시 PFD도 반영 (양방향 동기화)</li>
+                            <li><strong>도형 개수 불일치:</strong> PFD 1개 vs P&ID 3개일 경우, 파이프 연결이 자동으로 안 잡힐 수 있음</li>
+                            <li><strong>해결 방안:</strong> 온톨로지에서 "E-101 = {E-101A, E-101B, E-101C}"로 매핑</li>
+                        </ul>
+
+                        <div class="decision-card">
+                            <div class="decision-header">
+                                <span class="decision-badge">결정 #3</span>
+                                <span class="decision-title">장비 개수 불일치 자동 인식 로직 구현</span>
+                            </div>
+                            <div class="decision-content">
+                                <p><strong>결정 내용:</strong> A-B, A-B-C 등의 서픽스 패턴을 인식하여 PFD 단일 장비가 P&ID에서 복수 장비로 분할되었음을 자동 판단합니다.</p>
+                                <p><strong>구현 우선순위:</strong> 이 로직을 구현해 놓으면 역방향(P&ID → PFD) 반영도 자동화 가능</p>
+                            </div>
+                        </div>
+
+                        <div class="insight-box">
+                            <div class="insight-title">핵심 인사이트</div>
+                            <ul class="insight-list">
+                                <li><strong>설계 단계별 상세화:</strong> PFD는 개념 설계, P&ID는 상세 설계. 같은 장비라도 목적에 따라 표현이 달라지는 엔지니어링의 본질 이해 필수</li>
+                                <li><strong>온톨로지의 진가:</strong> 단순 1:1 매핑이 아닌 1:N 관계까지 처리할 수 있는 유연한 데이터 구조가 핵심 차별화 요소</li>
+                                <li><strong>실무 지식의 코드화:</strong> "열량 계산용으로 쓴다", "벤더에게 디자인 맡긴다" 같은 실무 컨텍스트를 시스템에 반영하는 것이 진정한 AI 적용</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 안건 6 -->
+                <div class="agenda-item">
+                    <div class="agenda-header" onclick="toggleAgenda(this)">
+                        <div class="agenda-number">6</div>
+                        <div class="agenda-title">패키지 장비 및 GA(General Arrangement) 처리</div>
+                        <div class="toggle-icon">▼</div>
+                    </div>
+                    <div class="agenda-content">
+                        <div class="speaker-quote">
+                            <span class="speaker-name">이종현:</span> 
+                            "점선 박스가 패키지 형태로 다른 데서 아예 스키드(skid) 째로 오면... 나중에 자세히 보니까 그걸 그냥 조립해서 하는 거더라고요."
+                        </div>
+
+                        <p><strong>패키지 장비 특성:</strong></p>
+                        <ul style="margin: 15px 0; padding-left: 20px; line-height: 1.8;">
+                            <li><strong>완제품 형태:</strong> 벤더가 스키드 단위로 공급 (조립만 하면 됨)</li>
+                            <li><strong>P&ID 표현:</strong> 점선 박스로 경계 표시</li>
+                            <li><strong>설계 생략:</strong> 패키지 내부는 벤더 책임, 발주자는 내부 설계 안 함</li>
+                            <li><strong>GA 제공 시점:</strong> 패키지 벤더가 제작 완료 후 제공 (초기에는 없음)</li>
+                            <li><strong>필수 정보:</strong> 노즐(Nozzle) 위치 - 외부 배관과 연결 지점</li>
+                        </ul>
+
+                        <div class="speaker-quote">
+                            <span class="speaker-name">이종현:</span> 
+                            "저희가 먼저 요청하는게 노즐 위치에요. 왜냐면 저희 쪽이랑 연결될 노즐을 어디다 배치해야 되는지는 저희 쪽 배관에서 봐야 되는 거라... 점선 기준으로 연결되는 지점을 최소한 빠르게 받거든요."
+                        </div>
+
+                        <p><strong>현재 단계 대응 전략:</strong></p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>항목</th>
+                                    <th>구현 방안</th>
+                                    <th>비고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>패키지 외형</td>
+                                    <td>직육면체(박스) 형태로 표시</td>
+                                    <td>Volume만 표현</td>
+                                </tr>
+                                <tr>
+                                    <td>태그 넘버</td>
+                                    <td>P&ID, Equipment List와 일치하는 번호 부여</td>
+                                    <td>필수</td>
+                                </tr>
+                                <tr>
+                                    <td>노즐 위치</td>
+                                    <td>점선 경계에서 연결 지점 좌표 표시</td>
+                                    <td>배관 연결 필수</td>
+                                </tr>
+                                <tr>
+                                    <td>내부 구조</td>
+                                    <td>표시하지 않음 (데이터 없음)</td>
+                                    <td>차기 Phase</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="decision-card">
+                            <div class="decision-header">
+                                <span class="decision-badge">결정 #4</span>
+                                <span class="decision-title">패키지는 박스 + 태그 넘버 + 노즐 위치로 1차 표현</span>
+                            </div>
+                            <div class="decision-content">
+                                <p><strong>결정 내용:</strong> Navisworks에 패키지 내부까지 상세 모델링하지 않고, 박스 형태로 볼륨만 잡고 태그 넘버와 노즐 위치를 정확히 표시합니다.</p>
+                                <p><strong>Phase 2 계획:</strong> 벤더로부터 GA 도면 수령 시 내부 상세 모델 추가 (3D 위치 정합성 확인, 간섭 체크 등)</p>
+                            </div>
+                        </div>
+
+                        <div class="insight-box">
+                            <div class="insight-title">핵심 인사이트</div>
+                            <ul class="insight-list">
+                                <li><strong>정보 가용성의 현실:</strong> 아무리 좋은 AI라도 데이터가 없으면 불가능. 현실적 제약을 인정하고 단계별 접근이 필요</li>
+                                <li><strong>핵심 정보 우선순위:</strong> 패키지 내부보다 "노즐 위치"가 먼저 필요한 이유를 이해하는 것이 도메인 지식의 핵심</li>
+                                <li><strong>최소 가치 제공(MVP):</strong> 박스 + 태그 + 노즐만으로도 1차 배치 설계와 간섭 체크에 충분한 가치 제공 가능</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 주요 결정 사항 요약 -->
+            <section class="section" id="section-decisions">
+                <h2 class="section-title">✅ 주요 결정 사항</h2>
+                
+                <div class="decision-card">
+                    <div class="decision-header">
+                        <span class="decision-badge">핵심 결정</span>
+                        <span class="decision-title">단계별 기술 검증 전략 확정</span>
+                    </div>
+                    <div class="decision-content">
+                        <p><strong>Phase 1 (현재):</strong></p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>RFP to Aspen 기술 검증 (Simplified 공정 모델)</li>
+                            <li>Text 추출 → 주요 인풋 데이터 정리 → HiSIS 순차 구축 과정 시연</li>
+                            <li>Navisworks 장비 배치 시각화 (박스 레벨)</li>
+                            <li>PFD/P&ID 심볼 인식 및 스트림 넘버링 로직 구현</li>
+                        </ul>
+                        <p><strong>Phase 2/3 (차기):</strong></p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>완벽한 공정 모델링 및 최적화</li>
+                            <li>자동 배관 루팅 알고리즘</li>
+                            <li>오류 해결 자동화 논리 구조</li>
+                            <li>패키지 내부 상세 모델링</li>
+                        </ul>
+                        <p><strong>근거:</strong> 기술 성숙도를 고려한 현실적 접근. 과도한 약속으로 인한 신뢰 손상 방지.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 액션 아이템 -->
+            <section class="section" id="section-actions">
+                <h2 class="section-title">🎯 액션 아이템</h2>
+                
+                <div class="action-grid">
+                    <div class="action-card high-priority">
+                        <div class="action-header">
+                            <div class="action-title">RFP to Aspen 데모 영상 업데이트</div>
+                            <span class="priority-badge priority-high">HIGH</span>
+                        </div>
+                        <p>기존 테크 데모에서 누락된 초기 설정 과정 포함: 파일 오픈, 컴포넌트 추가, Property Package 설정 근거, 인풋 데이터 결정 근거를 명시적으로 보여주는 완전한 워크플로우 영상 제작</p>
+                        <div class="action-meta">
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">담당자:</span>
+                                <span class="action-meta-value">김상윤, 기술팀</span>
+                            </div>
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">마감일:</span>
+                                <span class="action-meta-value">대림 ENC 미팅 전</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-card high-priority">
+                        <div class="action-header">
+                            <div class="action-title">오류 추적 시스템 설계</div>
+                            <span class="priority-badge priority-high">HIGH</span>
+                        </div>
+                        <p>Inconsistency 발생 시 오류 리스트(총 개수), 위치 링크, 수정 체크박스, 리비전 히스토리 기능을 포함한 사용자 친화적 오류 관리 시스템 기획 및 프로토타입 개발</p>
+                        <div class="action-meta">
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">담당자:</span>
+                                <span class="action-meta-value">박규호, UX/UI팀</span>
+                            </div>
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">마감일:</span>
+                                <span class="action-meta-value">2주 내</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-card medium-priority">
+                        <div class="action-header">
+                            <div class="action-title">PFD/P&ID 심볼 인식 로직 고도화</div>
+                            <span class="priority-badge priority-medium">MEDIUM</span>
+                        </div>
+                        <p>라인 위 도형 + 숫자 조합 인식, Heat & Material Balance Table과의 이중 검증, 사용자 Pre-check 프롬프트 추가, 리비전 자동 인식 기능 구현</p>
+                        <div class="action-meta">
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">담당자:</span>
+                                <span class="action-meta-value">이재윤, 안태현</span>
+                            </div>
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">마감일:</span>
+                                <span class="action-meta-value">3주 내</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-card medium-priority">
+                        <div class="action-header">
+                            <div class="action-title">Navisworks 배치 시스템 프로토타입</div>
+                            <span class="priority-badge priority-medium">MEDIUM</span>
+                        </div>
+                        <p>2D 도면 기반 장비 좌표 추출, 3D 모델 배치, 태그 넘버 매핑까지의 기본 워크플로우 구현. 패키지는 박스 형태로 표현하되 노즐 위치는 정확히 표시</p>
+                        <div class="action-meta">
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">담당자:</span>
+                                <span class="action-meta-value">정다소, 3D팀</span>
+                            </div>
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">마감일:</span>
+                                <span class="action-meta-value">4주 내</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-card low-priority">
+                        <div class="action-header">
+                            <div class="action-title">장비 개수 불일치 온톨로지 매핑</div>
+                            <span class="priority-badge priority-low">LOW</span>
+                        </div>
+                        <p>E-101A-B 같은 서픽스 패턴 인식, PFD 단일 장비 ↔ P&ID 복수 장비 자동 매핑, 양방향 동기화 로직 설계 및 테스트</p>
+                        <div class="action-meta">
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">담당자:</span>
+                                <span class="action-meta-value">온톨로지팀</span>
+                            </div>
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">마감일:</span>
+                                <span class="action-meta-value">5주 내</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-card low-priority">
+                        <div class="action-header">
+                            <div class="action-title">배관 전문가 네트워킹</div>
+                            <span class="priority-badge priority-low">LOW</span>
+                        </div>
+                        <p>자동 배관 루팅 알고리즘 개발을 위한 배관 설계 전문가 섭외 및 협력 관계 구축. 실무 노하우 및 제약 조건 청취</p>
+                        <div class="action-meta">
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">담당자:</span>
+                                <span class="action-meta-value">이종현, HR팀</span>
+                            </div>
+                            <div class="action-meta-item">
+                                <span class="action-meta-label">마감일:</span>
+                                <span class="action-meta-value">Phase 2 시작 전</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 시각화 -->
+            <section class="section">
+                <h2 class="section-title">📈 프로젝트 워크플로우</h2>
+                
+                <div class="diagram-container">
+                    <h3>RFP to Aspen 변환 프로세스</h3>
+                    <div class="mermaid">
+flowchart TD
+    A[RFP 문서 입력] --> B[텍스트 추출 및 파싱]
+    B --> C[주요 인풋 데이터 식별]
+    C --> D{데이터 타입 분류}
+    
+    D -->|컴포넌트| E[Component 리스트 생성]
+    D -->|스트림| F[Stream 정보 추출]
+    D -->|장비| G[Equipment 스펙 정리]
+    
+    E --> H[HiSIS 프로젝트 생성]
+    F --> H
+    G --> H
+    
+    H --> I[Property Package 설정]
+    I --> J[컴포넌트 추가]
+    J --> K[스트림 입력]
+    K --> L[장비 배치]
+    
+    L --> M{수렴 검증}
+    M -->|실패| N[오류 리스트 생성]
+    M -->|성공| O[결과 검증]
+    
+    N --> P[사용자 수정]
+    P --> M
+    
+    O --> Q[Aspen Plus 모델 완성]
+    
+    style A fill:#667eea
+    style Q fill:#4caf50
+    style M fill:#f39c12
+    style N fill:#e74c3c
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <h3>PFD/P&ID 연동 프로세스</h3>
+                    <div class="mermaid">
+flowchart LR
+    A[PFD 도면] --> B[심볼 인식]
+    C[P&ID 도면] --> D[상세 심볼 인식]
+    
+    B --> E[Equipment List]
+    D --> E
+    
+    E --> F{개수 불일치?}
+    F -->|일치| G[직접 매핑]
+    F -->|불일치| H[서픽스 패턴 분석]
+    
+    H --> I[A-B-C 인식]
+    I --> J[1:N 매핑]
+    
+    G --> K[온톨로지 구축]
+    J --> K
+    
+    K --> L[Heat & Material Balance]
+    L --> M[이중 검증]
+    M --> N[최종 데이터 세트]
+    
+    style A fill:#bbdefb
+    style C fill:#90caf9
+    style N fill:#4caf50
+                    </div>
+                </div>
+
+                <div class="diagram-container">
+                    <h3>Navisworks 3D 생성 흐름</h3>
+                    <div class="mermaid">
+flowchart TD
+    A[2D 도면 분석] --> B[장비 좌표 추출]
+    B --> C{패키지 여부?}
+    
+    C -->|일반 장비| D[Navisworks 심볼 매칭]
+    C -->|패키지| E[박스 형태 생성]
+    
+    D --> F[3D 모델 배치]
+    E --> G[노즐 위치 표시]
+    
+    F --> H[태그 넘버 부여]
+    G --> H
+    
+    H --> I[Navisworks 파일 생성]
+    I --> J{배관 루팅?}
+    
+    J -->|Phase 1| K[수동 연결]
+    J -->|Phase 2+| L[자동 루팅 알고리즘]
+    
+    L --> M[간섭 체크]
+    M --> N[최적화]
+    
+    K --> O[최종 3D 모델]
+    N --> O
+    
+    style A fill:#e3f2fd
+    style O fill:#4caf50
+    style J fill:#f39c12
+    style L fill:#ffd54f
+                    </div>
+                </div>
+            </section>
+
+            <!-- 타임라인 -->
+            <section class="section">
+                <h2 class="section-title">📅 프로젝트 타임라인</h2>
+                
+                <div class="diagram-container">
+                    <div class="mermaid">
+gantt
+    title 주요 마일스톤 및 일정
+    dateFormat YYYY-MM-DD
+    axisFormat %m/%d
+    
+    section Phase 1
+    RFP to Aspen 데모 업데이트    :done, task1, 2026-01-30, 7d
+    오류 추적 시스템 설계          :active, task2, 2026-02-06, 14d
+    
+    section 기술 개발
+    PFD/P&ID 심볼 인식 로직       :task3, 2026-02-10, 21d
+    Navisworks 배치 프로토타입    :task4, 2026-02-13, 28d
+    
+    section 검증
+    대림 ENC 미팅                :milestone, task5, 2026-02-10, 0d
+    Phase 1 완료                 :milestone, task6, 2026-03-13, 0d
+    
+    section Phase 2 준비
+    장비 개수 매핑 로직           :task7, 2026-02-20, 35d
+    배관 전문가 협력 구축         :task8, 2026-03-01, 14d
+                    </div>
+                </div>
+            </section>
+
+            <!-- 후속 계획 -->
+            <section class="section" id="section-next">
+                <h2 class="section-title">🔮 후속 계획 및 미해결 사항</h2>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>다음 미팅 일정</h3>
+                        <p>• <strong>대림 ENC 미팅:</strong> 2월 10일 예정<br>
+                        • <strong>내부 기술 검토:</strong> 주 1회 정기 미팅<br>
+                        • <strong>Phase 1 완료 보고:</strong> 3월 중순</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Phase 2 준비사항</h3>
+                        <p>• 배관 설계 전문가 섭외<br>
+                        • 자동 루팅 알고리즘 연구<br>
+                        • 완벽한 공정 모델 레퍼런스 수집<br>
+                        • 최적화 기법 조사</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>미해결 이슈</h3>
+                        <p>• <strong>오류 해결 자동화:</strong> 추가 학습 필요<br>
+                        • <strong>간섭 체크:</strong> 알고리즘 복잡도 높음<br>
+                        • <strong>패키지 GA:</strong> 벤더 제공 시점 불명확<br>
+                        • <strong>3D 좌표 정확도:</strong> 검증 방법 필요</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <footer>
+            <p>© 2026 HiSIS Development Team. All rights reserved.</p>
+            <p class="timestamp">생성일시: 2026년 1월 30일 | 문서 버전: v1.0</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mermaid 초기화
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#bbdefb',
+                primaryTextColor: '#1e3c72',
+                primaryBorderColor: '#2196f3',
+                lineColor: '#5a6c7d',
+                secondaryColor: '#ffe082',
+                tertiaryColor: '#fff9c4'
+            },
+            gantt: {
+                titleTopMargin: 25,
+                barHeight: 30,
+                barGap: 8,
+                topPadding: 50,
+                leftPadding: 150,
+                gridLineStartPadding: 35,
+                fontSize: 13,
+                sectionFontSize: 14,
+                numberSectionStyles: 4,
+                axisFormat: '%m/%d',
+                useWidth: 1400
+            }
+        });
+
+        // 아코디언 토글 기능
+        function toggleAgenda(header) {
+            const item = header.parentElement;
+            item.classList.toggle('collapsed');
+        }
+
+        // 인쇄 기능
+        function printMinutes() {
+            window.print();
+        }
+
+        // 스크롤 애니메이션
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.agenda-item, .decision-card, .action-card, .info-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

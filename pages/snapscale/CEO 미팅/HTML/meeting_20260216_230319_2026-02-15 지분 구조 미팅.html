@@ -1,0 +1,999 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회의록 | 2026-02-15 지분 구조 미팅</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --navy-dark: #1a2744;
+            --navy: #1e3a5f;
+            --navy-mid: #2c4f7c;
+            --navy-light: #4a7ab5;
+            --navy-pale: #e8f0f8;
+            --accent: #3a7bd5;
+            --accent-light: #6fa3e8;
+            --gray-dark: #2d3748;
+            --gray-mid: #4a5568;
+            --gray: #718096;
+            --gray-light: #a0aec0;
+            --gray-pale: #edf2f7;
+            --white: #ffffff;
+            --border: #d0dce8;
+            --success: #276749;
+            --success-bg: #e6fffa;
+            --warning: #744210;
+            --warning-bg: #fffbeb;
+            --danger: #742a2a;
+            --danger-bg: #fff5f5;
+            --info: #1a365d;
+            --info-bg: #ebf4ff;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --radius: 8px;
+            --radius-lg: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f0f4f8;
+            color: var(--gray-dark);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* ─── Header ─── */
+        .header {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-mid) 100%);
+            color: var(--white);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .header-icon {
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .header-title h1 {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+        .header-title p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.65);
+            margin-top: 2px;
+        }
+        .header-meta {
+            display: flex; gap: 20px; flex-shrink: 0;
+        }
+        .header-meta-item {
+            text-align: right;
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
+        }
+        .header-meta-item strong {
+            display: block;
+            font-size: 13px;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* ─── Layout ─── */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 28px 24px;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* ─── Sidebar / TOC ─── */
+        .sidebar {
+            position: sticky;
+            top: 92px;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        .sidebar-header {
+            background: var(--navy);
+            color: var(--white);
+            padding: 14px 18px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .toc-list { list-style: none; padding: 10px 0; }
+        .toc-list li a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            color: var(--gray-mid);
+            text-decoration: none;
+            font-size: 12.5px;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .toc-list li a:hover {
+            background: var(--navy-pale);
+            color: var(--navy);
+            border-left-color: var(--accent);
+        }
+        .toc-list li a .toc-num {
+            width: 20px; height: 20px;
+            background: var(--gray-pale);
+            border-radius: 50%;
+            font-size: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            color: var(--gray);
+        }
+        .toc-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 6px 18px;
+        }
+
+        /* ─── Main Content ─── */
+        .main { display: flex; flex-direction: column; gap: 24px; }
+
+        /* ─── Card ─── */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .card-header-icon {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .card-header h2 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--navy-dark);
+        }
+        .card-header .card-badge {
+            margin-left: auto;
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .card-body { padding: 24px; }
+
+        /* ─── Overview Grid ─── */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .overview-item {
+            background: var(--navy-pale);
+            border-radius: var(--radius);
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+        }
+        .overview-item .label {
+            font-size: 11px;
+            color: var(--gray);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .overview-item .value {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--navy-dark);
+        }
+
+        .participants-grid {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .participant-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gray-pale);
+            border-radius: 8px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+        }
+        .participant-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: var(--white);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .participant-info .name { font-weight: 700; font-size: 13px; color: var(--navy-dark); }
+        .participant-info .role { font-size: 11px; color: var(--gray); }
+
+        /* ─── Agenda Sections ─── */
+        .agenda-section { margin-bottom: 28px; }
+        .agenda-section:last-child { margin-bottom: 0; }
+        .agenda-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--navy-pale);
+        }
+        .agenda-num {
+            width: 28px; height: 28px;
+            background: var(--navy);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .agenda-title h3 { font-size: 14.5px; font-weight: 700; color: var(--navy-dark); }
+
+        .content-block { margin-bottom: 16px; }
+        .content-block h4 {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--navy-mid);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .content-block p {
+            font-size: 13.5px;
+            color: var(--gray-mid);
+            line-height: 1.75;
+        }
+
+        .bullet-list { list-style: none; padding: 0; }
+        .bullet-list li {
+            padding: 6px 0 6px 20px;
+            position: relative;
+            font-size: 13.5px;
+            color: var(--gray-mid);
+            line-height: 1.6;
+            border-bottom: 1px dashed var(--border);
+        }
+        .bullet-list li:last-child { border-bottom: none; }
+        .bullet-list li::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 14px;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--navy-light);
+        }
+
+        .insight-list { display: flex; flex-direction: column; gap: 10px; }
+        .insight-item {
+            display: flex;
+            gap: 10px;
+            background: var(--info-bg);
+            border: 1px solid #bee3f8;
+            border-radius: var(--radius);
+            padding: 12px 14px;
+        }
+        .insight-icon { font-size: 16px; flex-shrink: 0; }
+        .insight-text { font-size: 13px; color: var(--info); line-height: 1.6; }
+        .insight-text strong { font-weight: 700; }
+
+        /* ─── Decision Cards ─── */
+        .decision-grid { display: flex; flex-direction: column; gap: 14px; }
+        .decision-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .decision-header {
+            background: var(--navy);
+            color: var(--white);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .decision-body { padding: 14px 16px; }
+        .decision-body p { font-size: 13.5px; color: var(--gray-mid); line-height: 1.7; }
+        .decision-meta {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .decision-tag {
+            font-size: 11px;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .tag-blue { background: var(--info-bg); color: var(--info); border: 1px solid #90cdf4; }
+        .tag-green { background: var(--success-bg); color: var(--success); border: 1px solid #9ae6b4; }
+        .tag-yellow { background: var(--warning-bg); color: var(--warning); border: 1px solid #f6e05e; }
+        .tag-red { background: var(--danger-bg); color: var(--danger); border: 1px solid #fed7d7; }
+
+        /* ─── Action Items ─── */
+        .action-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .action-table thead tr {
+            background: var(--navy);
+            color: var(--white);
+        }
+        .action-table th {
+            padding: 11px 14px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .action-table tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        .action-table tbody tr:hover { background: var(--navy-pale); }
+        .action-table td { padding: 11px 14px; vertical-align: top; }
+        .priority-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .p-high { background: var(--danger-bg); color: #c53030; border: 1px solid #feb2b2; }
+        .p-medium { background: var(--warning-bg); color: #c05621; border: 1px solid #fbd38d; }
+        .p-low { background: var(--success-bg); color: #2f855a; border: 1px solid #9ae6b4; }
+        .assignee-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--navy-pale);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2px 9px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        /* ─── Mermaid ─── */
+        .diagram-wrap {
+            background: #fafbfc;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+        .diagram-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+        }
+        .diagram-wrap .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ─── Follow-up ─── */
+        .followup-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .followup-box {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .followup-box-header {
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .followup-box-header.blue { background: var(--info-bg); color: var(--info); }
+        .followup-box-header.green { background: var(--success-bg); color: var(--success); }
+        .followup-box-body { padding: 12px 14px; }
+        .followup-box-body ul { list-style: none; }
+        .followup-box-body ul li {
+            padding: 5px 0;
+            font-size: 13px;
+            color: var(--gray-mid);
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+            border-bottom: 1px dashed var(--border);
+        }
+        .followup-box-body ul li:last-child { border-bottom: none; }
+        .followup-box-body ul li::before {
+            content: '▸';
+            color: var(--navy-light);
+            flex-shrink: 0;
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        /* ─── Risk Banner ─── */
+        .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .risk-item {
+            border-radius: var(--radius);
+            padding: 14px 16px;
+            border: 1px solid;
+        }
+        .risk-item.danger { background: var(--danger-bg); border-color: #fed7d7; }
+        .risk-item.warning { background: var(--warning-bg); border-color: #fbd38d; }
+        .risk-item h5 {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .risk-item.danger h5 { color: #c53030; }
+        .risk-item.warning h5 { color: #c05621; }
+        .risk-item p { font-size: 12.5px; line-height: 1.6; }
+        .risk-item.danger p { color: var(--danger); }
+        .risk-item.warning p { color: var(--warning); }
+
+        /* ─── Collapsible ─── */
+        .collapsible { cursor: pointer; user-select: none; }
+        .collapsible .toggle-icon {
+            margin-left: auto;
+            font-size: 18px;
+            transition: transform 0.3s;
+            color: var(--gray-light);
+        }
+        .collapsible.open .toggle-icon { transform: rotate(180deg); }
+        .collapsible-body {
+            display: none;
+            padding: 24px;
+            border-top: 1px solid var(--border);
+        }
+        .collapsible-body.open { display: block; }
+
+        /* ─── Footer ─── */
+        .footer {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px 32px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray-light);
+        }
+
+        /* ─── Print ─── */
+        @media print {
+            .sidebar { display: none; }
+            .container { grid-template-columns: 1fr; }
+            .header { position: static; }
+            .collapsible-body { display: block !important; }
+            body { background: white; }
+            .card { box-shadow: none; border: 1px solid #ccc; }
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .sidebar { position: static; }
+            .overview-grid { grid-template-columns: 1fr 1fr; }
+            .followup-grid { grid-template-columns: 1fr; }
+            .risk-grid { grid-template-columns: 1fr; }
+            .header-meta { display: none; }
+        }
+        @media (max-width: 600px) {
+            .header-inner { padding: 16px; }
+            .container { padding: 16px; }
+            .card-body { padding: 16px; }
+            .overview-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════ HEADER ════════════════ -->
+<header class="header">
+    <div class="header-inner">
+        <div class="header-left">
+            <div class="header-icon">📋</div>
+            <div class="header-title">
+                <h1>2026-02-15 지분 구조 미팅</h1>
+                <p>스냅스케일(SnapScale) · 공동창업자 지분 및 베스팅 조건 협의</p>
+            </div>
+        </div>
+        <div class="header-meta">
+            <div class="header-meta-item">
+                <span>회의 일시</span>
+                <strong>2026-02-16 23:03</strong>
+            </div>
+            <div class="header-meta-item">
+                <span>문서 상태</span>
+                <strong>✅ 최종본</strong>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ════════════════ LAYOUT ════════════════ -->
+<div class="container">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+        <div class="sidebar-header">📑 목 차</div>
+        <ul class="toc-list">
+            <li><a href="#overview"><span class="toc-num">Ⅰ</span>회의 개요</a></li>
+            <div class="toc-divider"></div>
+            <li><a href="#agenda1"><span class="toc-num">1</span>투자 라운드 & 인력</a></li>
+            <li><a href="#agenda2"><span class="toc-num">2</span>지분 구조 & 조건</a></li>
+            <li><a href="#agenda3"><span class="toc-num">3</span>사업 로드맵</a></li>
+            <li><a href="#agenda4"><span class="toc-num">4</span>스톡옵션 법적 검토</a></li>
+            <div class="toc-divider"></div>
+            <li><a href="#decisions"><span class="toc-num">Ⅱ</span>결정사항</a></li>
+            <li><a href="#actions"><span class="toc-num">Ⅲ</span>액션아이템</a></li>
+            <li><a href="#diagrams"><span class="toc-num">Ⅳ</span>다이어그램</a></li>
+            <li><a href="#risks"><span class="toc-num">Ⅴ</span>리스크 분석</a></li>
+            <li><a href="#followup"><span class="toc-num">Ⅵ</span>후속 계획</a></li>
+        </ul>
+    </aside>
+
+    <!-- ── Main ── -->
+    <main class="main">
+
+        <!-- ───── 회의 개요 ───── -->
+        <section id="overview" class="card">
+            <div class="card-header">
+                <div class="card-header-icon" style="background:#ebf4ff">📌</div>
+                <h2>회의 개요</h2>
+                <span class="card-badge tag-blue">Overview</span>
+            </div>
+            <div class="card-body">
+                <div class="overview-grid">
+                    <div class="overview-item">
+                        <div class="label">회의 제목</div>
+                        <div class="value">2026-02-15 지분 구조 미팅</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="label">일시</div>
+                        <div class="value">2026-02-16 (일) 23:03</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="label">형식</div>
+                        <div class="value">대면 + 명절 자리 (비공식)</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="label">주관</div>
+                        <div class="value">김상윤 대표 (스냅스케일)</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="label">원본 파일</div>
+                        <div class="value">2026-02-15 지분 구조 미팅.txt</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="label">후속 미팅</div>
+                        <div class="value">당일 22:00 (조인 세부 협의)</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:16px">
+                    <div class="content-block">
+                        <h4>회의 목적</h4>
+                        <p>스냅스케일(SnapScale)의 공동창업자(코파운더) 영입과 관련하여 ① 초기 투자 라운드 조건 및 인력 채용 현황 공유, ② 코파운더 지분(30%) 부여 조건 및 베스팅(vesting) 구조 협의, ③ 회사 중장기 성장 로드맵 및 엑시트 플랜 정렬, ④ 스톡옵션 법적 검토 결과 공유.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="content-block"><h4>참석자</h4></div>
+                    <div class="participants-grid">
+                        <div class="participant-card">
+                            <div class="participant-avatar">김</div>
+                            <div class="participant-info">
+                                <div class="name">김상윤</div>
+                                <div class="role">대표 · 스냅스케일 (파운더)</div>
+                            </div>
+                        </div>
+                        <div class="participant-card">
+                            <div class="participant-avatar">박</div>
+                            <div class="participant-info">
+                                <div class="name">박규호 부장</div>
+                                <div class="role">코파운더 후보 · 前 아스펜테크 근무</div>
+                            </div>
+                        </div>
+                        <div class="participant-card">
+                            <div class="participant-avatar" style="background:#4a7ab5">태</div>
+                            <div class="participant-info">
+                                <div class="name">태현 (인턴)</div>
+                                <div class="role">의대 복귀 예정 · 경험 목적 참여</div>
+                            </div>
+                        </div>
+                        <div class="participant-card">
+                            <div class="participant-avatar" style="background:#666">다</div>
+                            <div class="participant-info">
+                                <div class="name">다수 (인턴)</div>
+                                <div class="role">현재 파트타임 근무 중</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── 안건 1: 투자 라운드 & 인력 ───── -->
+        <section id="agenda1" class="card">
+            <div class="card-header collapsible open" onclick="toggleCollapsible(this)">
+                <div class="card-header-icon" style="background:#e6fffa">💰</div>
+                <h2>안건 1 · 초기 투자 라운드 진행 현황 및 인력 채용 이슈</h2>
+                <span class="toggle-icon">▾</span>
+            </div>
+            <div class="collapsible-body open">
+                <div class="agenda-section">
+                    <div class="agenda-title">
+                        <div class="agenda-num">①</div>
+                        <h3>안건 내용</h3>
+                    </div>
+                    <div class="content-block">
+                        <h4>투자 라운드 현황</h4>
+                        <ul class="bullet-list">
+                            <li>초기 투자자(초기 라운드)를 현재 접촉 중이나, 투자금 입금까지 최소 1개월 이상 소요 예상.</li>
+                            <li>태조(외부 계약 건) 기준, 3월 중 계약 체결 예상 · 소요 기간 약 15주로 산정.</li>
+                            <li>3월 초까지 현대중공업, 이수건설 등 외부 이해관계자에게 가시적 결과물 제출 필요.</li>
+                            <li>투자 라운드 협상 시 조건을 보다 명확하고 단호하게(rigid하게) 제시하는 방향으로 전략 전환 논의.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block">
+                        <h4>인력 채용 이슈</h4>
+                        <ul class="bullet-list">
+                            <li>현재 팀원 2명으로 운영 중이며, 3~4월 내 최소 1명 추가 영입 필요.</li>
+                            <li>인턴 다수: 급여 지급 가능 시점에만 계속 근무 의사 표명. 안정적 고용을 위해 투자 선행 필수.</li>
+                            <li>다수 인턴은 스톡옵션+낮은 연봉보다 기준 연봉 이상의 현금 보상을 선호.</li>
+                            <li>초기 멤버로서의 장기 헌신 역량에 대한 불확실성이 여전히 존재 (풀타임 협업 미경험).</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="agenda-section">
+                    <div class="agenda-title">
+                        <div class="agenda-num">💡</div>
+                        <h3>안건 Insight</h3>
+                    </div>
+                    <div class="insight-list">
+                        <div class="insight-item">
+                            <span class="insight-icon">⚡</span>
+                            <div class="insight-text"><strong>자금-인력 선후관계 딜레마:</strong> 투자 입금(최소 1개월 소요)과 인력 필요 시점(3~4월)이 맞물려 있어, 자금 확보 전 인력 이탈 리스크가 구조적으로 존재함. 투자 조건 협상을 서두르되, 인력 유지를 위한 단기 브리지 방안 병행 검토 필요.</div>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-icon">🎯</span>
+                            <div class="insight-text"><strong>투자자 협상 포지셔닝 전환:</strong> '을(乙)'의 태도를 지양하고 조건 기반 협상(condition-based negotiation)으로 전환. 후보 리스트 확대를 위해 초기엔 소프트하게 접근할 필요가 없다는 공감대 형성.</div>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-icon">👤</span>
+                            <div class="insight-text"><strong>인턴 처우 불일치 리스크:</strong> 다수 인턴의 보상 선호(현금)와 스타트업의 현금 여력(제한적) 사이 간극이 있음. 초기 핵심 멤버 확보 관점에서 조기 처우 기준 명확화 및 투자금 확보 후 즉시 처우 개선 필요.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── 안건 2: 지분 구조 & 조건 ───── -->
+        <section id="agenda2" class="card">
+            <div class="card-header collapsible open" onclick="toggleCollapsible(this)">
+                <div class="card-header-icon" style="background:#fff5f5">📊</div>
+                <h2>안건 2 · 코파운더 지분 구조 및 베스팅 조건 상세 협의</h2>
+                <span class="toggle-icon">▾</span>
+            </div>
+            <div class="collapsible-body open">
+                <div class="agenda-section">
+                    <div class="agenda-title">
+                        <div class="agenda-num">①</div>
+                        <h3>초기 제안 (김상윤 대표)</h3>
+                    </div>
+                    <div class="content-block">
+                        <h4>지분 부여 선행조건</h4>
+                        <ul class="bullet-list">
+                            <li>조인(join) 전에 박규호 부장이 연결한 세일즈 채널에서 매출이 발생한 시점에 30% 지분 부여 + 계약서 작성 후 회사 합류.</li>
+                            <li>이유: 투자자 명분 확보, 코파운더로서 최소 기여 검증, 스냅스케일 입장의 리스크 최소화.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block">
+                        <h4>지분 회수 조건 (초기 제안)</h4>
+                        <ul class="bullet-list">
+                            <li><strong>조건 A:</strong> 중도 퇴사 시 전량(30%) 임명 지분 회수.</li>
+                            <li><strong>조건 B (역베스팅):</strong> 연 매출 1억 원 이상 OR 연 매출의 30%가 박규호 부장 연결 세일즈 채널에서 발생 — 미충족 시 연 3% 회수.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="agenda-section">
+                    <div class="agenda-title">
+                        <div class="agenda-num">②</div>
+                        <h3>카운터 제안 및 논점 (박규호 부장)</h3>
+                    </div>
+                    <div class="content-block">
+                        <h4>핵심 반론 포인트</h4>
+                        <ul class="bullet-list">
+                            <li>30% 지분은 처음 공동창업자로 영입 제안을 할 때의 기반(기여·신뢰·비전 공유)에서 나온 것이므로, 이후 세일즈 성과 등의 조건으로 회수하는 프레임은 성격이 다름.</li>
+                            <li>성과 조건(세일즈 KPI)이 계약에 명시되면 코파운더로서의 통합적 사고와 유연한 역할 수행에 방해가 됨 — 조건에 매몰될 위험.</li>
+                            <li>퇴사 기준 전량 회수보다는 '엑시트 전 이탈 시 전량 회수'로 프레임 재설정 필요. 엑시트 기간은 3~5년 기준 합의 필요.</li>
+                            <li>현 시점까지의 비공식 기여(기술 개발 자문, 고객사 미팅 연결, 도메인 지식 제공 등)가 코파운더 자격의 실질적 근거임을 인정받아야 함.</li>
+                            <li>조인 전 매출 발생 요건은 현직(아스펜테크) 신분으로 세일즈까지 수행해야 한다는 의미로, 현실적으로 부적절.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block">
+                        <h4>세일즈 역할 범위 관련 논의</h4>
+                        <ul class="bullet-list">
+                            <li>현재까지의 고객사 미팅(현대중공업 등)은 아스펜테크 재직 신분 + 박규호 부장의 산업 네트워크 + 설득 역량의 복합 산물.</li>
+                            <li>세일즈 성과(계약 체결)는 박규호 부장의 네트워킹에서 출발하지만, 최종 계약 여부는 스냅스케일 제품 완성도에 달려있음.</li>
+                            <li>30% 조건이 러프하게 설정된 '명분 만들기'임은 인식하나, 계약서에 명시 시 사고의 제약 발생 우려.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="agenda-section">
+                    <div class="agenda-title">
+                        <div class="agenda-num">③</div>
+                        <h3>최종 합의 방향</h3>
+                    </div>
+                    <div class="content-block">
+                        <h4>합의된 지분 구조 (심플 조건)</h4>
+                        <ul class="bullet-list">
+                            <li>투자 라운드 완료 후 즉시 합류(조인 타이밍은 추가 조율).</li>
+                            <li>합류 시 30% 지분 즉시 부여 — 별도 성과 선행 조건 없음.</li>
+                            <li>회사 중도 이탈(엑시트 전 자발적 퇴사) 시 30% 임명 지분 전량 회수.</li>
+                            <li>일정 기간(3~5년) 이후, 회사 상황에 따라 일부 지분 매각(현금화) 가능 — 대표와 동일 조건 적용.</li>
+                            <li>역베스팅(매출 조건 연동 회수) 조항 철회 — 계약서에 미포함.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block">
+                        <h4>기타 처우 합의 사항</h4>
+                        <ul class="bullet-list">
+                            <li>직함: 공동대표(Co-CEO) 동일 적용 검토.</li>
+                            <li>인사권: 엔지니어 채용 시 최종 결정 공동 진행.</li>
+                            <li>자기계발 지원: 재무 플래닝에 교육비·라이센스·자기개발비 항목 포함.</li>
+                            <li>세일즈 인센티브, 기타 구성원 인센티브: 회사 인사 규정에 별도 편입.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="agenda-section">
+                    <div class="agenda-title">
+                        <div class="agenda-num">💡</div>
+                        <h3>안건 Insight</h3>
+                    </div>
+                    <div class="insight-list">
+                        <div class="insight-item">
+                            <span class="insight-icon">🤝</span>
+                            <div class="insight-text"><strong>신뢰 기반 vs. 조건 기반의 근본 충돌:</strong> 대표는 투자자 명분 및 리스크 헷지를 위해 조건을 구조화하려 했고, 코파운더 후보는 신뢰와 비전 공유를 기반으로 한 무조건적 참여를 요구함. 최종적으로 '신뢰 우선, 최소 보호 조항(이탈 시 전량 회수)'의 심플한 구조로 절충.</div>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-icon">📐</span>
+                            <div class="insight-text"><strong>역베스팅의 양면성:</strong> 성과 기반 역베스팅은 특정 KPI에의 몰입을 유발해 코파운더 본연의 역할(전략적 사고·팀 리더십·유연한 대응)을 저해할 수 있음. 스타트업 환경의 빠른 피버팅(pivoting) 특성상 '심플한 조건 + 강한 신뢰'가 더 효과적인 인센티브 구조임을 인식.</div>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-icon">⚖️</span>
+                            <div class="insight-text"><strong>비공식 기여의 가치 재평가 필요:</strong> 조인 전 제공된 도메인 지식, 고객사 네트워킹, 제품 개발 자문 등은 시장 단가로 환산 시 상당한 금액에 해당. 투자자 설득 시 이를 코파운더 지분 근거로 명확히 문서화·서술하는 전략이 필요.</div>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-icon">🚀</span>
+                            <div class="insight-text"><strong>엑시트 플랜의 명확화 시급성:</strong> 코파운더 합류, 투자자 유치, 핵심 인재 영입 모두 '회사가 몇 년 내 어느 수준에 도달할 것인가'에 대한 명확한 답을 요구함. 모호한 "10년 이상 유지" 발언보다 구체적 마일스톤(국내 대기업 2곳 + 해외 1곳, 연매출 ~550억 등) 중심의 엑셀러레이션 플랜 제시가 인재·투자 유치에 결정적.</div>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-icon">🌐</span>
+                            <div class="insight-text"><strong>세일즈 역할의 복합성 인정:</strong> 코파운더의 세일즈 역할은 단순 영업(계약 체결)이 아니라, 고객 접근성 확보 → 산업 신뢰 구축 → 제품 피드백 루프 형성까지 포괄함. 세일즈 성과를 단일 KPI로 측정하는 것은 이 복합적 가치를 과소평가할 위험이 있음.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── 안건 3: 사업 로드맵 ───── -->
+        <section id="agenda3" class="card">
+            <div class="card-header collapsible open" onclick="toggleCollapsible(this)">
+                <div class="card-header-icon" style="background:#fffbeb">🗺️</div>
+                <h2>안건 3 · 중장기 사업 성장 로드맵 및 엑시트 플랜 정렬</h2>
+                <span class="toggle-icon">▾</span>
+            </div>
+            <div class="collapsible-body open">
+                <div class="agenda-section">
+                    <div class="agenda-title">
+                        <div class="agenda-num">①</div>
+                        <h3>4~5년 목표 매출 시나리오</h3>
+                    </div>
+                    <div class="content-block">
+                        <h4>국내 대기업 (설계 인원 200명 × 2개사 기준)</h4>
+                        <ul class="bullet-list">
+                            <li>1인당 연 평균 7,000만 원 × 200명 = 사 당 약 140억 원.</li>
+                            <li>국내 대기업 2곳 기준: 약 280억 원.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block">
+                        <h4>해외 대기업 1곳 + 국내외 중견·중소 20곳</h4>
+                        <ul class="bullet-list">
+                            <li>해외 대기업 1곳: 약 140~170억 원 (해외 프리미엄 반영 → 약 170억 원 추정).</li>
+                            <li>국내외 중견·중소 20곳 × 5억 원 = 100억 원.</li>
+                            <li><strong>4~5년 목표 연매출 합계: 약 550억 원.</strong></li>
+                            <li>이 시점 기업 가치: 3,000억~6,000억 원 추정.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block">
+                        <h4>10년 IPO 타겟</h4>
+                        <ul class="bullet-list">
+                            <li>연매출 3,000억~6,000억 원 도달 후 기업가치 1조 원 이상 (유니콘) IPO.</li>
+                            <li>박규호 부장: AI 시장 특성상 4~5년 목표도 보수적. 2년~3년 내 쇼부(핵심 성과) 달성이 현실적이라고 강조.</li>
+                            <li>플렉스(인사 SaaS) 사례: 2019년 창립 → 2025년 기업가치 5,000억 원 (6년 소요). AI 지원 환경에서 절반 이하(3년 이내) 달성 가능성 주장.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="agenda-section">
+                    <div class="agenda-title">
+                        <div class="agenda-num">②</div>
+                        <h3>코파운더 역할 정의</h3>
+                    </div>
+                    <div class="content-block">
+                        <h4>예상 핵심 역할 (초기 리스팅)</h4>
+                        <ul class="bullet-list">
+                            <li>세일즈 리드 (기존 네트워크 → 계약·매출 연결)</li>
+                            <li>비즈니스 모델 및 가격 체계 설계</li>
+                            <li>화공플랜트 도메인 지식 제공</li>
+                            <li>시뮬레이션 컨설팅 외주 수주 (회사 하방 유지)</li>
+                            <li>시니어 전문가 커뮤니티 구축 및 브랜딩</li>
+                            <li>팀 동기부여·리더십 (스타트업 조직문화 구축)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="agenda-section">
+                    <div class="agenda-title">
+                        <div class="agenda-num">💡</div>
+                        <h3>안건 Insight</h3>
+                    </div>
+                    <div class="insight-list">
+                        <div class="insight-item">
+                            <span class="insight-icon">📈</span>
+                            <div class="insight-text"><strong>속도 경쟁이 핵심:</strong> AI 화공플랜트 솔루션은 선점 효과가 절대적. 경쟁사 등장 전(4~5년 이내) 국내외 대기업 레퍼런스 확보가 사업의 생사를 결정함. "10년 유지"보다 "3~5년 내 핵심 지표 달성" 중심의 사고 전환이 전략적으로 더 적합.</div>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-icon">🏗️</span>
+                            <div class="insight-text"><strong>온톨로지 기반 기술의 해자(Moat):</strong> 특수 도메인(화공플랜트)에서의 AI 에이전틱 프레임워크 + 온톨로지 구조는 진입 장벽이 매우 높음. 이 해자를 유지하면서 6월 이후 본격 세일즈로 전환하는 타이밍 관리가 중요.</div>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-icon">🎭</span>
+                            <div class="insight-text"><strong>대표-코파운더 역할 보완성:</strong> 대표(개발·기술·신중한 의사결정) + 코파운더(세일즈·커뮤니티·조직 동기부여)의 역할 분리가 명확함. 이 상호 보완성을 투자자 피칭에서 적극 활용 필요.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── 안건 4: 스톡옵션 법적 검토 ───── -->
+        <section id="agenda4" class="card">
+            <div class="card-header collapsible open" onclick="toggleCollapsible(this)">
+                <div class="card-header-icon" style="background:#e6fffa">⚖️</div>
+                <h2>안건 4 · 스톡옵션 법적 검토 결과 (변호사 상담 내용)</h2>
+                <span class="toggle-icon">▾</span>
+            </div>
+            <div class="collapsible-body open">
+                <div class="agenda-section">
+                    <div class="agenda-title">
+                        <div class="agenda-num">①</div>
+                        <h3>주요 법적 검토 결과</h3>
+                    </div>
+                    <div class="content-block">
+                        <h4>특정 주주 지분 스톡옵션 부여 불가</h4>
+                        <ul class="bullet-list">
+                            <li>자연인(개인 주주)의 지분을 타인에게 스톡옵션으로 부여하는 것은 불가.</li>
+                            <li>가능한 방식: <strong>구주양도</strong> 또는 <strong>법인(자사주) 방식</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block">
+                        <h4>자사주 활용 조건</h4>
+                        <ul class="bullet-list">
+                            <li>스냅스케일 법인이 자사주를 취득한 후 스톡옵션으로 부여하는 방식은 가능.</li>
+                            <li>단, <strong>배당가능이익 한도 내에서만</strong> 자사주 취득 가능.</li>
+                            <li>배당가능이익 = 순자산 - 자본금 - 법정준비금 - 이익준비금 - 미시륜이익.</li>
+                            <li>초기 스타트업 특성상 배당가능이익이 0에 가까워 자사주 방식 실행 어려움.</li>
+                        </ul>
+                    </div>
+                    <div class="content-block">
+                        <h4>신주발행 방식 대안</h4>
+                        <ul class="bullet-list">
+                            <li>스톡옵션 실현 시 자사주 OR 신주발행 선택 가능 조항을 계약서에 포함하는 방식 제안.</li>
+                            <li>신주발행 시 기존 주주(대표·코파운더·투자자) 지분 동등 희석 발생.</li>
+                            <li>2~3년 후 배당가능이익 발생 시점에 자사주 방식으로 전환 가능.</li>
+                            <li>현재 60%:40% 구조에서 스톡옵션 풀 10% 마련 — 배당가능이익 수준 계산 후 방식 최종 결정 필요.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="agenda-section">
+                    <div class="agenda-title">
+                        <div class="agenda-num">💡</div>
+                        <h3>안건 Insight</h3>
+                    </div>
+                    <div class="insight-list">
+                        <div class="insight-item">
+                            <span class="insight-icon">📜</span>
+                            <div class="insight-text"><strong>스톡옵션 계약 설계의 유연성 확보 필요:</strong> 초기에는 신주발행 방식으로, 회사 성장 후에는 자사주 방식으로 전환할 수 있도록 계약서에 선택권 조항을 삽입하는 것이 현실적인 해법. 법적 유연성이 곧 직원 인센티브 설계의 유연성과 직결됨.</div>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-icon">🔢</span>
+                            <div class="insight-text"><strong>배당가능이익 계산의 시급성:</strong> 스톡옵션 풀(10%) 실행 가능성은 2~3년 후 예상 배당가능이익에 달려 있음. 투자 유치 후 재무 모델에서 해당 수치를 선제적으로 산출해야 향후 직원 채용 시 처우 협상에서 신뢰도를 확보할 수 있음.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ───── 결정사항 ───── -->
+        <section id="decisions" class="card">
+            <div class="card-header">
+                <div class="card-header-icon" style="background:#e6fffa">✅</div>
+                <h2>결정사항</h2>
+                <span class="card-badge tag-green">Decisions</span>
+            </div>
+            <div class="card-body">
+                <div class="decision-grid">
+
+                    <div class="decision-item">
+                        <div class="decision-header">
+                            <span>🎯</span> 결정 1 · 코파운더 지분 구조 확정
+                        </div>
+                        <div class="decision-body">
+                            <p>투자 라운드 완료 후 즉시 박규호 부장을 코파운더로 합류시키며, 합류 시 <strong>30% 지분 즉시 부여</strong>. 별도의 성과 선행 조건(매출 발생 등) 없이 진행. 역베스팅(매출 연동 회수) 조항은 계약서에서 완전 제외.</p>
+                            <div class="decision-meta">
+                                <span class="decision-tag tag-green">확정</span>
+                                <span class="decision-tag tag-blue">지분 30% 즉시 부여</span>
+                                <span class="decision-tag tag-yellow">투자 완료 후 집행</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="decision-item">
+                        <div class="decision-header">
+                            <span>🚪</span> 결정 2 · 이탈 시 전량 회수 조항 유지
+                        </div>
+                        <div class="decision-body">
+                            <p>엑시트(IPO, M&A 등) 이전에 코파운더가 자발적으로 회사를 이탈할 경우 <strong>30% 임명 지분 전량 회수</strong>. 이는 파운더와 코파운더가 '성공이든 실패든 끝까지 함께' 가는 무게의 지분임을 상

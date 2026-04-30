@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapScale 투자 전략 미팅 회의록 - 2026.04.27</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary-navy: #1e3c72;
+            --secondary-navy: #2a5298;
+            --accent-blue: #4a90e2;
+            --light-blue: #e3f2fd;
+            --dark-gray: #2c3e50;
+            --medium-gray: #7f8c8d;
+            --light-gray: #ecf0f1;
+            --white: #ffffff;
+            --success-green: #27ae60;
+            --warning-orange: #f39c12;
+            --danger-red: #e74c3c;
+            --speaker-a: #1565c0;
+            --speaker-b: #6a1b9a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: var(--dark-gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .notice-banner {
+            background: #fff3cd;
+            border-left: 5px solid #f39c12;
+            padding: 14px 40px;
+            font-size: 13px;
+            color: #856404;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
+            color: var(--white);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; position: relative; z-index: 1; }
+        .header-sub { font-size: 15px; opacity: 0.85; margin-bottom: 30px; position: relative; z-index: 1; }
+        .meeting-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px; margin-top: 20px; position: relative; z-index: 1;
+        }
+        .meta-item {
+            background: rgba(255,255,255,0.15);
+            padding: 14px; border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .meta-label { font-size: 11px; opacity: 0.85; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        .meta-value { font-size: 14px; font-weight: 600; }
+
+        /* NAV */
+        .sticky-nav {
+            position: sticky; top: 0; z-index: 100;
+            background: var(--primary-navy);
+            padding: 0 40px;
+            display: flex; gap: 5px; overflow-x: auto;
+        }
+        .sticky-nav a {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            padding: 14px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        .sticky-nav a:hover { color: #fff; border-bottom-color: var(--accent-blue); }
+
+        .content { padding: 40px; }
+        .section { margin-bottom: 50px; }
+        .section-title {
+            color: var(--primary-navy);
+            font-size: 22px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--accent-blue);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .toc {
+            background: var(--light-blue);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--accent-blue);
+        }
+        .toc h3 { color: var(--primary-navy); margin-bottom: 15px; font-size: 19px; }
+        .toc ul { list-style: none; }
+        .toc li { padding: 7px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+        .toc li:last-child { border-bottom: none; }
+        .toc a { color: var(--secondary-navy); text-decoration: none; font-weight: 500; }
+        .toc a:hover { color: var(--accent-blue); text-decoration: underline; }
+        .toc .toc-num { display: inline-block; width: 28px; color: var(--accent-blue); font-weight: 700; }
+
+        /* Agenda Cards */
+        .agenda-card {
+            background: var(--white);
+            border: 1px solid #dde3ee;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .agenda-header {
+            background: linear-gradient(135deg, var(--primary-navy), var(--secondary-navy));
+            color: var(--white);
+            padding: 18px 25px;
+            display: flex; align-items: center; gap: 15px;
+            cursor: pointer; user-select: none;
+        }
+        .agenda-header:hover { background: linear-gradient(135deg, #162d5e, #1e3c72); }
+        .agenda-num {
+            background: rgba(255,255,255,0.2);
+            width: 34px; height: 34px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 15px; flex-shrink: 0;
+        }
+        .agenda-title { font-size: 17px; font-weight: 600; flex: 1; }
+        .agenda-toggle { font-size: 18px; transition: transform 0.3s; }
+        .agenda-body { padding: 25px; display: none; }
+        .agenda-body.open { display: block; }
+
+        /* Insight Box */
+        .insight-box {
+            background: linear-gradient(135deg, #e8f4fd, #d1e8fa);
+            border-left: 5px solid var(--accent-blue);
+            padding: 18px 22px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .insight-box h4 { color: var(--primary-navy); margin-bottom: 10px; font-size: 15px; }
+        .insight-box ul { list-style: none; }
+        .insight-box ul li { padding: 5px 0; padding-left: 20px; position: relative; font-size: 14px; }
+        .insight-box ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent-blue); }
+
+        /* Speaker Quote */
+        .quote-block {
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .quote-kim {
+            background: #e3f2fd;
+            border-left: 4px solid var(--speaker-a);
+        }
+        .quote-park {
+            background: #f3e5f5;
+            border-left: 4px solid var(--speaker-b);
+        }
+        .quote-speaker {
+            font-weight: 700;
+            font-size: 12px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .quote-kim .quote-speaker { color: var(--speaker-a); }
+        .quote-park .quote-speaker { color: var(--speaker-b); }
+
+        /* Speaker Cards */
+        .speaker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px; margin: 20px 0;
+        }
+        .speaker-card {
+            background: var(--white);
+            border: 1px solid #dde3ee;
+            border-radius: 10px;
+            padding: 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .speaker-card h3 { font-size: 16px; color: var(--primary-navy); margin-bottom: 12px; }
+        .speaker-card p { font-size: 13px; line-height: 1.8; color: var(--dark-gray); }
+        .speaker-card .badge {
+            display: inline-block;
+            background: var(--light-blue);
+            color: var(--secondary-navy);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        /* Tables */
+        .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+        .data-table th {
+            background: var(--primary-navy); color: var(--white);
+            padding: 12px 16px; text-align: left; font-weight: 600;
+        }
+        .data-table td { padding: 11px 16px; border-bottom: 1px solid #e8edf5; vertical-align: top; }
+        .data-table tr:hover td { background: #f8faff; }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        /* Priority Badges */
+        .badge-high { background: #fde8e8; color: #c0392b; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .badge-medium { background: #fef9e7; color: #d68910; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .badge-low { background: #e9f7ef; color: #1e8449; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .badge-done { background: #e8f5e9; color: #2e7d32; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .badge-progress { background: #e3f2fd; color: #1565c0; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .badge-pending { background: #f3e5f5; color: #6a1b9a; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+
+        /* Risk Grid */
+        .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+        .risk-card { padding: 20px; border-radius: 8px; }
+        .risk-card h4 { font-size: 15px; margin-bottom: 10px; }
+        .risk-card ul { list-style: none; font-size: 14px; }
+        .risk-card ul li { padding: 4px 0; padding-left: 18px; position: relative; }
+        .risk-card ul li::before { content: '•'; position: absolute; left: 0; }
+        .risk-card.risk { background: #fdf3f0; border: 1px solid #f5c6bc; }
+        .risk-card.risk h4 { color: #c0392b; }
+        .risk-card.risk ul li::before { color: #e74c3c; }
+        .risk-card.opport { background: #f0fdf4; border: 1px solid #b2dfdb; }
+        .risk-card.opport h4 { color: #1e8449; }
+        .risk-card.opport ul li::before { color: #27ae60; }
+
+        /* Diagram container */
+        .diagram-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 25px 0;
+            overflow-x: auto;
+        }
+        .diagram-container .mermaid { min-width: 900px; margin: 0 auto; }
+
+        /* Numbered list */
+        .num-list { list-style: none; counter-reset: numcounter; }
+        .num-list li {
+            counter-increment: numcounter;
+            padding: 8px 0 8px 36px;
+            position: relative;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+        .num-list li:last-child { border-bottom: none; }
+        .num-list li::before {
+            content: counter(numcounter);
+            position: absolute; left: 0;
+            background: var(--accent-blue);
+            color: white;
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700;
+            top: 10px;
+        }
+
+        /* Summary box */
+        .summary-box {
+            background: linear-gradient(135deg, #e8f4fd, #f0f7ff);
+            border: 1px solid #c5dff8;
+            border-radius: 10px;
+            padding: 22px 26px;
+            margin: 20px 0;
+        }
+        .summary-box p { font-size: 14px; color: var(--dark-gray); line-height: 1.8; }
+
+        /* Decision status */
+        .decision-item {
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px solid #e0e0e0;
+            font-size: 14px;
+        }
+        .decision-item .di-title { font-weight: 600; color: var(--primary-navy); margin-bottom: 6px; }
+        .decision-item .di-detail { color: var(--dark-gray); }
+
+        footer {
+            background: var(--primary-navy);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 20px 40px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .risk-grid { grid-template-columns: 1fr; }
+            .content { padding: 20px; }
+        }
+        @media print {
+            .sticky-nav { display: none; }
+            .agenda-body { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- 안내 배너 -->
+    <div class="notice-banner">
+        ⚠️ 안내사항: 본 회의록은 AI 기술을 활용하여 녹취록을 기반으로 작성되었으며, 일부 정확도가 떨어질 수 있습니다.
+    </div>
+
+    <!-- 헤더 -->
+    <header>
+        <h1>📊 투자 전략 & 공동창업자 IR 대응 미팅</h1>
+        <p class="header-sub">시드 라운드 재무 플래닝 · 시장규모 추산 · 투자사 대응 전략 수립</p>
+        <div class="meeting-meta">
+            <div class="meta-item"><div class="meta-label">📅 일시</div><div class="meta-value">2026년 4월 27일</div></div>
+            <div class="meta-item"><div class="meta-label">📍 장소</div><div class="meta-value">온라인 (화상미팅)</div></div>
+            <div class="meta-item"><div class="meta-label">👥 참석자</div><div class="meta-value">김상윤 (대표), 박규호 (공동창업자)</div></div>
+            <div class="meta-item"><div class="meta-label">🎯 회의 성격</div><div class="meta-value">투자 전략 수립 / 내부 정렬</div></div>
+            <div class="meta-item"><div class="meta-label">⏱ 소요 시간</div><div class="meta-value">약 2시간 (10:50~)</div></div>
+        </div>
+    </header>
+
+    <!-- 스티키 네비게이션 -->
+    <nav class="sticky-nav">
+        <a href="#toc">목차</a>
+        <a href="#summary">회의 요약</a>
+        <a href="#agenda1">시드 런웨이</a>
+        <a href="#agenda2">시장규모</a>
+        <a href="#agenda3">5개년 플랜</a>
+        <a href="#agenda4">투자사 현황</a>
+        <a href="#agenda5">스트롱벤처스</a>
+        <a href="#agenda6">지분구조</a>
+        <a href="#agenda7">IR 대응 전략</a>
+        <a href="#decisions">결정사항</a>
+        <a href="#actions">액션아이템</a>
+        <a href="#risks">리스크/기회</a>
+        <a href="#speakers">발언 요약</a>
+    </nav>
+
+    <div class="content">
+
+        <!-- 목차 -->
+        <div class="toc" id="toc">
+            <h3>📋 목차</h3>
+            <ul>
+                <li><a href="#summary"><span class="toc-num">0.</span>회의 전체 요약</a></li>
+                <li><a href="#agenda1"><span class="toc-num">1.</span>시드 런웨이 재무 플래닝 (시나리오별 소요 자금)</a></li>
+                <li><a href="#agenda2"><span class="toc-num">2.</span>시장규모 추산 (솜·샘·탐 3단계)</a></li>
+                <li><a href="#agenda3"><span class="toc-num">3.</span>5개년 성장 로드맵 및 캡테이블</a></li>
+                <li><a href="#agenda4"><span class="toc-num">4.</span>투자사 파이프라인 현황</a></li>
+                <li><a href="#agenda5"><span class="toc-num">5.</span>스트롱벤처스 미팅 피드백 – 지분구조 이슈</a></li>
+                <li><a href="#agenda6"><span class="toc-num">6.</span>공동창업자 지분 구조 재정립 논의</a></li>
+                <li><a href="#agenda7"><span class="toc-num">7.</span>IR 공동 대응 전략 수립</a></li>
+                <li><a href="#decisions"><span class="toc-num">★</span>결정사항 요약</a></li>
+                <li><a href="#actions"><span class="toc-num">★</span>액션아이템</a></li>
+                <li><a href="#risks"><span class="toc-num">★</span>리스크 & 기회요소</a></li>
+                <li><a href="#speakers"><span class="toc-num">★</span>화자별 발언 요약</a></li>
+            </ul>
+        </div>
+
+        <!-- 전체 요약 -->
+        <section class="section" id="summary">
+            <h2 class="section-title">⚡ 회의 전체 요약</h2>
+            <div class="summary-box">
+                <p>
+                    본 미팅은 김상윤 대표가 <strong>시드 라운드 재무 플래닝, 시장규모 추산, 5개년 성장 로드맵, 투자사 파이프라인</strong>을 박규호 공동창업자에게 브리핑하는 형식으로 진행되었다.
+                    핵심 논의 사항은 두 가지였다: ① 시드 목표 투자금 <strong>7억원</strong>의 타당성과 TIPS 활용 전략, ② 투자자들로부터 반복적으로 제기되는 <strong>공동창업자 30% 지분 구조에 대한 우려</strong>.
+                </p>
+                <p style="margin-top:10px;">
+                    스트롱벤처스를 포함한 다수 투자자들이 현행 지분 구조에 부정적 반응을 보이는 상황에서, 두 사람은 <strong>"현행 구조를 유지하되 박규호 공동창업자가 IR에 직접 동행해 역량과 라포를 직접 어필"</strong>하는 전략을 핵심 해결책으로 합의했다.
+                    다음 미팅(4월 28일 오후 10:30)에서 지분구조 및 엑싯 기준을 최종 내부 정렬하고, IR Q&A 예상 문항을 함께 준비하기로 하였다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 안건 1: 시드 런웨이 -->
+        <section class="section" id="agenda1">
+            <h2 class="section-title">💰 안건 1. 시드 런웨이 재무 플래닝</h2>
+            <div class="agenda-card">
+                <div class="agenda-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">1</div>
+                    <div class="agenda-title">시나리오별 소요 자금 및 목표 투자금액 산정</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body open">
+                    <div class="quote-block quote-kim">
+                        <div class="quote-speaker">🎤 김상윤 대표</div>
+                        시드 단계에서는 1년 6개월 정도의 런타임을 상정하고, 그 이후 시리즈A 라운드 기간(2~6개월)까지 버틸 자금도 함께 확보해야 한다. 핵심 비용은 인건비입니다.
+                    </div>
+
+                    <p style="margin:16px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 3가지 시나리오별 소요 비용 (1년 6개월 기준)</p>
+                    <table class="data-table">
+                        <thead><tr><th>시나리오</th><th>주요 조건</th><th>총 소요 비용</th><th>TIPS(8억) 차감 후 자체 조달 필요액</th></tr></thead>
+                        <tbody>
+                            <tr><td>🟢 최소</td><td>개발자 6명, SW 미구매, H100 미도입</td><td>약 11억원</td><td>약 3억원</td></tr>
+                            <tr><td>🟡 중간</td><td>개발자 7명, SW 미구매, H100 도입</td><td>약 13억원</td><td>약 5억원</td></tr>
+                            <tr><td>🔴 최대</td><td>개발자 8명 (고급 1명 추가), 풀스펙</td><td>약 14억원</td><td>약 6억원</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p style="margin:16px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 인건비 구성 (월 기준)</p>
+                    <table class="data-table">
+                        <thead><tr><th>대상</th><th>월 급여</th></tr></thead>
+                        <tbody>
+                            <tr><td>김상윤 (대표)</td><td>130만원</td></tr>
+                            <tr><td>이재유</td><td>230만원 (최저임금 기준)</td></tr>
+                            <tr><td>이종현·이동성 외 개발자</td><td>평균 시장 수준 (개별 협의)</td></tr>
+                            <tr><td>개발자 7명 합계 (평균)</td><td>약 3,000~3,600만원</td></tr>
+                            <tr><td>박규호 부장 포함 시</td><td>약 3,500~4,000만원</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p style="margin:16px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 기대 매출 시나리오 (시드 기간 내)</p>
+                    <table class="data-table">
+                        <thead><tr><th>시나리오</th><th>주요 고객 근거</th><th>기대 매출</th></tr></thead>
+                        <tbody>
+                            <tr><td>🟢 최소</td><td>필즈(1.9억) + 화학물질안전원 + 삼두 + 한울</td><td>약 3.5억원</td></tr>
+                            <tr><td>🟡 중간</td><td>위 + 현대엔지니어링 + 중형 POC 1건</td><td>약 10억원대</td></tr>
+                            <tr><td>🔴 최대</td><td>위 + 대형 POC 3건 (소5천·중2억·대10억)</td><td>약 24억원</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="quote-block quote-kim">
+                        <div class="quote-speaker">🎤 김상윤 대표</div>
+                        시리즈A 라운드 기간 3~6개월을 포함해 약 3~4억의 추가 버퍼를 감안하면, 총 목표 투자금액은 <strong>7억원</strong>이 적절합니다. TIPS 8억을 고려하면 실질적으로 투자사에게 요청하는 금액은 중간 시나리오 기준 5억이 됩니다.
+                    </div>
+
+                    <div class="insight-box">
+                        <h4>💡 Insight</h4>
+                        <ul>
+                            <li>TIPS 8억은 현재 논의 중인 투자사들이 모두 TIPS 주관사이므로 현실적인 가정이다.</li>
+                            <li>최소 시나리오에서도 필즈엔지니어링 1건만으로 3.5억 매출 기반이 형성되어 있어 재무 리스크가 상대적으로 낮다.</li>
+                            <li>자문료 항목(이협영 교수 연 1천만원 + 김동훈 교수)이 명시된 것은 IR에서 전문 자문 네트워크 어필에 활용 가능하다.</li>
+                            <li>GPU 서버(H100) 및 HYSYS 라이선스 구매 여부가 시나리오 분기점이므로 초기 POC 진행 방식에 따라 유연하게 결정 가능하다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 안건 2: 시장규모 -->
+        <section class="section" id="agenda2">
+            <h2 class="section-title">🌐 안건 2. 시장규모 추산 (솜·샘·탐)</h2>
+            <div class="agenda-card">
+                <div class="agenda-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">2</div>
+                    <div class="agenda-title">Bottom-up 기반 3단계 시장규모 추산</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body open">
+                    <div class="quote-block quote-kim">
+                        <div class="quote-speaker">🎤 김상윤 대표</div>
+                        시장규모 계산 방법은 단순합니다. 기업 한 곳에서 1년에 우리가 얼마를 받을 수 있는지 산정하고, 전 세계 기업 수로 곱하면 시장규모가 나옵니다. 메인 비즈니스 모델은 연구독(구독)입니다.
+                    </div>
+
+                    <p style="margin:16px 0 10px; font-weight:600; color:var(--primary-navy);">▸ Bottom-up 근거: 9천억원 프로젝트 기준 설계 인건비 추산</p>
+                    <table class="data-table">
+                        <thead><tr><th>항목</th><th>수치</th><th>근거</th></tr></thead>
+                        <tbody>
+                            <tr><td>국내 EPC 화공플랜트 프로젝트 규모</td><td>9,000억원/건 (2025년 기준)</td><td>공개 수주 데이터</td></tr>
+                            <tr><td>설계 인력 비중</td><td>9.1%</td><td>박규호 부장 PPD 자료 + 인터뷰</td></tr>
+                            <tr><td>한 프로젝트 설계 인건비 합계</td><td>819억원</td><td>위 비중 적용</td></tr>
+                            <tr><td>삼성E&A 공정설계팀 (3유닛)</td><td>LE 2명 + AE 5명 + Jr 2명 × 3유닛</td><td>삼성E&A 선배 인터뷰</td></tr>
+                            <tr><td>공정설계팀 연 인건비</td><td>21.6억원</td><td>이종현 부장 제공 Man-rate</td></tr>
+                            <tr><td>현대엔지니어링 기준 총 설계 인력</td><td>약 200명 (일조 규모 프로젝트)</td><td>재무제표 역추산</td></tr>
+                            <tr><td>200명 비례 연 인건비</td><td>약 160억원</td><td>27명→200명 비례 확장</td></tr>
+                            <tr><td>2개년 인건비 + 간접비(×1.6)</td><td>약 512억원</td><td>4대보험·오피스·SW 포함</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p style="margin:16px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 3단계 시장규모 (솜 → 샘 → 탐)</p>
+                    <table class="data-table">
+                        <thead><tr><th>단계</th><th>범위</th><th>비즈니스 모델 기준</th><th>추산 시장 규모</th></tr></thead>
+                        <tbody>
+                            <tr><td>🟢 <strong>솜(SOM)</strong></td><td>국내 화공플랜트 E만</td><td>TIC 4.32% 절감분</td><td>약 1,170억원</td></tr>
+                            <tr><td>🟡 <strong>샘(SAM)</strong></td><td>글로벌 화공플랜트 EPC</td><td>TIC 12.21% 절감분 (E 4.32% + P·C 7.89%)</td><td>약 9.2조원</td></tr>
+                            <tr><td>🔴 <strong>탐(TAM)</strong></td><td>글로벌 전체 건설 FEED~O&M</td><td>EPC 확장 + O&M 라이선스 시장</td><td>약 47,775백만달러+α</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="quote-block quote-park">
+                        <div class="quote-speaker">🎤 박규호 공동창업자</div>
+                        O&M쪽은 AXDS처럼 DX에 집중하는 기업들이 이미 많고, VC들도 C-MARC같은 업체를 알고 있습니다. 샘 단계에서 O&M보다는 <strong>데이터센터 등 신규 건설 수요</strong> 방향으로 확장하는 것이 더 현실적일 것 같습니다.
+                    </div>
+                    <div class="quote-block quote-kim">
+                        <div class="quote-speaker">🎤 김상윤 대표</div>
+                        맞습니다. O&M 직접 경쟁보다는 저희가 설계 데이터를 갖고 있기 때문에 O&M 기업들과 <strong>협업 형태의 매출</strong>을 만드는 방향이 더 현실적입니다.
+                    </div>
+
+                    <div class="insight-box">
+                        <h4>💡 Insight</h4>
+                        <ul>
+                            <li>Bottom-up(512억)과 Top-down(819억의 62%) 수치가 얼추 맞아들어 추산의 신뢰도가 높다.</li>
+                            <li>샘 시장(9.2조원)에서 현실적으로 공정+배관 5~15% 공략 시 약 4,600억~1.38조원 규모 — VC가 기대하는 텐타임즈 성장 서사와 부합한다.</li>
+                            <li>O&M은 직접 진출보다 기존 EPC 고객사 연장선 상의 협업 모델로 접근하는 것이 현실적이며, 탐 시장 서술 시 과도한 확장으로 보이지 않도록 프레이밍 주의 필요.</li>
+                            <li>글로벌 화공플랜트 EPC 발주 24년 기준 101 billion USD는 IR 자료 출처로 인용 가능한 공신력 있는 수치다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 안건 3: 5개년 플랜 -->
+        <section class="section" id="agenda3">
+            <h2 class="section-title">📈 안건 3. 5개년 성장 로드맵 및 캡테이블</h2>
+            <div class="agenda-card">
+                <div class="agenda-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">3</div>
+                    <div class="agenda-title">연도별 POC-구독 전환 모델 및 라운드별 캡테이블</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body open">
+                    <p style="margin:0 0 14px; font-weight:600; color:var(--primary-navy);">▸ 단계별 성장 로드맵</p>
+                    <table class="data-table">
+                        <thead><tr><th>시점</th><th>핵심 목표</th><th>기대 매출</th></tr></thead>
+                        <tbody>
+                            <tr><td>~2027년 말 (시드)</td><td>무한 POC, 국내 화공플랜트 점유 시작</td><td>5억~30억 (POC 기반)</td></tr>
+                            <tr><td>~2028년 말 (시리즈A)</td><td>구독 전환 시행착오, 글로벌 화공 EPC 5% POC 완료</td><td>10억~50억</td></tr>
+                            <tr><td>~2029년 말</td><td>글로벌 EPC 3% 구독 전환, 10% POC 목표</td><td>97억(구독) + 100억(POC) = 약 197억</td></tr>
+                            <tr><td>~2030년 말</td><td>글로벌 EPC 5% 구독 전환, 스위트 패키지 완성 준비</td><td>231억(구독) + 100억(POC) = 약 331억</td></tr>
+                            <tr><td>2031년 말~</td><td>스위트 패키지 완성, POC 없이 즉시 구독 가능</td><td>구독 매출 본격 확장</td></tr>
+                            <tr><td>~2034년</td><td>샘 시장 30% 점유 목표</td><td>연구독 약 2.7조원 규모 (목표)</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p style="margin:18px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 캡테이블 (시나리오별)</p>
+                    <table class="data-table">
+                        <thead><tr><th>라운드</th><th>투자금 / TIPS</th><th>지분 떼주기</th><th>기업가치</th><th>김상윤</th><th>박규호</th></tr></thead>
+                        <tbody>
+                            <tr><td>현재 (시드 전)</td><td>—</td><td>—</td><td>—</td><td>68%</td><td>30%</td></tr>
+                            <tr><td>시드</td><td>7억원</td><td>12%</td><td>약 58억원</td><td>~60%</td><td>~26%</td></tr>
+                            <tr><td>시리즈A</td><td>50억 + TIPS 20억</td><td>15%</td><td>약 333억원</td><td>~50%</td><td>~22.4%</td></tr>
+                            <tr><td>프리IPO (낙관)</td><td>400억</td><td>10%</td><td>약 4,000억원</td><td>~45%</td><td>~20%</td></tr>
+                            <tr><td>프리IPO (보수)</td><td>시리즈B 추가 시</td><td>추가 희석</td><td>약 2,000억원</td><td>~30%</td><td>~13%</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="quote-block quote-kim">
+                        <div class="quote-speaker">🎤 김상윤 대표</div>
+                        스톡옵션 풀은 시드~시리즈A 구간 10%, 시리즈A 이후 5% 추가로 구성합니다. 이을범 교수 3~4%, 김동훈 교수 2%, 주요 개발자 1인당 0.5~0.8%, C레벨 2%, CTO 2%, 여분 1% 구조입니다.
+                    </div>
+
+                    <div class="insight-box">
+                        <h4>💡 Insight</h4>
+                        <ul>
+                            <li>프리IPO 낙관 시나리오에서 김상윤 대표 지분 45%는 업계 평균(20~30%)보다 높아 일부 계산 오류 가능성 존재 — 재검토 필요.</li>
+                            <li>시리즈B 없이 자체 매출로 달리는 시나리오가 성립하려면 2029~2030년 구독 전환율이 계획 대비 달성되어야 한다.</li>
+                            <li>개발자 최대 10명 → 고정 인건비 연 21.6억원 수렴 구조는 SaaS 전형의 '인건비 수렴 + 매출 확장' 모델로 투자자에게 명확히 전달 가능.</li>
+                        </ul>
+                    </div>
+
+                    <div class="diagram-container">
+                        <div class="mermaid">
+gantt
+    title SnapScale 투자 라운드 & 성장 마일스톤
+    dateFormat YYYY-MM-DD
+    axisFormat %Y
+
+    section 시드 단계
+    시드 투자 유치       :crit, s1, 2026-05-01, 60d
+    개발자 채용 (최대 8명) :s2, 2026-05-15, 120d
+    POC 다수 클로징      :active, s3, 2026-06-01, 365d
+
+    section 시리즈A
+    시리즈A 라운드 준비   :a1, 2027-10-01, 90d
+    시리즈A 투자 유치     :crit, a2, 2028-01-01, 60d
+    글로벌 EPC 5% POC     :a3, 2028-01-01, 365d
+
+    section 스위트 완성
+    구독 전환 본격화      :p1, 2029-01-01, 365d
+    스위트 패키지 완성    :milestone, p2, 2031-12-31, 0d
+
+    section 시장 확장
+    샘 30% 점유 목표      :milestone, p3, 2034-12-31, 0d
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 안건 4: 투자사 파이프라인 -->
+        <section class="section" id="agenda4">
+            <h2 class="section-title">🏦 안건 4. 투자사 파이프라인 현황</h2>
+            <div class="agenda-card">
+                <div class="agenda-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">4</div>
+                    <div class="agenda-title">현재 접촉 중인 투자사 리스트 및 일정</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body open">
+                    <p style="margin:0 0 14px; font-weight:600; color:var(--primary-navy);">▸ 적극 접촉 중인 투자사</p>
+                    <table class="data-table">
+                        <thead><tr><th>투자사</th><th>분류</th><th>현황</th><th>다음 단계</th><th>비고</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>포스텍홀딩스</strong></td>
+                                <td>VC</td>
+                                <td><span class="badge-progress">일정 확정</span></td>
+                                <td>5/12 본부 IR (강남 사무실)</td>
+                                <td>고병철 대표님 직접 발표. 통과 시 즉시 투자</td>
+                            </tr>
+                            <tr>
+                                <td><strong>스트롱벤처스</strong></td>
+                                <td>VC (리드 원칙)</td>
+                                <td><span class="badge-progress">4/6명 면담 완료</span></td>
+                                <td>잔여 2명 면담 후 텀시트</td>
+                                <td>리드 투자자 원칙. 지분구조 우려 제기</td>
+                            </tr>
+                            <tr>
+                                <td><strong>매쉬업벤처스</strong></td>
+                                <td>VC</td>
+                                <td><span class="badge-pending">다음주 연락 예정</span></td>
+                                <td>5월 말 이내 투자 가능성</td>
+                                <td>5/18 또는 5/20 일정 조율 중</td>
+                            </tr>
+                            <tr>
+                                <td><strong>카이스트 청창사</strong></td>
+                                <td>AC</td>
+                                <td><span class="badge-pending">미팅 일정 확정</span></td>
+                                <td>안준현 이사 5/7 오후 4시~</td>
+                                <td>투자 프로세스 상세 미확인</td>
+                            </tr>
+                            <tr>
+                                <td><strong>슈미트</strong></td>
+                                <td>VC/AC</td>
+                                <td><span class="badge-pending">IR 자료 대기</span></td>
+                                <td>IR 완성 후 전달</td>
+                                <td>5월 말까지 확정 미수령</td>
+                            </tr>
+                            <tr>
+                                <td><strong>베이스벤처스</strong></td>
+                                <td>VC</td>
+                                <td><span class="badge-low">연락 예정</span></td>
+                                <td>지분투자 특화, 연락 드릴 예정</td>
+                                <td>대출 요구 없는 순수 지분투자 강조</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p style="margin:18px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 추가 검토 투자사 (연락 예정)</p>
+                    <p style="font-size:14px; color:var(--dark-gray);">퓨즈플레이, 불포파, 스톤브릿지, 오키온캐피탈, 엔트로프로(전세훈 대표 — 화공 배경 앤젤/소형 VC), ABM랩 연결 네트워크 활용 가능성 검토</p>
+
+                    <div class="insight-box">
+                        <h4>💡 Insight</h4>
+                        <ul>
+                            <li>포스텍홀딩스 본부 IR(5/12)은 가장 임박한 클로징 기회. 박규호 공동창업자 동행 일정 조율 최우선 필요.</li>
+                            <li>스트롱벤처스는 리드 투자를 원칙으로 하므로, 스트롱이 리드하면 팔로잉 투자사(매쉬업 등)의 조건이 연동되어 협상 레버리지 확보 가능.</li>
+                            <li>AC(카이스트 청창사)와 VC(스트롱) 공동투자 시 두 가지 조건 구조(비례배분 vs 리드 구조) 중 선택 필요 — 사전 합의 중요.</li>
+                            <li>7억 목표치 기준으로 단일 투자사 클로징도 가능하므로, 복수 협상을 동시에 유지하되 첫 클로징 속도를 우선시할 필요 있음.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 안건 5: 스트롱벤처스 피드백 -->
+        <section class="section" id="agenda5">
+            <h2 class="section-title">⚠️ 안건 5. 스트롱벤처스 피드백 – 지분구조 이슈</h2>
+            <div class="agenda-card">
+                <div class="agenda-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">5</div>
+                    <div class="agenda-title">30% 지분 구조에 대한 투자자 반응 및 함의</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body open">
+                    <div class="quote-block quote-kim">
+                        <div class="quote-speaker">🎤 김상윤 대표</div>
+                        스트롱벤처스 피드백입니다. 아직 1년도 안 만난 사람이고, 1년에 6%씩이면 2년 후 퇴사해도 12% 갖고 있는데 그건 말이 안 된다고 하시더라고요. 5년 후 바로 퇴사해서 지분을 갖고 있는 것도 현 정책으로는 가능하니까요.
+                    </div>
+
+                    <p style="margin:16px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 투자자들의 공통된 우려 사항 (스트롱벤처스 외 다수)</p>
+                    <ul class="num-list">
+                        <li>30%는 자본 참여(투자) 없이 합류하는 공동창업자에게 과하다</li>
+                        <li>1년도 채 안된 관계에서 30% 부여는 신뢰 근거 부족</li>
+                        <li>역베스팅 구조에서 30% 선지급 후 회수는 리스크 구조로 인식</li>
+                        <li>중간 퇴사 후 지분 보유 가능성 (액면가 회수 조항 있어도) 불안 요소</li>
+                        <li>5% 내외가 적정선이라는 암묵적 시장 기대치 존재</li>
+                    </ul>
+
+                    <div class="quote-block quote-kim">
+                        <div class="quote-speaker">🎤 김상윤 대표</div>
+                        스트롱에서 제안한 대안들: ① 액면권 회수 조항 강화, ② 투자 라운드와 연동한 exponential 베스팅, ③ 지분 자체를 낮추는 것.
+                    </div>
+
+                    <div class="quote-block quote-park">
+                        <div class="quote-speaker">🎤 박규호 공동창업자</div>
+                        사실 어떻게 보면 지난 시간 자체가 무의미한 것처럼 느껴지기도 합니다. 어차피 외부에서 이야기했을 때 그거에 따라서 갈 수밖에 없는 상황이었다면 처음부터 방향성이 달라졌겠죠. 이거는 사실 선택인 것 같아요. 그 컨설턴트님 얘기를 신경 쓰지 마세요라고 하는 거에 대해서 한 번 더 고민해보시면 좋겠어요.
+                    </div>
+
+                    <div class="insight-box">
+                        <h4>💡 Insight</h4>
+                        <ul>
+                            <li>투자자 반응은 "협상의 시작점"으로 봐야 한다. 첫 미팅에 던진 포지션이며 실제 텀시트 단계에서 다시 논의 가능.</li>
+                            <li>지금까지 접촉한 모든 투자자에서 유사한 피드백이 나오고 있다는 점은 단순 네고 전술이 아니라 구조적 이슈일 가능성을 시사한다.</li>
+                            <li>박규호 부장의 핵심 가치는 '30% 도메인 지식' 이 아니라 '전주기 EPC 경험 × 커뮤니티 구축 능력 × AI 학습'의 복합 가치다 — IR에서 이 포인트를 명확히 전달해야 설득력이 높아진다.</li>
+                            <li>스트롱벤처스 잔여 2명 미팅 결과 + 피드백을 먼저 받아본 후 지분 구조 재조정 여부를 최종 결정하는 것이 합리적이다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 안건 6: 지분구조 논의 -->
+        <section class="section" id="agenda6">
+            <h2 class="section-title">⚖️ 안건 6. 공동창업자 지분구조 재정립 논의</h2>
+            <div class="agenda-card">
+                <div class="agenda-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">6</div>
+                    <div class="agenda-title">옵션별 장단점 및 향후 방향</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body open">
+                    <div class="quote-block quote-park">
+                        <div class="quote-speaker">🎤 박규호 공동창업자</div>
+                        저는 30%에 대해서 지금 스냅스케일이 공동창업을 하는 데 있어서 기여하지 못할 부분이 없고 그렇게 기여를 해봤다라고 말할 수 있다고 봅니다. EPIC IC를 다 경험한 사람이 AI를 배우고 VC를 공부하면서 이걸 제대로 꽃피워보고 싶다라는 방향성이 맞아서 달리고 있는 거니까요.
+                    </div>
+
+                    <p style="margin:16px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 현재 구조 유지 시 필요한 방어 논리</p>
+                    <ul class="num-list">
+                        <li><strong>EPC IC 전주기 유일한 경험자:</strong> 설계(거제도 상세설계) → 조달(휴스턴 현장) → 시공(CM 매니저) → 커미셔닝(해상 FLNG)까지 전 사이클 직접 경험</li>
+                        <li><strong>전사 교육 시스템 구축 경험:</strong> 현대중공업 귀국 후 FEED~상세설계 전 사원 교육 커리큘럼 직접 설계·운영</li>
+                        <li><strong>글로벌 네트워크:</strong> 영국·미국 거주 경험, PSIG 참여, 글로벌 EPC 엔지니어 네트워크 보유 — 해외 시장 진출 시 직접 활용 가능</li>
+                        <li><strong>AspenTech 인증:</strong> HYSYS Expert 자격, 국내 주요 EPC(삼성E&A, 현대건설, 포스코ENC) 20명 규모 강의 이력</li>
+                        <li><strong>이미 증명한 기여:</strong> 온톨로지 카테고리 설계, BM/프라이싱 논의, VC 스프린트 수료, 한울·현대·필즈 영업 지원</li>
+                        <li><strong>라포와 신뢰 근거:</strong> 7.20부터 4.27까지 약 30회 미팅, 총 수십 시간의 심층 논의 (영상·음성 백업 존재)</li>
+                    </ul>
+
+                    <p style="margin:18px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 레퍼런스 케이스 (국내 동종 딥테크 공동창업)</p>
+                    <table class="data-table">
+                        <thead><tr><th>회사</th><th>분야</th><th>구조</th><th>시사점</th></tr></thead>
+                        <tbody>
+                            <tr><td>루닛</td><td>의료AI</td><td>대학생 6인 공동창업, 초기 균등 지분</td><td>기술 전문성이 곧 지분 근거</td></tr>
+                            <tr><td>뷰노</td><td>의료AI</td><td>대표 + 핵심 기술 2인 구조</td><td>대표 과반 + 기술 공동창업자 2자리</td></tr>
+                            <tr><td>레빌리온</td><td>반도체AI</td><td>대표 + CTO 구조, CTO 지분 비율 높음</td><td>기술 전문가 지분 정당성 확보된 사례</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="quote-block quote-park">
+                        <div class="quote-speaker">🎤 박규호 공동창업자</div>
+                        결국에 끝까지 그냥 하기로 한 거 미친놈처럼 하는 거지 주변에서 말 좋게 나올 리는 없다. 매 라운드마다 매 순간마다 주변 얘기가 들어올 거잖아요. 선택의 기준을 저쪽에 두기 시작하면 IPO를 하든 엑싯을 하든 언제까지나 다 흔들릴 수밖에 없을 것 같습니다.
+                    </div>
+
+                    <div class="insight-box">
+                        <h4>💡 Insight</h4>
+                        <ul>
+                            <li>50대50 → 70대30으로의 조정 과정 자체가 "5개월간 고민하고 상호 협의한 결과"임을 투자자에게 명확히 전달하는 것이 핵심 방어 논리다.</li>
+                            <li>레빌리온 등 레퍼런스에서 기술 CTO 지분이 높은 사례가 실제 IR 자료에 포함되면 "우리만 이상한 게 아니다"는 객관적 근거가 된다.</li>
+                            <li>투자자가 "30%는 과하다"고 먼저 말하게 두고, 두 번째·세 번째 미팅에서 조율 가능한 영역을 논의하는 전략이 협상에서 유리하다.</li>
+                            <li>박규호 공동창업자의 구술 어필(EPC IC 전주기 경험)은 문서화보다 직접 대화가 훨씬 효과적 — 투자 미팅 직접 동행이 필수적이다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 안건 7: IR 대응 전략 -->
+        <section class="section" id="agenda7">
+            <h2 class="section-title">🎯 안건 7. IR 공동 대응 전략 수립</h2>
+            <div class="agenda-card">
+                <div class="agenda-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">7</div>
+                    <div class="agenda-title">투자자 대응 전략 합의 및 역할 분담</div>
+                    <div class="agenda-toggle">▼</div>
+                </div>
+                <div class="agenda-body open">
+                    <div class="quote-block quote-kim">
+                        <div class="quote-speaker">🎤 김상윤 대표</div>
+                        제 느낌에는 부장님이랑 저랑 무조건 같이 가서 방금 말씀하신 이야기를 그대로 하면 될 것 같아요. 그러면 이제 투자자들도 그렇게 될 것 같거든요. 제 느낌에는.
+                    </div>
+                    <div class="quote-block quote-park">
+                        <div class="quote-speaker">🎤 박규호 공동창업자</div>
+                        사실 가서 얼굴 보고 눈 보고 얘기하고 목소리 보고 이거 진짜네 하는 거는 그분들은 아마 몇 초 컷일 겁니다. 저는 이렇게 살아온 인생이라서 고민도 안 하죠.
+                    </div>
+
+                    <p style="margin:16px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 합의된 IR 공동 대응 전략 (3개 레이어)</p>
+                    <table class="data-table">
+                        <thead><tr><th>레이어</th><th>내용</th><th>담당</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Phase 0</strong><br>현행 구조 강력 어필</td>
+                                <td>
+                                    • 50→70/30 전환 과정 설명 (5개월 논의의 결과)<br>
+                                    • 박규호의 EPC IC 전주기 경험 직접 어필<br>
+                                    • 루닛·뷰노·레빌리온 레퍼런스 제시<br>
+                                    • 총 미팅 30회, 회의록 HTML 30개 시각 증거 제시
+                                </td>
+                                <td>두 사람 공동</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phase 1</strong><br>추가 설득 장치</td>
+                                <td>
+                                    • 투자자 질문에 박규호 직접 답변 (산업 파트)<br>
+                                    • 동행 불가 시: 박규호 경험 요약 영상/문서 IR 자료 편입<br>
+                                    • Claude Code로 미팅 기록 → 라포 증거 자료화
+                                </td>
+                                <td>박규호 (산업), 김상윤 (재무/기술)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Phase 2</strong><br>구조 조율 (필요 시)</td>
+                                <td>
+                                    • 스트롱벤처스 피드백 수령 후 판단<br>
+                                    • 가능한 조율 옵션: ① 락업 기간 연장 ② 지분율 소폭 조정 (10% 내)<br>
+                                    • 변호사 자문 필수 (투자사 텀시트 연계 조항 검토)
+                                </td>
+                                <td>두 사람 + 이을범 교수 자문</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p style="margin:18px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 예상 Q&A 및 답변 방향 (사전 준비 필요)</p>
+                    <table class="data-table">
+                        <thead><tr><th>예상 질문</th><th>답변 방향</th></tr></thead>
+                        <tbody>
+                            <tr><td>1년도 안 된 파트너십인데 30%는 어떻게 정당화?</td><td>50→30 과정 설명 + 30회 미팅 + EPC IC 전주기 유일성 어필</td></tr>
+                            <tr><td>투자 받으면 바로 조인하나?</td><td>회사 최대 성장 방향에서 검토 중. 현재 육아휴직 정책 활용해 개발 투자 우선. 딜레이 이유 명확히 설명</td></tr>
+                            <tr><td>중간에 나가면 지분 어떻게 되나?</td><td>클리프 1년 + 베스팅 구조. 중간 퇴사 시 잔여 액면가 회수 조항 있음</td></tr>
+                            <tr><td>끝까지 같이 갈 수 있나?</td><td>시리즈A 이후 자체 매출 안정화 시점까지. 이후 IPO 목표로 둘 다 장기 비전 일치. IPO 전 지분 매각 의향 없음</td></tr>
+                            <tr><td>혼자 하거나 채용으로 가면 되지 않나?</td><td>화공 전주기 도메인 + AI 이해 + 커뮤니티 구축 능력 복합 보유자는 시장에 없음. 채용으로 대체 불가</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p style="margin:18px 0 10px; font-weight:600; color:var(--primary-navy);">▸ 임박 IR 일정 조율</p>
+                    <table class="data-table">
+                        <thead><tr><th>일정</th><th>투자사</th><th>박규호 참여 가능여부</th><th>비고</th></tr></thead>
+                        <tbody>
+                            <tr><td>4/30 (화)</td><td>사전 화상 미팅</td><td>확인 필요</td><td>—</td></tr>
+                            <tr><td>5/7 (목)</td><td>카이스트 청창사 안준현 이사</td><td>5/8로 대안 가능 (3~4시)</td><td>5/6~8 교육 겹침</td></tr>
+                            <tr><td>5/12 (화)</td><td>포스텍홀딩스 본부 IR</td><td>최대한 조율 시도</td><td>대산 교육 5/13~14로 이동 시도</td></tr>
+                            <tr><td>5/18, 5/20</td><td>매쉬업벤처스 (예상)</td><td>월·수 가능</td><td>—</td></tr>
+                            <tr><td>5/25~6월초</td><td>미정</td><td>출산 전후 (5/28 예정일)</td><td>기간 비워두기 필요</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="diagram-container">
+                        <div class="mermaid">
+flowchart TD
+    A[IR 미팅 시작] --> B{박규호 참석 가능?}
+    B -- 예 --> C[공동 발표\n김상윤: 재무·기술 70%\n박규호: 산업 경험·지분근거 30%]
+    B -- 불가 --> D[박규호 어필 영상/문서 삽입\n+ 김상윤 단독 발표]
+    C --> E[지분구조 Q&A]
+    D --> E
+    E --> F{투자자 반응}
+    F -- "우호적" --> G[텀시트 협상]
+    F -- "지분 조율 요청" --> H{피드백 내용 검토}
+    H -- "구조적 이슈 아님" --> I[현행 유지 + 추가 어필]
+    H -- "구조 재정립 필요" --> J[변호사 자문 + \n옵션 재설계]
+    G --> K[투자 클로징]
+    I --> G
+    J --> G
+                        </div>
+                    </div>
+
+                    <div class="insight-box">
+                        <h4>💡 Insight</h4>
+                        <ul>
+                            <li>"가서 10시간 이야기한 것이 우리의 증거다" — 회의록 30개, 총 미팅 시간 시각화 자료가 단순 문서 이상의 신뢰 근거가 된다.</li>
+                            <li>IR 자료에 '공동창업자 소개' 슬라이드를 별도 추가하되, 박규호의 EPC IC 타임라인을 시각적으로 정리하면 투자자 설득력이 배가된다.</li>
+                            <li>출산 예정일(5/28) 전후 2주가 IR 공백기가 될 수 있으므로, 5/12 포스텍 IR 성공이 시드 라운드의 실질적 모멘텀이다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 결정사항 -->
+        <section class="section" id="decisions">
+            <h2 class="section-title">✅ 결정사항 요약</h2>
+            <div class="decision-item">
+                <div class="di-title">① 시드 목표 투자금액 7억원 확정</div>
+                <div class="di-detail">TIPS 8억 + 자체 조달 7억 구조로, 중간 시나리오 13억 런웨이 + 시리즈A 브리지 버퍼를 충족. 기업가치 50~70억원 목표.</div>
+            </div>
+            <div class="decision-item">
+                <div class="di-title">② 현행 지분 구조(김상윤 70% / 박규호 30%) 당분간 유지</div>
+                <div class="di-detail">스트롱벤처스 피드백 및 기타 투자사 반응을 더 수집한 후 최종 판단. Phase 0에서 현행 구조를 강하게 방어하는 전략을 먼저 시도.</div>
+            </div>
+            <div class="decision-item">
+                <div class="di-title">③ 박규호 공동창업자 IR 직접 동행 원칙 합의</div>
+                <div class="di-detail">가능한 모든 IR 미팅에 동행. 산업 경험 파트는 박규호가 직접 발언. 동행 불가 시 영상/문서 대체 자료 준비.</div>
+            </div>
+            <div class="decision-item">
+                <div class="di-title">④ 다음 내부 미팅 (4/28 오후 10:30) 의제 확정</div>
+                <div class="di-detail">지분구조·엑싯 기준 최종 내부 정렬 + IR Q&A 예상 문항 준비 + 포스텍 IR 대비 자료 점검.</div>
+            </div>
+            <div class="decision-item">
+                <div class="di-title">⑤ Claude Code로 기존 미팅 기록 → 라포 증거 자료 생성</div>
+                <div class="di-detail">7월 이후 회의록(약 30개)을 분석하여 총 미팅 시간, 핵심 논의 주제, 감정선 변화를 정리한 IR 보조 문서 제작. 담당: 김상윤 대표.</div>
+            </div>
+        </section>
+
+        <!-- 액션아이템 -->
+        <section class="section" id="actions">
+            <h2 class="section-title">📌 액션아이템</h2>
+            <table class="data-table">
+                <thead>
+                    <tr><th>우선순위</th><th>액션</th><th>담당자</th><th>기한</th><th>완료 기준</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge-high">🔴 High</span></td>
+                        <td>포스텍홀딩스 5/12 IR — 박규호 동행 일정 확보 (대산 교육 5/13~14로 이동)</td>
+                        <td>박규호</td>
+                        <td>4/30 이전</td>
+                        <td>교육 일정 변경 확정 통보</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-high">🔴 High</span></td>
+                        <td>IR 자료 개편: 공동창업자 소개 슬라이드 추가 + 박규호 EPC IC 경력 타임라인 시각화</td>
+                        <td>김상윤</td>
+                        <td>5/10</td>
+                        <td>IR 덱에 박규호 섹션 포함 확인</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-high">🔴 High</span></td>
+                        <td>4/28 내부 미팅: 지분구조 최종 정렬 + Q&A 예상 문항 10개 이상 준비</td>
+                        <td>두 사람</td>
+                        <td>4/28 오후 10:30</td>
+                        <td>Q&A 문서 공유 완료</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-high">🔴 High</span></td>
+                        <td>스트롱벤처스 잔여 2명 미팅 진행 + 피드백 문서화</td>
+                        <td>김상윤</td>
+                        <td>5월 초</td>
+                        <td>피드백 공유 및 지분구조 재논의 여부 판단</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-medium">🟡 Medium</span></td>
+                        <td>Claude Code 활용: 기존 30개 회의록 → 총 미팅시간·라포 요약 문서 생성</td>
+                        <td>김상윤</td>
+                        <td>5/10</td>
+                        <td>시각화 자료 IR 자료에 통합 가능한 형태로 완성</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-medium">🟡 Medium</span></td>
+                        <td>루닛·뷰노·레빌리온 초기 지분구조 레퍼런스 자료 수집</td>
+                        <td>박규호</td>
+                        <td>4/28 미팅 전</td>
+                        <td>관련 기사/공시 링크 공유</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-medium">🟡 Medium</span></td>
+                        <td>카이스트 청창사 일정 5/8 재조율 시도 (5/7 겹침)</td>
+                        <td>김상윤</td>
+                        <td>5/1</td>
+                        <td>5/8 오후 3~4시 확정</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-medium">🟡 Medium</span></td>
+                        <td>이을범 교수 및 변호사: 투자사 텀시트 대비 지분구조 법적 리스크 자문 요청</td>
+                        <td>김상윤</td>
+                        <td>5월 중</td>
+                        <td>자문 결과 공유</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-low">🟢 Low</span></td>
+                        <td>엔트로프로(전세훈 대표) 스몰톡 진행 — 앤젤 투자 가능성 탐색</td>
+                        <td>박규호</td>
+                        <td>5월 중</td>
+                        <td>투자 의향 및 가능 금액 확인</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge-low">🟢 Low</span></td>
+                        <td>베이스벤처스, 퓨즈플레이, 불포파, 스톤브릿지, 오키온 연락 시작</td>
+                        <td>김상윤</td>
+                        <td>5월 중</td>
+                        <td>미팅 일정 1건 이상 확보</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 리스크 & 기회요소 -->
+        <section class="section" id="risks">
+            <h2 class="section-title">🔍 리스크 & 기회요소</h2>
+            <div class="risk-grid">
+                <div class="risk-card risk">
+                    <h4>⚠️ 리스크</h4>
+                    <ul>
+                        <li>지분구조 우려가 구조적 문제일 경우, 현행 유지 시 모든 투자사에서 동일 반응 반복 위험</li>
+                        <li>스트롱벤처스 최종 딜 불발 시 리드 투자자 없이 라운드 진행 어려움</li>
+                        <li>박규호 공동창업자 5/28 전후 출산 시즌과 5/12 포스텍 IR 일정 충돌 가능성</li>
+                        <li>프리IPO 낙관 캡테이블의 지분율 오류 가능성 — 재무 모델 재검토 필요</li>
+                        <li>시리즈A 이후 자체 매출 안정화 실패 시 시리즈B 불가피 → 지분 추가 희석</li>
+                    </ul>
+                </div>
+                <div class="risk-card opport">
+                    <h4>🚀 기회요소</h4>
+                    <ul>
+                        <li>필즈엔지니어링 5월 중 1.9억 매출 예정 — 시드 전 실제 트랙션으로 IR 활용 가능</li>
+                        <li>박규호의 EPC IC 전주기 경험은 글로벌에서도 희소한 자산 — 직접 어필 시 강한 차별화</li>
+                        <li>30개 회의록 = 투자자에게 보여줄 수 있는 라포 증거 (국내 스타트업 중 이례적)</li>
+                        <li>TIPS 8억 확보 시 실질 자체 조달 필요액 3~6억으로 낮아져 협상 레버리지 상승</li>
+                        <li>현대엔지니어링 POC 완료 임박 — 계약 체결 시 IR 자료 핵심 트랙션으로 활용</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 화자별 발언 요약 -->
+        <section class="section" id="speakers">
+            <h2 class="section-title">👤 화자별 발언 요약</h2>
+            <div class="speaker-grid">
+                <div class="speaker-card">
+                    <div class="badge">김상윤 대표 · 약 70% 발언 비중</div>
+                    <h3>김상윤 (대표, SnapScale)</h3>
+                    <p>
+                        • 시드 런웨이 재무 플래닝, 시장규모 추산, 5개년 로드맵 전체를 직접 설계·발표<br>
+                        • 스트롱벤처스 미팅 피드백을 솔직하게 공유하며 투자자 반응 투명하게 전달<br>
+                        • 자금 조달 압박과 공동창업자 신뢰 사이에서 균형을 찾으려는 진지한 고민 표출<br>
+                        • <em>"지분 구조 이야기가 있어서 고민이 된다라는 지점부터 다시 얘기를 하시죠"</em>
+                    </p>
+                </div>
+                <div class="speaker-card">
+                    <div class="badge">박규호 공동창업자 · 약 30% 발언 비중</div>
+                    <h3>박규호 (공동창업자, 전 AspenTech)</h3>
+                    <p>
+                        • 시장규모·O&M 확장 방향에 대해 현업 시각에서 실용적 피드백 제공<br>
+                        • 지분 구조 논의에서 자신의 기여와 비전을 설득력 있게 어필<br>
+                        • EPC IC 전주기 경험, 글로벌 네트워크, AI 학습 의지를 구체적으로 설명<br>
+                        • 투자자 협상 프레임을 전략적으로 재정의하여 해결책 방향을 제시<br>
+                        • <em>"끝까지 하기로 한 거 미친놈처럼 하는 거지 주변에서 말 좋게 나올 리는 없다"</em>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 다음 미팅 -->
+        <section class="section">
+            <h2 class="section-title">📅 다음 미팅 계획</h2>
+            <table class="data-table">
+                <thead><tr><th>일시</th><th>미팅 유형</th><th>핵심 의제</th></tr></thead>
+                <tbody>
+                    <tr><td>4/28 (화) 오후 10:30</td><td>내부 정렬 미팅</td><td>지분구조 최종 확정 + 엑싯 기준 내부 합의 + IR Q&A 준비</td></tr>
+                    <tr><td>5/7 (목) → 5/8 (금) 조율</td><td>카이스트 청창사 IR</td><td>안준현 이사 면담, 투자 프로세스 파악</td></tr>
+                    <tr><td>5/12 (화)</td><td>포스텍홀딩스 본부 IR</td><td>고병철 대표 직접 발표 (박규호 동행 목표)</td></tr>
+                    <tr><td>5월 중 (미정)</td><td>스트롱벤처스 잔여 2명</td><td>최종 멤버 면담 → 텀시트 수령 여부 결정</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+    </div><!-- /content -->
+
+    <footer>
+        <p>Confidential &amp; Proprietary | SnapScale Internal Use Only</p>
+        <p style="margin-top:6px;">Generated with AI assistance based on meeting transcript | 2026.04.27</p>
+    </footer>
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        themeVariables: {
+            primaryColor: '#bbdefb',
+            primaryTextColor: '#1e3c72',
+            primaryBorderColor: '#2196f3',
+            lineColor: '#5a6c7d',
+            secondaryColor: '#ffe082',
+            tertiaryColor: '#fff9c4'
+        },
+        gantt: {
+            titleTopMargin: 25,
+            barHeight: 28,
+            barGap: 8,
+            topPadding: 50,
+            leftPadding: 160,
+            gridLineStartPadding: 35,
+            fontSize: 12,
+            sectionFontSize: 13,
+            numberSectionStyles: 4,
+            axisFormat: '%Y',
+            useWidth: 1400
+        }
+    });
+
+    function toggleAgenda(header) {
+        const body = header.nextElementSibling;
+        const toggle = header.querySelector('.agenda-toggle');
+        const isOpen = body.classList.contains('open');
+        body.classList.toggle('open', !isOpen);
+        toggle.textContent = isOpen ? '▼' : '▲';
+    }
+
+    // 스크롤 스파이
+    window.addEventListener('scroll', () => {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.sticky-nav a');
+        let current = '';
+        sections.forEach(sec => {
+            if (window.scrollY >= sec.offsetTop - 80) current = sec.getAttribute('id');
+        });
+        navLinks.forEach(a => {
+            a.style.color = a.getAttribute('href') === '#' + current
+                ? '#fff' : 'rgba(255,255,255,0.75)';
+            a.style.borderBottomColor = a.getAttribute('href') === '#' + current
+                ? 'var(--accent-blue)' : 'transparent';
+        });
+    });
+</script>
+</body>
+</html>

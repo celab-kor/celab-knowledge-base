@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삼두종합기술 POC 미팅 준비 회의록 | 2025.01.03</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .meta-info {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            border-bottom: 3px solid #e9ecef;
+        }
+        
+        .meta-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #2a5298;
+        }
+        
+        .meta-item strong {
+            color: #1e3c72;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .meta-item span {
+            color: #495057;
+            font-size: 1em;
+        }
+        
+        .toc {
+            background: #fff;
+            padding: 30px 40px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .toc h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .toc ul {
+            list-style: none;
+        }
+        
+        .toc li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f3f5;
+        }
+        
+        .toc a {
+            color: #2a5298;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .toc a:hover {
+            color: #1e3c72;
+            padding-left: 10px;
+        }
+        
+        .toc a::before {
+            content: "▸";
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            scroll-margin-top: 20px;
+        }
+        
+        .section-header {
+            background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px 25px;
+            margin: 0 -40px 30px -40px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-number {
+            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+        
+        .subsection {
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-left: 4px solid #2a5298;
+            border-radius: 8px;
+        }
+        
+        .subsection h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .insight-box {
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe0b3 100%);
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .insight-box h4 {
+            color: #e65100;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .insight-box h4::before {
+            content: "💡";
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+        
+        .decision-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .decision-box h4 {
+            color: #2e7d32;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .decision-box h4::before {
+            content: "✓";
+            margin-right: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .action-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .action-box h4 {
+            color: #1565c0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .action-box h4::before {
+            content: "→";
+            margin-right: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .risk-box {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .risk-box h4 {
+            color: #c62828;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .risk-box h4::before {
+            content: "⚠";
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+        
+        .content-list {
+            margin: 15px 0;
+            padding-left: 0;
+        }
+        
+        .content-list li {
+            margin: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .content-list li::before {
+            content: "•";
+            color: #2a5298;
+            font-weight: bold;
+            position: absolute;
+            left: 10px;
+        }
+        
+        .price-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .price-table th {
+            background: #1e3c72;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .price-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .price-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .diagram-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .diagram-title {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        .footer p {
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+        
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .collapsible::after {
+            content: " [펼치기]";
+            font-size: 0.9em;
+            color: #2a5298;
+            font-weight: normal;
+        }
+        
+        .collapsible.active::after {
+            content: " [접기]";
+        }
+        
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .collapsible-content.active {
+            max-height: 5000px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>삼두종합기술 POC 미팅 준비 회의록</h1>
+            <div class="subtitle">SnapScale 영업전략 수립 및 제안내용 확정</div>
+            <div class="subtitle" style="margin-top: 15px; font-size: 0.9em; opacity: 0.85;">본 회의록은 AI 기술을 활용하여 녹취록을 기반으로 작성되었으며, 일부 정확도가 떨어질 수 있습니다.</div>
+        </div>
+        
+        <div class="meta-info">
+            <div class="meta-item">
+                <strong>회의 일시</strong>
+                <span>2025년 1월 3일 (금)</span>
+            </div>
+            <div class="meta-item">
+                <strong>회의 장소</strong>
+                <span>온라인 미팅</span>
+            </div>
+            <div class="meta-item">
+                <strong>회의 유형</strong>
+                <span>영업전략 수립 회의</span>
+            </div>
+            <div class="meta-item">
+                <strong>참석자</strong>
+                <span>김상윤(CEO), 박규호, 이종현, 이재윤, 노은아, 안태현, 정다소</span>
+            </div>
+        </div>
+        
+        <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px 40px; margin: 0; font-size: 0.9em; color: #856404;">
+            <strong>⚠️ 안내사항:</strong> 본 회의록은 AI 기술을 활용하여 녹취록을 기반으로 작성되었으며, 일부 정확도가 떨어질 수 있습니다.
+        </div>
+        
+        <div class="toc">
+            <h2>목차</h2>
+            <ul>
+                <li><a href="#section1">1. 미팅 전략 및 접근 방식</a></li>
+                <li><a href="#section2">2. 제품 기능 및 데모 구성</a></li>
+                <li><a href="#section3">3. POC 제안 내용</a></li>
+                <li><a href="#section4">4. 가격 정책 및 협상 전략</a></li>
+                <li><a href="#section5">5. 기술적 요구사항 및 준비사항</a></li>
+                <li><a href="#section6">6. 시나리오별 대응 전략</a></li>
+                <li><a href="#section7">7. 결정사항 및 액션아이템</a></li>
+                <li><a href="#section8">8. 전략적 인사이트 및 제언</a></li>
+            </ul>
+        </div>
+        
+        <div class="content">
+            <!-- Section 1 -->
+            <section id="section1" class="section">
+                <div class="section-header">
+                    <div class="section-number">1</div>
+                    <div class="section-title">미팅 전략 및 접근 방식</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>1.1 핵심 전략: 주도권 확보</h3>
+                    <p>삼두종합기술과의 미팅에서 SnapScale이 주도권을 가져가기 위한 전략을 수립했습니다. 상대방이 먼저 제안하게 되면 미팅의 방향이 그들의 니즈 중심으로 흘러갈 위험이 있습니다.</p>
+                    
+                    <div class="decision-box">
+                        <h4>결정사항</h4>
+                        <ul class="content-list">
+                            <li><strong>선제적 제안</strong>: SnapScale이 먼저 개발 완료된 기능과 제안사항을 소개</li>
+                            <li><strong>협업툴 중심 접근</strong>: 통합 플랫폼보다는 핵심 모듈 중심으로 제시</li>
+                            <li><strong>고객 니즈 청취</strong>: 제안 후 삼두의 구체적 요구사항 파악</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>1.2 미팅 흐름 설계</h3>
+                    <div class="diagram-container">
+                        <div class="diagram-title">미팅 프로세스 플로우</div>
+                        <div class="mermaid">
+                        graph LR
+                            A[SnapScale 소개] --> B[핵심 기능 데모]
+                            B --> C[고객 니즈 청취]
+                            C --> D[맞춤형 제안]
+                            D --> E[POC 조건 협의]
+                            E --> F[계약서 제시]
+                            
+                            style A fill:#e3f2fd
+                            style B fill:#e8f5e9
+                            style C fill:#fff3e0
+                            style D fill:#f3e5f5
+                            style E fill:#e0f2f1
+                            style F fill:#fce4ec
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="insight-box">
+                    <h4>전략적 인사이트</h4>
+                    <ul class="content-list">
+                        <li><strong>주도권의 중요성</strong>: 먼저 제안함으로써 논의의 프레임을 SnapScale에 유리하게 설정</li>
+                        <li><strong>유연한 대응</strong>: 고정된 패키지보다 모듈식 접근으로 고객 맞춤화 가능성 확보</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Section 2 -->
+            <section id="section2" class="section">
+                <div class="section-header">
+                    <div class="section-number">2</div>
+                    <div class="section-title">제품 기능 및 데모 구성</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>2.1 협업툴 핵심 기능</h3>
+                    <p>프로젝트 관리 및 문서 버전 관리를 통합한 협업 플랫폼을 소개합니다.</p>
+                    
+                    <ul class="content-list">
+                        <li><strong>패키지 폴더 자동 연동</strong>: 라이선서로부터 받은 PFD, P&ID, HMB, 데이터시트 자동 인식</li>
+                        <li><strong>BDD 자동 파싱</strong>: Basic Design Data에서 프로젝트 정보 및 참여인원 자동 추출</li>
+                        <li><strong>마크업 및 코멘트 시스템</strong>: P&ID에 직접 주석 및 변경사항 표시</li>
+                        <li><strong>승인 워크플로우</strong>: 다단계 승인 프로세스를 통한 변경사항 관리</li>
+                        <li><strong>버전 관리</strong>: 커밋 누적을 통한 리비전 업그레이드 시스템</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h3>2.2 AI 자동화 기능</h3>
+                    
+                    <div class="diagram-container">
+                        <div class="diagram-title">AI 기능 아키텍처</div>
+                        <div class="mermaid">
+                        graph TD
+                            A[P&ID 입력] --> B[AI 인식 엔진]
+                            B --> C[라인리스트 생성]
+                            B --> D[Equipment 리스트 생성]
+                            C --> E[데이터 자동 채움]
+                            D --> E
+                            E --> F[PFD 연동]
+                            E --> G[데이터시트 연동]
+                            F --> H[최종 문서 생성]
+                            G --> H
+                            
+                            style A fill:#ffebee
+                            style B fill:#e1f5fe
+                            style C fill:#f3e5f5
+                            style D fill:#f3e5f5
+                            style E fill:#e8f5e9
+                            style F fill:#fff9c4
+                            style G fill:#fff9c4
+                            style H fill:#c8e6c9
+                        </div>
+                    </div>
+                    
+                    <h4 class="collapsible">▼ 주요 자동화 기능 상세</h4>
+                    <div class="collapsible-content">
+                        <table class="price-table">
+                            <thead>
+                                <tr>
+                                    <th>기능</th>
+                                    <th>설명</th>
+                                    <th>차별점</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>P&ID → 라인리스트</strong></td>
+                                    <td>P&ID 도면에서 배관 정보를 자동으로 추출하여 리스트 생성</td>
+                                    <td>PFD, 데이터시트 등 다른 문서와 연동하여 값 자동 채움</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Hydraulic Calculation</strong></td>
+                                    <td>Isometric에서 데이터 자동 추출 및 계산</td>
+                                    <td>수작업 대비 50% 이상 시간 단축</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PSV Case Study</strong></td>
+                                    <td>API 520/522 기준 PSV 위치 식별 및 규격 계산</td>
+                                    <td>100장 내외 설계도 자동 분석</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Aspen 시뮬레이션</strong></td>
+                                    <td>다이어그램 입력만으로 자동 시뮬레이션 실행</td>
+                                    <td>시뮬레이션 결과를 협업툴에 자동 반영</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>2.3 플로팅뷰 기능</h3>
+                    <p>화면 위에 작게 띄울 수 있는 통합 인터페이스로, AutoCAD, Excel, Aspen 등을 단일 윈도우에서 제어 가능합니다.</p>
+                    
+                    <div class="insight-box">
+                        <h4>기술적 우위</h4>
+                        <ul class="content-list">
+                            <li><strong>통합 워크플로우</strong>: 여러 소프트웨어를 하나의 인터페이스로 제어</li>
+                            <li><strong>생산성 향상</strong>: 프로그램 간 전환 시간 최소화</li>
+                            <li><strong>자동 인식</strong>: 현재 열려있는 DWG, Excel 파일 자동 감지</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>2.4 삼두종합기술 요청 기능</h3>
+                    <p>삼두에서 추가로 요청한 기능들에 대한 검토 및 대응 방안입니다.</p>
+                    
+                    <ul class="content-list">
+                        <li><strong>Hazard Area Calculation</strong>: 전기 코드 기반 폭발 위험 등급 계산 (기술적 도전과제: 물성치 DB 구축 필요)</li>
+                        <li><strong>방폭 계산서</strong>: Hazard Area Calculation 문서화 작업</li>
+                        <li><strong>배관 강도 계산서</strong>: 파이핑 스펙 기반 강도 계산 시트 생성</li>
+                        <li><strong>비파격 물량 산출</strong>: 추가 조사 필요</li>
+                        <li><strong>스마트 P&ID 경량화</strong>: AI 기반 자동 맵핑 및 연동</li>
+                        <li><strong>인허가 지원 프로그램</strong>: 서류 작업 자동화 (추가 논의 필요)</li>
+                    </ul>
+                    
+                    <div class="risk-box">
+                        <h4>기술적 도전과제</h4>
+                        <ul class="content-list">
+                            <li>Hazard Area Calculation: 전기 코드에 없는 신규 화학물질 분류 문제</li>
+                            <li>Aspen 자동화: 어준 교수님과의 협의 필요 가능성</li>
+                            <li>인허가 프로그램: 법규 해석의 주관성 문제</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 3 -->
+            <section id="section3" class="section">
+                <div class="section-header">
+                    <div class="section-number">3</div>
+                    <div class="section-title">POC 제안 내용</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>3.1 POC 구조 및 일정</h3>
+                    
+                    <div class="diagram-container">
+                        <div class="diagram-title">POC 타임라인</div>
+                        <div class="mermaid">
+                        gantt
+                            title POC 실행 일정
+                            dateFormat YYYY-MM-DD
+                            section 준비
+                            계약 체결           :2025-01-10, 7d
+                            샘플 데이터 수령    :2025-01-13, 5d
+                            section 개발
+                            플러그인 설치       :2025-01-17, 3d
+                            기능 테스트         :2025-01-20, 14d
+                            section 검증
+                            결과 분석           :2025-02-03, 7d
+                            본계약 논의         :2025-02-10, 7d
+                        </div>
+                    </div>
+                    
+                    <div class="decision-box">
+                        <h4>POC 핵심 조건</h4>
+                        <ul class="content-list">
+                            <li><strong>기간</strong>: 4주 (샘플 데이터 수령 후)</li>
+                            <li><strong>대상 기능</strong>: 4가지 핵심 기능 (P&ID 리스트, Hydraulic, PSV, Aspen)</li>
+                            <li><strong>성공 기준</strong>: 기준 작업 대비 50% 이상 시간 단축 또는 정확도 (예: 90% 이상)</li>
+                            <li><strong>실패 시</strong>: POC 비용 전액 환불</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>3.2 성공 기준 설정</h3>
+                    <p>POC의 성공 여부를 명확하게 판단하기 위한 정량적 기준을 수립했습니다.</p>
+                    
+                    <ul class="content-list">
+                        <li><strong>시간 기준</strong>: 맨아워 테이블 기준 3시간 소요 작업 선정</li>
+                        <li><strong>측정 방법</strong>: 간트차트 및 맨아워 테이블 기반 객관적 측정</li>
+                        <li><strong>성공 임계값</strong>: 50% 이상 시간 단축 달성 시 성공</li>
+                        <li><strong>정확도 기준</strong>: 계산 결과의 오차 범위 내 수렴 (90% 이상 정확도 목표)</li>
+                    </ul>
+                    
+                    <div class="insight-box">
+                        <h4>성공 기준의 전략적 의미</h4>
+                        <p>50% 시간 단축은 보수적인 목표이면서도 명확한 비즈니스 가치를 제시합니다. 이는 삼두가 동일 인원으로 2배 많은 프로젝트를 처리할 수 있음을 의미하며, 인력 채용 없이 매출 증대가 가능하다는 강력한 메시지를 전달합니다.</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>3.3 삼두에게 요청할 사항</h3>
+                    
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>세부 내용</th>
+                                <th>목적</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>샘플 데이터</strong></td>
+                                <td>3시간 소요 작업의 과거 데이터 (간트차트/맨아워 테이블 기준)</td>
+                                <td>POC 대상 작업 선정 및 벤치마크</td>
+                            </tr>
+                            <tr>
+                                <td><strong>담당 엔지니어</strong></td>
+                                <td>해당 작업을 수행했던 현직 엔지니어 배정</td>
+                                <td>실제 테스트 수행 및 검증</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PC 환경</strong></td>
+                                <td>OS 버전, Office 버전, AutoCAD 버전</td>
+                                <td>플러그인 호환성 확인</td>
+                            </tr>
+                            <tr>
+                                <td><strong>네트워크 정보</strong></td>
+                                <td>고정/유동 IP, 외부 IP, 방화벽 정책, IT 담당자</td>
+                                <td>원격 지원 및 데이터 연동</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Section 4 -->
+            <section id="section4" class="section">
+                <div class="section-header">
+                    <div class="section-number">4</div>
+                    <div class="section-title">가격 정책 및 협상 전략</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>4.1 가격 책정 논의 과정</h3>
+                    <p>회의에서 가장 많은 논의가 이루어진 부분으로, 초기 250만원/기능에서 5,000만원 수준까지 다양한 의견이 제시되었습니다.</p>
+                    
+                    <div class="decision-box">
+                        <h4>최종 가격 전략</h4>
+                        <ul class="content-list">
+                            <li><strong>POC 초기 제시가</strong>: 5,000만원 (1년 계약 기준)</li>
+                            <li><strong>POC 실행비용</strong>: 2,000~3,000만원 (협상 가능)</li>
+                            <li><strong>협상 레인지</strong>: 최소 3,000만원까지 조정 가능</li>
+                            <li><strong>가격 정당화 논리</strong>: AspenTech 1 copy 연간 비용 3,000~4,000만원과 비교</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <h4>가격 책정의 전략적 근거</h4>
+                        <ul class="content-list">
+                            <li><strong>업계 벤치마크</strong>: AspenTech, AutoPIPE 등 기존 소프트웨어 가격 참조</li>
+                            <li><strong>가치 기반 가격</strong>: 맨아워 절감이 아닌 프로젝트 수주 증대 능력에 초점</li>
+                            <li><strong>심리적 가격대</strong>: 너무 낮은 가격은 오히려 신뢰도 저하</li>
+                            <li><strong>협상 여지</strong>: 높게 시작하여 협상 공간 확보</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>4.2 가격 모델 구조</h3>
+                    
+                    <div class="diagram-container">
+                        <div class="diagram-title">가격 구성 요소</div>
+                        <div class="mermaid">
+                        graph TB
+                            A[총 계약 금액] --> B[구축비]
+                            A --> C[운영비]
+                            
+                            B --> D[인건비 기반]
+                            B --> E[기능 개수]
+                            
+                            C --> F[사용 인원수]
+                            C --> G[자동화 기능 수]
+                            C --> H[GPU 서버 대여]
+                            C --> I[사용량]
+                            C --> J[계약 기간]
+                            
+                            style A fill:#1e3c72,color:#fff
+                            style B fill:#e8f5e9
+                            style C fill:#e3f2fd
+                            style D fill:#fff9c4
+                            style E fill:#fff9c4
+                            style F fill:#f3e5f5
+                            style G fill:#f3e5f5
+                            style H fill:#f3e5f5
+                            style I fill:#f3e5f5
+                            style J fill:#f3e5f5
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>4.3 가격 협상 시나리오</h3>
+                    
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>시나리오</th>
+                                <th>대응 전략</th>
+                                <th>최종 목표</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>즉시 수용</strong></td>
+                                <td>5,000만원 그대로 진행</td>
+                                <td>POC 2,000~3,000만원, 본계약 협의</td>
+                            </tr>
+                            <tr>
+                                <td><strong>가격 협상 요청</strong></td>
+                                <td>3,000만원까지 조정 가능함을 암시</td>
+                                <td>최소 3,000만원 확보</td>
+                            </tr>
+                            <tr>
+                                <td><strong>기능 축소 제안</strong></td>
+                                <td>Aspen 제외 3개 기능으로 조정</td>
+                                <td>2,000~2,500만원</td>
+                            </tr>
+                            <tr>
+                                <td><strong>내부 검토 필요</strong></td>
+                                <td>속도 강조 (다른 업체 협의 중)</td>
+                                <td>의사결정 기간 단축</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="risk-box">
+                    <h4>가격 협상 시 주의사항</h4>
+                    <ul class="content-list">
+                        <li><strong>과도한 조기 할인 금지</strong>: 첫 미팅에서 즉시 할인은 신뢰도 저하</li>
+                        <li><strong>가치 먼저, 가격 나중</strong>: 기능과 효과를 충분히 설명한 후 가격 논의</li>
+                        <li><strong>비교 불가 강조</strong>: 단순 맨아워 대체가 아닌 비즈니스 성장 도구임을 강조</li>
+                        <li><strong>레퍼런스 효과</strong>: 초기 고객 특혜 제공 (맞춤 개발 등)</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Section 5 -->
+            <section id="section5" class="section">
+                <div class="section-header">
+                    <div class="section-number">5</div>
+                    <div class="section-title">기술적 요구사항 및 준비사항</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>5.1 GPU 서버 옵션</h3>
+                    
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>옵션</th>
+                                <th>장점</th>
+                                <th>단점</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Option A: SnapScale 클라우드</strong></td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>초기 투자 불필요</li>
+                                        <li>유지보수 SnapScale 담당</li>
+                                        <li>즉시 사용 가능</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>데이터 전송 필요 (암호화 강화)</li>
+                                        <li>월간 사용료 지속 발생</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Option B: 삼두 On-Premise</strong></td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>데이터 보안 최상</li>
+                                        <li>외부 전송 불필요</li>
+                                        <li>장기적 비용 절감 가능</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>GPU 서버 구매 필요</li>
+                                        <li>설치 및 설정 시간 소요</li>
+                                        <li>유지보수 부담</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3>5.2 네트워크 설정 요구사항</h3>
+                    <p>POC 진행을 위해 삼두로부터 확인해야 할 네트워크 정보입니다.</p>
+                    
+                    <ul class="content-list">
+                        <li><strong>IP 주소</strong>: 고정/유동 IP, 외부 IP 정보</li>
+                        <li><strong>방화벽 정책</strong>: 포트 개방 및 허용 IP 설정</li>
+                        <li><strong>IT 담당자</strong>: 기술 지원 및 권한 관리 담당자</li>
+                        <li><strong>보안 정책</strong>: 데이터 암호화 및 전송 프로토콜</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h3>5.3 데모 영상 준비</h3>
+                    
+                    <div class="decision-box">
+                        <h4>데모 방식 결정</h4>
+                        <p><strong>라이브 데모 → 녹화 영상</strong>으로 변경</p>
+                        <ul class="content-list">
+                            <li><strong>이유</strong>: 시간 효율성, 리소스 최적화, 완벽한 시연 가능</li>
+                            <li><strong>내용</strong>: 4가지 핵심 기능의 실제 작동 과정</li>
+                            <li><strong>길이</strong>: 기능당 2-3분, 총 10분 내외</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 6 -->
+            <section id="section6" class="section">
+                <div class="section-header">
+                    <div class="section-number">6</div>
+                    <div class="section-title">시나리오별 대응 전략</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>6.1 긍정적 반응 시나리오</h3>
+                    
+                    <div class="diagram-container">
+                        <div class="diagram-title">베스트 시나리오 타임라인</div>
+                        <div class="mermaid">
+                        gantt
+                            title 이상적인 프로젝트 진행 일정
+                            dateFormat YYYY-MM-DD
+                            section 1월
+                            미팅 및 제안        :2025-01-08, 3d
+                            계약 협의           :2025-01-10, 7d
+                            계약금 입금         :2025-01-17, 1d
+                            section 2월
+                            POC 진행            :2025-01-20, 28d
+                            결과 분석           :2025-02-17, 7d
+                            본계약 협의         :2025-02-24, 5d
+                        </div>
+                    </div>
+                    
+                    <div class="action-box">
+                        <h4>즉시 실행 사항</h4>
+                        <ul class="content-list">
+                            <li>계약서 및 NDA 즉시 제공</li>
+                            <li>1주일 내 검토 요청</li>
+                            <li>담당 엔지니어 배정 확인</li>
+                            <li>샘플 데이터 수령 일정 협의</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>6.2 Aspen 관련 이슈 시나리오</h3>
+                    <p>삼두에서 울산대 어준 교수와의 협의가 필요하다고 언급할 경우의 대응 전략입니다.</p>
+                    
+                    <div class="decision-box">
+                        <h4>대응 방안</h4>
+                        <ul class="content-list">
+                            <li><strong>기능 분리 제안</strong>: Aspen 제외, 3개 기능만 POC 진행</li>
+                            <li><strong>가격 조정</strong>: 3개 기능 기준 재산정</li>
+                            <li><strong>병행 진행</strong>: Aspen은 교수와 협의 후 본계약에 포함</li>
+                            <li><strong>메시지</strong>: "한 기능 때문에 전체를 지연시킬 필요 없음"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>6.3 실무자 저항 시나리오</h3>
+                    <p>담당 엔지니어가 AI 도입을 일자리 위협으로 인식할 경우의 대응입니다.</p>
+                    
+                    <div class="insight-box">
+                        <h4>설득 논리</h4>
+                        <ul class="content-list">
+                            <li><strong>도구의 본질 강조</strong>: "AI는 도구일 뿐, 판단과 책임은 사람의 몫"</li>
+                            <li><strong>업무 가치 상승</strong>: "반복 작업 대신 고부가가치 업무에 집중 가능"</li>
+                            <li><strong>경쟁력 확보</strong>: "회사가 더 많은 프로젝트를 수주하면 개인의 기회도 증가"</li>
+                            <li><strong>워라밸 개선</strong>: "주말 야근 없이 가족과 시간 보낼 수 있음"</li>
+                            <li><strong>불가피성 인식</strong>: "내가 안 하면 경쟁사가 먼저 도입"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="action-box">
+                        <h4>실무적 대응</h4>
+                        <ul class="content-list">
+                            <li>담당 엔지니어를 초기 도입 리더로 포지셔닝</li>
+                            <li>POC 성공 시 인센티브 제안 권유</li>
+                            <li>테스트 시 SnapScale 직접 참관 (부담 최소화)</li>
+                            <li>필요 시 화면 녹화로 대체 (심리적 압박 감소)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>6.4 가격 협상 시나리오</h3>
+                    
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>삼두 반응</th>
+                                <th>SnapScale 대응</th>
+                                <th>최종 목표</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"너무 비쌉니다"</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>가치 재강조 (프로젝트 수주 증대)</li>
+                                        <li>AspenTech 가격과 비교</li>
+                                        <li>초기 고객 맞춤 개발 제공</li>
+                                    </ul>
+                                </td>
+                                <td>3,000만원선 합의</td>
+                            </tr>
+                            <tr>
+                                <td>"내부 검토 필요"</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>다른 기업과 협의 중임을 암시</li>
+                                        <li>빠른 결정 시 우선 지원 약속</li>
+                                        <li>1주일 내 회신 요청</li>
+                                    </ul>
+                                </td>
+                                <td>의사결정 기간 단축</td>
+                            </tr>
+                            <tr>
+                                <td>"단계적 도입 희망"</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>2개 기능부터 시작 제안</li>
+                                        <li>성공 시 추가 기능 단계적 확장</li>
+                                        <li>POC 500만원 제시</li>
+                                    </ul>
+                                </td>
+                                <td>최소 500만원 확보</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Section 7 -->
+            <section id="section7" class="section">
+                <div class="section-header">
+                    <div class="section-number">7</div>
+                    <div class="section-title">결정사항 및 액션아이템</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>7.1 즉시 실행 항목</h3>
+                    
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>담당자</th>
+                                <th>마감일</th>
+                                <th>우선순위</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>미팅 발표자료 최종 버전 완성</td>
+                                <td>김상윤</td>
+                                <td>삼두 미팅 전날</td>
+                                <td><span class="highlight">High</span></td>
+                            </tr>
+                            <tr>
+                                <td>데모 영상 제작 (4개 기능)</td>
+                                <td>개발팀</td>
+                                <td>삼두 미팅 전날</td>
+                                <td><span class="highlight">High</span></td>
+                            </tr>
+                            <tr>
+                                <td>계약서 및 NDA 준비</td>
+                                <td>김상윤</td>
+                                <td>삼두 미팅 당일 지참</td>
+                                <td><span class="highlight">High</span></td>
+                            </tr>
+                            <tr>
+                                <td>박규호 부장과 Aspen 사용 사례 논의</td>
+                                <td>김상윤, 박규호</td>
+                                <td>월요일 회의</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>예상 Q&A 시트 작성</td>
+                                <td>김상윤, 이종현</td>
+                                <td>삼두 미팅 전</td>
+                                <td>Medium</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3>7.2 중기 실행 항목</h3>
+                    
+                    <div class="action-box">
+                        <h4>삼두 미팅 이후</h4>
+                        <ul class="content-list">
+                            <li>미팅 결과 정리 및 팀 공유 (당일 또는 익일)</li>
+                            <li>홈페이지 업데이트 완료 (대기업 컨택 준비)</li>
+                            <li>포스코, 현대건설, GS건설 컨택 일정 수립 (1월 중)</li>
+                            <li>조선일보 기사 인쇄 준비 (명함 대용)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>7.3 주요 결정사항 요약</h3>
+                    
+                    <div class="decision-box">
+                        <h4>핵심 의사결정</h4>
+                        <ul class="content-list">
+                            <li><strong>가격 전략</strong>: POC 초기 제시가 5,000만원, 협상 레인지 3,000~5,000만원</li>
+                            <li><strong>데모 방식</strong>: 라이브 대신 녹화 영상 사용</li>
+                            <li><strong>성공 기준</strong>: 시간 단축 50% + 정확도 90% 이상</li>
+                            <li><strong>계약 접근</strong>: 미팅 종료 시 계약서 제공 (압박 없이)</li>
+                            <li><strong>기능 유연성</strong>: 4개 전체 또는 3개 (Aspen 제외) 선택 가능</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 8 -->
+            <section id="section8" class="section">
+                <div class="section-header">
+                    <div class="section-number">8</div>
+                    <div class="section-title">전략적 인사이트 및 제언</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>8.1 핵심 인사이트</h3>
+                    
+                    <div class="insight-box">
+                        <h4>비즈니스 모델의 본질</h4>
+                        <p><strong>"맨아워 대체가 아닌 비즈니스 성장 도구"</strong></p>
+                        <p>회의 중 도출된 가장 중요한 인사이트는 SnapScale의 가치 제안을 "인력 절감"에서 "성장 가능성"으로 전환하는 것입니다. 삼두가 동일 인력으로 2배 많은 프로젝트를 수주할 수 있다는 점, 울산 지역에서 PSV 계산 시장을 선점할 수 있다는 점을 강조하는 것이 효과적입니다.</p>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <h4>가격의 심리학</h4>
+                        <p><strong>"저렴한 소프트웨어는 신뢰받지 못한다"</strong></p>
+                        <p>이종현 부장의 의견처럼, 산업용 소프트웨어 시장에서 과도하게 낮은 가격은 오히려 품질에 대한 의구심을 불러일으킵니다. AspenTech이 연간 3,000~4,000만원의 가격대를 형성하고 있는 시장에서, SnapScale도 비슷한 가격대를 유지하는 것이 신뢰도 확보에 유리합니다.</p>
+                    </div>
+                    
+                    <div class="insight-box">
+                        <h4>레퍼런스의 전략적 가치</h4>
+                        <p><strong>"첫 고객은 비용이 아닌 자산"</strong></p>
+                        <p>회의 참석자들이 공통적으로 강조한 점은 삼두와의 계약이 단순한 매출을 넘어 검증된 레퍼런스를 확보하는 것이라는 점입니다. 이는 향후 포스코, 현대건설, GS건설 등 대기업 영업에서 결정적인 신뢰 자산이 될 것입니다.</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>8.2 차별화 전략</h3>
+                    
+                    <div class="diagram-container">
+                        <div class="diagram-title">SnapScale vs 기존 솔루션</div>
+                        <div class="mermaid">
+                        graph LR
+                            A[기존 인텔리전트 P&ID] --> B[P&ID만 인식]
+                            A --> C[수동 데이터 입력 필요]
+                            A --> D[디지털 트윈 용도]
+                            
+                            E[SnapScale] --> F[P&ID + PFD + 데이터시트 통합]
+                            E --> G[완전 자동 데이터 채움]
+                            E --> H[실무 작업 자동화]
+                            
+                            style A fill:#ffebee
+                            style E fill:#e8f5e9
+                            style F fill:#c8e6c9
+                            style G fill:#c8e6c9
+                            style H fill:#c8e6c9
+                        </div>
+                    </div>
+                    
+                    <ul class="content-list">
+                        <li><strong>통합 데이터 소싱</strong>: 여러 문서에서 자동으로 정보 추출 및 교차 검증</li>
+                        <li><strong>실무 중심 설계</strong>: 디지털 트윈이 아닌 실제 업무 자동화에 집중</li>
+                        <li><strong>높은 정확도</strong>: 도메인 전문가와의 협업으로 90% 이상 정확도 확보</li>
+                        <li><strong>유연한 커스터마이징</strong>: 개발팀과 엔지니어 1:1 협의로 맞춤 개발</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h3>8.3 주요 리스크 및 완화 방안</h3>
+                    
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th>리스크</th>
+                                <th>영향</th>
+                                <th>완화 방안</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>실무자 저항</strong></td>
+                                <td>POC 테스트 비협조, 결과 조작 가능성</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>담당자를 리더로 포지셔닝</li>
+                                        <li>SnapScale 직접 참관</li>
+                                        <li>워라밸 개선 메시지 전달</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>의사결정 지연</strong></td>
+                                <td>POC 일정 차질, 투자 유치 타임라인 영향</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>다른 기업과 협의 중임 암시</li>
+                                        <li>빠른 결정 시 우대 제공</li>
+                                        <li>계약서 선제 제공으로 검토 시간 확보</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>기술 검증 실패</strong></td>
+                                <td>계약 불발, 레퍼런스 확보 실패</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>보수적 성공 기준 (50% 단축)</li>
+                                        <li>샘플 데이터 사전 검증</li>
+                                        <li>실패 시 전액 환불로 리스크 전가</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>가격 저항</strong></td>
+                                <td>계약 규모 축소 또는 불발</td>
+                                <td>
+                                    <ul class="content-list">
+                                        <li>가치 기반 정당화 (비즈니스 성장)</li>
+                                        <li>단계적 도입 옵션 제공</li>
+                                        <li>협상 레인지 확보 (3,000~5,000만원)</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3>8.4 향후 확장 전략</h3>
+                    
+                    <div class="action-box">
+                        <h4>단기 (1-2월)</h4>
+                        <ul class="content-list">
+                            <li>삼두 POC 성공적 완료 및 계약 체결</li>
+                            <li>포스코, 현대건설, GS건설 미팅 진행</li>
+                            <li>홈페이지 및 마케팅 자료 고도화</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="action-box">
+                        <h4>중기 (3-6월)</h4>
+                        <ul class="content-list">
+                            <li>대기업 1-2곳과 본계약 체결</li>
+                            <li>Series A 투자 유치 (40-50억원 목표)</li>
+                            <li>추가 기능 개발 (Hazard Area Calculation 등)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="action-box">
+                        <h4>장기 (하반기)</h4>
+                        <ul class="content-list">
+                            <li>국내 EPC 업계 표준 솔루션 지위 확보</li>
+                            <li>해외 시장 진출 준비 (중동, 동남아)</li>
+                            <li>교육 프로그램 및 커뮤니티 구축</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>8.5 핵심 성공 요인</h3>
+                    
+                    <div class="insight-box">
+                        <h4>Critical Success Factors</h4>
+                        <ul class="content-list">
+                            <li><strong>도메인 전문성</strong>: 박규호, 이종현 부장의 현장 경험과 네트워크</li>
+                            <li><strong>기술 우위</strong>: 온톨로지 기반 + LLM의 하이브리드 접근</li>
+                            <li><strong>실행 속도</strong>: 빠른 POC 완료로 경쟁사 대비 선점</li>
+                            <li><strong>가치 전달</strong>: 비용 절감이 아닌 성장 도구로서의 포지셔닝</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 최종 요약 섹션 -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-number">9</div>
+                    <div class="section-title">회의 결론 및 Next Steps</div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>9.1 회의 핵심 결론</h3>
+                    
+                    <div class="decision-box">
+                        <h4>전략적 합의사항</h4>
+                        <ol style="padding-left: 20px; margin: 15px 0;">
+                            <li style="margin: 10px 0;"><strong>고가 전략 채택</strong>: POC 5,000만원 제시, 최소 3,000만원 확보 목표</li>
+                            <li style="margin: 10px 0;"><strong>가치 중심 접근</strong>: 맨아워 절감보다 비즈니스 성장 잠재력 강조</li>
+                            <li style="margin: 10px 0;"><strong>유연한 제안</strong>: 4개 또는 3개 기능 선택 가능, 단계적 도입 지원</li>
+                            <li style="margin: 10px 0;"><strong>신속한 실행</strong>: 2월 말까지 POC 완료 및 본계약 논의 목표</li>
+                            <li style="margin: 10px 0;"><strong>레퍼런스 우선</strong>: 계약 금액보다 검증된 사례 확보가 전략적 우선순위</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>9.2 즉시 실행 체크리스트</h3>
+                    
+                    <table class="price-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;">☑</th>
+                                <th style="width: 50%;">항목</th>
+                                <th style="width: 20%;">담당</th>
+                                <th style="width: 20%;">기한</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>☐</td>
+                                <td>미팅 자료 최종 검토 및 수정</td>
+                                <td>김상윤</td>
+                                <td>미팅 전날</td>
+                            </tr>
+                            <tr>
+                                <td>☐</td>
+                                <td>4개 기능 데모 영상 제작</td>
+                                <td>개발팀</td>
+                                <td>미팅 전날</td>
+                            </tr>
+                            <tr>
+                                <td>☐</td>
+                                <td>계약서 및 NDA 최종본 준비</td>
+                                <td>김상윤</td>
+                                <td>미팅 당일</td>
+                            </tr>
+                            <tr>
+                                <td>☐</td>
+                                <td>예상 Q&A 시트 작성</td>
+                                <td>김상윤, 이종현</td>
+                                <td>미팅 전</td>
+                            </tr>
+                            <tr>
+                                <td>☐</td>
+                                <td>조선일보 기사 인쇄</td>
+                                <td>김상윤</td>
+                                <td>미팅 당일</td>
+                            </tr>
+                            <tr>
+                                <td>☐</td>
+                                <td>박규호 부장과 Aspen 사례 논의</td>
+                                <td>김상윤, 박규호</td>
+                                <td>월요일</td>
+                            </tr>
+                            <tr>
+                                <td>☐</td>
+                                <td>이중현 부장과 사전 미팅</td>
+                                <td>김상윤, 이종현</td>
+                                <td>삼두 미팅 전</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="subsection">
+                    <h3>9.3 마무리 메시지</h3>
+                    
+                    <div class="insight-box">
+                        <h4>회의 참석자들의 조언</h4>
+                        <ul class="content-list">
+                            <li><strong>이종현 부장</strong>: "5천만원도 싼 거다. 골프 치러 다니라고 해라."</li>
+                            <li><strong>박규호 부장</strong>: "설득이 아니라 해달라는 거 해주면 된다."</li>
+                            <li><strong>이재윤</strong>: "삼두가 교두보가 될 수 있다는 가능성을 강조하라."</li>
+                            <li><strong>팀 전체</strong>: "이건 쇼핑이 아니야. 써야 되면 쓰는 거지."</li>
+                        </ul>
+                    </div>
+                    
+                    <p style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-left: 4px solid #2a5298; border-radius: 8px;">
+                        <strong style="color: #1e3c72; display: block; margin-bottom: 10px;">전략의 핵심</strong>
+                        삼두종합기술과의 미팅은 단순한 영업 기회를 넘어, SnapScale의 기술력을 실전에서 검증하고 대기업 진출의 교두보를 마련하는 전략적 마일스톤입니다. 높은 가격 제시는 자신감의 표현이며, 유연한 협상 자세는 고객 중심 사고의 증거입니다. 무엇보다 중요한 것은 "AI가 일자리를 빼앗는 것이 아니라, 엔지니어들이 더 가치 있는 일에 집중할 수 있게 돕는 도구"라는 메시지를 일관되게 전달하는 것입니다.
+                    </p>
+                </div>
+            </section>
+        </div>
+        
+        <div class="footer">
+            <p><strong>SnapScale</strong> | Climate Tech Startup</p>
+            <p>문서 생성일: 2025년 1월 3일</p>
+            <p>Confidential & Proprietary | SnapScale Internal Use Only</p>
+        </div>
+    </div>
+    
+    <script>
+        // Mermaid 초기화
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#e3f2fd',
+                primaryTextColor: '#1e3c72',
+                primaryBorderColor: '#2a5298',
+                lineColor: '#2a5298',
+                secondaryColor: '#f8f9fa',
+                tertiaryColor: '#fff'
+            }
+        });
+        
+        // Collapsible 기능
+        document.addEventListener('DOMContentLoaded', function() {
+            const collapsibles = document.querySelectorAll('.collapsible');
+            
+            collapsibles.forEach(function(collapsible) {
+                // 초기 상태를 active로 설정
+                collapsible.classList.add('active');
+                const content = collapsible.nextElementSibling;
+                if (content && content.classList.contains('collapsible-content')) {
+                    content.classList.add('active');
+                }
+                
+                collapsible.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    if (content && content.classList.contains('collapsible-content')) {
+                        content.classList.toggle('active');
+                    }
+                });
+            });
+        });
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Print 기능
+        function printDocument() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

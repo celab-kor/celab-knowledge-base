@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SnapScale 팀 미팅 회의록 | 2026-04-10</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<style>
+    :root {
+        --navy-900: #0B1E3F;
+        --navy-800: #14305F;
+        --navy-700: #1E4785;
+        --navy-500: #3D6BB3;
+        --navy-200: #D8E2F2;
+        --navy-50: #F4F7FC;
+        --gray-900: #1A1D24;
+        --gray-700: #4A4F58;
+        --gray-500: #7B8291;
+        --gray-300: #C9CFDA;
+        --gray-100: #EEF1F6;
+        --gray-50: #F8FAFC;
+        --white: #FFFFFF;
+        --accent-amber: #C47F17;
+        --accent-green: #1F7A55;
+        --accent-red: #B23A48;
+        --accent-indigo: #5A4FCF;
+        --shadow-sm: 0 1px 2px rgba(11,30,63,0.06);
+        --shadow-md: 0 4px 12px rgba(11,30,63,0.08);
+        --shadow-lg: 0 12px 32px rgba(11,30,63,0.10);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+        background: var(--gray-50);
+        color: var(--gray-900);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    .hero {
+        background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-700) 100%);
+        color: var(--white);
+        padding: 72px 48px 56px;
+        position: relative;
+        overflow: hidden;
+    }
+    .hero::after {
+        content: '';
+        position: absolute;
+        top: -120px; right: -120px;
+        width: 400px; height: 400px;
+        background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+        border-radius: 50%;
+    }
+    .hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero-tag {
+        display: inline-block;
+        padding: 6px 14px;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 20px;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        font-weight: 500;
+        margin-bottom: 18px;
+    }
+    .hero h1 { font-size: 38px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 14px; line-height: 1.25; }
+    .hero-subtitle { font-size: 16px; color: rgba(255,255,255,0.78); max-width: 720px; line-height: 1.6; }
+    .hero-meta {
+        margin-top: 32px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+    }
+    .meta-card {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 10px;
+        padding: 16px 18px;
+        backdrop-filter: blur(4px);
+    }
+    .meta-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.62); margin-bottom: 6px; }
+    .meta-card .value { font-size: 15px; font-weight: 600; color: var(--white); }
+
+    /* Layout */
+    .container { max-width: 1200px; margin: 0 auto; padding: 48px; }
+
+    /* TOC */
+    .toc {
+        background: var(--white);
+        border: 1px solid var(--gray-300);
+        border-radius: 12px;
+        padding: 28px 32px;
+        margin-bottom: 40px;
+        box-shadow: var(--shadow-sm);
+    }
+    .toc h3 { font-size: 14px; color: var(--navy-700); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; font-weight: 700; }
+    .toc ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 6px 24px; }
+    .toc li a {
+        color: var(--gray-700);
+        text-decoration: none;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 0;
+        transition: color 0.15s;
+    }
+    .toc li a:hover { color: var(--navy-700); }
+    .toc li a::before { content: ''; width: 4px; height: 4px; background: var(--navy-500); border-radius: 50%; flex-shrink: 0; }
+
+    /* Section */
+    section { margin-bottom: 56px; }
+    .section-head {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        border-bottom: 2px solid var(--navy-200);
+        padding-bottom: 12px;
+        margin-bottom: 24px;
+    }
+    .section-num {
+        font-family: 'SF Mono', Menlo, monospace;
+        color: var(--navy-500);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+    }
+    .section-head h2 { font-size: 26px; color: var(--navy-900); font-weight: 700; letter-spacing: -0.01em; }
+
+    h3.sub { font-size: 18px; color: var(--navy-800); font-weight: 700; margin: 20px 0 12px; }
+
+    p { color: var(--gray-700); margin-bottom: 14px; font-size: 15px; }
+    strong { color: var(--navy-900); font-weight: 600; }
+
+    /* Agenda card */
+    .agenda-card {
+        background: var(--white);
+        border: 1px solid var(--gray-300);
+        border-left: 4px solid var(--navy-700);
+        border-radius: 10px;
+        padding: 28px 32px;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .agenda-card:hover { box-shadow: var(--shadow-md); }
+    .agenda-card.priority-high { border-left-color: var(--accent-red); }
+    .agenda-card.priority-medium { border-left-color: var(--accent-amber); }
+    .agenda-card.priority-low { border-left-color: var(--accent-green); }
+
+    .agenda-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+    }
+    .agenda-title {
+        font-size: 19px;
+        font-weight: 700;
+        color: var(--navy-900);
+        letter-spacing: -0.01em;
+    }
+    .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        border-radius: 4px;
+        text-transform: uppercase;
+    }
+    .badge-high { background: #FDECEC; color: var(--accent-red); }
+    .badge-medium { background: #FFF4E0; color: var(--accent-amber); }
+    .badge-low { background: #E3F3EB; color: var(--accent-green); }
+    .badge-info { background: var(--navy-50); color: var(--navy-700); }
+
+    .content-block {
+        margin-top: 14px;
+        padding: 14px 18px;
+        background: var(--gray-50);
+        border-radius: 6px;
+        font-size: 14.5px;
+        color: var(--gray-700);
+    }
+    .content-block ul { margin-left: 18px; margin-top: 6px; }
+    .content-block li { margin-bottom: 6px; }
+
+    /* Insight box */
+    .insight {
+        background: linear-gradient(135deg, var(--navy-50) 0%, var(--white) 100%);
+        border: 1px solid var(--navy-200);
+        border-radius: 8px;
+        padding: 18px 22px;
+        margin-top: 16px;
+    }
+    .insight-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--navy-700);
+        font-weight: 700;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+    .insight-title::before {
+        content: '◆';
+        color: var(--navy-500);
+    }
+    .insight ul { list-style: none; padding: 0; }
+    .insight li {
+        padding: 8px 0 8px 22px;
+        position: relative;
+        font-size: 14px;
+        color: var(--gray-700);
+        border-bottom: 1px dashed var(--navy-200);
+    }
+    .insight li:last-child { border-bottom: none; }
+    .insight li::before {
+        content: '→';
+        color: var(--navy-500);
+        position: absolute;
+        left: 0;
+        font-weight: 700;
+    }
+
+    /* Mermaid container */
+    .diagram-box {
+        background: var(--white);
+        border: 1px solid var(--gray-300);
+        border-radius: 10px;
+        padding: 28px;
+        margin: 20px 0;
+        overflow-x: auto;
+        text-align: center;
+        box-shadow: var(--shadow-sm);
+    }
+    .diagram-caption {
+        font-size: 12.5px;
+        color: var(--gray-500);
+        letter-spacing: 0.04em;
+        margin-top: 12px;
+        text-align: center;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0;
+        background: var(--white);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        font-size: 14px;
+    }
+    thead { background: var(--navy-800); color: var(--white); }
+    th { padding: 14px 16px; text-align: left; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; }
+    td { padding: 12px 16px; border-top: 1px solid var(--gray-100); color: var(--gray-700); vertical-align: top; }
+    tbody tr:hover { background: var(--navy-50); }
+
+    /* Action items */
+    .action-list { list-style: none; padding: 0; }
+    .action-item {
+        background: var(--white);
+        border: 1px solid var(--gray-300);
+        border-radius: 8px;
+        padding: 18px 22px;
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        transition: border-color 0.2s;
+    }
+    .action-item:hover { border-color: var(--navy-500); }
+    .action-text { flex: 1 1 320px; }
+    .action-text .task { font-weight: 600; color: var(--navy-900); font-size: 15px; }
+    .action-text .owner { font-size: 13px; color: var(--gray-500); margin-top: 4px; }
+    .action-meta { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+
+    /* Decision list */
+    .decision-item {
+        background: var(--white);
+        border-left: 3px solid var(--navy-700);
+        padding: 16px 22px;
+        margin-bottom: 12px;
+        border-radius: 0 8px 8px 0;
+        box-shadow: var(--shadow-sm);
+    }
+    .decision-item .title { font-weight: 700; color: var(--navy-900); margin-bottom: 4px; }
+    .decision-item .context { font-size: 13.5px; color: var(--gray-500); }
+
+    /* Summary stats */
+    .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin: 24px 0;
+    }
+    .stat-card {
+        background: var(--white);
+        border: 1px solid var(--gray-300);
+        border-radius: 10px;
+        padding: 22px 24px;
+        text-align: left;
+        box-shadow: var(--shadow-sm);
+    }
+    .stat-card .stat-label { font-size: 12px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .stat-card .stat-value { font-size: 28px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.02em; }
+    .stat-card .stat-hint { font-size: 12px; color: var(--gray-500); margin-top: 6px; }
+
+    /* Collapsible */
+    details { margin-top: 12px; }
+    details > summary {
+        cursor: pointer;
+        padding: 10px 14px;
+        background: var(--navy-50);
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--navy-700);
+        list-style: none;
+        user-select: none;
+    }
+    details > summary::-webkit-details-marker { display: none; }
+    details > summary::before { content: '▸ '; margin-right: 4px; transition: transform 0.2s; display: inline-block; }
+    details[open] > summary::before { transform: rotate(90deg); }
+    details > div { padding: 14px 4px; }
+
+    /* Footer */
+    footer {
+        background: var(--navy-900);
+        color: rgba(255,255,255,0.7);
+        padding: 32px 48px;
+        margin-top: 64px;
+        text-align: center;
+        font-size: 13px;
+    }
+
+    /* Print */
+    @media print {
+        .hero { break-inside: avoid; }
+        .agenda-card, .diagram-box, .insight { break-inside: avoid; }
+        body { background: white; }
+        footer { background: white; color: var(--gray-700); border-top: 1px solid var(--gray-300); }
+    }
+
+    @media (max-width: 768px) {
+        .hero { padding: 48px 24px 40px; }
+        .hero h1 { font-size: 28px; }
+        .container { padding: 32px 20px; }
+        .section-head h2 { font-size: 22px; }
+        .agenda-card { padding: 20px 22px; }
+    }
+</style>
+</head>
+<body>
+
+<header class="hero">
+    <div class="hero-inner">
+        <span class="hero-tag">SNAPSCALE · WEEKLY SYNC</span>
+        <h1>SnapScale 주간 팀 미팅 회의록</h1>
+        <p class="hero-subtitle">
+            현앤, 필즈, PKU(美 휴스턴), 이일범 교수 협력 등 주요 파트너십 진행상황 공유 및
+            AI 기반 엔지니어링 QA/QC 전략, 기술 오픈 범위, 투자 라운드 옵션에 대한 심층 논의
+        </p>
+        <div class="hero-meta">
+            <div class="meta-card">
+                <div class="label">회의일시</div>
+                <div class="value">2026-04-10 (금)</div>
+            </div>
+            <div class="meta-card">
+                <div class="label">유형</div>
+                <div class="value">내부 주간 동기화</div>
+            </div>
+            <div class="meta-card">
+                <div class="label">참석자</div>
+                <div class="value">상윤 · 이종혁 · 박현문 외</div>
+            </div>
+            <div class="meta-card">
+                <div class="label">형식</div>
+                <div class="value">온라인 (화면 공유)</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Executive Summary Stats -->
+    <section>
+        <div class="section-head">
+            <span class="section-num">SUMMARY</span>
+            <h2>핵심 지표 요약</h2>
+        </div>
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-label">필즈 제안 규모</div>
+                <div class="stat-value">3.5억</div>
+                <div class="stat-hint">1년차 1.2억 / 2년차 1.3억</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">삼두 지원사업</div>
+                <div class="stat-value">2,500만</div>
+                <div class="stat-hint">총 2,750만 지원 중 당사 수령분</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">한울 지원사업</div>
+                <div class="stat-value">1억</div>
+                <div class="stat-hint">선정 시 수령 예정</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">주요 논의 의제</div>
+                <div class="stat-value">9건</div>
+                <div class="stat-hint">국내 5건 · 해외 1건 · 내부 3건</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOC -->
+    <nav class="toc">
+        <h3>목차</h3>
+        <ul>
+            <li><a href="#agenda-1">1. 현앤 — 기술 공개 범위 및 온톨로지 시각화</a></li>
+            <li><a href="#agenda-2">2. 필즈 — 국가과제 부분자동화 협업</a></li>
+            <li><a href="#agenda-3">3. 삼두·한울 — 지원사업 진행현황</a></li>
+            <li><a href="#agenda-4">4. 화물질안전원 — ASME 저작권 이슈</a></li>
+            <li><a href="#agenda-5">5. 황우론 — 자문위원 초청</a></li>
+            <li><a href="#agenda-6">6. 태조 — 장비 발주 대기</a></li>
+            <li><a href="#agenda-7">7. PKU(美) — 미국 시장 공동 진출 제안</a></li>
+            <li><a href="#agenda-8">8. 이일범 교수 — 포스텍 산학 협력</a></li>
+            <li><a href="#agenda-9">9. 내부 기술 개발 진척 현황</a></li>
+            <li><a href="#agenda-10">10. 투자 라운드 옵션 검토</a></li>
+            <li><a href="#decisions">11. 결정 사항</a></li>
+            <li><a href="#actions">12. 액션 아이템</a></li>
+            <li><a href="#roadmap">13. 전략 로드맵</a></li>
+            <li><a href="#next">14. 후속 계획</a></li>
+        </ul>
+    </nav>
+
+    <!-- Agenda Flow Diagram -->
+    <section>
+        <div class="section-head">
+            <span class="section-num">OVERVIEW</span>
+            <h2>회의 전반 흐름</h2>
+        </div>
+        <div class="diagram-box">
+            <div class="mermaid">
+flowchart LR
+    A[세일즈 진행상황<br/>공유] --> B[국내 파트너]
+    A --> C[해외 파트너]
+    A --> D[내부 이슈]
+    B --> B1[현앤]
+    B --> B2[필즈]
+    B --> B3[삼두·한울]
+    B --> B4[화물원]
+    B --> B5[황우론·태조]
+    C --> C1[PKU 휴스턴]
+    D --> D1[기술 개발 진척]
+    D --> D2[이일범 교수 협력]
+    D --> D3[투자 라운드]
+    B1 -.핵심 고객.-> E[5월 계약 목표]
+    B2 -.임원회의.-> E
+    C1 -.미국 시장 진출.-> F[신규 파이프라인]
+    D2 -.감사역·자문역.-> G[창업팀 보강]
+    D3 -.AC·VC 협상.-> H[자본 전략]
+    style E fill:#14305F,color:#fff
+    style F fill:#14305F,color:#fff
+    style G fill:#14305F,color:#fff
+    style H fill:#14305F,color:#fff
+            </div>
+            <div class="diagram-caption">Figure 1. 금일 회의에서 다뤄진 의제별 상호 관계도</div>
+        </div>
+    </section>
+
+    <!-- Agenda 1: 현앤 -->
+    <section id="agenda-1">
+        <div class="section-head">
+            <span class="section-num">AGENDA 01</span>
+            <h2>현앤 — 기술 공개 범위 및 온톨로지 시각화</h2>
+        </div>
+
+        <div class="agenda-card priority-high">
+            <div class="agenda-header">
+                <div class="agenda-title">핵심 논점: "기술을 어디까지 공개할 것인가"</div>
+                <span class="badge badge-high">High Priority</span>
+            </div>
+            <p>
+                현앤 측은 "결과가 좋은 것은 확인했으나, <strong>정확도가 보장되는 기술적 원리</strong>를 이해해야
+                유료 도입으로 전환할 수 있다"는 입장을 전달. 이에 따라 내부적으로 <strong>온톨로지 일부 예시를
+                라이브 데모에 시각화</strong>하여 보여주는 방안을 검토 중.
+            </p>
+            <div class="content-block">
+                <strong>상윤 제안:</strong> 세 가지 기능이 온톨로지에 어떻게 올라가는지 예시 수준으로 시각화.
+                전체 스키마 공개가 아닌, 컨셉을 전달할 수 있는 최소한의 예시로 제한.
+            </div>
+            <div class="content-block" style="background:#FFF4E0;">
+                <strong>이종혁·박현문 의견(반대):</strong> 기술을 에둘러 설명하는 편이 오히려 제품을 쓰게 만드는
+                힘이 있다. 아이폰 신기능 구동 원리를 몰라도 쓰듯, 대안이 없으면 쓸 수밖에 없다.
+                <strong>키워드 하나가 추격의 실마리가 될 수 있으므로 노하우 노출은 지양</strong>.
+            </div>
+            <div class="insight">
+                <div class="insight-title">Key Insights</div>
+                <ul>
+                    <li>대기업은 인력·자금·기술을 갖춘 경쟁자를 내부화(팔란티어 모델)할 수 있음 — 공개 수준의 전략적 판단 필수</li>
+                    <li>"룰베이스만으로는 불가능한 결과"라는 <strong>임팩트는 보여주되, 구현 키워드는 에둘러 표현</strong>이 베스트 프랙티스</li>
+                    <li>GS건설 과거 유사 질문 대응 사례를 표준 응대 프로토콜로 문서화 필요</li>
+                    <li>현장 분위기를 읽는 세일즈의 판단이 기술 오픈 범위의 최종 게이트</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda 2: 필즈 -->
+    <section id="agenda-2">
+        <div class="section-head">
+            <span class="section-num">AGENDA 02</span>
+            <h2>필즈 — 국가과제 부분자동화 협업</h2>
+        </div>
+
+        <div class="agenda-card priority-high">
+            <div class="agenda-header">
+                <div class="agenda-title">5월 계약 목표 · 3.5억 규모 제안</div>
+                <span class="badge badge-high">High Priority</span>
+            </div>
+            <p>
+                연구소장이 다음 주 임원회의에서 <strong>상윤이 제안한 로드맵</strong>으로 발표 예정.
+                제한된 전체 규모 <strong>약 3.5억 원</strong> (올해 1.2억 / 내년 1.3억).
+                올해 필즈 유입 잠재 금액은 약 <strong>1억 원</strong> 수준.
+            </p>
+
+            <h3 class="sub">2개 과제 구조 (각 2년차 계획)</h3>
+            <table>
+                <thead>
+                    <tr><th>구분</th><th>과제</th><th>1년차 목표</th><th>2년차 목표</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>A</strong></td>
+                        <td>국가과제 설계 전주기 부분자동화</td>
+                        <td>AI 자동수행 + 애매 구간 인간 판단 요청</td>
+                        <td>AI가 사내 DB 추출 후 자체 해결 → 엔지니어 판단</td>
+                    </tr>
+                    <tr>
+                        <td><strong>B</strong></td>
+                        <td>필즈 자동화 희망 태스크 2~3개 선정</td>
+                        <td>실무자 인터뷰 → 개발 → 중간 워크샵</td>
+                        <td>1~2개월 실증 후 AI 교육·온보딩 정식 제공</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="content-block">
+                <strong>진행 프레임:</strong> 실무자 인터뷰 → 요구사항 정의 → 개발 → 중간 워크샵(1시간) →
+                실증(1~2개월) → 결과 리포트 → AI 교육·온보딩 수일 제공
+            </div>
+
+            <details>
+                <summary>리스크 및 변수</summary>
+                <div>
+                    <p>연구소장 단독 추진 가능하다고 하나, 임원진·대표 판단에 따라 지연 가능성 존재.
+                    기술 공개 범위 이슈와 맞물릴 경우 계약 타임라인 영향 우려.</p>
+                </div>
+            </details>
+
+            <div class="insight">
+                <div class="insight-title">Key Insights</div>
+                <ul>
+                    <li>연구소장이 <strong>적극적 드라이버</strong> 역할을 자임 — 내부 챔피언 확보 완료</li>
+                    <li>1·2년차 포맷 통일로 <strong>플레이북화</strong> 가능, 후속 고객사에 재사용 가능</li>
+                    <li>올해 1.2억 중 실제 유입 1억 수준이면 BEP 기여가 크지 않으므로 <strong>레퍼런스 가치</strong>가 핵심 의미</li>
+                    <li>5월 계약 실패 시 현앤·PKU 등 타 파이프라인으로 리소스 재배분 검토 필요</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda 3: 삼두·한울 -->
+    <section id="agenda-3">
+        <div class="section-head">
+            <span class="section-num">AGENDA 03</span>
+            <h2>삼두 · 한울 — 지원사업 진행현황</h2>
+        </div>
+
+        <div class="agenda-card priority-medium">
+            <div class="agenda-header">
+                <div class="agenda-title">컨설팅펌 공동 지원사업 작성 진행 중</div>
+                <span class="badge badge-medium">Medium</span>
+            </div>
+            <table>
+                <thead>
+                    <tr><th>파트너</th><th>총 지원 규모</th><th>당사 수령 예상</th><th>상태</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>삼두전업기술</td>
+                        <td>2,750만 원</td>
+                        <td>약 2,500만 원</td>
+                        <td>지원서 작성 중</td>
+                    </tr>
+                    <tr>
+                        <td>한울</td>
+                        <td>1억 원</td>
+                        <td>미정</td>
+                        <td>지원서 작성 중</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="insight">
+                <div class="insight-title">Key Insights</div>
+                <ul>
+                    <li>현재 개발 리소스의 상당 부분이 <strong>삼두 쪽 기능 개발</strong>에 할당 — 삼두 계약 확정 시 필즈·한울 후속 작업</li>
+                    <li>지원사업 채택 여부에 따라 2~3분기 현금흐름 변동성 상존</li>
+                    <li>컨설팅펌 의존도가 높아, 자체 제안서 역량 내재화 필요성 대두</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda 4: 화물원 -->
+    <section id="agenda-4">
+        <div class="section-head">
+            <span class="section-num">AGENDA 04</span>
+            <h2>화물질안전원 — ASME 저작권 이슈</h2>
+        </div>
+
+        <div class="agenda-card priority-high">
+            <div class="agenda-header">
+                <div class="agenda-title">ASME 저작권으로 AI 활용 제한 가능성</div>
+                <span class="badge badge-high">Blocker</span>
+            </div>
+            <p>
+                기존 <strong>화관법·화학안전법 고시 정확성 체크</strong>에 더해, <strong>ASME 코드 ↔ 국내 법령</strong>
+                정합성 체크를 새로 제안받음. 다만 ASME 저작권 이슈로 인해 로컬 LLM 활용조차 제한될
+                가능성이 있음. 내부 공유 이슈 사항.
+            </p>
+            <div class="content-block">
+                <strong>공유된 제약:</strong> ASME 코드 내 규정을 활용한 AI 학습 또는 부가적 결과물 생성 자체를
+                저작권 위반으로 보는 해석. 로컬 LLM도 동일 범위 적용 가능성.
+            </div>
+            <p><strong>후속 조치:</strong> 돌아오는 주 중 화상 회의를 통해 해결 방안 이론 검토 예정.</p>
+            <div class="insight">
+                <div class="insight-title">Key Insights</div>
+                <ul>
+                    <li>ASME 라이선스 구조(Enterprise License Agreement) 검토 및 <strong>법무 자문 선행 필요</strong></li>
+                    <li>ASME 활용이 막힐 경우, 국내 법령 간 정합성 체크(KGS 코드 등)로 범위 축소 대안 마련</li>
+                    <li>우회안: ASME 조항 자체를 저장하지 않고 <strong>구조화된 규칙 요약본</strong>으로 대체하는 접근 검토</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda 5: 황우론 -->
+    <section id="agenda-5">
+        <div class="section-head">
+            <span class="section-num">AGENDA 05</span>
+            <h2>황우론 — 자문위원 초청</h2>
+        </div>
+        <div class="agenda-card priority-low">
+            <div class="agenda-header">
+                <div class="agenda-title">현 사업과는 별개 지원사업 자문위원 참여</div>
+                <span class="badge badge-low">Low</span>
+            </div>
+            <p>
+                황우론 측에서 별건 지원사업의 <strong>자문위원으로 상윤을 초대</strong>.
+                정확한 초청 의도는 미확인 상태이나, 세미나 개최 이력 등 기존 협력 관계를 감안하여
+                일단 수락. 관계 관리 차원의 참여.
+            </p>
+            <div class="insight">
+                <div class="insight-title">Key Insights</div>
+                <ul>
+                    <li>업계 내 <strong>AI 전문가 풀에서 당사 인지도</strong>를 확인하는 신호</li>
+                    <li>저비용 관계 강화 채널로 활용 가능 — 추후 사업 연계 포석</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda 6: 태조 -->
+    <section id="agenda-6">
+        <div class="section-head">
+            <span class="section-num">AGENDA 06</span>
+            <h2>태조 — 장비 발주 대기</h2>
+        </div>
+        <div class="agenda-card priority-low">
+            <div class="agenda-header">
+                <div class="agenda-title">장비 입고 지연 · 리마인더만 유지</div>
+                <span class="badge badge-low">Low</span>
+            </div>
+            <p>
+                장비 발주는 완료. 입고 일정 미정. AI 외주 진행 여부는 장비 입고 후 재논의.
+                <strong>토목 중심 업무로 현 집중 영역(공정/플랜트)과 핀테가 상이</strong>.
+                오히려 프로젝트가 성사되지 않는 편이 리소스 배분상 유리한 상황으로 판단.
+            </p>
+            <div class="insight">
+                <div class="insight-title">Key Insights</div>
+                <ul>
+                    <li>태조 요청이 <strong>일반 업무자동화</strong> 수준 — 당사 차별화 포인트와 거리 있음</li>
+                    <li>전략적 No 판단 가능 — 집중 영역 방어 측면에서 합리적</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda 7: PKU -->
+    <section id="agenda-7">
+        <div class="section-head">
+            <span class="section-num">AGENDA 07</span>
+            <h2>PKU (美 휴스턴) — 미국 시장 공동 진출 제안</h2>
+        </div>
+
+        <div class="agenda-card priority-high">
+            <div class="agenda-header">
+                <div class="agenda-title">AI 네이티브 도메인 전문가 3인 회사와의 전략 파트너십</div>
+                <span class="badge badge-high">Strategic</span>
+            </div>
+
+            <h3 class="sub">회사 개요</h3>
+            <div class="content-block">
+                <ul>
+                    <li>본사: 미국 휴스턴 · 설립 8개월 · <strong>3인 회사</strong> (공정·배관·장비 시니어)</li>
+                    <li>대표/부사장 모두 시니어급 — 1세대 엔지니어링 베테랑</li>
+                    <li>하는 일: 한국 EPC가 수행한 설계도의 <strong>미국 현지 공장 건설 시 QA/QC 및 인증</strong></li>
+                    <li>내부 AI 툴을 바이브코딩 수준으로 개발 중 (실무 도입 난이도 높음)</li>
+                </ul>
+            </div>
+
+            <h3 class="sub">제안 내용</h3>
+            <p>
+                대표(제임스 킴 추정)가 <strong>미국 시장 공동 공략</strong>을 제안.
+                SnapScale AI 기술을 PKU가 내부 솔루션으로 활용 → 저가·고속·고정확 엔지니어링 외주 수주 →
+                확보한 고객사에 AI 마케팅 연계하는 순환 구조.
+            </p>
+
+            <h3 class="sub">QA/QC 범위 해석 차이 — 확인 필요</h3>
+            <div class="content-block">
+                <strong>상윤 이해:</strong> P&ID가 ASME B31.3 코드(파이핑)를 만족하는지 AI로 검증.
+                예) 카테고리 D (150 PSI-G, 186°F 이하) 조건 충족 여부를 라인별 운전압력·온도로 체크.
+            </div>
+            <div class="content-block" style="background:#FFF4E0;">
+                <strong>이종혁 해석:</strong> QA/QC는 엔지니어링 디자인이 아닌 <strong>구매·제작·시공 단계의
+                문서 절차 준수 검증</strong>. 자재·용접·성적서·벤더 승인 여부 등 메타 레벨 검증.
+            </div>
+            <div class="content-block" style="background:#E3F3EB;">
+                <strong>박현문 보강(휴스턴 경험):</strong> 현장 파이널 인스펙션(ITP)에서 서드파티 QA/QC가
+                시간 단위로 계약되어 펀치리스트 반영·문서 사인. 엔지니어링 디자인 QA/QC가 추가로 있는지
+                한 번 더 확인 필요.
+            </div>
+
+            <h3 class="sub">내부 검토: PKU의 자체 AI 리포트</h3>
+            <p>
+                PKU가 공유한 P&ID 분석 리포트(롯데케미컬·롯데ENC MTBE 공장)는 <strong>펌프 라인이 컴프레서로
+                연결됐다고 기재</strong>되는 등 명백한 오류 다수. MTBE 공정에 컴프레서가 없는데도 포함됨.
+                실무 도입 가능한 수준이 아님 → <strong>"이런 문제를 당사가 해결해달라"는 요청</strong>으로 해석.
+            </p>
+
+            <h3 class="sub">협력 포지셔닝 — 논의 결론</h3>
+            <div class="content-block">
+                <ul>
+                    <li><strong>영업 파트너 + 초기 고객</strong> 복합 포지션으로 설정</li>
+                    <li>PKU의 절실함(시니어 엔지니어 신규 수혈 한계, AI 포지셔닝 필요성)을 활용</li>
+                    <li>어제 논의된 <strong>Value 기반 % 과금 모델</strong>을 국내 EPC보다 강하게 드라이브 가능</li>
+                    <li>영업 수수료 지급 가능 — 영업팀처럼 활동할 수 있는 구조 제시 검토</li>
+                    <li>기존 프로젝트 <strong>TIC·재작업비·LD·컨틴전시 데이터</strong> 요청하여 가치 산정 근거 확보</li>
+                </ul>
+            </div>
+
+            <div class="insight">
+                <div class="insight-title">Key Insights</div>
+                <ul>
+                    <li>필즈 네트워크와 <strong>한 덩어리</strong>(1세대 엔지니어 커뮤니티)로 해석됨 — 레퍼런스 전파력 높음</li>
+                    <li>PKU가 당사에게 <strong>강하게 어필해야 하는 입장</strong>이므로 협상 레버리지는 당사 우위</li>
+                    <li>미국 엔지니어 공급 부족 + 1세대 고령화는 <strong>구조적 수요</strong> — 시장 진입 타이밍 적절</li>
+                    <li>포스텍 이일범 교수 학계 레퍼 + 당사 AI 기술 결합 시 <strong>산학 통합 포지셔닝</strong> 강화</li>
+                    <li>QA/QC 범위 확정 전까지 데모 방향성 유보 — 불필요한 리소스 소진 방지</li>
+                </ul>
+            </div>
+
+            <h3 class="sub">PKU 협력 구조도</h3>
+            <div class="diagram-box">
+                <div class="mermaid">
+flowchart TB
+    SS[SnapScale<br/>AI 기술]
+    PKU[PKU 휴스턴<br/>1세대 엔지니어]
+    Client[미국 EPC<br/>고객사]
+    POC[공동 POC]
+    Value[Value 기반 % 과금]
+
+    SS -->|기술 제공| POC
+    PKU -->|도메인 지식·네트워크| POC
+    PKU -->|영업 수주| Client
+    Client -->|프로젝트 발주| PKU
+    POC -->|본계약 시 차감| Value
+    Client -.AI 고객 전환.-> SS
+    PKU -->|TIC/재작업비 데이터| SS
+
+    style SS fill:#14305F,color:#fff
+    style Value fill:#1F7A55,color:#fff
+    style POC fill:#3D6BB3,color:#fff
+                </div>
+                <div class="diagram-caption">Figure 2. SnapScale-PKU 협력 및 가치 순환 구조</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda 8: 이일범 교수 -->
+    <section id="agenda-8">
+        <div class="section-head">
+            <span class="section-num">AGENDA 08</span>
+            <h2>이일범 교수 — 포스텍 산학 협력</h2>
+        </div>
+        <div class="agenda-card priority-medium">
+            <div class="agenda-header">
+                <div class="agenda-title">감사역·자문역으로 우선 참여 · 추후 연구소장 전환</div>
+                <span class="badge badge-medium">Strategic</span>
+            </div>
+            <p>
+                플랜트 AI 도입 분야 포스텍 교수. 당사 개발 기술 일부에 대한 <strong>기존 특허 보유</strong>.
+                연구소장 및 기술자 참여 의사, <strong>S-CheckUp 공동 논문, 공동 특허, 국제 특허 연결</strong>
+                지원 의향 표명. 국가과제 연계 가능성도 제시.
+            </p>
+
+            <h3 class="sub">현재 구조 (겸직 제약 반영)</h3>
+            <table>
+                <thead>
+                    <tr><th>구분</th><th>내용</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>직책</td>
+                        <td>감사역 + 자문역 (무보수)</td>
+                    </tr>
+                    <tr>
+                        <td>이유</td>
+                        <td>연구소장은 유급 → 학교 겸직 허가 시 연 6천 수준 필요<br/>무보수 겸직 시 연구소장은 불가</td>
+                    </tr>
+                    <tr>
+                        <td>전환 조건</td>
+                        <td>회사 재무 여력 확보 시 연구소장 전환</td>
+                    </tr>
+                    <tr>
+                        <td>스톡옵션</td>
+                        <td>다음 주 미팅에서 조건 논의 예정</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="insight">
+                <div class="insight-title">Key Insights</div>
+                <ul>
+                    <li>시드~시리즈 C에 이르는 <strong>창업팀 친화적 조언자</strong> — 투자 라운드 네비게이션 가치 큼</li>
+                    <li>연구소 설립은 <strong>국가과제 수주 요건</strong>이므로 별도 트랙으로 추진 필요</li>
+                    <li>PKU(산업) + 이일범 교수(학계)의 <strong>이중 레퍼런스 구조</strong>로 미국 진출 시 신뢰도 상승</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda 9: 내부 기술 개발 -->
+    <section id="agenda-9">
+        <div class="section-head">
+            <span class="section-num">AGENDA 09</span>
+            <h2>내부 기술 개발 진척 현황</h2>
+        </div>
+
+        <div class="agenda-card priority-medium">
+            <div class="agenda-header">
+                <div class="agenda-title">모듈별 진척도</div>
+                <span class="badge badge-info">Internal</span>
+            </div>
+            <table>
+                <thead>
+                    <tr><th>모듈</th><th>담당</th><th>현 상태</th><th>남은 과제</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>도면 인식 (벡터 기반)</td>
+                        <td>—</td>
+                        <td>로우 데이터 표준화 완료</td>
+                        <td>심볼 레전드 ↔ P&ID 매칭 개발 필요</td>
+                    </tr>
+                    <tr>
+                        <td>자연어 → 온톨로지 검증 언어 변환</td>
+                        <td>재유</td>
+                        <td>기본 단계 구현 중</td>
+                        <td>정확도 향상 및 예외 처리</td>
+                    </tr>
+                    <tr>
+                        <td>마크업 → CAD 변환</td>
+                        <td>—</td>
+                        <td>룰베이스 기반 성공</td>
+                        <td>AI 결합 · 예외 케이스 대응</td>
+                    </tr>
+                    <tr>
+                        <td>하이시스 자동화</td>
+                        <td>—</td>
+                        <td>기존 데모 상태 유지</td>
+                        <td>재개 대기</td>
+                    </tr>
+                    <tr>
+                        <td>Hydraulic Calculation</td>
+                        <td>Dr.(닥터)</td>
+                        <td>라인 길이 합산 구현</td>
+                        <td>몇 가지 예외 케이스 해결</td>
+                    </tr>
+                    <tr>
+                        <td>PSV / Safety Analysis</td>
+                        <td>종선 (신규)</td>
+                        <td>스터디 단계 (이틀차)</td>
+                        <td>이종혁 부장 감 잡기 필요</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top:14px;">
+                현재 개발 리소스의 대부분은 <strong>삼두 관련 기능 개발</strong>에 집중.
+                삼두 계약 개시 시 조기 완료 후 필즈·한울 관련 개발 이어서 추진.
+                제품 완성(도프텍 유사 수준)은 <strong>올해 하반기 목표</strong>.
+            </p>
+            <div class="insight">
+                <div class="insight-title">Key Insights</div>
+                <ul>
+                    <li>현 단계는 제품 판매보다 <strong>POC 기반 매출</strong>에 집중하는 전략이 합리적</li>
+                    <li>PKU와의 협업은 POC → 본계약 전환 시 POC 비용 차감 구조로 설계 가능</li>
+                    <li>심볼 매칭 로직이 <strong>크리티컬 패스</strong> — 재유 투입 후 현앤 완료 시점에 집중 개발</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda 10: 투자 라운드 -->
+    <section id="agenda-10">
+        <div class="section-head">
+            <span class="section-num">AGENDA 10</span>
+            <h2>투자 라운드 옵션 검토</h2>
+        </div>
+        <div class="agenda-card priority-medium">
+            <div class="agenda-header">
+                <div class="agenda-title">기 컨택 AC vs 신규 AC/VC 멀티 접촉</div>
+                <span class="badge badge-medium">Medium</span>
+            </div>
+            <p>
+                현재 컨택 중인 곳은 가장 적극적인 AC. 이후 연락 주지 않은 곳들은 상대적 적극도 낮음.
+                <strong>박현문 제안:</strong> 정해진 투자자 소수 협상보다 <strong>다수 AC/VC 동시 접촉</strong>으로
+                조건 개선을 노리는 옵션 존재.
+            </p>
+            <div class="content-block">
+                <strong>트레이드오프:</strong> 다수 접촉은 협상력 상승 / 조건 개선 가능성 ↔
+                설득 비용·개발 시간 기회비용 상승
+            </div>
+            <div class="insight">
+                <div class="insight-title">Key Insights</div>
+                <ul>
+                    <li>진행상황·단계별 로드맵 자료 준비가 선행되어야 멀티 접촉이 의미 있음</li>
+                    <li>기 컨택 AC는 <strong>앵커 오퍼</strong>로 활용, 신규 대상자를 통해 조건 개선 시도 가능</li>
+                    <li>개발 리소스 영향 최소화를 위해 <strong>미팅 주도는 CEO 원채널</strong>로 집중 권장</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Decisions -->
+    <section id="decisions">
+        <div class="section-head">
+            <span class="section-num">DECISIONS</span>
+            <h2>결정 사항</h2>
+        </div>
+
+        <div class="decision-item">
+            <div class="title">① 현앤 기술 공개 범위 — "에둘러 표현" 원칙 채택</div>
+            <div class="context">내구로직(온톨로지 상세)은 공개하지 않음. "왜 가능한지" 원리 설명 수준까지만. 추가 질의 시에도 키워드 노출 없이 인테그리티 테스트로 응대.</div>
+        </div>
+        <div class="decision-item">
+            <div class="title">② 필즈 로드맵 — 연구소장 임원회의 발표안으로 제출 확정</div>
+            <div class="context">5월 내 계약을 목표로 상윤이 제안한 로드맵·견적 그대로 임원회의 발표.</div>
+        </div>
+        <div class="decision-item">
+            <div class="title">③ PKU 대응 — Value 기반 % 과금 + 영업 협력 구조 제안</div>
+            <div class="context">인건비 베이스가 아닌 가치 밸류 퍼센트로 드라이브. POC 비용은 본계약 시 차감. 기존 프로젝트 TIC·재작업비·LD·컨틴전시 자료 요청.</div>
+        </div>
+        <div class="decision-item">
+            <div class="title">④ PKU QA/QC 범위 재확인 — 엔지니어링 디자인 검증 포함 여부 질의</div>
+            <div class="context">제작·시공 서드파티 QA/QC와 엔지니어링 단계 QA/QC 구분 확인. 이종혁·박현문 별도 조사 진행.</div>
+        </div>
+        <div class="decision-item">
+            <div class="title">⑤ 이일범 교수 — 감사역·자문역으로 우선 시작 · 연구소장은 재무 여력 확보 후 전환</div>
+            <div class="context">스톡옵션 조건은 다음 주 미팅에서 확정. 연구소 설립은 국가과제 대응 목적으로 별도 트랙 추진.</div>
+        </div>
+        <div class="decision-item">
+            <div class="title">⑥ 태조 — 전략적 유보</div>
+            <div class="context">현 집중 영역과 상이, 요청 내용도 일반 업무자동화 수준. 리마인더만 유지.</div>
+        </div>
+        <div class="decision-item">
+            <div class="title">⑦ 개발 전략 — POC 매출 집중, 제품 완성은 하반기</div>
+            <div class="context">제품 판매가 아닌 POC 기반 매출에 집중. 삼두 → 필즈·한울 순차 개발 완료.</div>
+        </div>
+    </section>
+
+    <!-- Action Items -->
+    <section id="actions">
+        <div class="section-head">
+            <span class="section-num">ACTION ITEMS</span>
+            <h2>액션 아이템</h2>
+        </div>
+        <ul class="action-list">
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">PKU에 보낼 P&ID × ASME B31.3 검증 리포트 작성</div>
+                    <div class="owner">담당: 상윤 · 이종혁 부장 코멘트 수령</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-high">High</span><span class="badge badge-info">다음 주 중</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">PKU 협력 로드맵·견적·BM 제안서 작성</div>
+                    <div class="owner">담당: 상윤 · Value 기반 % 과금 구조 반영</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-high">High</span><span class="badge badge-info">다음 주 중</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">PKU에 과거 프로젝트 데이터 요청 (TIC · 엔지니어링 인건비 · LD · 컨틴전시 · 재작업비)</div>
+                    <div class="owner">담당: 상윤</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-high">High</span><span class="badge badge-info">다음 미팅 전</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">PKU QA/QC 실제 업무 범위 재확인 (엔지니어링 디자인 검증 포함 여부)</div>
+                    <div class="owner">담당: 상윤 (질의) / 이종혁 (업계 조사) / 박현문 (휴스턴 경험 기반 재검토)</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-high">High</span><span class="badge badge-info">다음 미팅 전</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">PKU 미팅 일정 확정 (한국 밤 · 휴스턴 아침)</div>
+                    <div class="owner">담당: 상윤 · 이종혁·박현문 참석 가능</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-medium">Medium</span><span class="badge badge-info">다음 주</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">필즈 임원회의 발표 후속 대응 및 결과 공유</div>
+                    <div class="owner">담당: 상윤 · 연구소장과 소통</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-high">High</span><span class="badge badge-info">차주</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">현앤 온톨로지 시각화 예시 제작 — 공개 수위 가이드라인 적용</div>
+                    <div class="owner">담당: 상윤 · 이종혁·박현문 리뷰</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-high">High</span><span class="badge badge-info">라이브 데모 전</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">화물원 ASME 저작권 이슈 해결 방안 화상 회의</div>
+                    <div class="owner">담당: 상윤 · 화물원 담당자</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-high">High</span><span class="badge badge-info">돌아오는 주</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">삼두·한울 지원사업 서류 작성 지속</div>
+                    <div class="owner">담당: 상윤 · 컨설팅펌</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-medium">Medium</span><span class="badge badge-info">진행 중</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">이일범 교수 기술 소개 미팅 · 스톡옵션 조건 논의</div>
+                    <div class="owner">담당: 상윤</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-medium">Medium</span><span class="badge badge-info">다음 주</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">심볼 레전드 ↔ P&ID 매칭 모듈 개발</div>
+                    <div class="owner">담당: 재유 · 상윤 협업 · 현앤 완료 후 집중</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-medium">Medium</span><span class="badge badge-info">현앤 건 완료 후</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">PSV·Safety Analysis 스터디 — 이종혁 부장과 주기적 싱크</div>
+                    <div class="owner">담당: 종선 · 이종혁</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-medium">Medium</span><span class="badge badge-info">지속</span></div>
+            </li>
+            <li class="action-item">
+                <div class="action-text">
+                    <div class="task">투자 라운드 멀티 접촉 옵션 재논의</div>
+                    <div class="owner">담당: 상윤 · 박현문</div>
+                </div>
+                <div class="action-meta"><span class="badge badge-medium">Medium</span><span class="badge badge-info">차기 회의</span></div>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Roadmap -->
+    <section id="roadmap">
+        <div class="section-head">
+            <span class="section-num">ROADMAP</span>
+            <h2>전략 로드맵 (향후 2~6주)</h2>
+        </div>
+        <div class="diagram-box">
+            <div class="mermaid">
+gantt
+    title SnapScale 주요 마일스톤 (2026년 4월 ~ 6월)
+    dateFormat  YYYY-MM-DD
+    section 필즈
+    임원회의 발표             :a1, 2026-04-14, 3d
+    5월 계약 체결 목표        :crit, a2, after a1, 21d
+    section PKU
+    QA/QC 확인 · 견적 발송    :b1, 2026-04-13, 7d
+    다음 미팅 (BM 확정)       :b2, after b1, 3d
+    본계약 논의 시작          :b3, after b2, 14d
+    section 현앤
+    온톨로지 시각화 데모      :c1, 2026-04-14, 10d
+    라이브 데모 & 응대 프로토콜 :c2, after c1, 7d
+    section 삼두·한울
+    지원사업 서류 제출        :d1, 2026-04-10, 14d
+    선정 발표 대기            :d2, after d1, 21d
+    section 내부
+    심볼 매칭 개발            :e1, 2026-04-20, 21d
+    PSV 스터디·감 잡기        :e2, 2026-04-10, 30d
+    투자 라운드 준비          :e3, 2026-04-17, 28d
+            </div>
+            <div class="diagram-caption">Figure 3. 의사결정·실행 타임라인</div>
+        </div>
+    </section>
+
+    <!-- Next Meeting -->
+    <section id="next">
+        <div class="section-head">
+            <span class="section-num">NEXT</span>
+            <h2>후속 계획</h2>
+        </div>
+        <div class="agenda-card">
+            <div class="agenda-header">
+                <div class="agenda-title">다음 주 주요 이벤트</div>
+            </div>
+            <div class="content-block">
+                <ul>
+                    <li><strong>필즈 임원회의 발표</strong> — 결과 보고 공유 필요</li>
+                    <li><strong>PKU 한국 야간(휴스턴 오전) 미팅</strong> — BM·로드맵·견적 기반 본계약 논의</li>
+                    <li><strong>이일범 교수 미팅</strong> — 기술 소개 및 스톡옵션 조건 협상</li>
+                    <li><strong>화물원 화상 회의</strong> — ASME 저작권 이슈 해결 방안</li>
+                    <li><strong>현앤 라이브 데모 준비</strong> — 온톨로지 예시 시각화</li>
+                </ul>
+            </div>
+            <div class="insight">
+                <div class="insight-title">다음 회의까지 준비 자료</div>
+                <ul>
+                    <li>PKU에 보낼 <strong>P&ID 검증 리포트</strong> (이종혁 부장 코멘트 반영)</li>
+                    <li>PKU 협력 구조 <strong>로드맵·견적·제안서</strong></li>
+                    <li>현앤 데모용 <strong>온톨로지 예시 콘텐츠</strong> (공개 수위 검토 완료본)</li>
+                    <li>투자 라운드 <strong>단계별 로드맵 자료</strong> (멀티 접촉용)</li>
+                    <li>ASME 저작권 <strong>법무·라이선스 검토 요약</strong></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    SnapScale Weekly Sync · 2026-04-10 · Confidential Internal Document<br/>
+    이 문서는 내부 전략 공유를 위해 작성되었으며, 외부 공유 전 대표 승인을 요합니다.
+</footer>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#14305F',
+            primaryTextColor: '#ffffff',
+            primaryBorderColor: '#0B1E3F',
+            lineColor: '#3D6BB3',
+            secondaryColor: '#D8E2F2',
+            tertiaryColor: '#F4F7FC',
+            fontFamily: 'Pretendard, -apple-system, sans-serif'
+        },
+        flowchart: { curve: 'basis', padding: 20 },
+        gantt: { barHeight: 20, fontSize: 12 }
+    });
+</script>
+
+</body>
+</html>

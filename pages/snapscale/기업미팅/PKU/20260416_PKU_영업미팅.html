@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKU Industries 초기 영업미팅 회의록 - 2026.04.16</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary-navy: #1e3c72;
+            --secondary-navy: #2a5298;
+            --accent-blue: #4a90e2;
+            --light-blue: #e3f2fd;
+            --dark-gray: #2c3e50;
+            --medium-gray: #7f8c8d;
+            --light-gray: #ecf0f1;
+            --white: #ffffff;
+            --success-green: #27ae60;
+            --warning-orange: #f39c12;
+            --danger-red: #e74c3c;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: var(--dark-gray);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .notice-banner {
+            background: #fff3cd;
+            border-left: 5px solid #f39c12;
+            padding: 14px 40px;
+            font-size: 13px;
+            color: #856404;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
+            color: var(--white);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.1);} }
+        h1 { font-size: 36px; font-weight: 700; margin-bottom: 10px; position: relative; z-index: 1; }
+        .header-sub { font-size: 16px; opacity: 0.85; margin-bottom: 30px; position: relative; z-index: 1; }
+        .meeting-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px; margin-top: 20px; position: relative; z-index: 1;
+        }
+        .meta-item {
+            background: rgba(255,255,255,0.15);
+            padding: 14px; border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .meta-label { font-size: 11px; opacity: 0.85; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        .meta-value { font-size: 15px; font-weight: 600; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 50px; }
+        .section-title {
+            color: var(--primary-navy);
+            font-size: 26px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--accent-blue);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .toc {
+            background: var(--light-blue);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--accent-blue);
+        }
+        .toc h3 { color: var(--primary-navy); margin-bottom: 15px; font-size: 20px; }
+        .toc ul { list-style: none; }
+        .toc li { padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .toc li:last-child { border-bottom: none; }
+        .toc a { color: var(--secondary-navy); text-decoration: none; font-weight: 500; }
+        .toc a:hover { color: var(--accent-blue); text-decoration: underline; }
+        .toc .toc-num { display: inline-block; width: 28px; color: var(--accent-blue); font-weight: 700; }
+        .agenda-card {
+            background: var(--white);
+            border: 1px solid #dde3ee;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .agenda-header {
+            background: linear-gradient(135deg, var(--primary-navy), var(--secondary-navy));
+            color: var(--white);
+            padding: 18px 25px;
+            display: flex; align-items: center; gap: 15px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .agenda-header:hover { background: linear-gradient(135deg, #162d5e, #1e3c72); }
+        .agenda-num {
+            background: rgba(255,255,255,0.2);
+            width: 34px; height: 34px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 15px; flex-shrink: 0;
+        }
+        .agenda-title-text { font-size: 18px; font-weight: 600; flex: 1; }
+        .toggle-icon { font-size: 18px; transition: transform 0.3s; }
+        .toggle-icon.open { transform: rotate(180deg); }
+        .agenda-body { padding: 25px; display: block; }
+        .agenda-body.collapsed { display: none; }
+        .sub-section { margin-bottom: 22px; }
+        .sub-title {
+            font-size: 15px; font-weight: 700;
+            color: var(--secondary-navy);
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-left: 3px solid var(--accent-blue);
+        }
+        .discussion-item {
+            background: #f8faff;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            border: 1px solid #e3eaf8;
+        }
+        .speaker-tag {
+            display: inline-block;
+            padding: 2px 10px; border-radius: 12px;
+            font-size: 12px; font-weight: 600; margin-right: 8px;
+            vertical-align: middle;
+        }
+        .speaker-jade { background: #1e3c72; color: #fff; }
+        .speaker-park { background: #2a5298; color: #fff; }
+        .speaker-pku-ceo { background: #4a90e2; color: #fff; }
+        .speaker-pku-vp { background: #5ba3f5; color: #fff; }
+        .insight-box {
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            border-left: 4px solid var(--success-green);
+            padding: 18px 22px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 18px;
+        }
+        .insight-box h4 { color: var(--success-green); margin-bottom: 10px; font-size: 15px; }
+        .insight-list { list-style: none; }
+        .insight-list li { padding: 5px 0; padding-left: 20px; position: relative; font-size: 14px; }
+        .insight-list li::before { content: '💡'; position: absolute; left: 0; }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px; margin-top: 10px;
+        }
+        .info-card {
+            background: var(--light-blue);
+            border-radius: 10px; padding: 20px;
+            border: 1px solid #bee0f8;
+        }
+        .info-card h3 { color: var(--primary-navy); font-size: 16px; margin-bottom: 10px; }
+        .info-card p { font-size: 14px; line-height: 1.9; }
+        .decision-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        .decision-table th {
+            background: var(--primary-navy); color: var(--white);
+            padding: 12px 15px; text-align: left;
+        }
+        .decision-table td { padding: 11px 15px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+        .decision-table tr:nth-child(even) td { background: #f8faff; }
+        .badge {
+            display: inline-block; padding: 3px 10px; border-radius: 12px;
+            font-size: 12px; font-weight: 600;
+        }
+        .badge-high { background: #fde8e8; color: var(--danger-red); }
+        .badge-medium { background: #fff3cd; color: #856404; }
+        .badge-low { background: #d4edda; color: #155724; }
+        .badge-agreed { background: #d4edda; color: #155724; }
+        .badge-pending { background: #fff3cd; color: #856404; }
+        .action-table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 10px; }
+        .action-table th {
+            background: var(--secondary-navy); color: var(--white);
+            padding: 12px 15px; text-align: left;
+        }
+        .action-table td { padding: 11px 15px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+        .action-table tr:nth-child(even) td { background: #f8faff; }
+        .diagram-container {
+            background: #f8f9fa; padding: 30px;
+            border-radius: 8px; margin: 25px 0;
+            text-align: center; overflow-x: auto;
+        }
+        .diagram-container .mermaid { min-width: 900px; margin: 0 auto; }
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px; margin-top: 10px;
+        }
+        .risk-card {
+            border-radius: 10px; padding: 18px;
+            border-left: 4px solid;
+        }
+        .risk-card.risk { border-color: var(--danger-red); background: #fef6f6; }
+        .risk-card.oppo { border-color: var(--success-green); background: #f2fbf5; }
+        .risk-card h4 { font-size: 14px; margin-bottom: 8px; }
+        .risk-card.risk h4 { color: var(--danger-red); }
+        .risk-card.oppo h4 { color: var(--success-green); }
+        .risk-card ul { list-style: none; font-size: 13px; }
+        .risk-card ul li { padding: 4px 0; padding-left: 16px; position: relative; }
+        .risk-card.risk ul li::before { content: '⚠'; position: absolute; left: 0; }
+        .risk-card.oppo ul li::before { content: '✓'; position: absolute; left: 0; color: var(--success-green); }
+        footer {
+            background: var(--primary-navy);
+            color: rgba(255,255,255,0.7);
+            text-align: center; padding: 20px 40px;
+            font-size: 13px;
+        }
+        @media print {
+            body { background: white; }
+            .agenda-body.collapsed { display: block !important; }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 26px; }
+            .content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="notice-banner">
+        ⚠️ 안내사항: 본 회의록은 AI 기술을 활용하여 녹취록을 기반으로 작성되었으며, 일부 정확도가 떨어질 수 있습니다.
+    </div>
+
+    <header>
+        <h1>🤝 PKU Industries 초기 영업미팅</h1>
+        <p class="header-sub">기술 소개 및 파트너십 협력 방향 논의</p>
+        <div class="meeting-meta">
+            <div class="meta-item">
+                <div class="meta-label">📅 일시</div>
+                <div class="meta-value">2026년 4월 16일</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">📍 장소</div>
+                <div class="meta-value">온라인 (화상회의)</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">👥 참석 (SnapScale)</div>
+                <div class="meta-value">김상윤 대표 · 박규호 부장</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">👥 참석 (PKU)</div>
+                <div class="meta-value">대표 · 부사장</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">🏢 PKU 소재지</div>
+                <div class="meta-value">미국 휴스턴 (시니어 PE 3인)</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">🎯 미팅 성격</div>
+                <div class="meta-value">초기 파트너십 탐색</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="content">
+
+        <!-- 목차 -->
+        <div class="toc">
+            <h3>📋 목차</h3>
+            <ul>
+                <li><a href="#agenda1"><span class="toc-num">01</span> P&ID 리뷰 리포트 시연 및 기술 Q&A</a></li>
+                <li><a href="#agenda2"><span class="toc-num">02</span> SnapScale–PKU 협력 로드맵 제안</a></li>
+                <li><a href="#agenda3"><span class="toc-num">03</span> 비즈니스 모델 및 수수료 구조 논의</a></li>
+                <li><a href="#agenda4"><span class="toc-num">04</span> 경쟁사 현황 및 Fills Engineering 연계 공유</a></li>
+                <li><a href="#speakers"><span class="toc-num">05</span> 화자별 발언 요약</a></li>
+                <li><a href="#decisions"><span class="toc-num">06</span> 결정사항</a></li>
+                <li><a href="#actions"><span class="toc-num">07</span> 액션아이템</a></li>
+                <li><a href="#timeline"><span class="toc-num">08</span> 협력 타임라인</a></li>
+                <li><a href="#risks"><span class="toc-num">09</span> 리스크 및 기회요소</a></li>
+            </ul>
+        </div>
+
+        <!-- 안건 1 -->
+        <div class="section">
+            <h2 class="section-title">📑 안건별 논의 내용</h2>
+
+            <div class="agenda-card" id="agenda1">
+                <div class="agenda-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">1</div>
+                    <div class="agenda-title-text">P&ID 리뷰 리포트 시연 및 기술 Q&A</div>
+                    <div class="toggle-icon open">▼</div>
+                </div>
+                <div class="agenda-body">
+                    <div class="sub-section">
+                        <div class="sub-title">리포트 구성 소개</div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            PKU로부터 수령한 P&ID PDF를 기반으로 AI가 생성한 검토 리포트를 화면 공유로 시연. 리포트는 크리티컬(Critical) 이슈 2건, 워닝(Warning) 2건으로 구분하여 샘플 케이스를 제시. 각 이슈에는 ASME 코드 위반 조항(예: B31.3 §301.2.2-A), 해당 P&ID 페이지 번호, AI가 하이라이팅한 도면 영역이 함께 포함됨.
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            "AI가 모든 것을 완벽하게 검증했다고 할 수는 없습니다. 엔지니어가 AI 결과를 검수하다가 틀린 게 나온 순간 신뢰가 무너지는 함정이 있어 Critical/Warning 두 신호로 분리했습니다."
+                        </div>
+                    </div>
+                    <div class="sub-section">
+                        <div class="sub-title">Critical vs Warning 기준 논의</div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-pku-ceo">PKU 대표</span>
+                            "이 분류가 다소 주관적이지 않습니까? 엔지니어들이 AI 판단에 동의하지 않을 때 재학습(피드백)하는 플랫폼이 필요할 것 같습니다."
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            "분류 기준은 명확합니다. ASME 코드를 직접 위반하면 Critical, P&ID 정보만으로는 판단이 불충분하면 Warning입니다. AI 결과에 대한 엔지니어 피드백 학습 구조는 로드맵에 포함돼 있습니다."
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-pku-ceo">PKU 대표</span>
+                            "IFC(Issue for Construction) 도면에는 불확실한 표현이 있으면 안 됩니다. 예를 들어 'Gas Detector to be provided' 노트는 공사팀 혼란을 유발할 수 있어 Critical로 처리해야 한다고 봅니다. 안전 관련 사항은 무조건 Critical이어야 합니다."
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-park">박규호</span>
+                            "해당 케이스는 가스 디텍터 전용 레이어 파일 등 P&ID 외부 자료를 추가로 확인해야 한다는 의미의 Warning이지만, IFC 도면 특성상 명확성이 최우선이라는 의견에는 동의합니다. 이런 룰은 엔지니어들의 피드백으로 지속 정교화해야 합니다."
+                        </div>
+                    </div>
+                    <div class="sub-section">
+                        <div class="sub-title">할루시네이션(Hallucination) 방지 기술</div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-pku-ceo">PKU 대표</span>
+                            "AI가 정보 부족 시 거짓말을 하는 문제(할루시네이션)를 어떻게 방지하고 있습니까?"
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            "온톨로지(Ontology)가 핵심입니다. P&ID를 객체화된 디지털 모델로 변환하고, ASME 코드의 자연어 규칙을 그 객체들로 구성된 논리 문장으로 변환합니다. 설계도 내의 객체(예: PSV 101~107)만을 기반으로 결정론적으로 검증하기 때문에, AI가 존재하지 않는 PSV 108을 언급하면 룰 기반으로 자동 오류 감지가 됩니다."
+                        </div>
+                    </div>
+                    <div class="sub-section">
+                        <div class="sub-title">확장성 및 도면 타입 확대</div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-pku-ceo">PKU 대표</span>
+                            "현재는 ASME B31.3과 P&ID 위주인데, 향후 NFPA, IEEE 등 다수 코드와 PFD, Single Line Diagram, Control Logic Diagram까지 커버 가능합니까?"
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            "기술적으로 코드 종류와 도면 타입을 확장하는 것은 문제없습니다. 코드 간 충돌이 발생할 경우 엔지니어 판단이 필요하지만, 그 지원도 플랫폼에서 처리할 수 있습니다."
+                        </div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>📌 안건 1 인사이트</h4>
+                        <ul class="insight-list">
+                            <li>PKU 대표는 레이아웃과 기능성(링크 클릭, 코드 연결)보다 <strong>정확도와 신뢰성</strong>을 핵심 검증 기준으로 봄</li>
+                            <li>IFC 도면 특성상 Critical/Warning 기준은 현장 공사 실무 관점에서 재정의될 필요가 있으며, <strong>안전 연관 항목은 무조건 Critical</strong>이라는 업계 원칙 확인</li>
+                            <li>온톨로지 기반 결정론적 검증은 PKU 기술진이 납득할 수 있는 <strong>기술적 차별점</strong>으로 긍정적 반응 획득</li>
+                            <li>엔지니어 피드백 기반 Rule Base 고도화 → 이것이 SnapScale의 <strong>핵심 IP 자산</strong>이 될 수 있음을 PKU 대표도 명시적으로 동의</li>
+                            <li>NFPA·IEEE·PFD 등 코드·도면 확장에 대한 기술적 feasibility를 PKU가 확인, 향후 <strong>시장 확장 가능성에 대한 공감대 형성</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 안건 2 -->
+            <div class="agenda-card" id="agenda2">
+                <div class="agenda-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">2</div>
+                    <div class="agenda-title-text">SnapScale–PKU 협력 로드맵 제안 (Phase 1 상세)</div>
+                    <div class="toggle-icon open">▼</div>
+                </div>
+                <div class="agenda-body">
+                    <div class="sub-section">
+                        <div class="sub-title">포지셔닝 분석</div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            SnapScale: AI 기반 설계 자동화 기술 엔진 보유, 미국 시장 레퍼런스 부족 / PKU: 미국 PE 라이선스 보유 시니어 엔지니어 3인 팀, 풍부한 실무 경험, 스케일업 자원 한계. 두 조직의 강점이 상호 보완적임을 제시.
+                        </div>
+                    </div>
+                    <div class="sub-section">
+                        <div class="sub-title">Phase 1 실행 계획 (4개월)</div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            <strong>Step 1 (2주)</strong>: PKU로부터 파일럿 프로젝트 BDD·설계 패키지·적용 코드 리스트 수령 → SnapScale 온톨로지 구축<br>
+                            <strong>Step 2 (2주)</strong>: 클라이언트 프로그램 설치, GPU 서버 연결 테스트, 보안 정책 문서화 및 NDA 체결<br>
+                            <strong>Step 3 (3개월, 사이클 3회)</strong>: 프로세스·파이핑·익스트루먼트 전문가별 모듈 개발 → 내부 테스트 → 피드백 → 반복<br>
+                            <strong>KPI 측정</strong>: ① 업무 시간 절감률 ② 오탐지율 ③ 미탐지율 ④ PE 서명 가능 수준 주관 점수 ⑤ 보안 이슈 건수(No-Go)
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-pku-ceo">PKU 대표</span>
+                            "3~4개월이면 Phase 1 완료 예상이었고, 타이밍도 나쁘지 않습니다. 다만 정확도가 90~100% 수준에 도달해야 Phase 2로 넘어가는 것이 맞습니다. 그래야 외부 마케팅도 자신있게 할 수 있습니다."
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            Phase 1 비용: 3,000만 원 (일회성). 향후 라이선스 계약 또는 협력 비즈니스 모델 체결 시 해당 금액은 크레딧으로 차감됨.
+                        </div>
+                    </div>
+                    <div class="sub-section">
+                        <div class="sub-title">개발 속도 및 시장 타이밍</div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-pku-ceo">PKU 대표</span>
+                            "AI 기반 개발 속도가 기존 ERP 개발보다 훨씬 빠릅니다. 시장 변화도 예상보다 빠르게 옵니다. 마음이 급해질 수 있음을 사전에 말씀드립니다."
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            "데이터 보안상 ChatGPT나 Claude에 설계도면을 직접 입력할 수 없습니다. 공개 LLM은 세부 검토 시 60~70%가 허위 결과입니다. 도메인 지식을 깊이 이해하는 AI 엔지니어가 필수이며, 이런 인력 양성에 시간이 걸리기 때문에 당장의 경쟁자 수는 적고 실무 도입 가능한 업체는 더욱 적습니다."
+                        </div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>📌 안건 2 인사이트</h4>
+                        <ul class="insight-list">
+                            <li>Phase 1 → 2 → 3 순차 접근 방식에 PKU 대표 <strong>100% 동의</strong>. Rule Base 안정화 후 Phase 2 진입이라는 원칙 공유됨</li>
+                            <li>KPI 5개 지표 중 <strong>보안 이슈(No-Go)</strong>를 별도 설정한 것은 미국 PE 라이선스 책임 관점에서 중요한 요소</li>
+                            <li>3,000만 원 POC 비용의 <strong>크레딧 전환 구조</strong>는 PKU의 초기 리스크 부담을 줄여 계약 진입 장벽을 낮추는 효과</li>
+                            <li>도메인 특화 AI 엔지니어 희소성 → <strong>SnapScale의 경쟁 해자</strong>로 PKU 대표에게 납득 가능한 방어 논리 제공</li>
+                            <li>PKU 대표의 "속도" 강조는 계약 의사결정 가속화의 기회 요소이나, 동시에 <strong>과도한 기대치 관리</strong>가 필요</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 안건 3 -->
+            <div class="agenda-card" id="agenda3">
+                <div class="agenda-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">3</div>
+                    <div class="agenda-title-text">비즈니스 모델 및 수수료 구조 논의</div>
+                    <div class="toggle-icon open">▼</div>
+                </div>
+                <div class="agenda-body">
+                    <div class="sub-section">
+                        <div class="sub-title">Option A vs Option B</div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            <strong>Option A (AI 기반 엔지니어링 외주)</strong>: PKU가 AutoFlow를 활용하여 외주 엔지니어링 수행 → SnapScale은 발생 매출의 일부 수수료 수취. 라이선스 고정비 없음.<br>
+                            <strong>Option B (AI 내재화 POC 중개)</strong>: 고객사가 AI 내재화를 원할 경우 PKU가 SnapScale을 연결 → 발생 POC·라이선스 매출의 일부를 PKU에 수수료 지급.<br>
+                            <em>두 옵션 모두 상호 매출 발생 시 수수료 교환 구조로 설계 → 라이선스 모델에서 발생하는 고객 경쟁 방지</em>
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-pku-ceo">PKU 대표</span>
+                            "Option B까지 가려면 최소 1~2년이 걸릴 것입니다. 우선 Option A를 안정화하고, 안정화된 데모를 가지고 Option B로 진입하는 것이 효율적입니다. 콘셉트 자체는 100% 동의합니다. 수수료/로열티 수준은 실제 AutoFlow를 사용해본 후 협상해야 합니다."
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-pku-ceo">PKU 대표</span>
+                            "내재화 유도가 많아질수록 인센티브를 높이는 구조를 설계하면 PKU 측이 자발적으로 영업에 나서게 됩니다."
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            "라이선스 단일 모델로 가면 같은 고객을 두고 양 사가 경쟁하게 됩니다. 수수료 교환 구조는 시장 전체 규모를 키우는 방향으로 설계한 것입니다."
+                        </div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>📌 안건 3 인사이트</h4>
+                        <ul class="insight-list">
+                            <li>PKU 대표가 Option A 선집중 → Option B 확장의 <strong>단계적 접근에 동의</strong>, 전략 방향 일치</li>
+                            <li>수수료율은 아직 미정이나 <strong>인센티브 기반 인상 구조</strong>(내재화 건수↑ = 수수료↑)에 대한 개념적 합의 이루어짐</li>
+                            <li>라이선스 고정비 기반 모델보다 <strong>수익 연동 수수료 모델</strong>이 양 사의 이해관계를 더 잘 정렬시킴</li>
+                            <li>PKU 부사장의 발언에서 <strong>Fills Engineering과의 접점</strong>을 인지하고 있음 — 향후 협력 구도에서 정보 관리 필요</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 안건 4 -->
+            <div class="agenda-card" id="agenda4">
+                <div class="agenda-header" onclick="toggleAgenda(this)">
+                    <div class="agenda-num">4</div>
+                    <div class="agenda-title-text">경쟁사 현황 및 Fills Engineering 연계 공유</div>
+                    <div class="toggle-icon open">▼</div>
+                </div>
+                <div class="agenda-body">
+                    <div class="sub-section">
+                        <div class="sub-title">PKU가 검토 중인 경쟁 업체 현황</div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-pku-ceo">PKU 대표</span>
+                            현재 SnapScale 외 3개사를 병행 검토 중: ① 휴스턴 로컬 업체 ② 콜로라도 소재 업체 ③ 휴스턴 오피스 + 체코/우크라이나 개발팀 업체. 모든 결과물을 수합하여 비교 후 최종 의사결정 예정. 구체적 사명 공개는 하지 않음.
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            "경쟁사 이름만 여쭤봐도 될까요? 저희도 경쟁업체 조사가 필요해서요."
+                            → PKU 대표: 구체적 이름 공개 불가.
+                        </div>
+                    </div>
+                    <div class="sub-section">
+                        <div class="sub-title">Fills Engineering 진행 상황 공유</div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            Fills Engineering 류현성 연구소장이 국가과제로 설계 자동화를 추진 중(내년 5월까지). 다음 주 화요일 견적팀 인터뷰 예정. Fills CEO는 견적 자동화 먼저 원하는 상황. SnapScale이 Fills 및 PKU 양쪽과 병행 협력 중임을 PKU에 투명하게 공유. 단, 미국 시장(PKU)과 한국 시장(Fills)은 적용 범위와 조건이 다름을 강조.
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-pku-ceo">PKU 대표</span>
+                            "미국과 한국은 요구사항이 다르지만, 시간이 지나면 시너지가 생길 수 있다고 봅니다. SnapScale의 최종 결정이 나면 Fills와의 발표도 진행될 것으로 이해합니다."
+                        </div>
+                    </div>
+                    <div class="sub-section">
+                        <div class="sub-title">다음 단계 합의</div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-pku-ceo">PKU 대표</span>
+                            "Fizz(PKU 내부 의사결정자)에게 SnapScale 발표 자리를 마련하겠습니다. 내부 검토 후 다른 대안 업체들 결과와 비교하여 최종 결정할 것입니다. 한국 업체에 긍정적으로 고려하고 있습니다."
+                        </div>
+                        <div class="discussion-item">
+                            <span class="speaker-tag speaker-jade">김상윤</span>
+                            로드맵 슬라이드·테스트 리포트·비용 관련 자료를 정리하여 송부 예정. PKU 내부 스터디용으로 활용 요청.
+                        </div>
+                    </div>
+                    <div class="insight-box">
+                        <h4>📌 안건 4 인사이트</h4>
+                        <ul class="insight-list">
+                            <li>PKU는 복수 업체를 병행 검토 중이므로 <strong>다음 발표(Fizz 포함) 전까지 자료 품질과 전달력이 승부를 가름</strong></li>
+                            <li>PKU 대표의 "한국 업체에 긍정적" 발언은 <strong>지정학적 신뢰도</strong>가 경쟁 우위 요소로 작용함을 시사</li>
+                            <li>Fills Engineering 협력 공유는 투명성 측면에서 긍정적이나, Fills·PKU 간 정보 교류 가능성을 사전 관리해야 함</li>
+                            <li>리포트 내 고객사명 노출(박규호 부장 지적) → <strong>대외 자료 보안 프로세스 즉각 정비 필요</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 화자별 발언 요약 -->
+        <div class="section" id="speakers">
+            <h2 class="section-title">👤 화자별 발언 요약</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🙋 김상윤 대표 (SnapScale)</h3>
+                    <p>
+                        • 전체 미팅 진행 및 기술 설명 주도<br>
+                        • P&ID 리포트 화면 시연, 온톨로지 기술 설명<br>
+                        • 협력 로드맵 및 비즈니스 모델 제안<br>
+                        • Fills Engineering 병행 협력 상황 투명 공유<br>
+                        <br>
+                        <em>"결국은 상호 매출이 발생했을 때 수수료를 교환하는 구조면 서로가 적극적으로 고객을 찾아다니고 시장 전체를 키울 수 있습니다."</em>
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>🙋 박규호 부장 (SnapScale 자문)</h3>
+                    <p>
+                        • 도메인 전문가 관점에서 기술적 보완 설명<br>
+                        • Critical/Warning 분류 기준 보충 설명<br>
+                        • 리포트 내 고객사명 노출 보안 이슈 즉각 지적<br>
+                        <br>
+                        <em>"P&ID만으로 ASME 코드 검증이 제한될 때 Warning을 달아줍니다. 엔지니어들의 피드백으로 Rule Base를 지속 정교화해야 합니다."</em>
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>🙋 PKU 대표</h3>
+                    <p>
+                        • 기술 검증 중심 질의(할루시네이션, Critical/Warning 기준)<br>
+                        • Phase 단계별 접근 및 인센티브 구조에 원칙적 동의<br>
+                        • 복수 경쟁사 검토 중임을 공개적으로 언급<br>
+                        • Fizz 포함 내부 발표 자리 마련 약속<br>
+                        <br>
+                        <em>"Rule Base가 우리 내부 IP가 되는 거죠. 거기에 공사 경험과 Best Practice까지 연결시키면 크게 성공할 수 있다고 봅니다."</em>
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>🙋 PKU 부사장</h3>
+                    <p>
+                        • 보고서 레이아웃 및 UX 편의성 관련 의견 제시<br>
+                        • ASME 코드 링크 기능 추가 요청<br>
+                        • 전반적으로 기술적 방향성에 긍정적 반응<br>
+                        <br>
+                        <em>"레이아웃도 괜찮고, 링크가 걸리면 편의성이 높아지겠지만 근본적으로 필요한 것들은 다 정리된 것 같습니다."</em>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 결정사항 -->
+        <div class="section" id="decisions">
+            <h2 class="section-title">✅ 결정사항</h2>
+            <table class="decision-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>결정 내용</th>
+                        <th>근거 / 배경</th>
+                        <th>상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>P&ID 리뷰 리포트 파일 PKU에 공식 발송</td>
+                        <td>PKU 내부 검토 및 정확도 자체 검증 목적</td>
+                        <td><span class="badge badge-agreed">합의</span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Phase 1 → 2 → 3 순차 진행 원칙 합의 (Rule Base 안정화 후 단계 전환)</td>
+                        <td>정확도 90%+ 미달 시 Phase 2 미전환 원칙 공유</td>
+                        <td><span class="badge badge-agreed">합의</span></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>비즈니스 모델: Option A 우선 집중, Option B는 1~2년 후 검토</td>
+                        <td>PKU 대표 주도 제안, 양 사 동의</td>
+                        <td><span class="badge badge-agreed">합의</span></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>수수료 인센티브 구조 원칙 동의 (구체적 수치는 Phase 1 완료 후 협상)</td>
+                        <td>AutoFlow 실사용 경험 후 매너 파악 전 수치 확정 불가</td>
+                        <td><span class="badge badge-pending">조건부</span></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>PKU 내부(Fizz 포함) 발표 일정 PKU 측이 마련</td>
+                        <td>최종 의사결정권자 참여 필요</td>
+                        <td><span class="badge badge-pending">진행중</span></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>대외 공유 자료에서 고객사명 제거 프로세스 즉각 적용</td>
+                        <td>박규호 부장이 미팅 중 보안 이슈 직접 지적</td>
+                        <td><span class="badge badge-agreed">즉시 이행</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 액션아이템 -->
+        <div class="section" id="actions">
+            <h2 class="section-title">🎯 액션아이템</h2>
+            <table class="action-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>과제</th>
+                        <th>담당</th>
+                        <th>기한</th>
+                        <th>우선순위</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>P&ID 리뷰 리포트 파일 정리 후 PKU 발송 (고객사명 제거 확인 후)</td>
+                        <td>김상윤 대표</td>
+                        <td>미팅 직후 즉시</td>
+                        <td><span class="badge badge-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Phase 1~3 로드맵 슬라이드 및 비용 구조 자료 PKU 발송</td>
+                        <td>김상윤 대표</td>
+                        <td>미팅 직후 즉시</td>
+                        <td><span class="badge badge-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>대외 공유 자료 보안 체크리스트 작성 및 내부 프로세스 정비</td>
+                        <td>김상윤 대표 / 박규호 부장</td>
+                        <td>즉시</td>
+                        <td><span class="badge badge-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>PKU 내부 Fizz 포함 발표 일정 조율 및 SnapScale 공식 발표 자료 준비</td>
+                        <td>PKU 대표 (일정 마련) / 김상윤 대표 (자료 준비)</td>
+                        <td>PKU 일정 확정 후</td>
+                        <td><span class="badge badge-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>경쟁업체(휴스턴·콜로라도·동유럽 개발팀) 조사 및 차별화 포인트 강화</td>
+                        <td>김상윤 대표 / 박규호 부장</td>
+                        <td>PKU 발표 전</td>
+                        <td><span class="badge badge-medium">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>ASME 코드 클릭 링크 기능 로드맵 반영 검토 (부사장 요청)</td>
+                        <td>김상윤 대표</td>
+                        <td>Phase 1 개발 시</td>
+                        <td><span class="badge badge-low">Low</span></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>피드백 템플릿 설계 (PKU 엔지니어 Rule Base 피드백용)</td>
+                        <td>김상윤 대표</td>
+                        <td>Phase 1 착수 전</td>
+                        <td><span class="badge badge-medium">Medium</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 타임라인 다이어그램 -->
+        <div class="section" id="timeline">
+            <h2 class="section-title">📅 협력 타임라인</h2>
+            <div class="diagram-container">
+                <div class="mermaid">
+gantt
+    title SnapScale–PKU 협력 로드맵
+    dateFormat YYYY-MM-DD
+    axisFormat %m/%d
+
+    section 즉시 이행
+    P&ID 리포트·자료 발송        :done, t1, 2026-04-16, 2d
+    보안 프로세스 정비            :done, t2, 2026-04-16, 3d
+
+    section PKU 내부 검토
+    PKU 내부 스터디               :active, t3, 2026-04-18, 14d
+    Fizz 포함 내부 발표           :milestone, t4, 2026-05-02, 0d
+
+    section Phase 1 착수
+    데이터 수집·온톨로지 구축     :t5, 2026-05-05, 14d
+    서버 연결·보안 문서화·NDA    :t6, 2026-05-19, 14d
+
+    section Phase 1 개발 사이클
+    사이클 1 (프로세스 모듈)      :t7, 2026-06-02, 30d
+    사이클 2 (파이핑 모듈)        :t8, 2026-07-02, 30d
+    사이클 3 (익스트루먼트 모듈)  :t9, 2026-08-01, 30d
+
+    section Phase 1 완료
+    KPI 측정·평가                 :crit, t10, 2026-09-01, 14d
+    Phase 2 진입 여부 결정        :milestone, t11, 2026-09-15, 0d
+                </div>
+            </div>
+            <div class="diagram-container">
+                <div class="mermaid">
+flowchart LR
+    A([SnapScale\nAI 기술 엔진]) -->|AutoFlow 제공| B([PKU Industries\n미국 PE 라이선스])
+    B -->|AI 외주 엔지니어링| C([미국 EPC 고객])
+    C -->|외주 수주| B
+    B -->|매출 발생 시 수수료| A
+    C -->|AI 내재화 POC 요청| D([SnapScale\nPOC 공급])
+    D -->|POC·라이선스 매출| A
+    A -->|레퍼런스 수수료| B
+                </div>
+            </div>
+        </div>
+
+        <!-- 리스크 및 기회요소 -->
+        <div class="section" id="risks">
+            <h2 class="section-title">⚡ 리스크 및 기회요소</h2>
+            <div class="risk-grid">
+                <div class="risk-card risk">
+                    <h4>⚠ 리스크</h4>
+                    <ul>
+                        <li>PKU 복수 경쟁사 병행 검토 → 최종 탈락 가능성 존재</li>
+                        <li>Fizz 의사결정권자 설득 실패 시 협력 불발</li>
+                        <li>대외 자료 고객사명 노출 등 보안 관리 미흡</li>
+                        <li>Rule Base 구축 지연 시 Phase 1 일정 초과 위험</li>
+                        <li>수수료율 미확정 상태에서 계약 진행 시 추후 갈등 소지</li>
+                        <li>Fills–PKU 간 정보 교류로 인한 협상 구도 복잡화</li>
+                    </ul>
+                </div>
+                <div class="risk-card oppo">
+                    <h4>✓ 기회요소</h4>
+                    <ul>
+                        <li>PKU 대표의 "한국 업체 긍정적" 발언 → 신뢰도 경쟁우위</li>
+                        <li>온톨로지 기반 결정론적 검증으로 할루시네이션 방지 기술 납득</li>
+                        <li>Rule Base = 양 사 공동 IP → 장기 협력 유인 강화</li>
+                        <li>3,000만 원 크레딧 구조로 PKU 초기 진입 장벽 완화</li>
+                        <li>시니어 PE 3인 체제의 스케일업 한계 → SnapScale 자동화 필요성 높음</li>
+                        <li>미국 AI 엔지니어링 시장 경쟁사 대비 도메인 특화 희소성</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 후속 계획 -->
+        <div class="section">
+            <h2 class="section-title">🔮 후속 계획</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>📤 즉시 이행</h3>
+                    <p>
+                        • P&ID 리포트·로드맵·비용 슬라이드 발송 (고객사명 제거 확인 필수)<br>
+                        • 대외 공유 자료 보안 체크리스트 즉시 정비<br>
+                        • 경쟁사 3개사 조사 착수
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>📅 PKU Fizz 발표 준비</h3>
+                    <p>
+                        • SnapScale 공식 발표 덱 업데이트 (PKU 맞춤화)<br>
+                        • Option A/B 비교 슬라이드 정교화<br>
+                        • Phase 1 KPI 정의 문서 첨부<br>
+                        • 발표 일정 PKU 측 확정 후 즉시 조율
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h3>🔄 미해결 사항</h3>
+                    <p>
+                        • 수수료율 구체적 수치 미정 (Phase 1 완료 후 협상)<br>
+                        • PKU 최종 의사결정 시점 미정<br>
+                        • Phase 1 착수 조건(파일럿 프로젝트 선정) 미확정
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /content -->
+
+    <footer>
+        Confidential &amp; Proprietary | SnapScale Internal Use Only
+    </footer>
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        themeVariables: {
+            primaryColor: '#bbdefb',
+            primaryTextColor: '#1e3c72',
+            primaryBorderColor: '#2196f3',
+            lineColor: '#5a6c7d',
+            secondaryColor: '#ffe082',
+            tertiaryColor: '#fff9c4'
+        },
+        gantt: {
+            titleTopMargin: 25,
+            barHeight: 28,
+            barGap: 8,
+            topPadding: 50,
+            leftPadding: 200,
+            gridLineStartPadding: 35,
+            fontSize: 13,
+            sectionFontSize: 13,
+            numberSectionStyles: 4,
+            axisFormat: '%m/%d',
+            useWidth: 1400
+        }
+    });
+
+    function toggleAgenda(header) {
+        const body = header.nextElementSibling;
+        const icon = header.querySelector('.toggle-icon');
+        if (body.classList.contains('collapsed')) {
+            body.classList.remove('collapsed');
+            icon.classList.add('open');
+        } else {
+            body.classList.add('collapsed');
+            icon.classList.remove('open');
+        }
+    }
+</script>
+</body>
+</html>

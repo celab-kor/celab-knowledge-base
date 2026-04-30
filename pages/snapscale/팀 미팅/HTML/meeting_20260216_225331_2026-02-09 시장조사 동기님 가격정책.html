@@ -1,0 +1,1051 @@
+아래는 회의 녹음 텍스트를 분석하여 작성한 완전한 HTML 회의록입니다.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>회의록 | 시장조사 현황 공유 및 가격정책 방향성 논의</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: #f0f2f5;
+      color: #2d3748;
+      line-height: 1.7;
+    }
+
+    /* ===== PRINT ===== */
+    @media print {
+      .sidebar, .toc-fab, .back-to-top { display: none !important; }
+      .main-content { margin-left: 0 !important; }
+      .card { break-inside: avoid; box-shadow: none !important; border: 1px solid #ddd; }
+      body { background: #fff; }
+    }
+
+    /* ===== LAYOUT ===== */
+    .layout { display: flex; min-height: 100vh; }
+
+    /* --- Sidebar / TOC --- */
+    .sidebar {
+      width: 260px;
+      min-width: 260px;
+      background: #1a2744;
+      color: #c8d3e8;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid #2e3f66;
+    }
+    .sidebar-logo .logo-badge {
+      display: inline-block;
+      background: #3b6fd4;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .sidebar-logo h1 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #e8edf8;
+      line-height: 1.4;
+    }
+    .sidebar-meta {
+      padding: 16px 24px;
+      border-bottom: 1px solid #2e3f66;
+      font-size: 0.78rem;
+    }
+    .sidebar-meta p { margin-bottom: 4px; color: #8fa3c8; }
+    .sidebar-meta span { color: #c8d3e8; font-weight: 600; }
+    .sidebar-nav { padding: 16px 0; flex: 1; }
+    .sidebar-nav .nav-section {
+      padding: 6px 24px 4px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #4e6590;
+    }
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 24px;
+      color: #8fa3c8;
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+    .sidebar-nav a:hover, .sidebar-nav a.active {
+      color: #e8edf8;
+      background: #243459;
+      border-left-color: #3b6fd4;
+    }
+    .sidebar-nav a .nav-icon { font-size: 0.9rem; width: 18px; text-align: center; }
+    .sidebar-footer {
+      padding: 16px 24px;
+      font-size: 0.72rem;
+      color: #4e6590;
+      border-top: 1px solid #2e3f66;
+    }
+
+    /* --- Main Content --- */
+    .main-content {
+      flex: 1;
+      padding: 32px 36px;
+      max-width: calc(100% - 260px);
+      overflow-x: hidden;
+    }
+
+    /* ===== HEADER HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #1a2744 0%, #2b4a8f 50%, #3b6fd4 100%);
+      border-radius: 16px;
+      padding: 40px 44px;
+      color: #fff;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: 40%;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #d0e0ff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+    .hero h2 { font-size: 1.75rem; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+    .hero-subtitle { font-size: 0.9rem; color: rgba(255,255,255,0.75); margin-bottom: 24px; }
+    .hero-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .hero-meta-item {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px 16px;
+    }
+    .hero-meta-item .label {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .hero-meta-item .value { font-size: 0.88rem; font-weight: 600; color: #fff; }
+
+    /* ===== SECTION ===== */
+    .section { margin-bottom: 36px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1a2744, #3b6fd4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1a2744;
+    }
+    .section-title span {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #718096;
+      margin-top: 1px;
+    }
+
+    /* ===== CARD ===== */
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(26,39,68,0.07);
+      padding: 28px 32px;
+      margin-bottom: 20px;
+      border: 1px solid #e8edf8;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 6px 24px rgba(26,39,68,0.11); }
+
+    /* ===== AGENDA CARDS ===== */
+    .agenda-number {
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, #1a2744, #3b6fd4);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    .agenda-title-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid #eef1f8;
+    }
+    .agenda-card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1a2744;
+    }
+    .agenda-tag {
+      margin-left: auto;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 20px;
+      background: #eef3ff;
+      color: #3b6fd4;
+      border: 1px solid #c5d5f8;
+    }
+
+    .content-block { margin-bottom: 18px; }
+    .content-block h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #3b6fd4;
+      margin-bottom: 10px;
+    }
+    .content-block p, .content-block li {
+      font-size: 0.88rem;
+      color: #4a5568;
+      line-height: 1.75;
+    }
+    .content-block ul { padding-left: 20px; }
+    .content-block ul li { margin-bottom: 5px; }
+
+    /* Insight boxes */
+    .insight-list { display: flex; flex-direction: column; gap: 10px; }
+    .insight-item {
+      display: flex;
+      gap: 12px;
+      background: #f7f9ff;
+      border-left: 4px solid #3b6fd4;
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+    }
+    .insight-item.warning { border-left-color: #e67e22; background: #fffaf5; }
+    .insight-item.success { border-left-color: #27ae60; background: #f5fdf8; }
+    .insight-item.danger  { border-left-color: #e74c3c; background: #fff5f5; }
+    .insight-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .insight-content strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1a2744;
+      margin-bottom: 3px;
+    }
+    .insight-content p { font-size: 0.81rem; color: #5a6a80; line-height: 1.6; }
+
+    /* ===== KV SUMMARY BAR ===== */
+    .kv-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .kv-item {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 22px;
+      box-shadow: 0 2px 10px rgba(26,39,68,0.07);
+      border: 1px solid #e8edf8;
+      border-top: 4px solid #3b6fd4;
+      text-align: center;
+    }
+    .kv-item.orange { border-top-color: #e67e22; }
+    .kv-item.green  { border-top-color: #27ae60; }
+    .kv-item.red    { border-top-color: #e74c3c; }
+    .kv-value { font-size: 1.9rem; font-weight: 800; color: #1a2744; }
+    .kv-label { font-size: 0.76rem; color: #718096; font-weight: 600; margin-top: 4px; }
+
+    /* ===== DECISION TABLE ===== */
+    .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid #e2e8f0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    thead tr { background: #1a2744; }
+    thead th {
+      color: #c8d3e8;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 13px 16px;
+      text-align: left;
+    }
+    tbody tr { border-bottom: 1px solid #eef1f8; transition: background 0.15s; }
+    tbody tr:hover { background: #f7f9ff; }
+    tbody td { padding: 12px 16px; color: #4a5568; vertical-align: top; }
+    tbody tr:last-child { border-bottom: none; }
+
+    /* ===== PRIORITY BADGES ===== */
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+    .badge-high   { background: #fee2e2; color: #c0392b; }
+    .badge-medium { background: #fef3c7; color: #b7791f; }
+    .badge-low    { background: #d1fae5; color: #276749; }
+    .badge-blue   { background: #dbeafe; color: #1e40af; }
+    .badge-gray   { background: #f1f5f9; color: #64748b; }
+
+    /* ===== ACTION ITEMS ===== */
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .action-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e8edf8;
+      box-shadow: 0 2px 8px rgba(26,39,68,0.06);
+      padding: 20px 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .action-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+    }
+    .action-card.high::before   { background: linear-gradient(90deg,#e74c3c,#e67e22); }
+    .action-card.medium::before { background: linear-gradient(90deg,#e67e22,#f1c40f); }
+    .action-card.low::before    { background: linear-gradient(90deg,#27ae60,#2ecc71); }
+    .action-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .action-card h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #1a2744;
+      line-height: 1.4;
+      flex: 1;
+      margin-right: 8px;
+    }
+    .action-meta { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .action-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: #718096;
+    }
+    .action-meta-row .icon { font-size: 0.85rem; }
+    .action-meta-row strong { color: #4a5568; }
+
+    /* ===== COLLAPSIBLE ===== */
+    details { margin-bottom: 12px; }
+    details summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      background: #f0f4ff;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1a2744;
+      user-select: none;
+      transition: background 0.2s;
+      border: 1px solid #d8e3f8;
+    }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before {
+      content: '▶';
+      font-size: 0.65rem;
+      color: #3b6fd4;
+      transition: transform 0.2s;
+    }
+    details[open] summary::before { transform: rotate(90deg); }
+    details[open] summary { background: #dbeafe; }
+    details .details-body {
+      padding: 16px 18px;
+      background: #fafcff;
+      border: 1px solid #d8e3f8;
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      font-size: 0.84rem;
+      color: #4a5568;
+      line-height: 1.75;
+    }
+    details .details-body ul { padding-left: 18px; }
+    details .details-body li { margin-bottom: 5px; }
+
+    /* ===== MERMAID ===== */
+    .mermaid-wrap {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #e8edf8;
+      box-shadow: 0 2px 12px rgba(26,39,68,0.07);
+      padding: 28px 24px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+    .mermaid-wrap h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #3b6fd4;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eef1f8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ===== TIMELINE ===== */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 11px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, #3b6fd4, #c5d5f8);
+      border-radius: 2px;
+    }
+    .timeline-item { position: relative; margin-bottom: 22px; }
+    .timeline-dot {
+      position: absolute;
+      left: -25px; top: 4px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #3b6fd4;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px #3b6fd4;
+    }
+    .timeline-dot.done   { background: #27ae60; box-shadow: 0 0 0 2px #27ae60; }
+    .timeline-dot.warn   { background: #e67e22; box-shadow: 0 0 0 2px #e67e22; }
+    .timeline-dot.future { background: #adb5c7; box-shadow: 0 0 0 2px #adb5c7; }
+    .timeline-content {
+      background: #fff;
+      border: 1px solid #e8edf8;
+      border-radius: 10px;
+      padding: 14px 18px;
+      box-shadow: 0 1px 6px rgba(26,39,68,0.05);
+    }
+    .timeline-date { font-size: 0.73rem; font-weight: 700; color: #3b6fd4; margin-bottom: 3px; letter-spacing: 0.04em; }
+    .timeline-label { font-size: 0.88rem; font-weight: 700; color: #1a2744; margin-bottom: 4px; }
+    .timeline-desc { font-size: 0.8rem; color: #718096; line-height: 1.55; }
+
+    /* ===== UNRESOLVED ===== */
+    .unresolved-list { display: flex; flex-direction: column; gap: 10px; }
+    .unresolved-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: #fffdf0;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 14px 18px;
+    }
+    .unresolved-item .icon { font-size: 1.1rem; flex-shrink: 0; }
+    .unresolved-item p { font-size: 0.85rem; color: #5a4a00; line-height: 1.65; }
+    .unresolved-item strong { color: #92610a; }
+
+    /* ===== FAB & BACK TO TOP ===== */
+    .back-to-top {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      background: #1a2744;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 46px; height: 46px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(26,39,68,0.3);
+      transition: all 0.2s;
+      z-index: 200;
+    }
+    .back-to-top:hover { background: #3b6fd4; transform: translateY(-3px); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main-content { max-width: 100%; padding: 20px 18px; }
+      .hero { padding: 28px 24px; }
+      .hero h2 { font-size: 1.3rem; }
+    }
+    @media (max-width: 600px) {
+      .kv-bar { grid-template-columns: repeat(2, 1fr); }
+      .action-grid { grid-template-columns: 1fr; }
+      .hero-meta-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider { height: 1px; background: #e8edf8; margin: 8px 0 24px; }
+
+    /* ===== SOURCE TAG ===== */
+    .source-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #eef3ff;
+      border: 1px solid #c5d5f8;
+      border-radius: 6px;
+      font-size: 0.73rem;
+      color: #3b6fd4;
+      padding: 2px 9px;
+      margin: 2px 3px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ======== SIDEBAR ======== -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-badge">Meeting Minutes</div>
+      <h1>시장조사 현황 공유<br>및 가격정책 방향성</h1>
+    </div>
+    <div class="sidebar-meta">
+      <p>일시: <span>2026-02-16 22:53</span></p>
+      <p>작성: <span>자동 생성 회의록</span></p>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">목차</div>
+      <a href="#overview" class="active"><span class="nav-icon">📋</span>회의 개요</a>
+      <a href="#summary-kv"><span class="nav-icon">📊</span>핵심 지표</a>
+      <a href="#agenda"><span class="nav-icon">📌</span>안건별 분석</a>
+      <a href="#decisions"><span class="nav-icon">✅</span>결정사항</a>
+      <a href="#actions"><span class="nav-icon">🚀</span>액션아이템</a>
+      <a href="#diagrams"><span class="nav-icon">📐</span>다이어그램</a>
+      <a href="#timeline-sec"><span class="nav-icon">📅</span>조사 타임라인</a>
+      <a href="#unresolved"><span class="nav-icon">⚠️</span>미해결 이슈</a>
+      <a href="#next"><span class="nav-icon">🔮</span>후속 계획</a>
+    </div>
+    <div class="sidebar-footer">
+      회의록 자동 생성 시스템 v2.0<br>© 2026 Internal Use Only
+    </div>
+  </nav>
+
+  <!-- ======== MAIN ======== -->
+  <main class="main-content">
+
+    <!-- HERO -->
+    <div class="hero" id="overview">
+      <div class="hero-badge">회의록 · Meeting Minutes</div>
+      <h2>시장조사 현황 공유 및 가격정책 방향성 논의</h2>
+      <p class="hero-subtitle">EPC·석유화학 시장조사 방법론 리뷰 및 BM·프라이싱 전략 수립을 위한 사전 현황 파악 회의</p>
+      <div class="hero-meta-grid">
+        <div class="hero-meta-item">
+          <div class="label">🗓 회의 일시</div>
+          <div class="value">2026.02.16 (월) 22:53</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">📁 원본 파일</div>
+          <div class="value">2026-02-09_시장조사_가격정책.txt</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">📍 회의 형태</div>
+          <div class="value">온라인 화상회의 (화면 공유)</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">⏱ 회의 성격</div>
+          <div class="value">지식 이전 / 방향성 논의</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">👤 주요 화자 A</div>
+          <div class="value">동현 (시장조사 수행자)</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="label">👤 주요 화자 B</div>
+          <div class="value">회의 요청자 (대표/PM 추정)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 참석자 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">👥</div>
+        <div class="section-title">참석자 정보 <span>Participants</span></div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>이름</th>
+                <th>역할 / 직책 (추정)</th>
+                <th>주요 기여</th>
+                <th>비고</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>동현</strong></td>
+                <td><span class="badge badge-blue">시장조사 담당</span></td>
+                <td>기존 시장조사 PPT 3종 브리핑, 데이터 소스 및 방법론 설명</td>
+                <td>회계사 시험 준비 중 / 보험사(재보험) 취업 희망</td>
+              </tr>
+              <tr>
+                <td><strong>상윤</strong></td>
+                <td><span class="badge badge-blue">공동 조사 참여</span></td>
+                <td>10월 브리핑 참여, 한국플랜트산업협회 자료 문의</td>
+                <td>카톡으로 자료 공유 이력 보유</td>
+              </tr>
+              <tr>
+                <td><strong>회의 요청자</strong></td>
+                <td><span class="badge badge-gray">대표 / PM 추정</span></td>
+                <td>BM·프라이싱 방향 제시, 질의 주도, 후속 조사 방향 정의</td>
+                <td>강남 취창업센터 사무실 운영</td>
+              </tr>
+              <tr>
+                <td><strong>재형</strong></td>
+                <td><span class="badge badge-gray">10월 브리핑 참여</span></td>
+                <td>1차 브리핑 참석, 질의 제기</td>
+                <td>부재 (언급만)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 핵심 지표 KV -->
+    <div class="section" id="summary-kv">
+      <div class="section-header">
+        <div class="section-icon">📊</div>
+        <div class="section-title">핵심 현황 요약 <span>Key Metrics</span></div>
+      </div>
+      <div class="kv-bar">
+        <div class="kv-item">
+          <div class="kv-value">3</div>
+          <div class="kv-label">시장조사 PPT 파일 수</div>
+        </div>
+        <div class="kv-item orange">
+          <div class="kv-value">15</div>
+          <div class="kv-label">국내 EPC 조사 기업 수</div>
+        </div>
+        <div class="kv-item green">
+          <div class="kv-value">2H</div>
+          <div class="kv-label">1차 브리핑 소요 시간</div>
+        </div>
+        <div class="kv-item red">
+          <div class="kv-value">0</div>
+          <div class="kv-label">전문가 인터뷰 성공 건수</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 안건별 분석 -->
+    <div class="section" id="agenda">
+      <div class="section-header">
+        <div class="section-icon">📌</div>
+        <div class="section-title">안건별 상세 분석 <span>Agenda Analysis</span></div>
+      </div>
+
+      <!-- 안건 1 -->
+      <div class="card">
+        <div class="agenda-title-row">
+          <div class="agenda-number">1</div>
+          <div class="agenda-card-title">시장조사 방법론 및 자료 소스 현황 공유</div>
+          <div class="agenda-tag">정보 공유</div>
+        </div>
+
+        <div class="content-block">
+          <h4>🔍 핵심 논의 내용</h4>
+          <ul>
+            <li>동현이 수행한 시장조사는 총 <strong>3개 PPT 파일</strong>과 ZIP 압축파일(220MB)로 구성되어 있으며 카톡으로 재공유됨</li>
+            <li><strong>시장조사 1</strong>: 석유화학 도메인 기초 개념(업/다운스트림, 사이클 지표) + 정유사·한국 석유화학사 대응 전략 + PwC·EY 자료 기반 2030 전망 → 넓고 얕게 조사</li>
+            <li><strong>시장조사 2</strong>: 한국플랜트산업협회 자료 기반 EPC업체별 비교 및 중동·남미 플랜트 대응 분석 → 대회 준비로 인해 미완성 상태</li>
+            <li><strong>시장조사 3 (탐샘솜용)</strong>: 국내 EPC 상위 15개사 매출 분석, DART 연간 사업보고서 활용, 석유화학·정유 섹터 집중</li>
+          </ul>
+        </div>
+
+        <div class="content-block">
+          <h4>📚 주요 자료 출처</h4>
+          <p>
+            <span class="source-tag">🔗 구글링 + 증권사 리포트</span>
+            <span class="source-tag">🔗 PwC / EY 컨설팅 자료 (GPT 번역·요약)</span>
+            <span class="source-tag">🔗 한국플랜트산업협회 자료실</span>
+            <span class="source-tag">🔗 DART 연간 사업보고서</span>
+            <span class="source-tag">🔗 OPEC World Oil Outlook (328p)</span>
+            <span class="source-tag">🔗 증권사 리서치센터 (하나·LS 등)</span>
+          </p>
+        </div>
+
+        <div class="content-block">
+          <h4>💡 안건 Insight</h4>
+          <div class="insight-list">
+            <div class="insight-item">
+              <div class="insight-icon">📐</div>
+              <div class="insight-content">
+                <strong>도메인 비전문가의 구조적 한계 인식</strong>
+                <p>조사팀 전원이 석유화학 도메인 지식 부재로 1차 조사는 기초 개념 파악 수준에 머물렀음. 이는 추후 심층 조사 시 도메인 전문가 협력의 필요성을 시사함.</p>
+              </div>
+            </div>
+            <div class="insight-item success">
+              <div class="insight-icon">✅</div>
+              <div class="insight-content">
+                <strong>공신력 있는 복합 소스 활용 전략</strong>
+                <p>구글링→증권사 리포트→컨설팅 펌→협회 자료로 이어지는 계층적 소스 검증 방식을 사용하여 자료 신뢰도를 확보함. AI(GPT)를 활용한 영문 자료 번역·요약도 효율적으로 운영됨.</p>
+              </div>
+            </div>
+            <div class="insight-item warning">
+              <div class="insight-icon">⚠️</div>
+              <div class="insight-content">
+                <strong>한국플랜트산업협회 자료실 접근 제한</strong>
+                <p>현재 유료 회원 로그인 필요로 자료실이 막혀있음. 다만 동현이 사전에 다운받아 ZIP 파일로 보관 중이므로 즉시 활용 가능. 향후 공식 가입 여부 검토 필요.</p>
+              </div>
+            </div>
+            <div class="insight-item danger">
+              <div class="insight-icon">🚨</div>
+              <div class="insight-content">
+                <strong>드라이브 데이터 손실로 남미·중동 자료 부재</strong>
+                <p>노트북 교체 과정에서 약 3GB 분량의 남미·중동 관련 핵심 자료가 유실됨. 카톡 대화 이력에서 복구 가능성 있으나 확인 필요.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 안건 2 -->
+      <div class="card">
+        <div class="agenda-title-row">
+          <div class="agenda-number">2</div>
+          <div class="agenda-card-title">국내 EPC 상위 15개사 재무 분석 방법론 검토</div>
+          <div class="agenda-tag">심층 분석</div>
+        </div>
+
+        <div class="content-block">
+          <h4>🔍 핵심 논의 내용</h4>
+          <ul>
+            <li>DART 금융감독원 공시 시스템에서 연간 사업보고서(2024~2025년도) 기반으로 15개사 매출 분석</li>
+            <li>분석 항목: 화공 부문 매출액, 수주잔액(수주금액·공정률), 부문별 이익현황</li>
+            <li><strong>삼성 E&A</strong>만 화공 매출 별도 산정 가능. 타사는 원전·발전과 통합 계상하는 경향</li>
+            <li>회계 처리 방식 차이(균등배분 vs 완공률 기준)로 연간 매출 비교의 엄밀성 한계 존재</li>
+            <li><strong>에코플랜트</strong>는 해당 기간 화공 수주 실적 전무 확인</li>
+            <li>특허 조사 시도(현대엔지니어링, 삼성) → 도메인 한계로 분석 미완성</li>
+          </ul>
+        </div>
+
+        <div class="content-block">
+          <h4>🧮 마진율 산출 불가 원인 분석</h4>
+          <ul>
+            <li><strong>대손충당금</strong> 규모의 불확실성 및 회사별 상이한 회계 처리</li>
+            <li><strong>환율 헤지</strong> (환 파생상품) 손익이 실질 마진에 미치는 영향 불투명</li>
+            <li>EPC 특성상 수주-완공 기간이 수년에 걸쳐 있어 연간 인식 매출의 의미 해석 어려움</li>
+            <li>재무전략기획 담당자 인터뷰 3건 시도 → 전원 거절 (영업기밀 이슈)</li>
+          </ul>
+        </div>
+
+        <div class="content-block">
+          <h4>💡 안건 Insight</h4>
+          <div class="insight-list">
+            <div class="insight-item">
+              <div class="insight-icon">🏗️</div>
+              <div class="insight-content">
+                <strong>DART 기반 분석은 탐색적 규모 파악 수준으로 한계 명확</strong>
+                <p>공개 재무데이터만으로는 정밀한 세그먼트 마진율 산출이 불가능함. 대손충당금, 환헤지 손익 등 비영업 항목 영향이 크기 때문으로, 보완적 정보 소스(전문가 인터뷰, 내부 IR 자료 등) 필수.</p>
+              </div>
+            </div>
+            <div class="insight-item success">
+              <div class="insight-icon">💎</div>
+              <div class="insight-content">
+                <strong>삼성 E&A가 벤치마크 기준점으로 활용 가능</strong>
+                <p>15개사 중 화공 부문 별도 산정이 가능한 유일한 기업. BM·프라이싱 기초 데이터 수집 시 삼성 E&A 중심으로 심층 분석 우선 진행 권고.</p>
+              </div>
+            </div>
+            <div class="insight-item warning">
+              <div class="insight-icon">🔑</div>
+              <div class="insight-content">
+                <strong>증권사 리서치 리포트가 예측 데이터의 최적 소스</strong>
+                <p>기업 실사 기반의 애널리스트 리포트(하나·LS 등)는 실적 예측 및 수주 전망 관련 가장 신뢰도 높은 공개 자료. 향후 BM 수립 시 주요 소스로 적극 활용 필요.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 안건 3 -->
+      <div class="card">
+        <div class="agenda-title-row">
+          <div class="agenda-number">3</div>
+          <div class="agenda-card-title">BM 모델 및 가격정책 수립 방향성 논의</div>
+          <div class="agenda-tag">전략 논의</div>
+        </div>
+
+        <div class="content-block">
+          <h4>🔍 핵심 논의 내용</h4>
+          <ul>
+            <li>현재 개발 중인 제품은 <strong>"기존 소프트웨어 공급"이 아닌 "엔지니어링 접근 방식 자체를 변경"</strong>하는 게임 체인저 포지셔닝</li>
+            <li>가격 산정 방향: <strong>프로젝트 수주 건당 비용 산정 방식</strong> (하이브리드 모델)</li>
+            <li>정밀 프라이싱을 위해 필요한 추가 데이터:
+              <ul>
+                <li>고객사 연간 Free Cash Flow (솔루션 도입 여력 파악)</li>
+                <li>화공 플랜트 수주별 마진율 (현재 공개 데이터 부재)</li>
+                <li>엔지니어링 단계별 인건비 (Engineering Manpower vs Construction Manpower 구분)</li>
+                <li>기간 단축 시 인건비 절감액 vs 조기 완공 인센티브(보너스)</li>
+                <li>리워크(재작업) 발생 시 추가 비용</li>
+                <li>납기 지연 시 페널티 조항</li>
+              </ul>
+            </li>
+            <li>결론: 기존 공개 자료로는 정밀 프라이싱 불가 → <strong>네트워크 기반 전문가 인터뷰 및 대표 보유 자료</strong>가 핵심 경로</li>
+          </ul>
+        </div>
+
+        <div class="content-block">
+          <h4>💡 안건 Insight</h4>
+          <div class="insight-list">
+            <div class="insight-item">
+              <div class="insight-icon">🎯</div>
+              <div class="insight-content">
+                <strong>가치 기반 프라이싱(Value-Based Pricing) 모델 적합성 높음</strong>
+                <p>단순 인건비 환산이 아닌, 엔지니어링 기간 단축·리워크 감소·조기완공 인센티브를 종합한 가치 기반 가격 모델이 적합함. 이를 위해 고객사의 FCF, 프로젝트 마진 구조 파악이 선행되어야 함.</p>
+              </div>
+            </div>
+            <div class="insight-item warning">
+              <div class="insight-icon">🔐</div>
+              <div class="insight-content">
+                <strong>공개 데이터의 근본적 한계 → 네트워크 인텔리전스 필수</strong>
+                <p>EPC 기업의 계약 구조, 페널티 조항, 실질 마진율은 비공개 영역. 대표 보유 기존 네트워크(EPC 관계자, 기업보험 전문가 등)를 통한 접근이 유일하고 효과적인 경로임.</p>
+              </div>
+            </div>
+            <div class="insight-item success">
+              <div class="insight-icon">🌐</div>
+              <div class="insight-content">
+                <strong>OPEC World Oil Outlook이 수요 측면 근거자료로 활용 가능</strong>
+                <p>2030~2034년 공급 부족(쇼티지) 예측 구간은 솔루션 필요성 및 시장 타이밍 근거로 활용 가능. 투자자·고객 대상 피칭 자료에 인용 권고.</p>
+              </div>
+            </div>
+            <div class="insight-item danger">
+              <div class="insight-icon">⚡</div>
+              <div class="insight-content">
+                <strong>BM·프라이싱은 기존 시장조사와 별개의 심층 작업 필요</strong>
+                <p>현재까지의 시장조사는 탐색적 규모 파악 수준으로 BM·프라이싱 수립에는 직접 활용이 어려움. 별도 Phase로 분리하여 접근 방식과 데이터 소스를 새롭게 설계해야 함.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 결정사항 -->
+    <div class="section" id="decisions">
+      <div class="section-header">
+        <div class="section-icon">✅</div>
+        <div class="section-title">결정사항 <span>Decisions Made</span></div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>결정 내용</th>
+                <th>결정 근거</th>
+                <th>담당</th>
+                <th>기한</th>
+                <th>우선순위</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>D-1</strong></td>
+                <td>기존 시장조사 자료 3종 + ZIP 파일 전체를 회의 요청자에게 공유 완료</td>
+                <td>BM·프라이싱 수립의 기초 자료로 활용</td>
+                <td>동현</td>
+                <td>회의 당일 완료</td>
+                <td><span class="badge badge-high">High</span></td>
+              </tr>
+              <tr>
+                <td><strong>D-2</strong></td>
+                <td>BM·프라이싱 조사는 기존 공개 자료 접근 방식과는 별도로, 대표 네트워크 기반 인터뷰 중심으로 진행</td>
+                <td>공개 데이터의 구조적 한계 확인</td>
+                <td>대표(회의 요청자)</td>
+                <td>차기 회의 전</td>
+                <td><span class="badge badge-high">High</span></td>
+              </tr>
+              <tr>
+                <td><strong>D-3</strong></td>
+                <td>유실된 남미·중동 자료를 카톡 대화 이력에서 복구 시도 후 재공유</td>
+                <td>드라이브 손실로 현재 접근 불가</td>
+                <td>동현</td>
+                <td>일정 확인 시</td>
+                <td><span class="badge badge-medium">Medium</span></td>
+              </tr>
+              <tr>
+                <td><strong>D-4</strong></td>
+                <td>가격 모델을 단순 소프트웨어 라이선스가 아닌 프로젝트 수주 건당 하이브리드 과금 방식으로 방향 설정</td>
+                <td>게임 체인저 포지셔닝에 부합하는 수익모델 필요성</td>
+                <td>대표(회의 요청자)</td>
+                <td>BM 설계 단계</td>
+                <td><span class="badge badge-high">High</span></td>
+              </tr>
+              <tr>
+                <td><strong>D-5</strong></td>
+                <td>증권사 리서치센터(하나·LS 등)를 향후 조사의 주요 소스로 활용</td>
+                <td>기업 실사 기반 예측 데이터로 신뢰도 높음</td>
+                <td>회의 요청자 + 동현</td>
+                <td>조사 진행 시</td>
+                <td><span class="badge badge-medium">Medium</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 액션아이템 -->
+    <div class="section" id="actions">
+      <div class="section-header">
+        <div class="section-icon">🚀</div>
+        <div class="section-title">액션아이템 <span>Action Items</span></div>
+      </div>
+      <div class="action-grid">
+
+        <div class="action-card high">
+          <div class="action-card-header">
+            <h4>카톡 대화 이력에서 유실 자료 복구 및 재공유</h4>
+            <span class="badge badge-high">High</span>
+          </div>
+          <p style="font-size:0.82rem;color:#4a5568;">남미·중동 오일·가스 관련 수집 자료(드라이브 손실분)를 상윤님과의 카톡 이력에서 찾아 재전달</p>
+          <div class="action-meta">
+            <div class="action-meta-row"><span class="icon">👤</span><strong>담당:</strong> 동현</div>
+            <div class="action-meta-row"><span class="icon">📅</span><strong>기한:</strong> 시험 종료 후 가능한 시점</div>
+            <div class="action-meta-row"><span class="icon">✔️</span><strong>완료기준:</strong> 자료 공유 확인 메시지 수신</div>
+          </div>
+        </div>
+
+        <div class="action-card high">
+          <div class="action-card-header">
+            <h4>네트워크 기반 EPC 전문가 인터뷰 설계 및 대상 발굴</h4>
+            <span class="badge badge-high">High</span>
+          </div>
+          <p style="font-size:0.82rem;color:#4a5568;">대표 기존 네트워크(기업보험, EPC 재무전략, IR 담당자 등)를 통해 인터뷰 가능한 전문가 리스트업 및 컨택</p>
+          <div class="action-meta">
+            <div class="action-meta-row"><span class="icon">👤</span><strong>담당:</strong> 대표(회의 요청자)</div>
+            <div class="action-meta-row"><span class="icon">📅</span><strong>기한:</strong> 2026년 3월 중</div>
+            <div class="action-meta-row"><span class="icon">✔️</span><strong>완료기준:</strong> 인터뷰 일정 1건 이상 확정</div>
+          </div>
+        </div>
+
+        <div class="action-card high">
+          <div class="action-card-header">
+            <h4>BM·프라이싱 수립용 추가 조사 항목 정의서 작성</h4>
+            <span class="badge badge-high">High</span>
+          </div>
+          <p style="font-size:0.82rem;color:#4a5568;">FCF 분석, 단계별 인건비, 리워크 비용, 조기완공 인센티브, 페널티 구조 등 필요 데이터 목록 체계화</p>
+          <div class="action-meta">
+            <div class="action-meta-row"><span class="icon">👤</span><strong>담당:</strong> 대표(회의 요청자)</div>
+            <div class="action-meta-row"><span class="icon">📅</span><strong>기한:</strong> 2026년 2월 말</div>
+            <div class="action-meta-row"><span class="icon">✔️</span><strong>완료기준:</strong> 조사 항목 정의서 초안 완성</div>
+          </div>
+        </div>
+
+        <div class="action-card medium">
+          <div class="action-card-header">
+            <h4>한국플랜트산업협회 유료 회원 가입 검토</h4>
+            <span class="badge badge-medium">Medium</span>
+          </div>
+          <p style="font-size:0.82rem;color:#4a5568;">자료실 접근을 위한 회원 가입 비용·절차 확인 및 가입 여부 의사결정. 포스코인터내셔널 등 강사 자료 포함된 유용한 소스</p>
+          <div class="action-meta">
+            <div class="action-meta-row"><span class="icon">👤</span><strong>담당:</strong> 동현 or 대표</div>
+            <div class="action-meta-row"><span class="icon">📅</span><strong>기한:</strong> 2026년 3월 초</div>
+            <div class="action-meta-row"><span class="icon">✔️</span><strong>완료기준:</strong> 가입 완료 또는 불가 사유 확인</div>
+          </div>
+        </div>
+
+        <div class="action-card medium">
+          <div class="action-card-header">
+            <h4>삼성 E&A 화공 부문 심층 분석 자료 별도 정리</h4>
+            <span class="badge badge-medium">Medium</span>
+          </div>
+          <p style="font-size:0.82rem;color:#4a5568;">현재 15개사 중 유일하게 화공 매출 별도 산정 가능한 삼성 E&A 대상으로 수주 구조, 마진 추이 추가 분석</p>
+          <div class="action-meta">
+            <div class="action-meta-row"><span class="icon">👤</span><strong>담당:</strong> 동현</div>
+            <div class="action-meta-row"><span class="icon">📅</span><strong>기한:</strong> 시험 이후</div>
+            <div class="action-meta-row"><span class="icon">✔️</span><strong>완료기준:</strong> 별도 분석 문서 공유</div>
+          </div>
+        </div>
+
+        <div class="action-card medium">
+          <div class="action-card-header">
+            <h4>OPEC World Oil Outlook 쇼티지 구간 발췌 슬라이드 작성</h4>
+            <span class="badge badge-medium">Medium</span>
+          </div>
+          <p style="font-size:0.82rem;color:#4a5584;">2030~2034년 공급 부족 예측 구간을 피칭 자료용으로 정리. 솔루션 시장 기회 근거로 활용 가능</p>
+          <div class="action-meta">
+            <div class="action-meta-row"><span class="icon">👤</span><strong>담당:</strong> 회의 요청자</div>
+            <div class="action-meta-row"><span class="icon">📅</span><strong>기한:</strong> 다음 외부 피칭 전</div>
+            <div class="action-meta-row"><span class="icon">✔️</span><strong>완료기준:</strong> 피칭 덱 내 해당 슬라이드 삽입</div>
+          </div>
+        </div>
+
+        <div class="action-card low">
+          <div class="action-card-header">
+            <h4>사무실 방문 일정 조율 (강남 취창업센터)</h4>
+            <span class="badge badge-low">Low</span>
+          </div>
+          <p style="font-size:0.82rem;color:#4a5568;">동현 회계사/개비사 시험 종료 후 사무실 방문하여 대면 협업 기회 마련</p>
+          
