@@ -1344,58 +1344,73 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
+
 <script id="celab-inline-editor">
 (function(){
   if(window.location.protocol!=='file:') return;
-  var GOLD='#c9a84c',NAVY='#0d1b2a',RED='#e05c5c';
+  var GOLD='#c9a84c',NAVY='#0d1b2a',RED='#e05c5c',TEAL='#2c7a7b';
   var SEL='h1,h2,h3,h4,h5,h6,p,li,td,th';
   var SKIP=['nav','script','style','code','pre','button','a'];
   var active=false;
-  var fab=document.createElement('div');
-  fab.id='celab-fab';
-  fab.textContent='✏️ 편집';
-  Object.assign(fab.style,{position:'fixed',bottom:'28px',right:'28px',zIndex:'99999',
-    background:GOLD,color:NAVY,padding:'10px 20px',borderRadius:'24px',fontWeight:'700',
-    fontSize:'14px',cursor:'pointer',boxShadow:'0 4px 20px rgba(0,0,0,0.5)',
-    fontFamily:'Apple SD Gothic Neo,Noto Sans KR,sans-serif',userSelect:'none',transition:'all .2s'});
-  document.body.appendChild(fab);
+
+  function mkBtn(id,text,color,bottom){
+    var b=document.createElement('div');
+    b.id=id; b.textContent=text;
+    Object.assign(b.style,{position:'fixed',bottom:bottom,right:'28px',zIndex:'99999',
+      background:color,color:color===GOLD?NAVY:'#fff',padding:'10px 20px',borderRadius:'24px',
+      fontWeight:'700',fontSize:'14px',cursor:'pointer',boxShadow:'0 4px 20px rgba(0,0,0,0.5)',
+      fontFamily:'Apple SD Gothic Neo,Noto Sans KR,sans-serif',userSelect:'none',transition:'all .2s'});
+    document.body.appendChild(b); return b;
+  }
+  var fabEdit=mkBtn('celab-fab-edit','✏️ 편집',GOLD,'28px');
+  var fabLayout=mkBtn('celab-fab-layout','🔄 레이아웃',TEAL,'76px');
+
   function toast(msg,ok){
-    var t=document.createElement('div');
-    t.textContent=msg;
-    Object.assign(t.style,{position:'fixed',bottom:'80px',right:'28px',zIndex:'99999',
+    var t=document.createElement('div'); t.textContent=msg;
+    Object.assign(t.style,{position:'fixed',bottom:'132px',right:'28px',zIndex:'99999',
       background:ok?'#2f855a':'#c53030',color:'#fff',padding:'10px 18px',borderRadius:'12px',
       fontSize:'13px',fontFamily:'Apple SD Gothic Neo,Noto Sans KR,sans-serif',
       boxShadow:'0 4px 16px rgba(0,0,0,0.4)',transition:'opacity .4s'});
     document.body.appendChild(t);
-    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},2800);
+    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},3000);
   }
+
   function getEditables(){
     return [].filter.call(document.querySelectorAll(SEL),function(el){
       if(SKIP.some(function(s){return el.closest(s);})) return false;
-      var hasBlock=[].some.call(el.children,function(c){return /^(div|p|ul|ol|table|section|article)$/i.test(c.tagName);});
-      return !hasBlock;
+      if(['celab-fab-edit','celab-fab-layout'].indexOf(el.id)>=0) return false;
+      return ![].some.call(el.children,function(c){return /^(div|p|ul|ol|table|section|article)$/i.test(c.tagName);});
     });
   }
-  fab.addEventListener('click',function(){
+
+  function serializeHtml(){
+    // DOM 클론으로 저장 — 편집 버튼은 live DOM에 유지, 클론에서만 아티팩트 제거
+    var clone=document.documentElement.cloneNode(true);
+    clone.querySelectorAll('[contenteditable]').forEach(function(el){
+      el.removeAttribute('contenteditable');
+      el.style.outline=''; el.style.borderRadius=''; el.style.minHeight='';
+    });
+    return '<!DOCTYPE html>\\n'+clone.outerHTML;
+  }
+
+  // ── 텍스트 편집 버튼 ──────────────────────────────────────
+  fabEdit.addEventListener('click',function(){
     if(!active){
       active=true;
-      fab.textContent='💾 저장';fab.style.background=RED;fab.style.color='#fff';
+      fabEdit.textContent='💾 저장'; fabEdit.style.background=RED; fabEdit.style.color='#fff';
       getEditables().forEach(function(el){
         el.contentEditable='true';
         el.style.outline='1px dashed rgba(201,168,76,0.5)';
-        el.style.borderRadius='3px';el.style.minHeight='1em';
+        el.style.borderRadius='3px'; el.style.minHeight='1em';
       });
       toast('편집 모드 — 텍스트를 클릭해 수정하세요',true);
     } else {
       active=false;
-      fab.textContent='✏️ 편집';fab.style.background=GOLD;fab.style.color=NAVY;
+      fabEdit.textContent='✏️ 편집'; fabEdit.style.background=GOLD; fabEdit.style.color=NAVY;
       getEditables().forEach(function(el){
-        el.contentEditable='false';el.style.outline='';el.style.borderRadius='';
+        el.contentEditable='false'; el.style.outline=''; el.style.borderRadius='';
       });
-      var sc=document.getElementById('celab-inline-editor');
-      var scBak=sc.cloneNode(true);sc.remove();
-      var html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
-      document.body.appendChild(scBak);
+      var html=serializeHtml();
       var fp=decodeURIComponent(window.location.pathname);
       if(window.electronAPI&&window.electronAPI.saveHtml){
         window.electronAPI.saveHtml({filePath:fp,html:html}).then(function(r){
@@ -1405,11 +1420,44 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);
       } else {
         var a=document.createElement('a');
         a.href='data:text/html;charset=utf-8,'+encodeURIComponent(html);
-        a.download=(document.title||'celab')+'_edited.html';
-        a.click();
+        a.download=(document.title||'celab')+'_edited.html'; a.click();
         toast('💾 수정본 다운로드 완료',true);
       }
     }
+  });
+
+  // ── 레이아웃 업데이트 버튼 ────────────────────────────────
+  fabLayout.addEventListener('click',function(){
+    if(active){ toast('⚠️ 편집 모드를 먼저 저장/취소하세요',false); return; }
+    if(!(window.electronAPI&&window.electronAPI.updateHtmlLayout)){
+      toast('❌ Electron 앱에서만 사용 가능합니다',false); return;
+    }
+    // 메타데이터 추출
+    var meta={};
+    var metaEl=document.getElementById('celab-metadata');
+    if(metaEl){try{meta=JSON.parse(metaEl.textContent);}catch(e){}}
+    // 페이지 텍스트 콘텐츠 구조화
+    var lines=[];
+    document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td').forEach(function(el){
+      if(el.closest('nav,script,style,#celab-fab-edit,#celab-fab-layout')) return;
+      var t=el.textContent.trim();
+      if(t.length<2) return;
+      var tag=el.tagName.toLowerCase();
+      var pfx=tag==='h1'?'# ':tag==='h2'?'## ':tag==='h3'?'### ':tag==='h4'?'#### ':tag==='li'?'- ':'';
+      lines.push(pfx+t);
+    });
+    var textContent=lines.join('\\n');
+    var fp=decodeURIComponent(window.location.pathname);
+    fabLayout.textContent='⏳ 재생성 중...'; fabLayout.style.opacity='0.7'; fabLayout.style.cursor='default';
+    window.electronAPI.updateHtmlLayout({filePath:fp,textContent:textContent,metadata:meta})
+      .then(function(r){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        if(r.success) toast('✅ 레이아웃 재생성 완료 — 창 새로고침 중...',true);
+        else toast('❌ 재생성 실패: '+r.error,false);
+      }).catch(function(e){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        toast('❌ 오류: '+e.message,false);
+      });
   });
 })();
 </script>
