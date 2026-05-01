@@ -1344,5 +1344,74 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
+<script id="celab-inline-editor">
+(function(){
+  if(window.location.protocol!=='file:') return;
+  var GOLD='#c9a84c',NAVY='#0d1b2a',RED='#e05c5c';
+  var SEL='h1,h2,h3,h4,h5,h6,p,li,td,th';
+  var SKIP=['nav','script','style','code','pre','button','a'];
+  var active=false;
+  var fab=document.createElement('div');
+  fab.id='celab-fab';
+  fab.textContent='✏️ 편집';
+  Object.assign(fab.style,{position:'fixed',bottom:'28px',right:'28px',zIndex:'99999',
+    background:GOLD,color:NAVY,padding:'10px 20px',borderRadius:'24px',fontWeight:'700',
+    fontSize:'14px',cursor:'pointer',boxShadow:'0 4px 20px rgba(0,0,0,0.5)',
+    fontFamily:'Apple SD Gothic Neo,Noto Sans KR,sans-serif',userSelect:'none',transition:'all .2s'});
+  document.body.appendChild(fab);
+  function toast(msg,ok){
+    var t=document.createElement('div');
+    t.textContent=msg;
+    Object.assign(t.style,{position:'fixed',bottom:'80px',right:'28px',zIndex:'99999',
+      background:ok?'#2f855a':'#c53030',color:'#fff',padding:'10px 18px',borderRadius:'12px',
+      fontSize:'13px',fontFamily:'Apple SD Gothic Neo,Noto Sans KR,sans-serif',
+      boxShadow:'0 4px 16px rgba(0,0,0,0.4)',transition:'opacity .4s'});
+    document.body.appendChild(t);
+    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},2800);
+  }
+  function getEditables(){
+    return [].filter.call(document.querySelectorAll(SEL),function(el){
+      if(SKIP.some(function(s){return el.closest(s);})) return false;
+      var hasBlock=[].some.call(el.children,function(c){return /^(div|p|ul|ol|table|section|article)$/i.test(c.tagName);});
+      return !hasBlock;
+    });
+  }
+  fab.addEventListener('click',function(){
+    if(!active){
+      active=true;
+      fab.textContent='💾 저장';fab.style.background=RED;fab.style.color='#fff';
+      getEditables().forEach(function(el){
+        el.contentEditable='true';
+        el.style.outline='1px dashed rgba(201,168,76,0.5)';
+        el.style.borderRadius='3px';el.style.minHeight='1em';
+      });
+      toast('편집 모드 — 텍스트를 클릭해 수정하세요',true);
+    } else {
+      active=false;
+      fab.textContent='✏️ 편집';fab.style.background=GOLD;fab.style.color=NAVY;
+      getEditables().forEach(function(el){
+        el.contentEditable='false';el.style.outline='';el.style.borderRadius='';
+      });
+      var sc=document.getElementById('celab-inline-editor');
+      var scBak=sc.cloneNode(true);sc.remove();
+      var html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+      document.body.appendChild(scBak);
+      var fp=decodeURIComponent(window.location.pathname);
+      if(window.electronAPI&&window.electronAPI.saveHtml){
+        window.electronAPI.saveHtml({filePath:fp,html:html}).then(function(r){
+          if(r.success) toast('✅ 저장 완료 — GitHub 자동 동기화 중',true);
+          else toast('❌ 저장 실패: '+r.error,false);
+        }).catch(function(e){toast('❌ 오류: '+e.message,false);});
+      } else {
+        var a=document.createElement('a');
+        a.href='data:text/html;charset=utf-8,'+encodeURIComponent(html);
+        a.download=(document.title||'celab')+'_edited.html';
+        a.click();
+        toast('💾 수정본 다운로드 완료',true);
+      }
+    }
+  });
+})();
+</script>
 </body>
 </html>
