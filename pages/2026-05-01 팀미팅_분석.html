@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신의스케일 주간 회의록 | 사업 진행 현황 및 기술 논의</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy2: #1a2d45;
+  --gold: #c9a84c;
+  --gold2: #e8c96a;
+  --text: #e8edf2;
+  --muted: #8a9bb0;
+  --card-bg: #162030;
+  --card-border: #243450;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: var(--navy);
+  color: var(--text);
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  line-height: 1.7;
+}
+
+/* ── NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,27,42,0.97);
+  border-bottom: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-logo {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  padding: 0.75rem 0.8rem 0.75rem 0;
+  white-space: nowrap;
+  border-right: 1px solid var(--card-border);
+  margin-right: 0.5rem;
+}
+.nav-inner a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.78rem;
+  padding: 0.75rem 0.6rem;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+.nav-inner a:hover { color: var(--gold2); }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a2d45 40%, #0f2235 70%, #162030 100%);
+  padding: 4rem 1.5rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(201,168,76,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.05em;
+}
+.hero h1 {
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.hero-sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 2.5rem;
+}
+.kpi-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.kpi-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.2rem 1.8rem;
+  min-width: 140px;
+  text-align: center;
+}
+.kpi-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1;
+}
+.kpi-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
+/* ── MAIN LAYOUT ── */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* ── SECTION TITLE ── */
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--card-border);
+}
+.section-emoji { font-size: 1.3rem; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.9rem;
+}
+.card-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.card-icon.gold { background: rgba(201,168,76,0.15); }
+.card-icon.blue { background: rgba(59,130,246,0.15); }
+.card-icon.green { background: rgba(34,197,94,0.15); }
+.card-icon.purple { background: rgba(168,85,247,0.15); }
+.card-icon.orange { background: rgba(249,115,22,0.15); }
+
+.card-title { font-size: 1rem; font-weight: 700; color: var(--text); }
+.card-sub { font-size: 0.78rem; color: var(--muted); }
+
+/* ── DETAILS / ACCORDION ── */
+details {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+}
+details[open] { border-color: var(--gold); }
+summary {
+  padding: 1rem 1.4rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  user-select: none;
+  transition: background 0.2s;
+}
+summary:hover { background: rgba(201,168,76,0.06); }
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: '▾';
+  color: var(--gold);
+  font-size: 1rem;
+  transition: transform 0.25s;
+}
+details[open] summary::after { transform: rotate(180deg); }
+.details-body {
+  padding: 0 1.4rem 1.2rem;
+  border-top: 1px solid var(--card-border);
+  margin-top: 0;
+}
+.details-body p, .details-body li {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+.details-body ul { padding-left: 1.2rem; margin-top: 0.5rem; }
+.details-body li { margin-bottom: 0.3rem; }
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.04));
+  border: 1px solid rgba(201,168,76,0.4);
+  border-left: 4px solid var(--gold);
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 0.8rem;
+}
+.highlight-box .hl-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.4rem;
+}
+.highlight-box p { font-size: 0.88rem; color: var(--text); }
+
+.info-box {
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.25);
+  border-left: 4px solid #3b82f6;
+  border-radius: 10px;
+  padding: 1rem 1.3rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+.warn-box {
+  background: rgba(249,115,22,0.08);
+  border: 1px solid rgba(249,115,22,0.25);
+  border-left: 4px solid #f97316;
+  border-radius: 10px;
+  padding: 1rem 1.3rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+/* ── ACTION ITEMS ── */
+.action-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+.action-table th {
+  background: var(--navy2);
+  color: var(--muted);
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+.action-table td {
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid var(--card-border);
+  color: var(--text);
+  vertical-align: top;
+}
+.action-table tr:last-child td { border-bottom: none; }
+.action-table tr:hover td { background: rgba(201,168,76,0.03); }
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.badge-high { background: rgba(239,68,68,0.2); color: #f87171; }
+.badge-mid  { background: rgba(249,115,22,0.2); color: #fb923c; }
+.badge-low  { background: rgba(34,197,94,0.2); color: #4ade80; }
+.badge-gold { background: rgba(201,168,76,0.2); color: var(--gold2); }
+.badge-blue { background: rgba(59,130,246,0.2); color: #60a5fa; }
+.badge-confirmed { background: rgba(34,197,94,0.15); color: #4ade80; }
+.badge-pending   { background: rgba(249,115,22,0.15); color: #fb923c; }
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+@media(max-width: 768px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* ── PIPELINE ── */
+.pipeline-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  border-bottom: 1px solid var(--card-border);
+  font-size: 0.87rem;
+}
+.pipeline-row:last-child { border-bottom: none; }
+.pipeline-name { font-weight: 600; flex: 0 0 100px; }
+.pipeline-bar-wrap { flex: 1; background: var(--navy2); border-radius: 6px; height: 8px; overflow: hidden; }
+.pipeline-bar { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+.pipeline-status { flex: 0 0 90px; text-align: right; }
+
+/* ── MERMAID ── */
+.mermaid-wrap {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+.mermaid-wrap h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.mermaid { color: var(--text); }
+
+/* ── INSIGHT CHIPS ── */
+.insight-list { list-style: none; padding: 0; margin-top: 0.8rem; }
+.insight-list li {
+  display: flex; gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--card-border);
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+.insight-list li:last-child { border-bottom: none; }
+.insight-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0; margin-top: 0.4rem;
+}
+
+/* ── DECISION CARD ── */
+.decision-card {
+  background: linear-gradient(135deg, rgba(201,168,76,0.07), transparent);
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 0.8rem;
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+.decision-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gold); color: var(--navy);
+  font-size: 0.8rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.decision-content .dc-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; }
+.decision-content .dc-body { font-size: 0.83rem; color: var(--muted); }
+
+/* ── DIVIDER ── */
+.section-gap { margin-top: 2.5rem; }
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--navy2);
+  border-top: 1px solid var(--card-border);
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ── SCROLL SMOOTH ── */
+html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+<div id="celab-home-btn" style="position:fixed;top:14px;right:14px;z-index:10000;">
+  <a href="https://celab-kor.github.io/celab-knowledge-base/" target="_blank" style="display:flex;align-items:center;gap:7px;
+            background:rgba(13,27,42,0.88);color:#c9a84c;
+            padding:7px 13px;border-radius:22px;
+            font-size:13px;font-weight:700;text-decoration:none;
+            box-shadow:0 2px 10px rgba(0,0,0,0.35);
+            border:1px solid rgba(201,168,76,0.35);
+            backdrop-filter:blur(6px);
+            transition:background 0.2s;" onmouseover="this.style.background='rgba(13,27,42,1)'" onmouseout="this.style.background='rgba(13,27,42,0.88)'" title="CELab 지식창고 홈으로">
+    <svg width="15" height="15" viewBox="0 0 20 20" fill="#c9a84c" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z"></path>
+    </svg>
+    CELab 지식창고
+  </a>
+</div>
+
+<!-- ══════════════════════════════════════════ NAV ══════════════════════════════════════════ -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-logo">📋 회의록</div>
+    <a href="#overview">개요</a>
+    <a href="#agenda1">필즈 프로젝트</a>
+    <a href="#agenda2">한울 지원사업</a>
+    <a href="#agenda3">파이프라인</a>
+    <a href="#agenda4">파트너십</a>
+    <a href="#agenda5">인력·재무</a>
+    <a href="#agenda6">기술 토의</a>
+    <a href="#decisions">결정사항</a>
+    <a href="#actions">액션아이템</a>
+    <a href="#diagrams">다이어그램</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════ HERO ══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-badge">🏢 신의스케일 주간 회의</div>
+  <h1 style="">사업 진행 현황 및<br>기술 전략 논의</h1>
+  <p class="hero-sub" style="">화공플랜트 AI 자동화 · 투자 라운드 · 인력 채용 계획 · 엔지니어링 기술 Q&amp;A</p>
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-num">6+</div>
+      <div class="kpi-label">참석자 수</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">8</div>
+      <div class="kpi-label">논의 안건 수</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">14</div>
+      <div class="kpi-label">액션 아이템</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ MAIN ══════════════════════════════════════════ -->
+<div class="container">
+
+  <!-- ── 회의 개요 ── -->
+  <section id="overview" class="section-gap">
+    <div class="section-title"><span class="section-emoji">📌</span>회의 개요</div>
+    <div class="grid-2">
+      <div class="card">
+        <table style="width:100%;font-size:0.85rem;">
+          <tbody><tr><td style="color: var(--muted); padding: 0.35rem 0px; width: 90px;">일시</td><td style="color: var(--text);">최근 주간 (5월 초 추정)</td></tr>
+          <tr><td style="color: var(--muted); padding: 0.35rem 0px;">형식</td><td style="color: var(--text);">온라인 (Slack 허들)</td></tr>
+          <tr><td style="color: var(--muted); padding: 0.35rem 0px;">주관</td><td style="color: var(--text);">대표 (상윤)</td></tr>
+          <tr><td style="color: var(--muted); padding: 0.35rem 0px;">참석</td><td style="color: var(--text);">대표, 이종현 부장, 박규호 부장, 이재윤, 정다소, 이종석</td></tr>
+          <tr><td style="color: var(--muted); padding: 0.35rem 0px;">도구</td><td style="color: var(--text);">Slack 허들 → 다음부터 Google Meet 전환 예정</td></tr>
+        </tbody></table>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon gold">🎯</div>
+          <div>
+            <div class="card-title">핵심 논의 주제</div>
+            <div class="card-sub">이번 회의 3대 포커스</div>
+          </div>
+        </div>
+        <ul class="insight-list">
+          <li style=""><span class="insight-dot"></span>필즈 1년 프로젝트 수주 확정 및 견적 자동화 전략</li>
+          <li style=""><span class="insight-dot"></span>한울·화물안전원 지원사업 당락 및 파트너십 계약</li>
+          <li style=""><span class="insight-dot"></span>투자 라운드 + 개발자 채용 + 재무 플래닝 완료 보고</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 안건 1: 필즈 프로젝트 ══ -->
+  <section id="agenda1" class="section-gap">
+    <div class="section-title"><span class="section-emoji">🏭</span>안건 1 — 필즈(FIELDS) 프로젝트</div>
+
+    <div class="highlight-box">
+      <div class="hl-title">💡 핵심 요약</div>
+      <p style="">계약서 완료·도장 대기 중. 계약금 <strong>1억 9천만원</strong> 한 달 이내 수령 예정. 내년 4월까지 <strong>견적 파트 전주기 자동화</strong> 수행. 현재 전 부서 실무자 인터뷰 진행 중.</p>
+    </div>
+
+    <details open="">
+      <summary>📋 안건 내용 상세</summary>
+      <div class="details-body">
+        <ul>
+          <li style="">계약서 내용 완료 → 도장 날인만 남은 상태</li>
+          <li style="">계약금 1억 9천만원 명시, 한 달 이내 입금 예정</li>
+          <li style="">프로젝트 기간: 현재 ~ 내년 4월 (약 1년)</li>
+          <li style="">범위: 피드(Feed) 파트 견적 전주기 자동화 → 견적 자동화 포함</li>
+          <li style="">현황: 전 부서 실무자 대상 약 8시간 논스톱 인터뷰 완료</li>
+          <li style="">다음 인터뷰 대상: 소방, HVAC, 구매 부서 (다음 주 예정)</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>🔍 견적 자동화 — 설계 전주기 자동화의 '초성' 역할</summary>
+      <div class="details-body">
+        <p style="margin-bottom: 0.7rem;">이번 인터뷰를 통해 발견된 핵심 인사이트:</p>
+        <ul>
+          <li style=""><strong>견적팀이 전체 스케줄 수립</strong> → 각 딜리버러블 물량을 각 부서에 배분</li>
+          <li style="">각 부서(공정팀, 배관팀 등)가 P&amp;ID 장수·라인 수·계장 수 등을 산출</li>
+          <li style="">산출 방식: 레퍼런스 기반 추정 또는 직접 수량 산정</li>
+          <li style=""><strong>결론:</strong> 견적 업무에서도 부분적 도면 인식(라인 수, 장비 수, 계장 수 카운팅)이 필수 → 도면 해석 기능이 자연스럽게 포함됨</li>
+          <li style="">이로써 <strong>견적 자동화 ⊃ 설계 자동화의 서브셋</strong>이라는 구조 확인</li>
+          <li style="">필즈 대표 요청 사항이자, 연구소장(이종혁 원장)의 '기본 설계 전중기 자동화' 추진과 맞닿아 있음</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>💬 이종혁 원장 코멘트 — 견적 자동화 평가</summary>
+      <div class="details-body">
+        <p style="">견적은 <strong>정확도보다 스피드</strong>가 핵심. AI가 사람보다 압도적으로 빠르므로 충분한 의미가 있음. 논리적 견적 과정을 설명할 수 있으면 충분. 상세 설계 단계의 고정밀 요구와는 다른 기준 적용 가능.</p>
+      </div>
+    </details>
+
+    <div class="grid-3" style="margin-top:1rem;">
+      <div class="info-box"><strong>데이터 리스크</strong><br>필즈의 데이터 품질/제공 수준 불확실 → 모니터링 필요</div>
+      <div class="info-box"><strong>도면 인식 범위</strong><br>P&amp;ID 기반 라인·장비·계장 카운팅 포함 → 핵심 기술 요소</div>
+      <div class="info-box"><strong>연구소장 추진</strong><br>기본 설계 전중기 자동화 강력 추진 의지 → 협력 필수</div>
+    </div>
+
+    <div style="margin-top:1rem;">
+      <div class="section-title" style="font-size:1rem;"><span>💡</span>안건 인사이트</div>
+      <ul class="insight-list" style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:1rem 1.2rem;">
+        <li style=""><span class="insight-dot"></span><strong>도면 인식이 핵심 기술:</strong> 견적 단계에서도 P&amp;ID 도면의 라인·장비 카운팅이 필요 → 이후 설계 자동화의 공통 엔진으로 활용 가능</li>
+        <li style=""><span class="insight-dot"></span><strong>견적이 진입장벽 낮춤:</strong> 정확도보다 속도 중심의 견적은 AI 도입 초기 PMF 확인에 최적화된 유스케이스</li>
+        <li style=""><span class="insight-dot"></span><strong>부서 간 데이터 흐름 파악 완료:</strong> 8시간 인터뷰로 견적팀 → 각 엔지니어링 부서 간 딜리버러블 배분 구조 확보. 자동화 설계에 바로 활용 가능</li>
+        <li style=""><span class="insight-dot"></span><strong>1년 프로젝트 = 제품 검증 기회:</strong> 대기업 직행 대신 필즈 규모에서 충분히 검증 후 대형 계약 레퍼런스화 가능</li>
+        <li style=""><span class="insight-dot"></span><strong>해양플랜트 확장 가능성:</strong> 필즈 내 해양플랜트 실제 프로젝트 데이터에 자사 기술 적용 가능한 구조</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══ 안건 2: 한울 지원사업 ══ -->
+  <section id="agenda2" class="section-gap">
+    <div class="section-title"><span class="section-emoji">🌤️</span>안건 2 — 한울(하늘) AX 지원사업 발표</div>
+
+    <div class="warn-box">⚠️ <strong>발표 아쉬움:</strong> 발표 준비 시간 부족(서류 합격 다음날 즉시 발표). 고문님 발표 도중 긴장으로 미완료. 질의응답에서 AI 전문가(대표) 직접 보완 어필.</div>
+
+    <details open="">
+      <summary>📋 안건 내용 상세</summary>
+      <div class="details-body">
+        <ul>
+          <li style="">발표 주제: 해당 제조기업의 AX(AI Transformation) 계획 구체적 설명</li>
+          <li style="">6팀 중 2팀 선발 방식 → 경쟁률 3:1</li>
+          <li style="">앞팀도 "심사위원이 이해 못 한 것 같다"고 언급 → 전반적 준비 시간 부족 분위기</li>
+          <li style="">뒷팀은 발표 1분 전까지 대본 암기 → 비슷한 상황</li>
+          <li style="">결론: 모두 발표 미숙 → <strong>질의응답에서의 전문성 어필이 당락 결정적 요소</strong></li>
+          <li style="">합격 확률: 약 50% (반반) 추정</li>
+          <li style="">지원사업 당락과 무관하게 한울 측이 AI 도입 강한 의지 → 별도 계약 가능성 높음</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>📝 한울 파트너십 계약 계획</summary>
+      <div class="details-body">
+        <ul>
+          <li style="">단순 용역계약이 아닌 <strong>장기 파트너십 계약서</strong> 작성 예정</li>
+          <li style="">지원사업 당락 무관하게 계약 추진 가능성 高</li>
+          <li style="">범위: 기계 설계(다른 디시플린) 자동화 → 빠른 MVP 시연 후 공정 설계로 확장</li>
+          <li style="">리소스 투입 최소화 원칙 유지 (임보 수준에서 먼저 진행)</li>
+        </ul>
+      </div>
+    </details>
+
+    <ul class="insight-list" style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:1rem 1.2rem;margin-top:0.8rem;">
+      <li style=""><span class="insight-dot"></span><strong>발표보다 질의응답 전략이 중요:</strong> AI 비전문가 기업의 발표 특성상 질의응답에서 전문가 동행이 실질적 경쟁력</li>
+      <li style=""><span class="insight-dot"></span><strong>지원사업 독립적 영업 병행:</strong> 정부 지원 여부와 무관하게 자체 계약 트랙 운영이 리스크 분산에 효과적</li>
+      <li style=""><span class="insight-dot"></span><strong>파트너십 계약 선제적 설계:</strong> 장기 파트너십 계약서는 향후 유사 계약 표준 템플릿으로 활용 가능</li>
+    </ul>
+  </section>
+
+  <!-- ══ 안건 3: 세일즈 파이프라인 ══ -->
+  <section id="agenda3" class="section-gap">
+    <div class="section-title"><span class="section-emoji">📊</span>안건 3 — 세일즈 파이프라인 현황</div>
+
+    <div class="card" style="margin-bottom:1rem;">
+      <div class="card-header">
+        <div class="card-icon green">✅</div>
+        <div><div class="card-title">계약 확정권 (3곳)</div><div class="card-sub">필즈(FIELDS), 한울, 화물질 안전원</div></div>
+      </div>
+      <div>
+        <div class="pipeline-row">
+          <span class="pipeline-name">필즈</span>
+          <div class="pipeline-bar-wrap"><div class="pipeline-bar" style="width:95%"></div></div>
+          <span class="pipeline-status"><span class="badge badge-confirmed">계약 확정</span></span>
+        </div>
+        <div class="pipeline-row">
+          <span class="pipeline-name">한울</span>
+          <div class="pipeline-bar-wrap"><div class="pipeline-bar" style="width:70%"></div></div>
+          <span class="pipeline-status"><span class="badge badge-pending">50% 확률</span></span>
+        </div>
+        <div class="pipeline-row">
+          <span class="pipeline-name">화물안전원</span>
+          <div class="pipeline-bar-wrap"><div class="pipeline-bar" style="width:85%"></div></div>
+          <span class="pipeline-status"><span class="badge badge-confirmed">거의 확정</span></span>
+        </div>
+        <div class="pipeline-row">
+          <span class="pipeline-name">현대엔지니어링</span>
+          <div class="pipeline-bar-wrap"><div class="pipeline-bar" style="width:30%"></div></div>
+          <span class="pipeline-status"><span class="badge badge-blue">IT팀 접촉</span></span>
+        </div>
+        <div class="pipeline-row">
+          <span class="pipeline-name">삼두</span>
+          <div class="pipeline-bar-wrap"><div class="pipeline-bar" style="width:20%"></div></div>
+          <span class="pipeline-status"><span class="badge badge-pending">지원 대기</span></span>
+        </div>
+        <div class="pipeline-row">
+          <span class="pipeline-name">PKU/필시</span>
+          <div class="pipeline-bar-wrap"><div class="pipeline-bar" style="width:25%"></div></div>
+          <span class="pipeline-status"><span class="badge badge-blue">협의 중</span></span>
+        </div>
+      </div>
+    </div>
+
+    <details open="">
+      <summary>🏢 고객사별 상세 현황</summary>
+      <div class="details-body">
+        <ul>
+          <li style=""><strong>화물질 안전원:</strong> 5월 7일 공고 예정. 필요 서류 미리 안내받음. 경쟁력 높음 (이변 없으면 계약 예상)</li>
+          <li style=""><strong>현대 엔지니어링:</strong> 미래기술추진단 외 IT팀에서 별도 협력업체 물색 중 연락. AI팀·IT팀 분리 파악 완료. 이후 업데이트 없음</li>
+          <li style=""><strong>삼두:</strong> 지원사업 제출 완료. 결과 대기 중</li>
+          <li style=""><strong>PKU:</strong> 필시(Philsee) 측에서 먼저 협의를 요청 → 필시와 함께 3자 논의 필요</li>
+        </ul>
+      </div>
+    </details>
+
+    <details open="">
+      <summary>💬 사업 다각화 vs 선택과 집중 — 내부 토론</summary>
+      <div class="details-body">
+        <p style="margin-bottom: 0.6rem;"><strong>문제 제기 (참석자):</strong> 한울(기계설계), 필즈(화공견적), PKU(미국), 화학안전원 등 업종이 상이한 건들이 혼재 → 선택과 집중 필요한 것 아닌가?</p>
+        <p style="margin-bottom: 0.6rem;"><strong>대표 답변:</strong></p>
+        <ul>
+          <li style="">어차피 에이전트 OS는 전주기 전 도메인 타겟팅 필요 (공정설계만으로는 생존 불가)</li>
+          <li style="">들어온 건 모두 적극적 스탠스에서 온 협력 의지 있는 곳들</li>
+          <li style="">인력을 충분히 채용하여 빠르게 흡수하는 것이 현재 최선</li>
+          <li style=""><em>"먹을 거 미리 좀 먹자"</em> — 선점 전략</li>
+        </ul>
+        <p style="margin-bottom: 0.6rem;"><strong>박경호 부장 추가 공유:</strong></p>
+        <ul>
+          <li style="">태조 건축 건: 너무 이질적 → 연락 없으면 추가 영업 없이 탈락 인정</li>
+          <li style="">한울: 기계 설계도 전주기 다른 디시플린 → 빠른 MVP 먼저, 공정설계 확장</li>
+          <li style="">화학안전원: 화공플랜트 Regulation 온톨로지화 = 화학안전원 온톨로지화와 동일 역량 → 크게 벗어나지 않음</li>
+          <li style="">필즈: 대기업 직행보다 밑단에서 계약 → 투자 라운드 직전 매출 포인트로 최적</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ══ 안건 4: 파트너십 및 자문 ══ -->
+  <section id="agenda4" class="section-gap">
+    <div class="section-title"><span class="section-emoji">🤝</span>안건 4 — 파트너십 및 자문 계약</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon purple">🎓</div>
+          <div><div class="card-title">이해범 교수 자문 계약</div><div class="card-sub">조만간 체결 예정</div></div>
+        </div>
+        <ul style="font-size:0.84rem;color:var(--muted);padding-left:1.2rem;">
+          <li style="">S-Checkup 공동 논문 발표</li>
+          <li style="">국가 과제 다수 연결</li>
+          <li style="">필즈 포함 계약 컨설팅 경험 풍부</li>
+          <li style="">부프텍 외 플랜트 IT 기업 2곳 추가 연결 가능</li>
+          <li style="">기술 협력 로드맵 공동 수립 제안</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon orange">🏢</div>
+          <div><div class="card-title">컨설팅펌 협력 계약</div><div class="card-sub">필즈 연결 컨설팅사 — 조만간 체결</div></div>
+        </div>
+        <ul style="font-size:0.84rem;color:var(--muted);padding-left:1.2rem;">
+          <li style="">아웃바운드 세일즈 지속 지원</li>
+          <li style="">정부/국가 지원사업 서류 완벽 작성</li>
+          <li style="">PT 자료 제작 및 발표 코칭</li>
+          <li style="">법적 이슈 검토 전반</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 안건 5: 인력 채용 및 재무 ══ -->
+  <section id="agenda5" class="section-gap">
+    <div class="section-title"><span class="section-emoji">💰</span>안건 5 — 인력 채용·투자·재무 플래닝</div>
+
+    <div class="highlight-box">
+      <div class="hl-title">🗓️ 재무 플래닝 완료</div>
+      <p style="">2027년 말 ~ 2031년까지 자금 운용 및 사업 확장 방향 수립 완료. 5년 기준 '에이전트 OS 제품군' 완성 로드맵 확정.</p>
+    </div>
+
+    <details open="">
+      <summary>🚀 5년 제품 로드맵 — 에이전트 OS 전략</summary>
+      <div class="details-body">
+        <ul>
+          <li style=""><strong>Phase 1 (現):</strong> 화공플랜트 견적/설계 자동화 POC 수행 (필즈, 한울 등)</li>
+          <li style=""><strong>Phase 2:</strong> 화공플랜트 전주기(Process, Piping, Civil, Electrical, Instrumentation) 확장</li>
+          <li style=""><strong>Phase 3:</strong> 원자력·파워플랜트·해양플랜트 등 도메인 다각화</li>
+          <li style=""><strong>Phase 4:</strong> 한국 → 글로벌 시장 타겟팅</li>
+          <li style=""><strong>Phase 5:</strong> MS Office Suite형 모듈 패키지 → <strong>에이전트 OS</strong> 완성</li>
+          <li style=""><em>목표: 4주 내 기업 현장 방문 → GPU 서버 설치 → AI 기능 탑재 → 즉시 운영</em></li>
+        </ul>
+      </div>
+    </details>
+
+    <details open="">
+      <summary>👥 개발자 채용 계획</summary>
+      <div class="details-body">
+        <ul>
+          <li style="">투자금 입금 즉시 채용 절차 시작 (목표: 5월 말~6월 초)</li>
+          <li style="">우선 채용: 다솜, 종성 (포스텍 선배, 역량 검증, 거의 확정)</li>
+          <li style="">추가 채용 목표: 총 2~3명 (투자금 입금 후)</li>
+          <li style=""><strong>필수 채용:</strong> LLM 전문가 1명 (현재 물색 중 — 최우선 과제)</li>
+          <li style="">장기 계획: 최대 10명 (5~10년 기준, 변동 가능)</li>
+          <li style="">도메인 전문가 운영: 박규호 부장 중심 '전문단 툴' 별도 운영 계획</li>
+        </ul>
+      </div>
+    </details>
+
+    <details open="">
+      <summary>📈 투자 라운드 현황</summary>
+      <div class="details-body">
+        <ul>
+          <li style="">현재 5곳 미팅 진행 중 (모두 정치환경대회 수상 후 먼저 연락 온 곳)</li>
+          <li style="">추가 5곳 연락 예정 (1~2회 미팅 후 성과 생기면 재연락 요청했던 곳)</li>
+          <li style="">10곳 추가 대기 (총 20곳 파이프라인)</li>
+          <li style=""><strong>납입 목표: 5월 말 ~ 6월 초</strong></li>
+          <li style="">최악의 경우 필즈 계약금(1억 9천) 6월 초~중 입금으로 사업 운영 가능</li>
+        </ul>
+      </div>
+    </details>
+
+    <div class="grid-3" style="margin-top:0.8rem;">
+      <div class="info-box"><strong>박경호 부장</strong><br>아스팔테크 2집 절차 있음 → 합류 시기 조율 필요</div>
+      <div class="info-box"><strong>이주영 부장</strong><br>도메인 전문단 운영 협력 지속 요청 예정</div>
+      <div class="warn-box"><strong>LLM 전문가</strong><br>채용 경로 미확정 → 최우선 해결 과제</div>
+    </div>
+
+    <ul class="insight-list" style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:1rem 1.2rem;margin-top:1rem;">
+      <li style=""><span class="insight-dot"></span><strong>슈퍼팀 전략:</strong> 소수 정예 → 모듈 완성 → 반복 판매 모델. 대규모 채용 없이 확장 가능한 SaaS 구조 지향</li>
+      <li style=""><span class="insight-dot"></span><strong>수익 다각화와 투자 연계:</strong> 필즈 계약금이 투자 라운드 bridge 역할 → 재무 안정성 확보</li>
+      <li style=""><span class="insight-dot"></span><strong>IP·특허 병행 필요:</strong> 이을범 교수와 특허/기술 제휴로 원천 기술 사업화 시간 단축 전략 논의 중</li>
+    </ul>
+  </section>
+
+  <!-- ══ 안건 6: 기술 Q&A ══ -->
+  <section id="agenda6" class="section-gap">
+    <div class="section-title"><span class="section-emoji">🔬</span>안건 6 — 엔지니어링 기술 질의응답 (이종혁 원장)</div>
+
+    <details open="">
+      <summary>⚙️ 하이드롤릭(Hydraulic) 계산 Q&amp;A — 다솜</summary>
+      <div class="details-body">
+        <ul>
+          <li style=""><strong>구간 분할 기준:</strong> 고도(Elevation) 기준 가장 높은 지점에서 구간 분할 → 확인 완료</li>
+          <li style=""><strong>밸브·FE·FV 처리:</strong> Control Valve, Flowmeter는 등가길이(Equivalent Length) 산정 불가 → 별도 ΔP를 다음 구간 Operation Pressure에서 직접 차감하는 방식으로 처리</li>
+          <li style=""><strong>수치 불일치(휴먼 에러):</strong> 고도 차이(1780mm)와 파이프 치수 합산(1920mm) 약 140mm 불일치 → 14~15cm 수준으로 무시 가능한 휴먼 에러로 확인</li>
+          <li style=""><strong>T-피팅 BOM 구간 배분:</strong> 구간 경계에 걸친 T, 엘보우는 아무 구간에 포함해도 무방. ISO 도면에 표현된 구간에 넣는 것이 가장 명확</li>
+          <li style=""><strong>점선 피팅:</strong> 점선으로 표현된 피팅 = 해당 페이지에서는 미고려. 다른 페이지에서 반영됨</li>
+          <li style=""><strong>벤더 프린트 ΔP:</strong> 벤더 데이터 시트에서 ΔP 확인 후 해당 구간 시작 압력에서 차감. 양이 많아 전부 처리 불필요 (메모 수준)</li>
+        </ul>
+      </div>
+    </details>
+
+    <details open="">
+      <summary>🔧 PSV(압력안전밸브) API 문서 해석 — 이종혁 원장</summary>
+      <div class="details-body">
+        <p style="margin-bottom: 0.6rem;"><strong>API 문서 조동사 의미 (강도 순):</strong></p>
+        <ul>
+          <li style=""><strong>SHALL:</strong> 지구가 망해도 반드시 수행. 협의 불가. 가장 강한 의무</li>
+          <li style=""><strong>MUST:</strong> 반드시 수행. SHALL과 유사하나 약간 하위</li>
+          <li style=""><strong>SHOULD:</strong> 해야 함. 원칙적 의무</li>
+          <li style=""><strong>MIGHT/MAY:</strong> 협의 가능. 하는 것이 좋으나 상황에 따라 미수행 가능</li>
+        </ul>
+        <p style="margin-top: 0.6rem; color: var(--gold); font-size: 0.84rem;">💡 SHALL이 가장 강한 의무 — 예상과 반대!</p>
+      </div>
+    </details>
+
+    <details open="">
+      <summary>📐 전기·계장 부서 인터뷰 준비 — 필즈 다음 주 인터뷰</summary>
+      <div class="details-body">
+        <p style="margin-bottom: 0.5rem;"><strong>이미 파악된 용어:</strong></p>
+        <ul>
+          <li style="">Electrical Load List, Single Line Diagram (전기팀)</li>
+          <li style="">P&amp;ID, Instrument List, Valve List (계장팀)</li>
+        </ul>
+        <p style="margin-top: 0.7rem; margin-bottom: 0.5rem;"><strong>다음 주 인터뷰 대상 부서:</strong></p>
+        <ul>
+          <li style=""><strong>소방 (Fire Protection):</strong> 스프링클러, 소화설비 물량 산출</li>
+          <li style=""><strong>HVAC:</strong> Heat, Ventilation, Air Conditioning — 실내 온·습도 제어 설비</li>
+          <li style=""><strong>공사 (Construction):</strong> 시공 최근접 영역 (Tong-up 건축 인터뷰에서 확인)</li>
+          <li style=""><strong>구매 (Procurement):</strong> MR(Material Requisition), LD(Liquidated Damages) 등 계약 조건 포함</li>
+        </ul>
+      </div>
+    </details>
+
+    <div class="info-box" style="margin-top:0.8rem;">
+      💡 <strong>다음 회의 플랫폼 변경:</strong> Slack 허들 딜레이 문제 심각 → Google Meet으로 전환 결정 (이종혁 원장과 별도 1:1 포함)
+    </div>
+  </section>
+
+  <!-- ══ 핵심 결정사항 ══ -->
+  <section id="decisions" class="section-gap">
+    <div class="section-title"><span class="section-emoji">✅</span>핵심 결정사항</div>
+
+    <div class="decision-card">
+      <div class="decision-num">1</div>
+      <div class="decision-content">
+        <div class="dc-title">필즈 1년 프로젝트 계약 확정 진행</div>
+        <div class="dc-body">계약서 완료·도장 날인 후 계약금 1억 9천만원 수령. 내년 4월까지 견적 전주기 자동화 수행. 책임: 대표</div>
+      </div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-num">2</div>
+      <div class="decision-content">
+        <div class="dc-title">한울 장기 파트너십 계약서 작성·발송</div>
+        <div class="dc-body">단순 용역 아닌 장기 파트너십 계약서 형태. 지원사업 당락 무관 계약 추진. 책임: 대표</div>
+      </div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-num">3</div>
+      <div class="decision-content">
+        <div class="dc-title">화물안전원 5/7 공고 제출 준비</div>
+        <div class="dc-body">5월 7일 공고 즉시 서류 제출. 필요 서류 사전 준비 완료 지시. 책임: 대표, 컨설팅펌 협력</div>
+      </div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-num">4</div>
+      <div class="decision-content">
+        <div class="dc-title">이해범 교수 &amp; 컨설팅펌 자문/협력 계약 체결</div>
+        <div class="dc-body">두 계약 모두 조만간 체결. 국가과제 연결 + 아웃바운드 세일즈 + 발표 역량 보강. 책임: 대표</div>
+      </div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-num">5</div>
+      <div class="decision-content">
+        <div class="dc-title">투자금 입금 즉시 개발자 채용 개시</div>
+        <div class="dc-body">다솜·종성 우선 채용. LLM 전문가 채용 경로 확보가 최우선 과제. 목표: 5월 말~6월 초. 책임: 대표</div>
+      </div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-num">6</div>
+      <div class="decision-content">
+        <div class="dc-title">회의 플랫폼 Slack 허들 → Google Meet 전환</div>
+        <div class="dc-body">딜레이·화면 공유 품질 문제로 즉시 전환. 기존 Google Meet 링크 유지, 종성에게 링크 별도 전달. 책임: 대표</div>
+      </div>
+    </div>
+    <div class="decision-card">
+      <div class="decision-num">7</div>
+      <div class="decision-content">
+        <div class="dc-title">필시/PKU 협력은 필시 3자 미팅 후 결정</div>
+        <div class="dc-body">필시 측이 먼저 PKU 논의 요청 → 필시와 함께 미팅 진행 후 협력 방향 결정. 책임: 대표</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 액션 아이템 ══ -->
+  <section id="actions" class="section-gap">
+    <div class="section-title"><span class="section-emoji">📝</span>액션 아이템</div>
+    <div class="card" style="overflow-x:auto;">
+      <table class="action-table">
+        <thead>
+          <tr>
+            <th style="">#</th>
+            <th style="">과제</th>
+            <th style="">담당자</th>
+            <th style="">마감</th>
+            <th style="">우선순위</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="">1</td>
+            <td style="">필즈 계약서 도장 날인 완료</td>
+            <td style="">대표</td>
+            <td style="">즉시</td>
+            <td style=""><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td style="">2</td>
+            <td style="">한울 장기 파트너십 계약서 작성·발송</td>
+            <td style="">대표</td>
+            <td style="">이번 주</td>
+            <td style=""><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td style="">3</td>
+            <td style="">화물안전원 공고(5/7) 제출 서류 사전 준비</td>
+            <td style="">대표 + 컨설팅펌</td>
+            <td style="">5월 6일</td>
+            <td style=""><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td style="">4</td>
+            <td style="">LLM 전문가 채용 경로 확보 (채용 공고 / 네트워크)</td>
+            <td style="">대표</td>
+            <td style="">6월 초</td>
+            <td style=""><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td style="">5</td>
+            <td style="">이해범 교수 자문 계약서 작성·체결</td>
+            <td style="">대표</td>
+            <td style="">조만간</td>
+            <td style=""><span class="badge badge-mid">Mid</span></td>
+          </tr>
+          <tr>
+            <td style="">6</td>
+            <td style="">컨설팅펌 협력 계약서 작성·체결</td>
+            <td style="">대표</td>
+            <td style="">조만간</td>
+            <td style=""><span class="badge badge-mid">Mid</span></td>
+          </tr>
+          <tr>
+            <td style="">7</td>
+            <td style="">투자 라운드 2차 5곳 연락 및 미팅 일정 수립</td>
+            <td style="">대표</td>
+            <td style="">5월 말</td>
+            <td style=""><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td style="">8</td>
+            <td style="">필즈 소방·HVAC·구매 부서 인터뷰 준비 및 진행</td>
+            <td style="">대표 + 다솜</td>
+            <td style="">다음 주</td>
+            <td style=""><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td style="">9</td>
+            <td style="">필시/PKU 3자 미팅 일정 확정</td>
+            <td style="">대표</td>
+            <td style="">이번 주</td>
+            <td style=""><span class="badge badge-mid">Mid</span></td>
+          </tr>
+          <tr>
+            <td style="">10</td>
+            <td style="">박경호 부장 아스팔테크 2집 절차 일정 파악 → 합류 시기 조율</td>
+            <td style="">대표 + 박경호 부장</td>
+            <td style="">조율 중</td>
+            <td style=""><span class="badge badge-mid">Mid</span></td>
+          </tr>
+          <tr>
+            <td style="">11</td>
+            <td style="">Google Meet 링크 종성에게 전달 및 플랫폼 전환 공지</td>
+            <td style="">대표</td>
+            <td style="">즉시</td>
+            <td style=""><span class="badge badge-low">Low</span></td>
+          </tr>
+          <tr>
+            <td style="">12</td>
+            <td style="">다솜: 하이드롤릭 계산 시트 FE/FV ΔP 반영 완료</td>
+            <td style="">다솜</td>
+            <td style="">다음 주</td>
+            <td style=""><span class="badge badge-mid">Mid</span></td>
+          </tr>
+          <tr>
+            <td style="">13</td>
+            <td style="">종성: P&amp;ID 추가 학습 후 이종혁 원장 기술 질의</td>
+            <td style="">종성</td>
+            <td style="">지속</td>
+            <td style=""><span class="badge badge-low">Low</span></td>
+          </tr>
+          <tr>
+            <td style="">14</td>
+            <td style="">박경호 부장: 도메인 전문단 운영 방안 구체화</td>
+            <td style="">박경호 부장</td>
+            <td style="">지속</td>
+            <td style=""><span class="badge badge-mid">Mid</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══ 다이어그램 ══ -->
+  <section id="diagrams" class="section-gap">
+    <div class="section-title"><span class="section-emoji">📐</span>시각화 다이어그램</div>
+
+    <!-- Diagram 1: Workflow -->
+    <div class="mermaid-wrap">
+      <h3 style="">① 견적 자동화 → 설계 자동화 워크플로우</h3>
+      <div class="mermaid" data-processed="true"><svg id="mermaid-1777645765700" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 747.8203125px;" viewBox="0 0 747.8203125 1239.921875" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mermaid-1777645765700{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-1777645765700 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-1777645765700 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-1777645765700 .error-icon{fill:#a44141;}#mermaid-1777645765700 .error-text{fill:#ddd;stroke:#ddd;}#mermaid-1777645765700 .edge-thickness-normal{stroke-width:1px;}#mermaid-1777645765700 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1777645765700 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1777645765700 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1777645765700 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1777645765700 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1777645765700 .marker{fill:#c9a84c;stroke:#c9a84c;}#mermaid-1777645765700 .marker.cross{stroke:#c9a84c;}#mermaid-1777645765700 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1777645765700 p{margin:0;}#mermaid-1777645765700 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#ccc;}#mermaid-1777645765700 .cluster-label text{fill:#e8edf2;}#mermaid-1777645765700 .cluster-label span{color:#e8edf2;}#mermaid-1777645765700 .cluster-label span p{background-color:transparent;}#mermaid-1777645765700 .label text,#mermaid-1777645765700 span{fill:#ccc;color:#ccc;}#mermaid-1777645765700 .node rect,#mermaid-1777645765700 .node circle,#mermaid-1777645765700 .node ellipse,#mermaid-1777645765700 .node polygon,#mermaid-1777645765700 .node path{fill:#162030;stroke:#243450;stroke-width:1px;}#mermaid-1777645765700 .rough-node .label text,#mermaid-1777645765700 .node .label text,#mermaid-1777645765700 .image-shape .label,#mermaid-1777645765700 .icon-shape .label{text-anchor:middle;}#mermaid-1777645765700 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-1777645765700 .rough-node .label,#mermaid-1777645765700 .node .label,#mermaid-1777645765700 .image-shape .label,#mermaid-1777645765700 .icon-shape .label{text-align:center;}#mermaid-1777645765700 .node.clickable{cursor:pointer;}#mermaid-1777645765700 .root .anchor path{fill:#c9a84c!important;stroke-width:0;stroke:#c9a84c;}#mermaid-1777645765700 .arrowheadPath{fill:lightgrey;}#mermaid-1777645765700 .edgePath .path{stroke:#c9a84c;stroke-width:1px;}#mermaid-1777645765700 .flowchart-link{stroke:#c9a84c;fill:none;}#mermaid-1777645765700 .edgeLabel{background-color:#162030;text-align:center;}#mermaid-1777645765700 .edgeLabel p{background-color:#162030;}#mermaid-1777645765700 .edgeLabel rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1777645765700 .labelBkg{background-color:rgba(22, 32, 48, 0.5);}#mermaid-1777645765700 .cluster rect{fill:#1a2d45;stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#mermaid-1777645765700 .cluster text{fill:#e8edf2;}#mermaid-1777645765700 .cluster span{color:#e8edf2;}#mermaid-1777645765700 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:#0d1b2a;border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1777645765700 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#mermaid-1777645765700 rect.text{fill:none;stroke-width:0;}#mermaid-1777645765700 .icon-shape,#mermaid-1777645765700 .image-shape{background-color:#162030;text-align:center;}#mermaid-1777645765700 .icon-shape p,#mermaid-1777645765700 .image-shape p{background-color:#162030;padding:2px;}#mermaid-1777645765700 .icon-shape .label rect,#mermaid-1777645765700 .image-shape .label rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1777645765700 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-1777645765700 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-1777645765700 .node .neo-node{stroke:#243450;}#mermaid-1777645765700 [data-look="neo"].node rect,#mermaid-1777645765700 [data-look="neo"].cluster rect,#mermaid-1777645765700 [data-look="neo"].node polygon{stroke:url(#mermaid-1777645765700-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765700 [data-look="neo"].node path{stroke:url(#mermaid-1777645765700-gradient);stroke-width:1px;}#mermaid-1777645765700 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765700 [data-look="neo"].node .neo-line path{stroke:#243450;filter:none;}#mermaid-1777645765700 [data-look="neo"].node circle{stroke:url(#mermaid-1777645765700-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765700 [data-look="neo"].node circle .state-start{fill:#000000;}#mermaid-1777645765700 [data-look="neo"].icon-shape .icon{fill:url(#mermaid-1777645765700-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765700 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mermaid-1777645765700-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765700 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="mermaid-1777645765700_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777645765700_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777645765700_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777645765700_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mermaid-1777645765700_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777645765700_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777645765700_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777645765700_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777645765700_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777645765700_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777645765700_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mermaid-1777645765700_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M396.719,86L396.719,90.167C396.719,94.333,396.719,102.667,396.719,110.333C396.719,118,396.719,125,396.719,128.5L396.719,132" id="mermaid-1777645765700-L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6Mzk2LjcxODc1LCJ5Ijo4Nn0seyJ4IjozOTYuNzE4NzUsInkiOjExMX0seyJ4IjozOTYuNzE4NzUsInkiOjEzNn1d" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M396.719,190L396.719,194.167C396.719,198.333,396.719,206.667,396.719,214.333C396.719,222,396.719,229,396.719,232.5L396.719,236" id="mermaid-1777645765700-L_B_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6Mzk2LjcxODc1LCJ5IjoxOTB9LHsieCI6Mzk2LjcxODc1LCJ5IjoyMTV9LHsieCI6Mzk2LjcxODc1LCJ5IjoyNDB9XQ==" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M335.411,344.036L294.134,358.421C252.856,372.806,170.301,401.575,129.024,419.459C87.746,437.344,87.746,444.344,87.746,447.844L87.746,451.344" id="mermaid-1777645765700-L_C_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6MzM1LjQxMTQ1NTg5MTc5NzQsInkiOjM0NC4wMzY0NTU4OTE3OTc0fSx7IngiOjg3Ljc0NjA5Mzc1LCJ5Ijo0MzAuMzQzNzV9LHsieCI6ODcuNzQ2MDkzNzUsInkiOjQ1NS4zNDM3NX1d" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M354.977,363.602L343.634,374.726C332.29,385.85,309.602,408.097,298.258,422.72C286.914,437.344,286.914,444.344,286.914,447.844L286.914,451.344" id="mermaid-1777645765700-L_C_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_E_0" data-points="W3sieCI6MzU0Ljk3NzQyNzE4NzczNTc3LCJ5IjozNjMuNjAyNDI3MTg3NzM1Nzd9LHsieCI6Mjg2LjkxNDA2MjUsInkiOjQzMC4zNDM3NX0seyJ4IjoyODYuOTE0MDYyNSwieSI6NDU1LjM0Mzc1fV0=" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M431.716,370.347L439.056,380.346C446.396,390.346,461.077,410.345,468.417,423.844C475.758,437.344,475.758,444.344,475.758,447.844L475.758,451.344" id="mermaid-1777645765700-L_C_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_F_0" data-points="W3sieCI6NDMxLjcxNTY2ODY3MzM3NTQzLCJ5IjozNzAuMzQ2ODMxMzI2NjI0NTd9LHsieCI6NDc1Ljc1NzgxMjUsInkiOjQzMC4zNDM3NX0seyJ4Ijo0NzUuNzU3ODEyNSwieSI6NDU1LjM0Mzc1fV0=" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M455.87,346.192L491.142,360.218C526.413,374.243,596.957,402.293,632.228,419.819C667.5,437.344,667.5,444.344,667.5,447.844L667.5,451.344" id="mermaid-1777645765700-L_C_G_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_G_0" data-points="W3sieCI6NDU1Ljg3MDA0ODIwMTk3MzUsInkiOjM0Ni4xOTI0NTE3OTgwMjY1fSx7IngiOjY2Ny41LCJ5Ijo0MzAuMzQzNzV9LHsieCI6NjY3LjUsInkiOjQ1NS4zNDM3NX1d" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M87.746,533.344L87.746,537.51C87.746,541.677,87.746,550.01,122.354,560.072C156.961,570.134,226.176,581.925,260.783,587.82L295.391,593.715" id="mermaid-1777645765700-L_D_H_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_H_0" data-points="W3sieCI6ODcuNzQ2MDkzNzUsInkiOjUzMy4zNDM3NX0seyJ4Ijo4Ny43NDYwOTM3NSwieSI6NTU4LjM0Mzc1fSx7IngiOjI5OS4zMzM5ODQzNzUsInkiOjU5NC4zODcwNTMyODI5MzY2fV0=" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M286.914,533.344L286.914,537.51C286.914,541.677,286.914,550.01,294.816,558.05C302.719,566.09,318.523,573.837,326.426,577.71L334.328,581.583" id="mermaid-1777645765700-L_E_H_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_H_0" data-points="W3sieCI6Mjg2LjkxNDA2MjUsInkiOjUzMy4zNDM3NX0seyJ4IjoyODYuOTE0MDYyNSwieSI6NTU4LjM0Mzc1fSx7IngiOjMzNy45MTk3MzQwNzQ1MTkyLCJ5Ijo1ODMuMzQzNzV9XQ==" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M475.758,533.344L475.758,537.51C475.758,541.677,475.758,550.01,469.692,557.989C463.625,565.968,451.493,573.592,445.426,577.404L439.36,581.216" id="mermaid-1777645765700-L_F_H_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_H_0" data-points="W3sieCI6NDc1Ljc1NzgxMjUsInkiOjUzMy4zNDM3NX0seyJ4Ijo0NzUuNzU3ODEyNSwieSI6NTU4LjM0Mzc1fSx7IngiOjQzNS45NzMyMTk2NTE0NDIzLCJ5Ijo1ODMuMzQzNzV9XQ==" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M667.5,533.344L667.5,537.51C667.5,541.677,667.5,550.01,638.018,559.762C608.536,569.514,549.572,580.684,520.09,586.269L490.608,591.854" id="mermaid-1777645765700-L_G_H_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_G_H_0" data-points="W3sieCI6NjY3LjUsInkiOjUzMy4zNDM3NX0seyJ4Ijo2NjcuNSwieSI6NTU4LjM0Mzc1fSx7IngiOjQ4Ni42Nzc3MzQzNzUsInkiOjU5Mi41OTg2MDgwMTI5NjQyfV0=" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M393.006,637.344L393.006,641.51C393.006,645.677,393.006,654.01,393.006,661.677C393.006,669.344,393.006,676.344,393.006,679.844L393.006,683.344" id="mermaid-1777645765700-L_H_I_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_H_I_0" data-points="W3sieCI6MzkzLjAwNTg1OTM3NSwieSI6NjM3LjM0Mzc1fSx7IngiOjM5My4wMDU4NTkzNzUsInkiOjY2Mi4zNDM3NX0seyJ4IjozOTMuMDA1ODU5Mzc1LCJ5Ijo2ODcuMzQzNzV9XQ==" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M337.535,792.451L307.558,805.863C277.582,819.275,217.629,846.098,187.652,863.01C157.676,879.922,157.676,886.922,157.676,890.422L157.676,893.922" id="mermaid-1777645765700-L_I_J_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_I_J_0" data-points="W3sieCI6MzM3LjUzNTAxNDk3MDc4MTQ1LCJ5Ijo3OTIuNDUxMDMwNTk1NzgxNX0seyJ4IjoxNTcuNjc1NzgxMjUsInkiOjg3Mi45MjE4NzV9LHsieCI6MTU3LjY3NTc4MTI1LCJ5Ijo4OTcuOTIxODc1fV0=" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M395.741,845.187L395.904,849.809C396.067,854.432,396.393,863.677,396.556,871.799C396.719,879.922,396.719,886.922,396.719,890.422L396.719,893.922" id="mermaid-1777645765700-L_I_K_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_I_K_0" data-points="W3sieCI6Mzk1Ljc0MDcxNDEwODMzMTUzLCJ5Ijo4NDUuMTg3MDIwMjY2NjY4NX0seyJ4IjozOTYuNzE4NzUsInkiOjg3Mi45MjE4NzV9LHsieCI6Mzk2LjcxODc1LCJ5Ijo4OTcuOTIxODc1fV0=" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M446.651,794.277L473.042,807.384C499.433,820.492,552.214,846.707,578.605,863.314C604.996,879.922,604.996,886.922,604.996,890.422L604.996,893.922" id="mermaid-1777645765700-L_I_L_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_I_L_0" data-points="W3sieCI6NDQ2LjY1MTAxNDc0NjgyOSwieSI6Nzk0LjI3NjcxOTYyODE3MX0seyJ4Ijo2MDQuOTk2MDkzNzUsInkiOjg3Mi45MjE4NzV9LHsieCI6NjA0Ljk5NjA5Mzc1LCJ5Ijo4OTcuOTIxODc1fV0=" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M157.676,975.922L157.676,980.089C157.676,984.255,157.676,992.589,180.689,1002.917C203.702,1013.245,249.727,1025.567,272.74,1031.729L295.753,1037.89" id="mermaid-1777645765700-L_J_M_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_J_M_0" data-points="W3sieCI6MTU3LjY3NTc4MTI1LCJ5Ijo5NzUuOTIxODc1fSx7IngiOjE1Ny42NzU3ODEyNSwieSI6MTAwMC45MjE4NzV9LHsieCI6Mjk5LjYxNzE4NzUsInkiOjEwMzguOTI0NDU2OTEwMjg2OH1d" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M396.719,975.922L396.719,980.089C396.719,984.255,396.719,992.589,396.719,1000.255C396.719,1007.922,396.719,1014.922,396.719,1018.422L396.719,1021.922" id="mermaid-1777645765700-L_K_M_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_K_M_0" data-points="W3sieCI6Mzk2LjcxODc1LCJ5Ijo5NzUuOTIxODc1fSx7IngiOjM5Ni43MTg3NSwieSI6MTAwMC45MjE4NzV9LHsieCI6Mzk2LjcxODc1LCJ5IjoxMDI1LjkyMTg3NX1d" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M604.996,975.922L604.996,980.089C604.996,984.255,604.996,992.589,587.104,1002.253C569.212,1011.918,533.428,1022.914,515.536,1028.411L497.644,1033.909" id="mermaid-1777645765700-L_L_M_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_L_M_0" data-points="W3sieCI6NjA0Ljk5NjA5Mzc1LCJ5Ijo5NzUuOTIxODc1fSx7IngiOjYwNC45OTYwOTM3NSwieSI6MTAwMC45MjE4NzV9LHsieCI6NDkzLjgyMDMxMjUsInkiOjEwMzUuMDg0MjU2MTM5OTMxM31d" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path><path d="M396.719,1103.922L396.719,1108.089C396.719,1112.255,396.719,1120.589,396.719,1128.255C396.719,1135.922,396.719,1142.922,396.719,1146.422L396.719,1149.922" id="mermaid-1777645765700-L_M_N_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_M_N_0" data-points="W3sieCI6Mzk2LjcxODc1LCJ5IjoxMTAzLjkyMTg3NX0seyJ4IjozOTYuNzE4NzUsInkiOjExMjguOTIxODc1fSx7IngiOjM5Ni43MTg3NSwieSI6MTE1My45MjE4NzV9XQ==" data-look="classic" marker-end="url(#mermaid-1777645765700_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_C_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_D_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_E_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_F_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_G_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_H_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_E_H_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_H_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_G_H_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_H_I_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_I_J_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_I_K_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_I_L_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_J_M_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_K_M_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_L_M_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_M_N_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="mermaid-1777645765700-flowchart-A-0" data-look="classic" transform="translate(396.71875, 47)"><rect class="basic label-container" style="fill:#1a2d45 !important;stroke:#c9a84c !important" x="-109.921875" y="-39" width="219.84375" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-79.921875, -24)"><rect></rect><foreignObject width="159.84375" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">🏭 필즈 전체 스케줄 수립<br>견적팀</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-B-1" data-look="classic" transform="translate(396.71875, 163)"><rect class="basic label-container" style="" x="-97.1015625" y="-27" width="194.203125" height="54"></rect><g class="label" style="" transform="translate(-67.1015625, -12)"><rect></rect><foreignObject width="134.203125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">딜리버러블 목록 도출</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-C-3" data-look="classic" transform="translate(396.71875, 322.671875)"><polygon points="82.671875,0 165.34375,-82.671875 82.671875,-165.34375 0,-82.671875" class="label-container" transform="translate(-82.171875, 82.671875)"></polygon><g class="label" style="" transform="translate(-55.671875, -12)"><rect></rect><foreignObject width="111.34375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">각 부서 물량 배분</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-D-5" data-look="classic" transform="translate(87.74609375, 494.34375)"><rect class="basic label-container" style="" x="-79.74609375" y="-39" width="159.4921875" height="78"></rect><g class="label" style="" transform="translate(-49.74609375, -24)"><rect></rect><foreignObject width="99.4921875" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">공정팀<br>P&amp;ID 장수 산출</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-E-7" data-look="classic" transform="translate(286.9140625, 494.34375)"><rect class="basic label-container" style="" x="-69.421875" y="-39" width="138.84375" height="78"></rect><g class="label" style="" transform="translate(-39.421875, -24)"><rect></rect><foreignObject width="78.84375" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">배관팀<br>라인 수 산출</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-F-9" data-look="classic" transform="translate(475.7578125, 494.34375)"><rect class="basic label-container" style="" x="-69.421875" y="-39" width="138.84375" height="78"></rect><g class="label" style="" transform="translate(-39.421875, -24)"><rect></rect><foreignObject width="78.84375" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">전기·계장팀<br>계장 수 산출</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-G-11" data-look="classic" transform="translate(667.5, 494.34375)"><rect class="basic label-container" style="" x="-72.3203125" y="-39" width="144.640625" height="78"></rect><g class="label" style="" transform="translate(-42.3203125, -24)"><rect></rect><foreignObject width="84.640625" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">소방·HVAC팀<br>설비 수 산출</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-H-16" data-look="classic" transform="translate(393.005859375, 610.34375)"><rect class="basic label-container" style="" x="-93.671875" y="-27" width="187.34375" height="54"></rect><g class="label" style="" transform="translate(-63.671875, -12)"><rect></rect><foreignObject width="127.34375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">📊 견적 데이터 취합</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-I-18" data-look="classic" transform="translate(393.005859375, 767.6328125)"><polygon points="80.2890625,0 160.578125,-80.2890625 80.2890625,-160.578125 0,-80.2890625" class="label-container" transform="translate(-79.7890625, 80.2890625)" style="fill:#162030 !important;stroke:#c9a84c !important"></polygon><g class="label" style="color:#e8edf2 !important" transform="translate(-53.2890625, -12)"><rect></rect><foreignObject width="106.578125" height="24"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">AI 자동화 포인트</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-J-20" data-look="classic" transform="translate(157.67578125, 936.921875)"><rect class="basic label-container" style="" x="-104.69921875" y="-39" width="209.3984375" height="78"></rect><g class="label" style="" transform="translate(-74.69921875, -24)"><rect></rect><foreignObject width="149.3984375" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">🤖 도면 인식<br>P&amp;ID 라인/장비 카운팅</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-K-22" data-look="classic" transform="translate(396.71875, 936.921875)"><rect class="basic label-container" style="" x="-84.34375" y="-39" width="168.6875" height="78"></rect><g class="label" style="" transform="translate(-54.34375, -24)"><rect></rect><foreignObject width="108.6875" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">🤖 레퍼런스 기반<br>물량 추정</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-L-24" data-look="classic" transform="translate(604.99609375, 936.921875)"><rect class="basic label-container" style="" x="-73.93359375" y="-39" width="147.8671875" height="78"></rect><g class="label" style="" transform="translate(-43.93359375, -24)"><rect></rect><foreignObject width="87.8671875" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">🤖 규정 검토<br>온톨로지 매칭</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-M-28" data-look="classic" transform="translate(396.71875, 1064.921875)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#4ade80 !important" x="-97.1015625" y="-39" width="194.203125" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-67.1015625, -24)"><rect></rect><foreignObject width="134.203125" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">⚡ 견적 자동 생성<br>사람보다 압도적 속도</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765700-flowchart-N-30" data-look="classic" transform="translate(396.71875, 1192.921875)"><rect class="basic label-container" style="fill:#1a2d45 !important;stroke:#c9a84c !important" x="-100.59375" y="-39" width="201.1875" height="78"></rect><g class="label" style="color:#c9a84c !important" transform="translate(-70.59375, -24)"><rect></rect><foreignObject width="141.1875" height="48"><div style="color: rgb(201, 168, 76) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#c9a84c !important" class="nodeLabel"><p style="">🚀 설계 전주기 자동화<br>에이전트 OS로 확장</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mermaid-1777645765700-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><defs><filter id="mermaid-1777645765700-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><linearGradient id="mermaid-1777645765700-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"></stop></linearGradient></svg></div>
+    </div>
+
+    <!-- Diagram 2: Relationship -->
+    <div class="mermaid-wrap">
+      <h3 style="">② 사업 파이프라인 관계도</h3>
+      <div class="mermaid" data-processed="true"><svg id="mermaid-1777645765752" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 790.4598388671875px;" viewBox="-0.000003814697265625 13 790.4598388671875 1130" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mermaid-1777645765752{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-1777645765752 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-1777645765752 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-1777645765752 .error-icon{fill:#a44141;}#mermaid-1777645765752 .error-text{fill:#ddd;stroke:#ddd;}#mermaid-1777645765752 .edge-thickness-normal{stroke-width:1px;}#mermaid-1777645765752 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1777645765752 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1777645765752 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1777645765752 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1777645765752 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1777645765752 .marker{fill:#c9a84c;stroke:#c9a84c;}#mermaid-1777645765752 .marker.cross{stroke:#c9a84c;}#mermaid-1777645765752 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1777645765752 p{margin:0;}#mermaid-1777645765752 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#ccc;}#mermaid-1777645765752 .cluster-label text{fill:#e8edf2;}#mermaid-1777645765752 .cluster-label span{color:#e8edf2;}#mermaid-1777645765752 .cluster-label span p{background-color:transparent;}#mermaid-1777645765752 .label text,#mermaid-1777645765752 span{fill:#ccc;color:#ccc;}#mermaid-1777645765752 .node rect,#mermaid-1777645765752 .node circle,#mermaid-1777645765752 .node ellipse,#mermaid-1777645765752 .node polygon,#mermaid-1777645765752 .node path{fill:#162030;stroke:#243450;stroke-width:1px;}#mermaid-1777645765752 .rough-node .label text,#mermaid-1777645765752 .node .label text,#mermaid-1777645765752 .image-shape .label,#mermaid-1777645765752 .icon-shape .label{text-anchor:middle;}#mermaid-1777645765752 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-1777645765752 .rough-node .label,#mermaid-1777645765752 .node .label,#mermaid-1777645765752 .image-shape .label,#mermaid-1777645765752 .icon-shape .label{text-align:center;}#mermaid-1777645765752 .node.clickable{cursor:pointer;}#mermaid-1777645765752 .root .anchor path{fill:#c9a84c!important;stroke-width:0;stroke:#c9a84c;}#mermaid-1777645765752 .arrowheadPath{fill:lightgrey;}#mermaid-1777645765752 .edgePath .path{stroke:#c9a84c;stroke-width:1px;}#mermaid-1777645765752 .flowchart-link{stroke:#c9a84c;fill:none;}#mermaid-1777645765752 .edgeLabel{background-color:#162030;text-align:center;}#mermaid-1777645765752 .edgeLabel p{background-color:#162030;}#mermaid-1777645765752 .edgeLabel rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1777645765752 .labelBkg{background-color:rgba(22, 32, 48, 0.5);}#mermaid-1777645765752 .cluster rect{fill:#1a2d45;stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#mermaid-1777645765752 .cluster text{fill:#e8edf2;}#mermaid-1777645765752 .cluster span{color:#e8edf2;}#mermaid-1777645765752 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:#0d1b2a;border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1777645765752 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#mermaid-1777645765752 rect.text{fill:none;stroke-width:0;}#mermaid-1777645765752 .icon-shape,#mermaid-1777645765752 .image-shape{background-color:#162030;text-align:center;}#mermaid-1777645765752 .icon-shape p,#mermaid-1777645765752 .image-shape p{background-color:#162030;padding:2px;}#mermaid-1777645765752 .icon-shape .label rect,#mermaid-1777645765752 .image-shape .label rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1777645765752 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-1777645765752 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-1777645765752 .node .neo-node{stroke:#243450;}#mermaid-1777645765752 [data-look="neo"].node rect,#mermaid-1777645765752 [data-look="neo"].cluster rect,#mermaid-1777645765752 [data-look="neo"].node polygon{stroke:url(#mermaid-1777645765752-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765752 [data-look="neo"].node path{stroke:url(#mermaid-1777645765752-gradient);stroke-width:1px;}#mermaid-1777645765752 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765752 [data-look="neo"].node .neo-line path{stroke:#243450;filter:none;}#mermaid-1777645765752 [data-look="neo"].node circle{stroke:url(#mermaid-1777645765752-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765752 [data-look="neo"].node circle .state-start{fill:#000000;}#mermaid-1777645765752 [data-look="neo"].icon-shape .icon{fill:url(#mermaid-1777645765752-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765752 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mermaid-1777645765752-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765752 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="mermaid-1777645765752_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777645765752_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777645765752_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777645765752_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mermaid-1777645765752_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777645765752_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777645765752_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777645765752_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777645765752_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777645765752_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777645765752_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mermaid-1777645765752_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M76.796,541L98.035,456.167C119.274,371.333,161.751,201.667,198.952,119.514C236.153,37.361,268.076,42.722,284.038,45.403L299.999,48.084" id="mermaid-1777645765752-L_CORE_FIELDS_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_CORE_FIELDS_0" data-points="W3sieCI6NzYuNzk1NjMwNDg2ODA2MjMsInkiOjU0MX0seyJ4IjoyMDQuMjI5MzQ3MjI5MDAzOSwieSI6MzJ9LHsieCI6MzAzLjk0NDE5MDk3OTAwMzksInkiOjQ4Ljc0NjA3NTYyOTA3MDh9XQ==" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path><path d="M80.015,541L100.718,482.167C121.42,423.333,162.825,305.667,197.173,246.833C231.521,188,258.813,188,272.459,188L286.104,188" id="mermaid-1777645765752-L_CORE_HANUL_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_CORE_HANUL_0" data-points="W3sieCI6ODAuMDE1MjAxMzQ1MDg2MSwieSI6NTQxfSx7IngiOjIwNC4yMjkzNDcyMjkwMDM5LCJ5IjoxODh9LHsieCI6MjkwLjEwNDM0NzIyOTAwMzksInkiOjE4OH1d" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path><path d="M85.588,541L105.361,503.5C125.135,466,164.682,391,199.255,353.5C233.827,316,263.425,316,278.223,316L293.022,316" id="mermaid-1777645765752-L_CORE_CARGO_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_CORE_CARGO_0" data-points="W3sieCI6ODUuNTg3NTM1NTIyODc4MTcsInkiOjU0MX0seyJ4IjoyMDQuMjI5MzQ3MjI5MDAzOSwieSI6MzE2fSx7IngiOjI5Ny4wMjIzMTU5NzkwMDM5LCJ5IjozMTZ9XQ==" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path><path d="M101.994,541.292L119.033,525.077C136.073,508.862,170.151,476.431,201.238,460.215C232.324,444,260.419,444,274.467,444L288.515,444" id="mermaid-1777645765752-L_CORE_HDEC_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_CORE_HDEC_0" data-points="W3sieCI6MTAxLjk5NDIxMDk0MzgxNTIzLCJ5Ijo1NDEuMjkyMzc2MTAwOTg4fSx7IngiOjIwNC4yMjkzNDcyMjkwMDM5LCJ5Ijo0NDR9LHsieCI6MjkyLjUxNDUwMzQ3OTAwMzksInkiOjQ0NH1d" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path><path d="M129.241,572.5L141.739,572.417C154.237,572.333,179.233,572.167,209.238,572.083C239.244,572,274.258,572,291.765,572L309.272,572" id="mermaid-1777645765752-L_CORE_SAMDU_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_CORE_SAMDU_0" data-points="W3sieCI6MTI5LjI0MTA2OTEyMDY0Mjg2LCJ5Ijo1NzIuNX0seyJ4IjoyMDQuMjI5MzQ3MjI5MDAzOSwieSI6NTcyfSx7IngiOjMxMy4yNzIzMTU5NzkwMDM5LCJ5Ijo1NzJ9XQ==" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path><path d="M101.994,603.708L119.033,619.756C136.073,635.805,170.151,667.903,203.126,683.951C236.1,700,267.972,700,283.907,700L299.843,700" id="mermaid-1777645765752-L_CORE_PKU_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_CORE_PKU_0" data-points="W3sieCI6MTAxLjk5NDIxMDk0MzgxNTYzLCJ5Ijo2MDMuNzA3NjIzODk5MDEyM30seyJ4IjoyMDQuMjI5MzQ3MjI5MDAzOSwieSI6NzAwfSx7IngiOjMwMy44NDI2Mjg0NzkwMDM5LCJ5Ijo3MDB9XQ==" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path><path d="M88.868,604L108.095,634.333C127.322,664.667,165.776,725.333,196.937,758.673C228.099,792.013,251.969,798.026,263.904,801.033L275.839,804.039" id="mermaid-1777645765752-L_CORE_PROF_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_CORE_PROF_0" data-points="W3sieCI6ODguODY4NDQyNTYyMTM4OSwieSI6NjAzLjk5OTk5OTk5OTk5OTl9LHsieCI6MjA0LjIyOTM0NzIyOTAwMzksInkiOjc4Nn0seyJ4IjoyNzkuNzE3NjI4NDc5MDAzOSwieSI6ODA1LjAxNjIxMjkyMzQ4MDd9XQ==" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path><path d="M80.015,604L100.718,662.667C121.42,721.333,162.825,838.667,196.595,897.333C230.366,956,256.503,956,269.571,956L282.64,956" id="mermaid-1777645765752-L_CORE_CONSULT_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_CORE_CONSULT_0" data-points="W3sieCI6ODAuMDE1MjAxMzQ1MDg2MDgsInkiOjYwMy45OTk5OTk5OTk5OTk5fSx7IngiOjIwNC4yMjkzNDcyMjkwMDM5LCJ5Ijo5NTZ9LHsieCI6Mjg2LjYzOTUwMzQ3OTAwMzksInkiOjk1Nn1d" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path><path d="M77.229,604L98.396,684C119.562,764,161.896,924,196.761,1004C231.625,1084,259.021,1084,272.719,1084L286.417,1084" id="mermaid-1777645765752-L_CORE_INV_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_CORE_INV_0" data-points="W3sieCI6NzcuMjI5MDM0MjU2MTkwMDYsInkiOjYwNH0seyJ4IjoyMDQuMjI5MzQ3MjI5MDAzOSwieSI6MTA4NH0seyJ4IjoyOTAuNDE2ODQ3MjI5MDAzOSwieSI6MTA4NH1d" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path><path d="M303.944,74.469L287.325,78.058C270.706,81.646,237.468,88.823,199.969,165.937C162.471,243.051,120.712,390.101,99.833,463.627L78.954,537.152" id="mermaid-1777645765752-L_FIELDS_CORE_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_FIELDS_CORE_0" data-points="W3sieCI6MzAzLjk0NDE5MDk3OTAwMzksInkiOjc0LjQ2OTMzMTMzNDA1MTgzfSx7IngiOjIwNC4yMjkzNDcyMjkwMDM5LCJ5Ijo5Nn0seyJ4Ijo3Ny44NjExODk4MTQxNzQ4OCwieSI6NTQxfV0=" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path><path d="M279.718,850.984L267.136,854.153C254.555,857.323,229.392,863.661,196.92,823.104C164.449,782.547,124.668,695.094,104.778,651.368L84.888,607.641" id="mermaid-1777645765752-L_PROF_CORE_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_PROF_CORE_0" data-points="W3sieCI6Mjc5LjcxNzYyODQ3OTAwMzksInkiOjg1MC45ODM3ODcwNzY1MTkzfSx7IngiOjIwNC4yMjkzNDcyMjkwMDM5LCJ5Ijo4NzB9LHsieCI6ODMuMjMxNDQ3OTE3NTAyOTksInkiOjYwNH1d" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path><path d="M451.495,1084L465.348,1084C479.202,1084,506.909,1084,532.166,1084C557.423,1084,580.231,1084,591.634,1084L603.038,1084" id="mermaid-1777645765752-L_INV_HIRE_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_INV_HIRE_0" data-points="W3sieCI6NDUxLjQ5NDk3MjIyOTAwMzksInkiOjEwODR9LHsieCI6NTM0LjYxNjA2NTk3OTAwMzksInkiOjEwODR9LHsieCI6NjA3LjAzNzk0MDk3OTAwMzksInkiOjEwODR9XQ==" data-look="classic" marker-end="url(#mermaid-1777645765752_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel" transform="translate(152.79069, 237.45802)"><g class="label" data-id="L_CORE_FIELDS_0" transform="translate(-30.09375, -24)"><foreignObject width="60.1875" height="48"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">계약 확정<br>1억9천</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(204.2293472290039, 188)"><g class="label" data-id="L_CORE_HANUL_0" transform="translate(-43.28515625, -24)"><foreignObject width="86.5703125" height="48"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">지원사업 50%<br>+ 직계약 高</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(204.2293472290039, 316)"><g class="label" data-id="L_CORE_CARGO_0" transform="translate(-30.09375, -24)"><foreignObject width="60.1875" height="48"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">5/7 공고<br>거의 확정</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(204.2293472290039, 444)"><g class="label" data-id="L_CORE_HDEC_0" transform="translate(-30.04296875, -24)"><foreignObject width="60.0859375" height="48"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">IT팀 접촉<br>추진 중</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(204.2293472290039, 572)"><g class="label" data-id="L_CORE_SAMDU_0" transform="translate(-43.93359375, -12)"><foreignObject width="87.8671875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">지원사업 대기</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(204.2293472290039, 700)"><g class="label" data-id="L_CORE_PKU_0" transform="translate(-43.6171875, -12)"><foreignObject width="87.234375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">3자 협의 예정</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(167.38704, 727.87546)"><g class="label" data-id="L_CORE_PROF_0" transform="translate(-30.09375, -12)"><foreignObject width="60.1875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">자문 계약</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(204.2293472290039, 956)"><g class="label" data-id="L_CORE_CONSULT_0" transform="translate(-30.09375, -12)"><foreignObject width="60.1875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">협력 계약</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(204.2293472290039, 1084)"><g class="label" data-id="L_CORE_INV_0" transform="translate(-37.01171875, -12)"><foreignObject width="74.0234375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">투자 라운드</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(154.97882, 269.43361)"><g class="label" data-id="L_FIELDS_CORE_0" transform="translate(-37.01171875, -12)"><foreignObject width="74.0234375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">데이터 제공</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(159.84678, 772.43002)"><g class="label" data-id="L_PROF_CORE_0" transform="translate(-50.48828125, -12)"><foreignObject width="100.9765625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">IT기업 2곳 연결</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(534.6160659790039, 1084)"><g class="label" data-id="L_INV_HIRE_0" transform="translate(-47.421875, -12)"><foreignObject width="94.84375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">투자금 → 채용</p></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="mermaid-1777645765752-flowchart-CORE-0" data-look="classic" transform="translate(68.37053298950195, 572)"><g class="basic label-container outer-path"><path d="M-28.88671875 -31.5 C-6.687053034556435 -31.5, 15.51261268088713 -31.5, 28.88671875 -31.5 C28.88671875 -31.5, 28.886718749999996 -31.5, 28.886718749999996 -31.5 C29.544264798452474 -31.47891377806187, 30.201810846904948 -31.45782755612374, 30.904930679392454 -31.435279871635593 C31.354180183667186 -31.39194131225979, 31.803429687941914 -31.348602752883984, 32.91484934306194 -31.241385435432253 C33.56065379597929 -31.13697677977291, 34.206458248896645 -31.03256812411356, 34.908215554093225 -30.91911344521856 C35.584806627930405 -30.7646859477846, 36.26139770176758 -30.61025845035064, 36.87683814314948 -30.469788185729428 C37.39067166301582 -30.31728509420028, 37.90450518288217 -30.164782002671135, 38.81262761774405 -29.895256030836062 C39.19700188620255 -29.753802746926546, 39.58137615466105 -29.61234946301703, 40.70762940370028 -29.197877856399685 C41.28762568186038 -28.941130709036504, 41.86762196002049 -28.684383561673325, 42.55405653220308 -28.380519338926202 C43.008299203361794 -28.143541228339018, 43.46254187452052 -27.90656311775183, 44.344321638124036 -27.44653917988677 C44.71298641683984 -27.223052424514528, 45.081651195555644 -26.99956566914229, 46.071068138132276 -26.399775304092984 C46.70400284263113 -25.958267453536344, 47.33693754712998 -25.516759602979704, 47.7272004604733 -25.244529088840633 C48.13280391398403 -24.921071128227027, 48.538407367494756 -24.597613167613417, 49.30591320219533 -23.985547688627737 C49.68570935430012 -23.640626872141688, 50.06550550640492 -23.29570605565564, 50.80071909400982 -22.62800452807842 C51.2854544949081 -22.1274754291344, 51.77018989580638 -21.626946330190382, 52.205475657872434 -21.177478043231485 C52.6238234855711 -20.686062880150878, 53.04217131326977 -20.194647717070275, 53.51441044774294 -19.63992875855011 C53.87256079005967 -19.160039928013095, 54.230711132376406 -18.680151097476077, 54.7221447698041 -18.02167479384835 C54.974692026378044 -17.63369438931691, 55.227239282951984 -17.24571398478547, 55.8237157846684 -16.329365901781543 C56.182754904031036 -15.691855588699974, 56.54179402339367 -15.054345275618406, 56.81459690074951 -14.56995614258631 C57.12174705531602 -13.932152274668436, 57.42889720988254 -13.294348406750562, 57.69071637499809 -12.750675308355413 C57.85046314898638 -12.356097688110573, 58.01020992297467 -11.961520067865733, 58.44847404456745 -10.878999214271206 C58.62508235948724 -10.347083108446474, 58.80169067440703 -9.815167002621742, 59.08475612065481 -8.962618978877531 C59.280859008019064 -8.21479367782861, 59.476961895383326 -7.466968376779688, 59.596947983727446 -7.009409419623907 C59.742544733747685 -6.261800880154003, 59.88814148376792 -5.514192340684098, 59.98294492755518 -5.027396693551458 C60.06427773310777 -4.3965955146646305, 60.145610538660364 -3.765794335777803, 60.241160807899746 -3.024725316091981 C60.27249869145068 -2.536612484301879, 60.30383657500161 -2.0484996525117767, 60.37053456032167 -1.0096246935071378 C60.37053456032167 -0.22526533013504801, 60.37053456032167 0.5590940332370418, 60.37053456032167 1.00962469350713 C60.324804517295526 1.7219070262657217, 60.27907447426938 2.4341893590243133, 60.241160807899746 3.02472531609196 C60.1536780570636 3.703224256153982, 60.066195306227456 4.381723196216004, 59.98294492755518 5.027396693551435 C59.84854146463393 5.717530069470102, 59.71413800171268 6.407663445388768, 59.596947983727446 7.0094094196239 C59.46145665583014 7.526096575209292, 59.325965327932835 8.042783730794683, 59.084756120654816 8.96261897887751 C58.86577229564625 9.622163369468986, 58.64678847063769 10.281707760060462, 58.448474044567455 10.878999214271184 C58.24758231457288 11.375205671335156, 58.04669058457831 11.871412128399129, 57.69071637499809 12.750675308355405 C57.47836270840162 13.19163224068356, 57.266009041805155 13.632589173011718, 56.81459690074951 14.569956142586303 C56.467675853636784 15.185949591300282, 56.12075480652406 15.801943040014262, 55.82371578466841 16.329365901781536 C55.51262983641027 16.80727745657961, 55.20154388815212 17.285189011377685, 54.72214476980412 18.021674793848334 C54.40860775436263 18.441785830730208, 54.095070738921144 18.861896867612085, 53.51441044774295 19.639928758550102 C53.14321821549645 20.075952275983198, 52.77202598324995 20.51197579341629, 52.20547565787245 21.177478043231467 C51.80895901833087 21.586914028179688, 51.412442378789294 21.996350013127905, 50.80071909400983 22.628004528078414 C50.295538718515644 23.08679597876195, 49.79035834302146 23.545587429445483, 49.305913202195356 23.985547688627715 C48.68445167459243 24.481146719105254, 48.06299014698951 24.976745749582793, 47.72720046047331 25.24452908884063 C47.36352931183938 25.498210339057373, 46.99985816320544 25.751891589274116, 46.0710681381323 26.399775304092973 C45.38080172589427 26.81821885964736, 44.690535313656255 27.23666241520175, 44.34432163812404 27.446539179886766 C43.92115071558462 27.667307179121668, 43.497979793045204 27.88807517835657, 42.554056532203084 28.3805193389262 C42.07431611125591 28.592886192285555, 41.59457569030873 28.80525304564491, 40.707629403700295 29.197877856399682 C40.23923935871544 29.37024972270422, 39.77084931373059 29.54262158900876, 38.81262761774407 29.895256030836055 C38.24298973940416 30.0643215630371, 37.67335186106425 30.23338709523815, 36.87683814314951 30.46978818572942 C36.3611983208924 30.587479610295304, 35.84555849863528 30.705171034861188, 34.90821555409324 30.919113445218557 C34.405446389133964 31.000397264776065, 33.90267722417469 31.081681084333574, 32.91484934306196 31.24138543543225 C32.37188429634153 31.293764620478363, 31.82891924962109 31.346143805524473, 30.904930679392454 31.435279871635593 C30.263265612001828 31.455856821421524, 29.6216005446112 31.476433771207457, 28.886718750000007 31.5 C28.886718750000004 31.5, 28.886718750000004 31.5, 28.88671875 31.5 C10.732996027693332 31.5, -7.420726694613336 31.5, -28.886718749999993 31.5 C-29.375286535491032 31.484332582058805, -29.86385432098207 31.468665164117613, -30.904930679392443 31.435279871635593 C-31.635567121974447 31.36479625273859, -32.36620356455645 31.29431263384159, -32.914849343061945 31.24138543543225 C-33.336032386713256 31.17329182725799, -33.75721543036456 31.105198219083736, -34.908215554093225 30.919113445218557 C-35.400801041948384 30.80668402203633, -35.893386529803536 30.6942545988541, -36.87683814314947 30.469788185729428 C-37.64173794047511 30.24276994092415, -38.40663773780074 30.01575169611887, -38.812627617744035 29.89525603083607 C-39.50392139538977 29.64085353041281, -40.1952151730355 29.38645102998955, -40.70762940370029 29.197877856399685 C-41.29846617237854 28.936331945455848, -41.88930294105679 28.67478603451201, -42.55405653220308 28.380519338926206 C-43.057907478695284 28.117660622873156, -43.56175842518749 27.854801906820104, -44.34432163812403 27.446539179886773 C-44.99752468395047 27.0505636548596, -45.650727729776925 26.654588129832426, -46.07106813813226 26.399775304092994 C-46.58087690462076 26.044154777856427, -47.090685671109256 25.688534251619856, -47.7272004604733 25.244529088840636 C-48.33434983243768 24.760343621622376, -48.94149920440207 24.276158154404115, -49.30591320219533 23.98554768862774 C-49.729120268053876 23.601202228860366, -50.15232733391243 23.216856769092992, -50.80071909400981 22.628004528078435 C-51.23622965689266 22.178304115819703, -51.67174021977552 21.728603703560967, -52.20547565787244 21.177478043231478 C-52.612317015976494 20.69957903407337, -53.019158374080554 20.22168002491526, -53.51441044774293 19.639928758550113 C-53.864081171660146 19.171401844159327, -54.21375189557736 18.70287492976854, -54.7221447698041 18.021674793848355 C-55.11151921217625 17.423491088686944, -55.5008936545484 16.825307383525537, -55.823715784668394 16.329365901781557 C-56.0855565613511 15.864441088527668, -56.3473973380338 15.39951627527378, -56.8145969007495 14.569956142586314 C-56.99773672443421 14.189662380140527, -57.180876548118924 13.80936861769474, -57.69071637499809 12.750675308355417 C-57.86884106688232 12.310703875594728, -58.046965758766554 11.87073244283404, -58.44847404456745 10.878999214271209 C-58.696630068307485 10.131592809059189, -58.94478609204752 9.384186403847167, -59.08475612065481 8.962618978877522 C-59.2302888742188 8.407639515243629, -59.3758216277828 7.852660051609735, -59.59694798372744 7.009409419623911 C-59.70185856402728 6.470715762643231, -59.80676914432712 5.932022105662551, -59.98294492755518 5.027396693551461 C-60.08520078218744 4.234320477726081, -60.187456636819704 3.441244261900701, -60.241160807899746 3.024725316091999 C-60.269628688117955 2.5813151028340497, -60.29809656833617 2.1379048895761006, -60.37053456032167 1.0096246935071416 C-60.37053456032167 0.4437366005180077, -60.37053456032167 -0.12215149247112622, -60.37053456032167 -1.0096246935071262 C-60.333426926079795 -1.5876060495676043, -60.29631929183792 -2.165587405628082, -60.241160807899746 -3.024725316091956 C-60.17107678742609 -3.5682831392304233, -60.10099276695244 -4.111840962368891, -59.98294492755518 -5.027396693551446 C-59.86890718939928 -5.612956377097513, -59.75486945124337 -6.19851606064358, -59.596947983727446 -7.009409419623896 C-59.45476370320309 -7.55161970432025, -59.31257942267874 -8.093829989016603, -59.084756120654816 -8.962618978877506 C-58.840297563157854 -9.69888920487663, -58.595839005660885 -10.435159430875755, -58.44847404456746 -10.878999214271168 C-58.16967026918406 -11.567649929772472, -57.89086649380065 -12.256300645273775, -57.69071637499809 -12.750675308355401 C-57.449239259247946 -13.252107705993149, -57.2077621434978 -13.753540103630895, -56.81459690074951 -14.5699561425863 C-56.586846423307904 -14.974350177520494, -56.3590959458663 -15.378744212454688, -55.8237157846684 -16.329365901781546 C-55.60225389405697 -16.66959083660504, -55.380792003445535 -17.00981577142853, -54.72214476980411 -18.021674793848344 C-54.46415434873271 -18.36735845467315, -54.206163927661315 -18.713042115497952, -53.51441044774295 -19.639928758550102 C-53.047799039276576 -20.188037069875996, -52.581187630810206 -20.736145381201894, -52.205475657872455 -21.177478043231467 C-51.79508738257987 -21.601237630975074, -51.38469910728728 -22.02499721871868, -50.800719094009835 -22.628004528078403 C-50.38740196567171 -23.003368208263137, -49.974084837333585 -23.378731888447867, -49.305913202195356 -23.98554768862771 C-48.83380053140692 -24.36204498013569, -48.36168786061849 -24.738542271643666, -47.72720046047331 -25.244529088840626 C-47.353194887510895 -25.505419186098898, -46.97918931454848 -25.76630928335717, -46.071068138132304 -26.39977530409297 C-45.61763376413562 -26.674649886285916, -45.164199390138926 -26.949524468478867, -44.34432163812404 -27.446539179886763 C-43.715206698233175 -27.77474804106048, -43.08609175834231 -28.102956902234194, -42.55405653220309 -28.3805193389262 C-42.13819566698671 -28.564608607883226, -41.72233480177033 -28.74869787684025, -40.7076294037003 -29.19787785639968 C-40.13155635379644 -29.4098780639252, -39.55548330389258 -29.62187827145072, -38.81262761774408 -29.895256030836055 C-38.272772054710956 -30.055482328184606, -37.73291649167784 -30.21570862553316, -36.87683814314951 -30.469788185729417 C-36.34652252836904 -30.59082926417026, -35.81620691358858 -30.7118703426111, -34.90821555409324 -30.919113445218553 C-34.43547902305064 -30.99554182143097, -33.96274249200803 -31.071970197643385, -32.91484934306196 -31.24138543543225 C-32.30160979113205 -31.300543917478464, -31.68837023920214 -31.359702399524675, -30.904930679392457 -31.435279871635593 C-30.40807329478006 -31.451213120885882, -29.911215910167662 -31.467146370136174, -28.88671875000001 -31.5 C-28.886718750000007 -31.5, -28.886718750000004 -31.5, -28.88671875 -31.5" stroke="none" stroke-width="0" fill="#1a2d45" style="fill:#1a2d45 !important;stroke:#c9a84c !important"></path><path d="M-28.88671875 -31.5 C-14.172763280109084 -31.5, 0.5411921897818317 -31.5, 28.88671875 -31.5 M-28.88671875 -31.5 C-6.490558991728697 -31.5, 15.905600766542605 -31.5, 28.88671875 -31.5 M28.88671875 -31.5 C28.88671875 -31.5, 28.886718749999996 -31.5, 28.886718749999996 -31.5 M28.88671875 -31.5 C28.88671875 -31.5, 28.886718749999996 -31.5, 28.886718749999996 -31.5 M28.886718749999996 -31.5 C29.682326363310477 -31.474486412397408, 30.477933976620957 -31.448972824794815, 30.904930679392454 -31.435279871635593 M28.886718749999996 -31.5 C29.313315214801364 -31.486319881693465, 29.73991167960273 -31.472639763386933, 30.904930679392454 -31.435279871635593 M30.904930679392454 -31.435279871635593 C31.5109356361501 -31.376819302284776, 32.116940592907746 -31.31835873293396, 32.91484934306194 -31.241385435432253 M30.904930679392454 -31.435279871635593 C31.683351390339997 -31.360186561838358, 32.46177210128754 -31.285093252041122, 32.91484934306194 -31.241385435432253 M32.91484934306194 -31.241385435432253 C33.5916174532455 -31.131970815792855, 34.26838556342905 -31.02255619615346, 34.908215554093225 -30.91911344521856 M32.91484934306194 -31.241385435432253 C33.63979603342606 -31.12418167657973, 34.36474272379018 -31.006977917727212, 34.908215554093225 -30.91911344521856 M34.908215554093225 -30.91911344521856 C35.40572870905025 -30.805559314176364, 35.903241864007285 -30.692005183134164, 36.87683814314948 -30.469788185729428 M34.908215554093225 -30.91911344521856 C35.63433062807989 -30.753382417924783, 36.36044570206654 -30.587651390631006, 36.87683814314948 -30.469788185729428 M36.87683814314948 -30.469788185729428 C37.58459252594862 -30.25973039999321, 38.29234690874776 -30.04967261425699, 38.81262761774405 -29.895256030836062 M36.87683814314948 -30.469788185729428 C37.53799320865219 -30.27356083276198, 38.19914827415491 -30.077333479794532, 38.81262761774405 -29.895256030836062 M38.81262761774405 -29.895256030836062 C39.43663297229903 -29.665616292117562, 40.06063832685401 -29.435976553399065, 40.70762940370028 -29.197877856399685 M38.81262761774405 -29.895256030836062 C39.47189061160041 -29.652641154936614, 40.13115360545677 -29.41002627903716, 40.70762940370028 -29.197877856399685 M40.70762940370028 -29.197877856399685 C41.20702029816044 -28.976812321326722, 41.706411192620585 -28.755746786253756, 42.55405653220308 -28.380519338926202 M40.70762940370028 -29.197877856399685 C41.204305989624174 -28.97801386519862, 41.700982575548075 -28.758149873997553, 42.55405653220308 -28.380519338926202 M42.55405653220308 -28.380519338926202 C42.95375713667029 -28.171995789596114, 43.353457741137504 -27.96347224026603, 44.344321638124036 -27.44653917988677 M42.55405653220308 -28.380519338926202 C43.1709214840518 -28.05870128866758, 43.78778643590053 -27.736883238408964, 44.344321638124036 -27.44653917988677 M44.344321638124036 -27.44653917988677 C44.97903107925934 -27.061774586703848, 45.61374052039465 -26.67700999352093, 46.071068138132276 -26.399775304092984 M44.344321638124036 -27.44653917988677 C44.852114635038355 -27.138712081034427, 45.359907631952666 -26.830884982182084, 46.071068138132276 -26.399775304092984 M46.071068138132276 -26.399775304092984 C46.70901504005844 -25.95477116158558, 47.3469619419846 -25.509767019078176, 47.7272004604733 -25.244529088840633 M46.071068138132276 -26.399775304092984 C46.62490550129812 -26.01344233478153, 47.17874286446396 -25.627109365470073, 47.7272004604733 -25.244529088840633 M47.7272004604733 -25.244529088840633 C48.09844861351448 -24.948468566118553, 48.46969676655566 -24.65240804339647, 49.30591320219533 -23.985547688627737 M47.7272004604733 -25.244529088840633 C48.22761185004446 -24.845464322163966, 48.728023239615624 -24.4463995554873, 49.30591320219533 -23.985547688627737 M49.30591320219533 -23.985547688627737 C49.81870108361426 -23.519847302346925, 50.33148896503319 -23.054146916066113, 50.80071909400982 -22.62800452807842 M49.30591320219533 -23.985547688627737 C49.881001768701566 -23.463267468536433, 50.456090335207804 -22.940987248445126, 50.80071909400982 -22.62800452807842 M50.80071909400982 -22.62800452807842 C51.30154193078747 -22.1108638307859, 51.80236476756512 -21.593723133493377, 52.205475657872434 -21.177478043231485 M50.80071909400982 -22.62800452807842 C51.1023250071844 -22.31657166041968, 51.40393092035898 -22.005138792760942, 52.205475657872434 -21.177478043231485 M52.205475657872434 -21.177478043231485 C52.721117218196575 -20.571776125638777, 53.236758778520716 -19.96607420804607, 53.51441044774294 -19.63992875855011 M52.205475657872434 -21.177478043231485 C52.55027462996277 -20.77245755099686, 52.89507360205311 -20.36743705876224, 53.51441044774294 -19.63992875855011 M53.51441044774294 -19.63992875855011 C53.88401404597034 -19.14469360850588, 54.25361764419774 -18.649458458461652, 54.7221447698041 -18.02167479384835 M53.51441044774294 -19.63992875855011 C53.8882222243188 -19.13905503289188, 54.26203400089466 -18.638181307233644, 54.7221447698041 -18.02167479384835 M54.7221447698041 -18.02167479384835 C55.1375061028066 -17.383568246221518, 55.55286743580909 -16.745461698594685, 55.8237157846684 -16.329365901781543 M54.7221447698041 -18.02167479384835 C55.056965664919446 -17.507299986951978, 55.391786560034795 -16.992925180055604, 55.8237157846684 -16.329365901781543 M55.8237157846684 -16.329365901781543 C56.06899200682117 -15.893853132438586, 56.314268228973944 -15.458340363095632, 56.81459690074951 -14.56995614258631 M55.8237157846684 -16.329365901781543 C56.1792219290691 -15.6981287434974, 56.5347280734698 -15.066891585213256, 56.81459690074951 -14.56995614258631 M56.81459690074951 -14.56995614258631 C57.04077738179001 -14.100287534218682, 57.26695786283051 -13.630618925851055, 57.69071637499809 -12.750675308355413 M56.81459690074951 -14.56995614258631 C57.035995420891624 -14.110217378341757, 57.25739394103373 -13.650478614097201, 57.69071637499809 -12.750675308355413 M57.69071637499809 -12.750675308355413 C57.98657514352119 -12.019898430063195, 58.28243391204429 -11.289121551770977, 58.44847404456745 -10.878999214271206 M57.69071637499809 -12.750675308355413 C57.96003428787194 -12.085454856649378, 58.229352200745794 -11.420234404943344, 58.44847404456745 -10.878999214271206 M58.44847404456745 -10.878999214271206 C58.67721873260395 -10.190056659421904, 58.905963420640454 -9.5011141045726, 59.08475612065481 -8.962618978877531 M58.44847404456745 -10.878999214271206 C58.693176076198306 -10.141995682973137, 58.937878107829164 -9.404992151675067, 59.08475612065481 -8.962618978877531 M59.08475612065481 -8.962618978877531 C59.21814662817106 -8.453943161906396, 59.351537135687316 -7.945267344935261, 59.596947983727446 -7.009409419623907 M59.08475612065481 -8.962618978877531 C59.270025658771566 -8.256105933712591, 59.45529519688832 -7.54959288854765, 59.596947983727446 -7.009409419623907 M59.596947983727446 -7.009409419623907 C59.741798206560716 -6.2656341394805, 59.886648429393986 -5.521858859337094, 59.98294492755518 -5.027396693551458 M59.596947983727446 -7.009409419623907 C59.697601531287255 -6.49257472603909, 59.79825507884707 -5.975740032454272, 59.98294492755518 -5.027396693551458 M59.98294492755518 -5.027396693551458 C60.04403035955298 -4.553630145659461, 60.10511579155078 -4.079863597767464, 60.241160807899746 -3.024725316091981 M59.98294492755518 -5.027396693551458 C60.05317531250483 -4.482703696440135, 60.12340569745447 -3.938010699328813, 60.241160807899746 -3.024725316091981 M60.241160807899746 -3.024725316091981 C60.28430960603157 -2.352647956105846, 60.327458404163394 -1.6805705961197113, 60.37053456032167 -1.0096246935071378 M60.241160807899746 -3.024725316091981 C60.282828796214076 -2.3757127643015434, 60.3244967845284 -1.7267002125111057, 60.37053456032167 -1.0096246935071378 M60.37053456032167 -1.0096246935071378 C60.37053456032167 -0.4117574195819468, 60.37053456032167 0.18610985434324423, 60.37053456032167 1.00962469350713 M60.37053456032167 -1.0096246935071378 C60.37053456032167 -0.31090812038550253, 60.37053456032167 0.38780845273613274, 60.37053456032167 1.00962469350713 M60.37053456032167 1.00962469350713 C60.34252246344914 1.445935713254347, 60.31451036657662 1.8822467330015642, 60.241160807899746 3.02472531609196 M60.37053456032167 1.00962469350713 C60.33791555632213 1.5176920103860836, 60.305296552322595 2.025759327265037, 60.241160807899746 3.02472531609196 M60.241160807899746 3.02472531609196 C60.13961778663967 3.8122729370475503, 60.03807476537959 4.599820558003141, 59.98294492755518 5.027396693551435 M60.241160807899746 3.02472531609196 C60.16355775217315 3.626599291850813, 60.08595469644654 4.228473267609666, 59.98294492755518 5.027396693551435 M59.98294492755518 5.027396693551435 C59.88849368480659 5.512383862788228, 59.794042442058 5.99737103202502, 59.596947983727446 7.0094094196239 M59.98294492755518 5.027396693551435 C59.848349977136685 5.718513317297588, 59.71375502671818 6.4096299410437405, 59.596947983727446 7.0094094196239 M59.596947983727446 7.0094094196239 C59.44459461226168 7.590398855391754, 59.29224124079591 8.171388291159609, 59.084756120654816 8.96261897887751 M59.596947983727446 7.0094094196239 C59.39498698320769 7.779574245057055, 59.19302598268793 8.54973907049021, 59.084756120654816 8.96261897887751 M59.084756120654816 8.96261897887751 C58.909318219757544 9.49100998414658, 58.733880318860265 10.019400989415647, 58.448474044567455 10.878999214271184 M59.084756120654816 8.96261897887751 C58.91283261172741 9.480425195475664, 58.740909102799996 9.998231412073821, 58.448474044567455 10.878999214271184 M58.448474044567455 10.878999214271184 C58.27837306563699 11.29915192090813, 58.10827208670653 11.719304627545075, 57.69071637499809 12.750675308355405 M58.448474044567455 10.878999214271184 C58.15832609120107 11.595670268715208, 57.86817813783469 12.312341323159231, 57.69071637499809 12.750675308355405 M57.69071637499809 12.750675308355405 C57.351724131347844 13.45459995556721, 57.0127318876976 14.158524602779014, 56.81459690074951 14.569956142586303 M57.69071637499809 12.750675308355405 C57.4853329679627 13.177158347565324, 57.27994956092731 13.603641386775243, 56.81459690074951 14.569956142586303 M56.81459690074951 14.569956142586303 C56.57216042559107 15.000426653585262, 56.32972395043263 15.43089716458422, 55.82371578466841 16.329365901781536 M56.81459690074951 14.569956142586303 C56.601215415334096 14.948836577159776, 56.38783392991868 15.327717011733249, 55.82371578466841 16.329365901781536 M55.82371578466841 16.329365901781536 C55.49474729825225 16.834749837324182, 55.16577881183609 17.34013377286683, 54.72214476980412 18.021674793848334 M55.82371578466841 16.329365901781536 C55.494161322419885 16.835650053559238, 55.16460686017136 17.34193420533694, 54.72214476980412 18.021674793848334 M54.72214476980412 18.021674793848334 C54.389447091397315 18.46745937353143, 54.056749412990506 18.913243953214522, 53.51441044774295 19.639928758550102 M54.72214476980412 18.021674793848334 C54.47363674677231 18.354652905164325, 54.22512872374049 18.687631016480317, 53.51441044774295 19.639928758550102 M53.51441044774295 19.639928758550102 C53.04703870603383 20.188930200567114, 52.57966696432471 20.737931642584126, 52.20547565787245 21.177478043231467 M53.51441044774295 19.639928758550102 C53.210056728132784 19.99743995582145, 52.90570300852262 20.35495115309279, 52.20547565787245 21.177478043231467 M52.20547565787245 21.177478043231467 C51.8750383205789 21.51868172339698, 51.54460098328536 21.859885403562494, 50.80071909400983 22.628004528078414 M52.20547565787245 21.177478043231467 C51.82674476394756 21.56854878559358, 51.44801387002268 21.959619527955695, 50.80071909400983 22.628004528078414 M50.80071909400983 22.628004528078414 C50.23234688766256 23.144185127578496, 49.663974681315295 23.660365727078577, 49.305913202195356 23.985547688627715 M50.80071909400983 22.628004528078414 C50.22804447273205 23.148092466982725, 49.655369851454275 23.668180405887036, 49.305913202195356 23.985547688627715 M49.305913202195356 23.985547688627715 C48.79484984875507 24.393107113029348, 48.28378649531478 24.80066653743098, 47.72720046047331 25.24452908884063 M49.305913202195356 23.985547688627715 C48.87583768946685 24.328521465238655, 48.44576217673834 24.671495241849595, 47.72720046047331 25.24452908884063 M47.72720046047331 25.24452908884063 C47.229268654619034 25.591864761484103, 46.73133684876476 25.939200434127578, 46.0710681381323 26.399775304092973 M47.72720046047331 25.24452908884063 C47.123218740608486 25.66584059067108, 46.51923702074365 26.08715209250153, 46.0710681381323 26.399775304092973 M46.0710681381323 26.399775304092973 C45.67624655598671 26.639118467418786, 45.28142497384112 26.878461630744603, 44.34432163812404 27.446539179886766 M46.0710681381323 26.399775304092973 C45.65810523410782 26.65011584335201, 45.24514233008335 26.900456382611047, 44.34432163812404 27.446539179886766 M44.34432163812404 27.446539179886766 C43.71655687146486 27.774043656550337, 43.088792104805684 28.101548133213907, 42.554056532203084 28.3805193389262 M44.34432163812404 27.446539179886766 C43.90143558006191 27.67759255269572, 43.45854952199977 27.90864592550468, 42.554056532203084 28.3805193389262 M42.554056532203084 28.3805193389262 C41.93732993641538 28.65352590833696, 41.32060334062767 28.92653247774772, 40.707629403700295 29.197877856399682 M42.554056532203084 28.3805193389262 C41.89664561102843 28.671535652328128, 41.23923468985378 28.962551965730057, 40.707629403700295 29.197877856399682 M40.707629403700295 29.197877856399682 C40.008223408158926 29.455265727997055, 39.308817412617564 29.712653599594425, 38.81262761774407 29.895256030836055 M40.707629403700295 29.197877856399682 C40.102402556051786 29.420606930989983, 39.497175708403276 29.643336005580284, 38.81262761774407 29.895256030836055 M38.81262761774407 29.895256030836055 C38.325516211205375 30.03982813939679, 37.83840480466669 30.184400247957527, 36.87683814314951 30.46978818572942 M38.81262761774407 29.895256030836055 C38.050501221379676 30.12145114479392, 37.28837482501528 30.347646258751784, 36.87683814314951 30.46978818572942 M36.87683814314951 30.46978818572942 C36.273783300018266 30.607431518373502, 35.67072845688701 30.745074851017588, 34.90821555409324 30.919113445218557 M36.87683814314951 30.46978818572942 C36.41456139562655 30.57529983671384, 35.95228464810358 30.68081148769826, 34.90821555409324 30.919113445218557 M34.90821555409324 30.919113445218557 C34.40912790607007 30.999802065668426, 33.9100402580469 31.080490686118296, 32.91484934306196 31.24138543543225 M34.90821555409324 30.919113445218557 C34.33525571954577 31.011745147898313, 33.7622958849983 31.104376850578067, 32.91484934306196 31.24138543543225 M32.91484934306196 31.24138543543225 C32.235713432914395 31.306900859903752, 31.55657752276683 31.37241628437526, 30.904930679392454 31.435279871635593 M32.91484934306196 31.24138543543225 C32.38467910285238 31.292530320882268, 31.854508862642795 31.343675206332282, 30.904930679392454 31.435279871635593 M30.904930679392454 31.435279871635593 C30.24662445940767 31.45639047079518, 29.588318239422883 31.47750106995477, 28.886718750000007 31.5 M30.904930679392454 31.435279871635593 C30.231140050329877 31.456887025655732, 29.557349421267297 31.47849417967587, 28.886718750000007 31.5 M28.886718750000007 31.5 C28.886718750000004 31.5, 28.886718750000004 31.5, 28.88671875 31.5 M28.886718750000007 31.5 C28.886718750000004 31.5, 28.886718750000004 31.5, 28.88671875 31.5 M28.88671875 31.5 C9.400882454904917 31.5, -10.084953840190167 31.5, -28.886718749999993 31.5 M28.88671875 31.5 C12.614870512831722 31.5, -3.6569777243365564 31.5, -28.886718749999993 31.5 M-28.886718749999993 31.5 C-29.64642888297358 31.475637574721603, -30.406139015947172 31.45127514944321, -30.904930679392443 31.435279871635593 M-28.886718749999993 31.5 C-29.508350580954744 31.480065477114238, -30.129982411909495 31.460130954228475, -30.904930679392443 31.435279871635593 M-30.904930679392443 31.435279871635593 C-31.531798314831228 31.374806704763447, -32.15866595027001 31.3143335378913, -32.914849343061945 31.24138543543225 M-30.904930679392443 31.435279871635593 C-31.52849323654248 31.375125541691023, -32.15205579369252 31.314971211746457, -32.914849343061945 31.24138543543225 M-32.914849343061945 31.24138543543225 C-33.35391732388685 31.170400329315523, -33.792985304711756 31.0994152231988, -34.908215554093225 30.919113445218557 M-32.914849343061945 31.24138543543225 C-33.365105279382426 31.16859154743489, -33.8153612157029 31.095797659437533, -34.908215554093225 30.919113445218557 M-34.908215554093225 30.919113445218557 C-35.54725645279602 30.773256530221225, -36.186297351498816 30.627399615223897, -36.87683814314947 30.469788185729428 M-34.908215554093225 30.919113445218557 C-35.54507595265381 30.773754215149594, -36.18193635121439 30.628394985080632, -36.87683814314947 30.469788185729428 M-36.87683814314947 30.469788185729428 C-37.31489203836727 30.339776089020603, -37.75294593358507 30.209763992311782, -38.812627617744035 29.89525603083607 M-36.87683814314947 30.469788185729428 C-37.311516381583886 30.34077796623473, -37.74619462001831 30.211767746740026, -38.812627617744035 29.89525603083607 M-38.812627617744035 29.89525603083607 C-39.47417348987856 29.65180103462756, -40.135719362013084 29.408346038419047, -40.70762940370029 29.197877856399685 M-38.812627617744035 29.89525603083607 C-39.45993922841275 29.657039374427047, -40.10725083908146 29.418822718018028, -40.70762940370029 29.197877856399685 M-40.70762940370029 29.197877856399685 C-41.320235776061224 28.926695187677872, -41.932842148422154 28.655512518956062, -42.55405653220308 28.380519338926206 M-40.70762940370029 29.197877856399685 C-41.151193150020056 29.00152534375496, -41.59475689633982 28.805172831110237, -42.55405653220308 28.380519338926206 M-42.55405653220308 28.380519338926206 C-43.11639157519889 28.087149507188077, -43.6787266181947 27.793779675449944, -44.34432163812403 27.446539179886773 M-42.55405653220308 28.380519338926206 C-43.25367878002123 28.015526860368908, -43.953301027839395 27.650534381811614, -44.34432163812403 27.446539179886773 M-44.34432163812403 27.446539179886773 C-44.86189581043031 27.132782675031255, -45.3794699827366 26.819026170175732, -46.07106813813226 26.399775304092994 M-44.34432163812403 27.446539179886773 C-44.8441990450831 27.143510558182474, -45.34407645204217 26.840481936478174, -46.07106813813226 26.399775304092994 M-46.07106813813226 26.399775304092994 C-46.50896221773181 26.09431935029353, -46.946856297331365 25.788863396494072, -47.7272004604733 25.244529088840636 M-46.07106813813226 26.399775304092994 C-46.41067264664932 26.162881900193728, -46.75027715516637 25.92598849629446, -47.7272004604733 25.244529088840636 M-47.7272004604733 25.244529088840636 C-48.176572498356805 24.886166846920684, -48.62594453624032 24.52780460500073, -49.30591320219533 23.98554768862774 M-47.7272004604733 25.244529088840636 C-48.301772041381405 24.78632354305833, -48.87634362228951 24.328117997276024, -49.30591320219533 23.98554768862774 M-49.30591320219533 23.98554768862774 C-49.77122922643636 23.562959986999385, -50.23654525067739 23.14037228537103, -50.80071909400981 22.628004528078435 M-49.30591320219533 23.98554768862774 C-49.7684439356171 23.565489514426673, -50.23097466903888 23.14543134022561, -50.80071909400981 22.628004528078435 M-50.80071909400981 22.628004528078435 C-51.143833450740516 22.273710784541393, -51.48694780747123 21.91941704100435, -52.20547565787244 21.177478043231478 M-50.80071909400981 22.628004528078435 C-51.33095211168078 22.080495404392806, -51.861185129351746 21.532986280707174, -52.20547565787244 21.177478043231478 M-52.20547565787244 21.177478043231478 C-52.634492893410204 20.673529986596566, -53.06351012894796 20.169581929961655, -53.51441044774293 19.639928758550113 M-52.20547565787244 21.177478043231478 C-52.666171819400574 20.63631811754632, -53.12686798092871 20.09515819186116, -53.51441044774293 19.639928758550113 M-53.51441044774293 19.639928758550113 C-53.93422134201534 19.077420405784338, -54.35403223628775 18.514912053018566, -54.7221447698041 18.021674793848355 M-53.51441044774293 19.639928758550113 C-53.82398007454257 19.225133661011782, -54.133549701342204 18.81033856347345, -54.7221447698041 18.021674793848355 M-54.7221447698041 18.021674793848355 C-55.05077847485441 17.516805172385038, -55.379412179904726 17.011935550921716, -55.823715784668394 16.329365901781557 M-54.7221447698041 18.021674793848355 C-54.955053369928606 17.663864639340904, -55.1879619700531 17.306054484833453, -55.823715784668394 16.329365901781557 M-55.823715784668394 16.329365901781557 C-56.17410535040535 15.707213747024657, -56.5244949161423 15.085061592267756, -56.8145969007495 14.569956142586314 M-55.823715784668394 16.329365901781557 C-56.11980238134726 15.803634167359169, -56.41588897802614 15.27790243293678, -56.8145969007495 14.569956142586314 M-56.8145969007495 14.569956142586314 C-57.02230840071473 14.138638768594387, -57.230019900679956 13.70732139460246, -57.69071637499809 12.750675308355417 M-56.8145969007495 14.569956142586314 C-57.061019304347646 14.058254748919978, -57.30744170794579 13.546553355253643, -57.69071637499809 12.750675308355417 M-57.69071637499809 12.750675308355417 C-57.94735976611302 12.116761170439139, -58.20400315722794 11.482847032522859, -58.44847404456745 10.878999214271209 M-57.69071637499809 12.750675308355417 C-57.87408070105695 12.29776187788196, -58.05744502711581 11.844848447408504, -58.44847404456745 10.878999214271209 M-58.44847404456745 10.878999214271209 C-58.63981389809792 10.30271406130302, -58.83115375162839 9.726428908334828, -59.08475612065481 8.962618978877522 M-58.44847404456745 10.878999214271209 C-58.686128433167596 10.163222060892199, -58.923782821767745 9.44744490751319, -59.08475612065481 8.962618978877522 M-59.08475612065481 8.962618978877522 C-59.26632848736911 8.270204850634357, -59.447900854083414 7.5777907223911924, -59.59694798372744 7.009409419623911 M-59.08475612065481 8.962618978877522 C-59.275173837903 8.236473695449472, -59.46559155515119 7.510328412021421, -59.59694798372744 7.009409419623911 M-59.59694798372744 7.009409419623911 C-59.73915856564043 6.279188137717846, -59.88136914755342 5.548966855811779, -59.98294492755518 5.027396693551461 M-59.59694798372744 7.009409419623911 C-59.747872413609535 6.234444370068924, -59.898796843491624 5.459479320513935, -59.98294492755518 5.027396693551461 M-59.98294492755518 5.027396693551461 C-60.04434249936395 4.551209250924571, -60.10574007117272 4.075021808297681, -60.241160807899746 3.024725316091999 M-59.98294492755518 5.027396693551461 C-60.03868118113333 4.595117317167555, -60.09441743471147 4.162837940783647, -60.241160807899746 3.024725316091999 M-60.241160807899746 3.024725316091999 C-60.272598517717555 2.535057609617041, -60.304036227535356 2.045389903142083, -60.37053456032167 1.0096246935071416 M-60.241160807899746 3.024725316091999 C-60.272867476015854 2.5308683670217356, -60.30457414413197 2.0370114179514727, -60.37053456032167 1.0096246935071416 M-60.37053456032167 1.0096246935071416 C-60.37053456032167 0.24031278632543218, -60.37053456032167 -0.5289991208562772, -60.37053456032167 -1.0096246935071262 M-60.37053456032167 1.0096246935071416 C-60.37053456032167 0.3710127225037858, -60.37053456032167 -0.26759924849956995, -60.37053456032167 -1.0096246935071262 M-60.37053456032167 -1.0096246935071262 C-60.338951389675046 -1.5015580698047706, -60.307368219028426 -1.9934914461024147, -60.241160807899746 -3.024725316091956 M-60.37053456032167 -1.0096246935071262 C-60.33522736820811 -1.5595627101283382, -60.29992017609455 -2.10950072674955, -60.241160807899746 -3.024725316091956 M-60.241160807899746 -3.024725316091956 C-60.18490043631572 -3.4610696482306924, -60.12864006473169 -3.8974139803694294, -59.98294492755518 -5.027396693551446 M-60.241160807899746 -3.024725316091956 C-60.17332351503917 -3.5508579635299298, -60.10548622217859 -4.076990610967903, -59.98294492755518 -5.027396693551446 M-59.98294492755518 -5.027396693551446 C-59.848643540566464 -5.717005931130319, -59.714342153577746 -6.406615168709192, -59.596947983727446 -7.009409419623896 M-59.98294492755518 -5.027396693551446 C-59.89023167140873 -5.503459668909849, -59.797518415262275 -5.979522644268251, -59.596947983727446 -7.009409419623896 M-59.596947983727446 -7.009409419623896 C-59.43262765620946 -7.636034045330409, -59.26830732869148 -8.262658671036922, -59.084756120654816 -8.962618978877506 M-59.596947983727446 -7.009409419623896 C-59.46552015995391 -7.510600672851527, -59.334092336180376 -8.011791926079157, -59.084756120654816 -8.962618978877506 M-59.084756120654816 -8.962618978877506 C-58.90041072090105 -9.517837951485122, -58.71606532114728 -10.07305692409274, -58.44847404456746 -10.878999214271168 M-59.084756120654816 -8.962618978877506 C-58.842169222095656 -9.693252066364318, -58.599582323536495 -10.423885153851131, -58.44847404456746 -10.878999214271168 M-58.44847404456746 -10.878999214271168 C-58.27871786898421 -11.29830024997418, -58.10896169340096 -11.717601285677189, -57.69071637499809 -12.750675308355401 M-58.44847404456746 -10.878999214271168 C-58.18861479274512 -11.520856590309199, -57.92875554092278 -12.16271396634723, -57.69071637499809 -12.750675308355401 M-57.69071637499809 -12.750675308355401 C-57.4453483929334 -13.260187173146509, -57.19998041086871 -13.769699037937617, -56.81459690074951 -14.5699561425863 M-57.69071637499809 -12.750675308355401 C-57.406849632106216 -13.340130673745685, -57.122982889214335 -13.929586039135971, -56.81459690074951 -14.5699561425863 M-56.81459690074951 -14.5699561425863 C-56.60216558369269 -14.947149457024112, -56.38973426663586 -15.324342771461925, -55.8237157846684 -16.329365901781546 M-56.81459690074951 -14.5699561425863 C-56.48744507908605 -15.150847329663957, -56.160293257422595 -15.731738516741615, -55.8237157846684 -16.329365901781546 M-55.8237157846684 -16.329365901781546 C-55.40553972396711 -16.97179662701395, -54.98736366326582 -17.614227352246353, -54.72214476980411 -18.021674793848344 M-55.8237157846684 -16.329365901781546 C-55.4427818067835 -16.914582786908483, -55.06184782889859 -17.499799672035422, -54.72214476980411 -18.021674793848344 M-54.72214476980411 -18.021674793848344 C-54.46490727470174 -18.366349602467622, -54.207669779599364 -18.7110244110869, -53.51441044774295 -19.639928758550102 M-54.72214476980411 -18.021674793848344 C-54.30465672689799 -18.581070737399408, -53.88716868399187 -19.140466680950475, -53.51441044774295 -19.639928758550102 M-53.51441044774295 -19.639928758550102 C-53.25227300766553 -19.947850311707928, -52.99013556758812 -20.255771864865753, -52.205475657872455 -21.177478043231467 M-53.51441044774295 -19.639928758550102 C-53.22987155126091 -19.974164337079774, -52.94533265477888 -20.308399915609442, -52.205475657872455 -21.177478043231467 M-52.205475657872455 -21.177478043231467 C-51.70863667906271 -21.690505080091306, -51.21179770025295 -22.203532116951145, -50.800719094009835 -22.628004528078403 M-52.205475657872455 -21.177478043231467 C-51.90665289095856 -21.486037083875487, -51.607830124044675 -21.794596124519508, -50.800719094009835 -22.628004528078403 M-50.800719094009835 -22.628004528078403 C-50.32883326615019 -23.056558751525706, -49.85694743829055 -23.48511297497301, -49.305913202195356 -23.98554768862771 M-50.800719094009835 -22.628004528078403 C-50.428360571654714 -22.9661706860147, -50.05600204929959 -23.304336843951, -49.305913202195356 -23.98554768862771 M-49.305913202195356 -23.98554768862771 C-48.98782873954352 -24.23921158300951, -48.669744276891684 -24.492875477391312, -47.72720046047331 -25.244529088840626 M-49.305913202195356 -23.98554768862771 C-48.926824678749064 -24.287860698106854, -48.54773615530277 -24.590173707585993, -47.72720046047331 -25.244529088840626 M-47.72720046047331 -25.244529088840626 C-47.29016915905077 -25.549383205932873, -46.85313785762823 -25.854237323025117, -46.071068138132304 -26.39977530409297 M-47.72720046047331 -25.244529088840626 C-47.28589374629425 -25.552365548792185, -46.844587032115186 -25.860202008743745, -46.071068138132304 -26.39977530409297 M-46.071068138132304 -26.39977530409297 C-45.672985326503834 -26.641095443896415, -45.27490251487537 -26.88241558369986, -44.34432163812404 -27.446539179886763 M-46.071068138132304 -26.39977530409297 C-45.68974082581454 -26.630938161748023, -45.308413513496774 -26.862101019403077, -44.34432163812404 -27.446539179886763 M-44.34432163812404 -27.446539179886763 C-43.90016428715397 -27.67825578539149, -43.4560069361839 -27.90997239089622, -42.55405653220309 -28.3805193389262 M-44.34432163812404 -27.446539179886763 C-43.95684712163443 -27.64868438695012, -43.56937260514483 -27.850829594013476, -42.55405653220309 -28.3805193389262 M-42.55405653220309 -28.3805193389262 C-42.16057856937334 -28.554700360961874, -41.767100606543586 -28.728881382997546, -40.7076294037003 -29.19787785639968 M-42.55405653220309 -28.3805193389262 C-42.18023949571127 -28.54599705209273, -41.80642245921945 -28.71147476525926, -40.7076294037003 -29.19787785639968 M-40.7076294037003 -29.19787785639968 C-39.98086606247655 -29.465333484096703, -39.25410272125279 -29.732789111793725, -38.81262761774408 -29.895256030836055 M-40.7076294037003 -29.19787785639968 C-39.96145614452071 -29.472476513327766, -39.21528288534111 -29.747075170255854, -38.81262761774408 -29.895256030836055 M-38.81262761774408 -29.895256030836055 C-38.1064495217681 -30.104845982917258, -37.40027142579213 -30.314435934998457, -36.87683814314951 -30.469788185729417 M-38.81262761774408 -29.895256030836055 C-38.17991360803288 -30.08304222773473, -37.54719959832168 -30.2708284246334, -36.87683814314951 -30.469788185729417 M-36.87683814314951 -30.469788185729417 C-36.2236225318035 -30.618880386388916, -35.570406920457486 -30.767972587048416, -34.90821555409324 -30.919113445218553 M-36.87683814314951 -30.469788185729417 C-36.45668698866725 -30.565684944997482, -36.036535834184996 -30.661581704265544, -34.90821555409324 -30.919113445218553 M-34.90821555409324 -30.919113445218553 C-34.33151265507781 -31.01235029753359, -33.75480975606237 -31.10558714984863, -32.91484934306196 -31.24138543543225 M-34.90821555409324 -30.919113445218553 C-34.15281755217457 -31.041240335969768, -33.3974195502559 -31.163367226720982, -32.91484934306196 -31.24138543543225 M-32.91484934306196 -31.24138543543225 C-32.1885461124185 -31.31145103458499, -31.462242881775047 -31.381516633737732, -30.904930679392457 -31.435279871635593 M-32.91484934306196 -31.24138543543225 C-32.23715987623681 -31.306761323256044, -31.559470409411652 -31.37213721107984, -30.904930679392457 -31.435279871635593 M-30.904930679392457 -31.435279871635593 C-30.417302616670323 -31.450917154496647, -29.92967455394819 -31.4665544373577, -28.88671875000001 -31.5 M-30.904930679392457 -31.435279871635593 C-30.148969013239583 -31.459522090879, -29.393007347086705 -31.4837643101224, -28.88671875000001 -31.5 M-28.88671875000001 -31.5 C-28.886718750000007 -31.5, -28.886718750000004 -31.5, -28.88671875 -31.5 M-28.88671875000001 -31.5 C-28.886718750000007 -31.5, -28.886718750000004 -31.5, -28.88671875 -31.5" stroke="#c9a84c" stroke-width="1.3" fill="none" stroke-dasharray="0 0" style="fill:#1a2d45 !important;stroke:#c9a84c !important"></path></g><g class="label" style="color:#c9a84c !important;font-weight:bold !important" transform="translate(-45.01171875, -24)"><rect></rect><foreignObject width="90.0234375" height="48"><div style="color: rgb(201, 168, 76) !important; font-weight: bold !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#c9a84c !important;font-weight:bold !important" class="nodeLabel"><p style="">🏢 스냅스케일<br>에이전트 OS</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765752-flowchart-FIELDS-2" data-look="classic" transform="translate(370.9559097290039, 60)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#4ade80 !important" x="-67.01171875" y="-39" width="134.0234375" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-37.01171875, -24)"><rect></rect><foreignObject width="74.0234375" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">필즈<br>견적 자동화</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765752-flowchart-HANUL-4" data-look="classic" transform="translate(370.9559097290039, 188)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#fb923c !important" x="-80.8515625" y="-39" width="161.703125" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-50.8515625, -24)"><rect></rect><foreignObject width="101.703125" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">한울<br>기계설계 자동화</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765752-flowchart-CARGO-6" data-look="classic" transform="translate(370.9559097290039, 316)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#4ade80 !important" x="-73.93359375" y="-39" width="147.8671875" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-43.93359375, -24)"><rect></rect><foreignObject width="87.8671875" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">화물안전원<br>규정 온톨로지</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765752-flowchart-HDEC-8" data-look="classic" transform="translate(370.9559097290039, 444)"><rect class="basic label-container" style="" x="-78.44140625" y="-39" width="156.8828125" height="78"></rect><g class="label" style="" transform="translate(-48.44140625, -24)"><rect></rect><foreignObject width="96.8828125" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">현대엔지니어링<br>AI 도입</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765752-flowchart-SAMDU-10" data-look="classic" transform="translate(370.9559097290039, 572)"><rect class="basic label-container" style="" x="-57.68359375" y="-39" width="115.3671875" height="78"></rect><g class="label" style="" transform="translate(-27.68359375, -24)"><rect></rect><foreignObject width="55.3671875" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">삼두<br>지원사업</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765752-flowchart-PKU-12" data-look="classic" transform="translate(370.9559097290039, 700)"><rect class="basic label-container" style="" x="-67.11328125" y="-39" width="134.2265625" height="78"></rect><g class="label" style="" transform="translate(-37.11328125, -24)"><rect></rect><foreignObject width="74.2265625" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">PKU / 필즈<br>글로벌 협력</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765752-flowchart-PROF-14" data-look="classic" transform="translate(370.9559097290039, 828)"><rect class="basic label-container" style="" x="-91.23828125" y="-39" width="182.4765625" height="78"></rect><g class="label" style="" transform="translate(-61.23828125, -24)"><rect></rect><foreignObject width="122.4765625" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">이을범 교수<br>논문·국과제·컨설팅</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765752-flowchart-CONSULT-16" data-look="classic" transform="translate(370.9559097290039, 956)"><rect class="basic label-container" style="" x="-84.31640625" y="-39" width="168.6328125" height="78"></rect><g class="label" style="" transform="translate(-54.31640625, -24)"><rect></rect><foreignObject width="108.6328125" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">컨설팅펌<br>세일즈·발표·서류</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765752-flowchart-INV-18" data-look="classic" transform="translate(370.9559097290039, 1084)"><rect class="basic label-container" style="" x="-80.5390625" y="-39" width="161.078125" height="78"></rect><g class="label" style="" transform="translate(-50.5390625, -24)"><rect></rect><foreignObject width="101.078125" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel"><p style="">투자사 20곳<br>5월말 납입 목표</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1777645765752-flowchart-HIRE-24" data-look="classic" transform="translate(694.7488784790039, 1084)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#60a5fa !important" x="-87.7109375" y="-51" width="175.421875" height="102"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-57.7109375, -36)"><rect></rect><foreignObject width="115.421875" height="72"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">개발자 2~3명<br>다솜·종석 확정<br>LLM전문가 물색중</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mermaid-1777645765752-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><defs><filter id="mermaid-1777645765752-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><linearGradient id="mermaid-1777645765752-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"></stop></linearGradient></svg></div>
+    </div>
+
+    <!-- Diagram 3: Timeline -->
+    <div class="mermaid-wrap">
+      <h3 style="">③ 주요 마일스톤 타임라인</h3>
+      <div class="mermaid" data-processed="true"><svg id="mermaid-1777645765782" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1002 484" style="max-width: 1002px;" role="graphics-document document" aria-roledescription="gantt"><style>#mermaid-1777645765782{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-1777645765782 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-1777645765782 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-1777645765782 .error-icon{fill:#a44141;}#mermaid-1777645765782 .error-text{fill:#ddd;stroke:#ddd;}#mermaid-1777645765782 .edge-thickness-normal{stroke-width:1px;}#mermaid-1777645765782 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1777645765782 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1777645765782 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1777645765782 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1777645765782 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1777645765782 .marker{fill:#c9a84c;stroke:#c9a84c;}#mermaid-1777645765782 .marker.cross{stroke:#c9a84c;}#mermaid-1777645765782 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1777645765782 p{margin:0;}#mermaid-1777645765782 .mermaid-main-font{font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1777645765782 .exclude-range{fill:hsl(52.9411764706, 28.813559322%, 48.431372549%);}#mermaid-1777645765782 .section{stroke:none;opacity:0.2;}#mermaid-1777645765782 .section0{fill:#1a2d45;}#mermaid-1777645765782 .section2{fill:#162030;}#mermaid-1777645765782 .section1,#mermaid-1777645765782 .section3{fill:#162030;opacity:0.2;}#mermaid-1777645765782 .sectionTitle0{fill:#e8edf2;}#mermaid-1777645765782 .sectionTitle1{fill:#e8edf2;}#mermaid-1777645765782 .sectionTitle2{fill:#e8edf2;}#mermaid-1777645765782 .sectionTitle3{fill:#e8edf2;}#mermaid-1777645765782 .sectionTitle{text-anchor:start;font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1777645765782 .grid .tick{stroke:#243450;opacity:0.8;shape-rendering:crispEdges;}#mermaid-1777645765782 .grid .tick text{font-family:"trebuchet ms",verdana,arial,sans-serif;fill:#ccc;}#mermaid-1777645765782 .grid path{stroke-width:0;}#mermaid-1777645765782 .today{fill:none;stroke:#c9a84c;stroke-width:2px;}#mermaid-1777645765782 .task{stroke-width:2;}#mermaid-1777645765782 .taskText{text-anchor:middle;font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1777645765782 .taskTextOutsideRight{fill:#2c2c2c;text-anchor:start;font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1777645765782 .taskTextOutsideLeft{fill:#2c2c2c;text-anchor:end;}#mermaid-1777645765782 .task.clickable{cursor:pointer;}#mermaid-1777645765782 .taskText.clickable{cursor:pointer;fill:#c9a84c!important;font-weight:bold;}#mermaid-1777645765782 .taskTextOutsideLeft.clickable{cursor:pointer;fill:#c9a84c!important;font-weight:bold;}#mermaid-1777645765782 .taskTextOutsideRight.clickable{cursor:pointer;fill:#c9a84c!important;font-weight:bold;}#mermaid-1777645765782 .taskText0,#mermaid-1777645765782 .taskText1,#mermaid-1777645765782 .taskText2,#mermaid-1777645765782 .taskText3{fill:#e8edf2;}#mermaid-1777645765782 .task0,#mermaid-1777645765782 .task1,#mermaid-1777645765782 .task2,#mermaid-1777645765782 .task3{fill:#1a2d45;stroke:#c9a84c;}#mermaid-1777645765782 .taskTextOutside0,#mermaid-1777645765782 .taskTextOutside2{fill:#e8edf2;}#mermaid-1777645765782 .taskTextOutside1,#mermaid-1777645765782 .taskTextOutside3{fill:#e8edf2;}#mermaid-1777645765782 .active0,#mermaid-1777645765782 .active1,#mermaid-1777645765782 .active2,#mermaid-1777645765782 .active3{fill:#243450;stroke:#e8c96a;}#mermaid-1777645765782 .activeText0,#mermaid-1777645765782 .activeText1,#mermaid-1777645765782 .activeText2,#mermaid-1777645765782 .activeText3{fill:#2c2c2c!important;}#mermaid-1777645765782 .done0,#mermaid-1777645765782 .done1,#mermaid-1777645765782 .done2,#mermaid-1777645765782 .done3{stroke:#8a9bb0;fill:#162030;stroke-width:2;}#mermaid-1777645765782 .doneText0,#mermaid-1777645765782 .doneText1,#mermaid-1777645765782 .doneText2,#mermaid-1777645765782 .doneText3{fill:#2c2c2c!important;}#mermaid-1777645765782 .doneText0.taskTextOutsideLeft,#mermaid-1777645765782 .doneText0.taskTextOutsideRight,#mermaid-1777645765782 .doneText1.taskTextOutsideLeft,#mermaid-1777645765782 .doneText1.taskTextOutsideRight,#mermaid-1777645765782 .doneText2.taskTextOutsideLeft,#mermaid-1777645765782 .doneText2.taskTextOutsideRight,#mermaid-1777645765782 .doneText3.taskTextOutsideLeft,#mermaid-1777645765782 .doneText3.taskTextOutsideRight{fill:#e8edf2!important;}#mermaid-1777645765782 .crit0,#mermaid-1777645765782 .crit1,#mermaid-1777645765782 .crit2,#mermaid-1777645765782 .crit3{stroke:#f87171;fill:rgba(239,68,68,0.15);stroke-width:2;}#mermaid-1777645765782 .activeCrit0,#mermaid-1777645765782 .activeCrit1,#mermaid-1777645765782 .activeCrit2,#mermaid-1777645765782 .activeCrit3{stroke:#f87171;fill:#243450;stroke-width:2;}#mermaid-1777645765782 .doneCrit0,#mermaid-1777645765782 .doneCrit1,#mermaid-1777645765782 .doneCrit2,#mermaid-1777645765782 .doneCrit3{stroke:#f87171;fill:#162030;stroke-width:2;cursor:pointer;shape-rendering:crispEdges;}#mermaid-1777645765782 .milestone{transform:rotate(45deg) scale(0.8,0.8);}#mermaid-1777645765782 .milestoneText{font-style:italic;}#mermaid-1777645765782 .doneCritText0,#mermaid-1777645765782 .doneCritText1,#mermaid-1777645765782 .doneCritText2,#mermaid-1777645765782 .doneCritText3{fill:#2c2c2c!important;}#mermaid-1777645765782 .doneCritText0.taskTextOutsideLeft,#mermaid-1777645765782 .doneCritText0.taskTextOutsideRight,#mermaid-1777645765782 .doneCritText1.taskTextOutsideLeft,#mermaid-1777645765782 .doneCritText1.taskTextOutsideRight,#mermaid-1777645765782 .doneCritText2.taskTextOutsideLeft,#mermaid-1777645765782 .doneCritText2.taskTextOutsideRight,#mermaid-1777645765782 .doneCritText3.taskTextOutsideLeft,#mermaid-1777645765782 .doneCritText3.taskTextOutsideRight{fill:#e8edf2!important;}#mermaid-1777645765782 .vert{stroke:#00BFFF;}#mermaid-1777645765782 .vertText{font-size:15px;text-anchor:middle;fill:#00BFFF!important;}#mermaid-1777645765782 .activeCritText0,#mermaid-1777645765782 .activeCritText1,#mermaid-1777645765782 .activeCritText2,#mermaid-1777645765782 .activeCritText3{fill:#2c2c2c!important;}#mermaid-1777645765782 .titleText{text-anchor:middle;font-size:18px;fill:#e8edf2;font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1777645765782 .node .neo-node{stroke:#243450;}#mermaid-1777645765782 [data-look="neo"].node rect,#mermaid-1777645765782 [data-look="neo"].cluster rect,#mermaid-1777645765782 [data-look="neo"].node polygon{stroke:url(#mermaid-1777645765782-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765782 [data-look="neo"].node path{stroke:url(#mermaid-1777645765782-gradient);stroke-width:1px;}#mermaid-1777645765782 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765782 [data-look="neo"].node .neo-line path{stroke:#243450;filter:none;}#mermaid-1777645765782 [data-look="neo"].node circle{stroke:url(#mermaid-1777645765782-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765782 [data-look="neo"].node circle .state-start{fill:#000000;}#mermaid-1777645765782 [data-look="neo"].icon-shape .icon{fill:url(#mermaid-1777645765782-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765782 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mermaid-1777645765782-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777645765782 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g></g><g class="grid" transform="translate(75, 434)" fill="none" font-size="10" font-family="sans-serif" text-anchor="middle"><path class="domain" stroke="currentColor" d="M0,-399V0H852V-399"></path><g class="tick" opacity="1" transform="translate(117,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 07/01</text></g><g class="tick" opacity="1" transform="translate(266,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 10/01</text></g><g class="tick" opacity="1" transform="translate(415,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 01/01</text></g><g class="tick" opacity="1" transform="translate(560,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 04/01</text></g><g class="tick" opacity="1" transform="translate(708,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 07/01</text></g></g><g><rect x="0" y="144" width="964.5" height="24" class="section section1"></rect><rect x="0" y="48" width="964.5" height="24" class="section section0"></rect><rect x="0" y="240" width="964.5" height="24" class="section section2"></rect><rect x="0" y="312" width="964.5" height="24" class="section section3"></rect><rect x="0" y="72" width="964.5" height="24" class="section section0"></rect><rect x="0" y="168" width="964.5" height="24" class="section section1"></rect><rect x="0" y="96" width="964.5" height="24" class="section section0"></rect><rect x="0" y="120" width="964.5" height="24" class="section section0"></rect><rect x="0" y="336" width="964.5" height="24" class="section section3"></rect><rect x="0" y="192" width="964.5" height="24" class="section section1"></rect><rect x="0" y="216" width="964.5" height="24" class="section section1"></rect><rect x="0" y="264" width="964.5" height="24" class="section section2"></rect><rect x="0" y="288" width="964.5" height="24" class="section section2"></rect><rect x="0" y="360" width="964.5" height="24" class="section section3"></rect><rect x="0" y="384" width="964.5" height="24" class="section section3"></rect><rect x="0" y="408" width="964.5" height="24" class="section section3"></rect></g><g><rect id="mermaid-1777645765782-b1" rx="3" ry="3" x="75" y="146" width="32" height="20" transform-origin="91px 156px" class="task done1"></rect><rect id="mermaid-1777645765782-a1" rx="3" ry="3" x="93" y="50" width="11" height="20" transform-origin="98.5px 60px" class="task done0"></rect><rect id="mermaid-1777645765782-c1" rx="3" ry="3" x="93" y="242" width="48" height="20" transform-origin="117px 252px" class="task active2"></rect><rect id="mermaid-1777645765782-d1" rx="3" ry="3" x="93" y="314" width="34" height="20" transform-origin="110px 324px" class="task active3"></rect><rect id="mermaid-1777645765782-a2" rx="3" ry="3" x="99" y="74" width="12" height="20" transform-origin="105px 84px" class="task active0"></rect><rect id="mermaid-1777645765782-b2" rx="3" ry="3" x="99" y="170" width="33" height="20" transform-origin="115.5px 180px" class="task active1"></rect><rect id="mermaid-1777645765782-a3" rx="3" ry="3" x="101" y="98" width="3" height="20" transform-origin="102.5px 108px" class="task active0"></rect><rect id="mermaid-1777645765782-a4" rx="3" ry="3" x="124" y="122" width="11" height="20" transform-origin="129.5px 132px" class="task task0"></rect><rect id="mermaid-1777645765782-d2" rx="3" ry="3" x="127" y="338" width="48" height="20" transform-origin="151px 348px" class="task task3"></rect><rect id="mermaid-1777645765782-b3" rx="3" ry="3" x="132" y="194" width="16" height="20" transform-origin="140px 204px" class="task crit1"></rect><rect id="mermaid-1777645765782-b4" rx="3" ry="3" x="143" y="218" width="23" height="20" transform-origin="154.5px 228px" class="task crit1"></rect><rect id="mermaid-1777645765782-c2" rx="3" ry="3" x="143" y="266" width="34" height="20" transform-origin="160px 276px" class="task task2"></rect><rect id="mermaid-1777645765782-c3" rx="3" ry="3" x="166" y="290" width="48" height="20" transform-origin="190px 300px" class="task task2"></rect><rect id="mermaid-1777645765782-d3" rx="3" ry="3" x="242" y="362" width="97" height="20" transform-origin="290.5px 372px" class="task crit3"></rect><rect id="mermaid-1777645765782-d4" rx="3" ry="3" x="341" y="386" width="291" height="20" transform-origin="486.5px 396px" class="task task3"></rect><rect id="mermaid-1777645765782-d5" rx="3" ry="3" x="635" y="410" width="292" height="20" transform-origin="781px 420px" class="task task3"></rect><text id="mermaid-1777645765782-b1-text" font-size="11" x="112" y="159.5" class="taskTextOutsideRight taskTextOutside1  doneText1 width-110.4296875">투자 라운드 1차 5곳 미팅      </text><text id="mermaid-1777645765782-a1-text" font-size="11" x="109" y="63.5" class="taskTextOutsideRight taskTextOutside0  doneText0 width-86.0625">필즈 계약 도장 날인           </text><text id="mermaid-1777645765782-c1-text" font-size="11" x="146" y="255.5" class="taskTextOutsideRight taskTextOutside2 activeText2 width-117.8359375">LLM 전문가 채용 경로 확보     </text><text id="mermaid-1777645765782-d1-text" font-size="11" x="132" y="327.5" class="taskTextOutsideRight taskTextOutside3 activeText3 width-95.578125">필즈 부서 인터뷰 완료         </text><text id="mermaid-1777645765782-a2-text" font-size="11" x="116" y="87.5" class="taskTextOutsideRight taskTextOutside0 activeText0 width-114.609375">한울 파트너십 계약서 발송      </text><text id="mermaid-1777645765782-b2-text" font-size="11" x="137" y="183.5" class="taskTextOutsideRight taskTextOutside1 activeText1 width-110.4296875">투자 라운드 2차 5곳 미팅      </text><text id="mermaid-1777645765782-a3-text" font-size="11" x="109" y="111.5" class="taskTextOutsideRight taskTextOutside0 activeText0 width-120.9609375">화물안전원 공고 제출 (5/7)    </text><text id="mermaid-1777645765782-a4-text" font-size="11" x="140" y="135.5" class="taskTextOutsideRight taskTextOutside0  width-105.09375">한울 지원사업 결과 발표        </text><text id="mermaid-1777645765782-d2-text" font-size="11" x="180" y="351.5" class="taskTextOutsideRight taskTextOutside3  width-95.578125">견적 자동화 설계 시작         </text><text id="mermaid-1777645765782-b3-text" font-size="11" x="153" y="207.5" class="taskTextOutsideRight taskTextOutside1  critText1 width-73.234375">투자금 납입 목표              </text><text id="mermaid-1777645765782-b4-text" font-size="11" x="171" y="231.5" class="taskTextOutsideRight taskTextOutside1  critText1 width-109.4296875">필즈 계약금 입금 (6월초)      </text><text id="mermaid-1777645765782-c2-text" font-size="11" x="182" y="279.5" class="taskTextOutsideRight taskTextOutside2  width-109.1328125">다솜·종성 채용 절차 시작      </text><text id="mermaid-1777645765782-c3-text" font-size="11" x="219" y="303.5" class="taskTextOutsideRight taskTextOutside2  width-73.234375">추가 개발자 채용              </text><text id="mermaid-1777645765782-d3-text" font-size="11" x="290.5" y="375.5" class="taskText taskText3  critText3 width-74.609375">견적 자동화 MVP              </text><text id="mermaid-1777645765782-d4-text" font-size="11" x="486.5" y="399.5" class="taskText taskText3  width-106.1875">설계 전주기 자동화 POC        </text><text id="mermaid-1777645765782-d5-text" font-size="11" x="781" y="423.5" class="taskText taskText3  width-95.3125">에이전트 OS 1.0 목표          </text></g><g><text dy="0em" x="10" y="98" font-size="11" class="sectionTitle sectionTitle0"><tspan alignment-baseline="central" x="10">계약·수주</tspan></text><text dy="0em" x="10" y="194" font-size="11" class="sectionTitle sectionTitle1"><tspan alignment-baseline="central" x="10">투자·재무</tspan></text><text dy="0em" x="10" y="278" font-size="11" class="sectionTitle sectionTitle2"><tspan alignment-baseline="central" x="10">채용·조직</tspan></text><text dy="0em" x="10" y="374" font-size="11" class="sectionTitle sectionTitle3"><tspan alignment-baseline="central" x="10">기술개발</tspan></text></g><g class="today"><line x1="686" x2="686" y1="25" y2="459" class="today"></line></g><text x="501" y="25" class="titleText">신의스케일 2025~2026 주요 마일스톤</text></svg></div>
+    </div>
+  </section>
+
+  <!-- ══ 다음 단계 ══ -->
+  <section class="section-gap">
+    <div class="section-title"><span class="section-emoji">🔭</span>다음 단계 및 후속 과제</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon gold">⚡</div>
+          <div><div class="card-title">이번 주 즉시 처리</div></div>
+        </div>
+        <ul class="insight-list">
+          <li style=""><span class="insight-dot"></span>필즈 계약서 도장 날인</li>
+          <li style=""><span class="insight-dot"></span>한울 파트너십 계약서 초안 작성</li>
+          <li style=""><span class="insight-dot"></span>화물안전원 제출 서류 준비</li>
+          <li style=""><span class="insight-dot"></span>Google Meet 링크 전달 및 플랫폼 전환</li>
+          <li style=""><span class="insight-dot"></span>필시/PKU 3자 미팅 일정 확정</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon blue">📅</div>
+          <div><div class="card-title">다음 주 ~ 이번 달</div></div>
+        </div>
+        <ul class="insight-list">
+          <li style=""><span class="insight-dot"></span>필즈 소방·HVAC·구매 부서 인터뷰</li>
+          <li style=""><span class="insight-dot"></span>이을범 교수·컨설팅펌 계약 체결</li>
+          <li style=""><span class="insight-dot"></span>투자 라운드 2차 5곳 미팅 진행</li>
+          <li style=""><span class="insight-dot"></span>LLM 전문가 채용 채널 확보</li>
+          <li style=""><span class="insight-dot"></span>박경호 부장 합류 일정 조율</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon green">🎯</div>
+          <div><div class="card-title">6월 목표</div></div>
+        </div>
+        <ul class="insight-list">
+          <li style=""><span class="insight-dot"></span>투자금 or 필즈 계약금 입금 완료</li>
+          <li style=""><span class="insight-dot"></span>개발자 다솜·종성 채용 절차 완료</li>
+          <li style=""><span class="insight-dot"></span>LLM 전문가 채용 확정</li>
+          <li style=""><span class="insight-dot"></span>견적 자동화 설계 스펙 확정</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon purple">🚀</div>
+          <div><div class="card-title">장기 목표 (5년)</div></div>
+        </div>
+        <ul class="insight-list">
+          <li style=""><span class="insight-dot"></span>화공·원자력·해양·파워 플랜트 전 도메인 커버</li>
+          <li style=""><span class="insight-dot"></span>MS Office Suite형 모듈 패키지 완성</li>
+          <li style=""><span class="insight-dot"></span>글로벌 시장 진출</li>
+          <li style=""><span class="insight-dot"></span>4주 내 기업 현장 배포 가능한 에이전트 OS</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p style="">📋 신의스케일 주간 회의록 | 자동 생성 문서 | 배포 전 담당자 검토 필요</p>
+  <p style="margin-top: 0.3rem; font-size: 0.72rem;">본 문서는 회의 녹취를 기반으로 자동 작성되었습니다. 오기재 사항은 담당자에게 문의하세요.</p>
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#1a2d45',
+      primaryTextColor: '#e8edf2',
+      primaryBorderColor: '#243450',
+      lineColor: '#c9a84c',
+      secondaryColor: '#162030',
+      tertiaryColor: '#0d1b2a',
+      background: '#0d1b2a',
+      mainBkg: '#162030',
+      nodeBorder: '#243450',
+      clusterBkg: '#1a2d45',
+      titleColor: '#e8edf2',
+      edgeLabelBackground: '#162030',
+      actorBkg: '#162030',
+      actorBorder: '#c9a84c',
+      actorTextColor: '#e8edf2',
+      actorLineColor: '#8a9bb0',
+      signalColor: '#c9a84c',
+      signalTextColor: '#e8edf2',
+      labelBoxBkgColor: '#162030',
+      labelBoxBorderColor: '#243450',
+      labelTextColor: '#e8edf2',
+      loopTextColor: '#8a9bb0',
+      noteBorderColor: '#243450',
+      noteBkgColor: '#1a2d45',
+      noteTextColor: '#e8edf2',
+      activationBorderColor: '#c9a84c',
+      activationBkgColor: '#1a2d45',
+      sequenceNumberColor: '#0d1b2a',
+      sectionBkgColor: '#1a2d45',
+      altSectionBkgColor: '#162030',
+      sectionBkgColor2: '#162030',
+      taskBorderColor: '#c9a84c',
+      taskBkgColor: '#1a2d45',
+      taskTextColor: '#e8edf2',
+      taskTextLightColor: '#e8edf2',
+      taskTextOutsideColor: '#e8edf2',
+      taskTextClickableColor: '#c9a84c',
+      activeTaskBorderColor: '#e8c96a',
+      activeTaskBkgColor: '#243450',
+      gridColor: '#243450',
+      doneTaskBkgColor: '#162030',
+      doneTaskBorderColor: '#8a9bb0',
+      critBorderColor: '#f87171',
+      critBkgColor: 'rgba(239,68,68,0.15)',
+      todayLineColor: '#c9a84c',
+      fillType0: '#1a2d45',
+      fillType1: '#162030',
+      fillType2: '#1a2d45',
+      fillType3: '#162030',
+    },
+    gantt: {
+      titleTopMargin: 25,
+      barHeight: 20,
+      barGap: 4,
+      topPadding: 50,
+      leftPadding: 75,
+      gridLineStartPadding: 35,
+      fontSize: 11,
+      numberSectionStyles: 4,
+    },
+    flowchart: {
+      htmlLabels: true,
+      curve: 'basis',
+    },
+  });
+</script>
+
+<script type="application/json" id="celab-metadata">
+{"title":"신의스케일 주간 회의록 — 사업 진행 현황 및 기술 논의","description":"화공플랜트 AI 자동화 스타트업 신의스케일의 주간 회의록. 필즈 1년 프로젝트 계약 확정(1억 9천), 한울·화물안전원 파이프라인, 투자 라운드 20곳, 에이전트 OS 5년 로드맵, 하이드롤릭·PSV API 기술 Q&A 포함.","category":"전략","tags":["회의록","AI자동화","화공플랜트","스타트업","투자라운드","견적자동화","에이전트OS"],"emoji":"📋"}
+</script>
+<div id="celab-logo-badge" style="position:fixed;bottom:18px;right:18px;z-index:9999;
+  width:52px;height:52px;border-radius:50%;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,0.35);cursor:pointer;" title="CELab · Chemical Engineering Lab" onclick="window.open('https://celab-kor.github.io/celab-knowledge-base/','_blank')">
+  <img src="data:image/jpeg;base64,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" style="width:100%;height:100%;object-fit:cover;display:block;">
+</div>
+<script id="celab-inline-editor">
+(function(){
+  if(window.location.protocol!=='file:') return;
+  var GOLD='#c9a84c',NAVY='#0d1b2a',RED='#e05c5c',TEAL='#2c7a7b';
+  var SEL='h1,h2,h3,h4,h5,h6,p,li,td,th';
+  var SKIP=['nav','script','style','code','pre','button','a'];
+  var active=false;
+
+  function mkBtn(id,text,color,bottom){
+    var b=document.createElement('div');
+    b.id=id; b.textContent=text;
+    Object.assign(b.style,{position:'fixed',bottom:bottom,right:'28px',zIndex:'99999',
+      background:color,color:color===GOLD?NAVY:'#fff',padding:'10px 20px',borderRadius:'24px',
+      fontWeight:'700',fontSize:'14px',cursor:'pointer',boxShadow:'0 4px 20px rgba(0,0,0,0.5)',
+      fontFamily:'Apple SD Gothic Neo,Noto Sans KR,sans-serif',userSelect:'none',transition:'all .2s'});
+    document.body.appendChild(b); return b;
+  }
+  var fabEdit=mkBtn('celab-fab-edit','✏️ 편집',GOLD,'28px');
+  var fabLayout=mkBtn('celab-fab-layout','🔄 레이아웃',TEAL,'76px');
+
+  function toast(msg,ok){
+    var t=document.createElement('div'); t.textContent=msg;
+    Object.assign(t.style,{position:'fixed',bottom:'132px',right:'28px',zIndex:'99999',
+      background:ok?'#2f855a':'#c53030',color:'#fff',padding:'10px 18px',borderRadius:'12px',
+      fontSize:'13px',fontFamily:'Apple SD Gothic Neo,Noto Sans KR,sans-serif',
+      boxShadow:'0 4px 16px rgba(0,0,0,0.4)',transition:'opacity .4s'});
+    document.body.appendChild(t);
+    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},3000);
+  }
+
+  function getEditables(){
+    return [].filter.call(document.querySelectorAll(SEL),function(el){
+      if(SKIP.some(function(s){return el.closest(s);})) return false;
+      if(['celab-fab-edit','celab-fab-layout'].indexOf(el.id)>=0) return false;
+      return ![].some.call(el.children,function(c){return /^(div|p|ul|ol|table|section|article)$/i.test(c.tagName);});
+    });
+  }
+
+  function serializeHtml(){
+    // DOM 클론으로 저장 — 편집 버튼은 live DOM에 유지, 클론에서만 아티팩트 제거
+    var clone=document.documentElement.cloneNode(true);
+    clone.querySelectorAll('[contenteditable]').forEach(function(el){
+      el.removeAttribute('contenteditable');
+      el.style.outline=''; el.style.borderRadius=''; el.style.minHeight='';
+    });
+    return '<!DOCTYPE html>\n'+clone.outerHTML;
+  }
+
+  // ── 텍스트 편집 버튼 ──────────────────────────────────────
+  fabEdit.addEventListener('click',function(){
+    if(!active){
+      active=true;
+      fabEdit.textContent='💾 저장'; fabEdit.style.background=RED; fabEdit.style.color='#fff';
+      getEditables().forEach(function(el){
+        el.contentEditable='true';
+        el.style.outline='1px dashed rgba(201,168,76,0.5)';
+        el.style.borderRadius='3px'; el.style.minHeight='1em';
+      });
+      toast('편집 모드 — 텍스트를 클릭해 수정하세요',true);
+    } else {
+      active=false;
+      fabEdit.textContent='✏️ 편집'; fabEdit.style.background=GOLD; fabEdit.style.color=NAVY;
+      getEditables().forEach(function(el){
+        el.contentEditable='false'; el.style.outline=''; el.style.borderRadius='';
+      });
+      var html=serializeHtml();
+      var fp=decodeURIComponent(window.location.pathname);
+      if(window.electronAPI&&window.electronAPI.saveHtml){
+        window.electronAPI.saveHtml({filePath:fp,html:html}).then(function(r){
+          if(r.success) toast('✅ 저장 완료 — GitHub 자동 동기화 중',true);
+          else toast('❌ 저장 실패: '+r.error,false);
+        }).catch(function(e){toast('❌ 오류: '+e.message,false);});
+      } else {
+        var a=document.createElement('a');
+        a.href='data:text/html;charset=utf-8,'+encodeURIComponent(html);
+        a.download=(document.title||'celab')+'_edited.html'; a.click();
+        toast('💾 수정본 다운로드 완료',true);
+      }
+    }
+  });
+
+  // ── 레이아웃 업데이트 버튼 ────────────────────────────────
+  fabLayout.addEventListener('click',function(){
+    if(active){ toast('⚠️ 편집 모드를 먼저 저장/취소하세요',false); return; }
+    if(!(window.electronAPI&&window.electronAPI.updateHtmlLayout)){
+      toast('❌ Electron 앱에서만 사용 가능합니다',false); return;
+    }
+    // 메타데이터 추출
+    var meta={};
+    var metaEl=document.getElementById('celab-metadata');
+    if(metaEl){try{meta=JSON.parse(metaEl.textContent);}catch(e){}}
+    // 페이지 텍스트 콘텐츠 구조화
+    var lines=[];
+    document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td').forEach(function(el){
+      if(el.closest('nav,script,style,#celab-fab-edit,#celab-fab-layout')) return;
+      var t=el.textContent.trim();
+      if(t.length<2) return;
+      var tag=el.tagName.toLowerCase();
+      var pfx=tag==='h1'?'# ':tag==='h2'?'## ':tag==='h3'?'### ':tag==='h4'?'#### ':tag==='li'?'- ':'';
+      lines.push(pfx+t);
+    });
+    var textContent=lines.join('\n');
+    var fp=decodeURIComponent(window.location.pathname);
+    fabLayout.textContent='⏳ 재생성 중...'; fabLayout.style.opacity='0.7'; fabLayout.style.cursor='default';
+    window.electronAPI.updateHtmlLayout({filePath:fp,textContent:textContent,metadata:meta})
+      .then(function(r){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        if(r.success) toast('✅ 레이아웃 재생성 완료 — 창 새로고침 중...',true);
+        else toast('❌ 재생성 실패: '+r.error,false);
+      }).catch(function(e){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        toast('❌ 오류: '+e.message,false);
+      });
+  });
+})();
+</script><div id="celab-fab-edit" style="position: fixed; bottom: 28px; right: 28px; z-index: 99999; background: rgb(201, 168, 76); color: rgb(13, 27, 42); padding: 10px 20px; border-radius: 24px; font-weight: 700; font-size: 14px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s;">✏️ 편집</div><div id="celab-fab-layout" style="position: fixed; bottom: 76px; right: 28px; z-index: 99999; background: rgb(44, 122, 123); color: rgb(255, 255, 255); padding: 10px 20px; border-radius: 24px; font-weight: 700; font-size: 14px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s;">🔄 레이아웃</div>
+
+<div class="mermaidTooltip" style="opacity: 0; position: absolute; text-align: center; max-width: 200px; padding: 2px; font-size: 12px; background: rgb(255, 255, 222); border: 1px solid rgb(51, 51, 51); border-radius: 2px; pointer-events: none; z-index: 100;"></div></body></html>
