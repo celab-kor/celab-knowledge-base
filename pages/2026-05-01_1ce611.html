@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>초기 투자자가 꼭 알아야 할 것들 — 퓨처플레이 권호영 대표</title>
+<style>
+  :root {
+    --navy:#0d1b2a;
+    --navy2:#1a2d45;
+    --gold:#c9a84c;
+    --gold2:#e8c96a;
+    --text:#e8edf2;
+    --muted:#8a9bb0;
+    --card-bg:#162030;
+    --card-border:#243450;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--navy);color:var(--text);font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;line-height:1.7;}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:999;background:rgba(13,27,42,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--card-border);}
+  .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:6px;padding:0 16px;overflow-x:auto;height:52px;white-space:nowrap;}
+  .nav-inner a{color:var(--muted);text-decoration:none;font-size:.8rem;padding:6px 12px;border-radius:20px;transition:all .25s;flex-shrink:0;}
+  .nav-inner a:hover{color:var(--gold2);background:var(--navy2);}
+  .nav-logo{color:var(--gold);font-weight:700;font-size:.9rem;margin-right:12px;flex-shrink:0;}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#0d1b2a 0%,#1a3a5c 45%,#0d2b1f 100%);padding:80px 16px 60px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(201,168,76,.12) 0%,transparent 60%),radial-gradient(ellipse at 70% 20%,rgba(26,93,134,.2) 0%,transparent 50%);}
+  .hero-tag{display:inline-block;background:rgba(201,168,76,.15);border:1px solid var(--gold);color:var(--gold);font-size:.75rem;padding:4px 14px;border-radius:20px;margin-bottom:20px;position:relative;}
+  .hero h1{font-size:clamp(1.7rem,4vw,2.8rem);font-weight:800;line-height:1.25;margin-bottom:12px;position:relative;}
+  .hero h1 span{color:var(--gold2);}
+  .hero-sub{color:var(--muted);font-size:1rem;margin-bottom:40px;position:relative;}
+  .kpi-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;position:relative;}
+  .kpi{background:rgba(22,32,48,.8);border:1px solid var(--card-border);border-radius:16px;padding:22px 32px;min-width:160px;}
+  .kpi-num{font-size:2.4rem;font-weight:800;color:var(--gold2);line-height:1;}
+  .kpi-label{font-size:.78rem;color:var(--muted);margin-top:6px;}
+
+  /* LAYOUT */
+  .container{max-width:1100px;margin:0 auto;padding:0 16px;}
+  section{padding:60px 0;}
+  .section-title{font-size:1.5rem;font-weight:700;color:var(--gold2);margin-bottom:32px;display:flex;align-items:center;gap:10px;}
+  .section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--card-border),transparent);}
+
+  /* PROFILE CARD */
+  .profile-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:32px;display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap;}
+  .profile-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--navy2));display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;}
+  .profile-info h2{font-size:1.4rem;font-weight:700;margin-bottom:4px;}
+  .profile-info .role{color:var(--gold);font-size:.9rem;margin-bottom:12px;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .tag{background:var(--navy2);border:1px solid var(--card-border);color:var(--muted);font-size:.73rem;padding:4px 12px;border-radius:12px;}
+  .career-list{margin-top:16px;display:flex;flex-direction:column;gap:6px;}
+  .career-item{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--muted);}
+  .career-item::before{content:'▸';color:var(--gold);margin-top:2px;}
+
+  /* SESSION CARDS */
+  .session-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+  .session-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px;transition:transform .2s,border-color .2s;}
+  .session-card:hover{transform:translateY(-3px);border-color:var(--gold);}
+  .session-num{font-size:.72rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+  .session-card h3{font-size:1.05rem;font-weight:700;margin-bottom:12px;line-height:1.35;}
+  .session-card p{font-size:.85rem;color:var(--muted);line-height:1.65;}
+  .session-card ul{margin-top:12px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:6px;}
+  .session-card ul li{font-size:.83rem;color:var(--muted);padding-left:16px;position:relative;}
+  .session-card ul li::before{content:'•';color:var(--gold);position:absolute;left:0;}
+
+  /* INSIGHT CARDS */
+  .insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+  .insight-card{background:linear-gradient(135deg,var(--card-bg),var(--navy2));border:1px solid var(--card-border);border-radius:16px;padding:24px;position:relative;overflow:hidden;}
+  .insight-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));}
+  .insight-icon{font-size:1.8rem;margin-bottom:12px;}
+  .insight-card h3{font-size:1rem;font-weight:700;margin-bottom:10px;}
+  .insight-card p{font-size:.83rem;color:var(--muted);line-height:1.65;}
+  .highlight{color:var(--gold2);font-weight:600;}
+
+  /* 3-COL PERSPECTIVE */
+  .perspective-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  @media(max-width:700px){.perspective-grid{grid-template-columns:1fr;}}
+  .persp-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px;}
+  .persp-card .persp-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .persp-badge{font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:10px;text-transform:uppercase;}
+  .badge-investor{background:rgba(201,168,76,.2);color:var(--gold);}
+  .badge-vc{background:rgba(72,187,255,.15);color:#72d7ff;}
+  .badge-founder{background:rgba(126,211,136,.15);color:#7ed388;}
+  .persp-card h3{font-size:1rem;font-weight:700;margin-bottom:10px;}
+  .persp-card ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .persp-card ul li{font-size:.82rem;color:var(--muted);padding-left:16px;position:relative;}
+  .persp-card ul li::before{content:'→';color:var(--gold);position:absolute;left:0;}
+
+  /* GLOSSARY TABLE */
+  .table-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;font-size:.85rem;}
+  thead{background:var(--navy2);}
+  thead th{padding:12px 16px;text-align:left;color:var(--gold);font-weight:700;border-bottom:2px solid var(--card-border);}
+  tbody tr{border-bottom:1px solid var(--card-border);transition:background .2s;}
+  tbody tr:hover{background:var(--navy2);}
+  tbody td{padding:12px 16px;color:var(--muted);vertical-align:top;}
+  tbody td:first-child{color:var(--text);font-weight:600;}
+
+  /* ACCORDION */
+  .accordion{display:flex;flex-direction:column;gap:12px;}
+  .acc-item{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;overflow:hidden;}
+  .acc-header{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;cursor:pointer;user-select:none;}
+  .acc-header:hover{background:var(--navy2);}
+  .acc-title{font-weight:700;font-size:.95rem;}
+  .acc-arrow{color:var(--gold);font-size:1.1rem;transition:transform .3s;}
+  .acc-body{padding:0 22px;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s;}
+  .acc-body.open{max-height:600px;padding:0 22px 20px;}
+  .acc-body p{font-size:.85rem;color:var(--muted);line-height:1.7;}
+  .acc-arrow.open{transform:rotate(180deg);}
+
+  /* HIGHLIGHT BOX */
+  .highlight-box{background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(26,45,69,.6));border:1px solid var(--gold);border-radius:16px;padding:28px 32px;margin:32px 0;}
+  .highlight-box .hb-label{font-size:.72rem;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;}
+  .highlight-box p{font-size:1.02rem;line-height:1.75;}
+
+  /* CHECKLIST */
+  .checklist{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;}
+  .check-item{display:flex;align-items:flex-start;gap:14px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:16px;}
+  .check-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+  .check-box::after{content:'✓';color:var(--gold);font-size:.75rem;font-weight:800;}
+  .check-text{font-size:.85rem;color:var(--muted);line-height:1.55;}
+  .check-text strong{color:var(--text);}
+
+  /* TIMELINE */
+  .timeline{display:flex;flex-direction:column;gap:0;}
+  .tl-item{display:flex;gap:20px;padding-bottom:28px;position:relative;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-left{display:flex;flex-direction:column;align-items:center;width:36px;flex-shrink:0;}
+  .tl-dot{width:14px;height:14px;border-radius:50%;background:var(--gold);border:3px solid var(--navy);flex-shrink:0;}
+  .tl-line{width:2px;flex:1;background:var(--card-border);margin-top:4px;}
+  .tl-content{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:16px 20px;flex:1;}
+  .tl-era{font-size:.72rem;color:var(--gold);font-weight:700;margin-bottom:4px;}
+  .tl-content h4{font-size:.95rem;font-weight:700;margin-bottom:6px;}
+  .tl-content p{font-size:.82rem;color:var(--muted);}
+
+  /* QUOTE */
+  .quote-card{background:var(--navy2);border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:20px 24px;margin:20px 0;}
+  .quote-card p{font-size:.95rem;font-style:italic;line-height:1.7;}
+  .quote-card .quote-src{font-size:.75rem;color:var(--muted);margin-top:8px;}
+
+  /* FOOTER */
+  footer{background:var(--navy2);border-top:1px solid var(--card-border);padding:32px 16px;text-align:center;color:var(--muted);font-size:.8rem;}
+
+  @media(max-width:600px){
+    .profile-card{flex-direction:column;}
+    .kpi{min-width:120px;padding:16px 20px;}
+    .kpi-num{font-size:1.9rem;}
+    .perspective-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">🚀 FuturePlay</span>
+    <a href="#profile">강사 프로필</a>
+    <a href="#sessions">세션 내용</a>
+    <a href="#insights">핵심 인사이트</a>
+    <a href="#perspectives">전문가 관점</a>
+    <a href="#timeline">시장 타임라인</a>
+    <a href="#glossary">핵심 용어</a>
+    <a href="#checklist">실행 체크리스트</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag">📚 초기 벤처투자 강의 심층 분석</div>
+    <h1 style="">초기 투자자가 꼭 알아야 할 것들<br><span>— 시장 읽기, 생태계 이해, 투자 철학 —</span></h1>
+    <p class="hero-sub" style="">퓨처플레이 권호영 대표 | 벤처투자 7년 현장 인사이트 강의</p>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-num">12</div>
+        <div class="kpi-label">핵심 개념 수</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num">4</div>
+        <div class="kpi-label">주요 세션 수</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num">18</div>
+        <div class="kpi-label">실행 인사이트</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile">
+  <div class="container">
+    <div class="section-title">👤 강사 프로필</div>
+    <div class="profile-card">
+      <div class="profile-avatar">🎯</div>
+      <div class="profile-info">
+        <h2 style="">권호영</h2>
+        <div class="role">퓨처플레이 대표 · 초기 벤처투자자</div>
+        <div class="tag-row">
+          <span class="tag">초기 스타트업 투자</span>
+          <span class="tag">컴퍼니 빌딩</span>
+          <span class="tag">딥테크 · AI</span>
+          <span class="tag">핀테크</span>
+          <span class="tag">오픈 이노베이션</span>
+        </div>
+        <div class="career-list">
+          <div class="career-item">미국 회계사로 커리어 시작 (CPA)</div>
+          <div class="career-item">핀테크 SaaS 스타트업 <strong>피노미얼(현 SEIC 코스닥 상장사)</strong> 사업 총괄</div>
+          <div class="career-item">약 7년 전 퓨처플레이 합류, 2022년부터 대표 수행</div>
+          <div class="career-item">퓨처플레이 : 올라웍스(→인텔 매각) 창업자 유중희 대표가 설립한 딥테크 VC/액셀러레이터</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:28px;">
+      <div class="hb-label">🏢 퓨처플레이 소개</div>
+      <p style="">
+        <span class="highlight">미션:</span> 10년 이내 인류에 지대한 영향을 끼칠 혁신적 스타트업을 지속가능한 방법으로 만들고 투자한다.<br>
+        약 <span class="highlight">60명 전문가</span>로 구성되며, <span class="highlight">마이너리티 투자(벤처투자)</span> + <span class="highlight">컴퍼니 빌딩</span> + <span class="highlight">이노베이션 컨설팅(오픈이노베이션)</span> 3가지 축으로 운영.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SESSIONS -->
+<section id="sessions" style="background:var(--navy2);">
+  <div class="container">
+    <div class="section-title">📋 세션별 핵심 내용</div>
+    <div class="session-grid">
+
+      <div class="session-card">
+        <div class="session-num">Session 01</div>
+        <h3 style="">🌊 거시적 시장 이해 — 파도를 읽는 법</h3>
+        <p style="">초기 투자자의 가장 중요한 역량은 <strong>미래를 읽어내는 능력</strong>. 서핑처럼 거대한 파도(시장 흐름)를 만들 수 없지만 기다리고 올라탈 수는 있다.</p>
+        <ul>
+          <li style="">메인프레임 → PC/윈도우 → 인터넷/WWW → 스마트폰 → AI 인프라 순서로 기술 혁신 파도 진행</li>
+          <li style="">인프라 → 미들웨어 → 애플리케이션 계층 구조 이해 필수</li>
+          <li style="">1995년 탑20 기업(GE, ExxonMobil, AT&amp;T) 중 2020년 탑20 잔류 거의 없음 → 혁신 기업 선제 발굴의 중요성</li>
+          <li style="">2023년 = 새로운 인프라스트럭처가 등장해야 할 시기</li>
+        </ul>
+      </div>
+
+      <div class="session-card">
+        <div class="session-num">Session 02</div>
+        <h3 style="">🌱 스타트업 생태계 이해</h3>
+        <p style=""><strong>스타트업 정의:</strong> 스케일러블한 비즈니스 모델을 가진 창업 기업. 커피숍 ≠ 스타트업이지만 스타벅스·교촌은 스타트업이었다.</p>
+        <ul>
+          <li style="">페어차일드→인텔·KP / 페이팔 마피아→유튜브·테슬라·링크드인 : 휴먼캐피탈의 선순환</li>
+          <li style="">한국 생태계: 카카오/네이버 → 토스·두나무·야놀자·직방 → 글로벌 유니콘 배출</li>
+          <li style="">창업풀: 쿠팡·카카오·토스 출신, NHN·네오위즈·올라웍스 계보</li>
+          <li style="">투자풀: 퓨처플레이·프라이머·블루포인트(초기) → 한국투자파트너스·에이티넘·소프트뱅크(성장)</li>
+        </ul>
+      </div>
+
+      <div class="session-card">
+        <div class="session-num">Session 03</div>
+        <h3 style="">🎯 벤처 투자자의 역할과 자기 정의</h3>
+        <p style="">어떤 투자자가 될 것인가를 메타인지로 먼저 파악. 극초기/시드 vs 성장단계 vs 프리IPO 투자자는 성향이 완전히 다르다.</p>
+        <ul>
+          <li style="">CEO의 진정한 사업 파트너: 외로운 창업자의 속마음을 들어줄 존재</li>
+          <li style="">객관적 인사이트 제공: 경쟁 환경·투자 현황·인력 채용 정보 공급</li>
+          <li style="">펀드레이징 조력: IR 덱 리뷰, 후속 투자자 네트워킹</li>
+          <li style="">이사회 멤버로서 실질적 기여: 조직 구성·HR 문제 공동 해결</li>
+          <li style="">어벤져니스트: 제품을 사랑하고 전도하는 역할</li>
+        </ul>
+      </div>
+
+      <div class="session-card">
+        <div class="session-num">Session 04</div>
+        <h3 style="">📐 투자 평가 기준과 창업팀 분석</h3>
+        <p style="">창업팀의 <strong>Unfair Advantage</strong>를 핵심 기준으로 평가. 역사에 남을 회사인가를 질문하라.</p>
+        <ul>
+          <li style="">시리얼 창업자(성공·엑시트 경험) → 최선호 프로파일</li>
+          <li style="">빠른 제품 구현력 + 시장 이터레이션 능력</li>
+          <li style="">전 세계 누구도 만들기 어려운 기술 보유 여부</li>
+          <li style="">고객의 근본적 문제를 해결하는가 (양치질 서비스 vs 희귀질환 치료제)</li>
+          <li style="">Bessemer VP의 '안티 포트폴리오' 사례: 에어비앤비 $40M 밸류 거절 → 훗날 $47B</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- 아코디언: 투자자 프로파일 심화 -->
+    <div style="margin-top:32px;">
+      <div class="section-title" style="font-size:1.1rem;">🔍 글로벌 레전드 VC 프로파일 심화 분석</div>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)">
+            <span class="acc-title">존 도어 (John Doerr) — 클레이너 퍼킨스 · 세일즈맨 출신</span>
+            <span class="acc-arrow">▼</span>
+          </div>
+          <div class="acc-body">
+            <p style="">인텔의 세일즈맨으로 출발. 클레이너 퍼킨스에 합류 후 넷스케이프·선마이크로시스템즈·아마존·구글에 투자. 구글에 OKR 프레임워크를 직접 전파하며 경영 조력자 역할 수행. 90~2000년대 벤처캐피탈의 기준을 세운 인물로 평가받음. 시사점: <strong>산업 현장 세일즈 경험 + 생태계 관계망</strong>이 초기 투자의 강력한 무기가 됨.</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)">
+            <span class="acc-title">마이클 모리츠 (Michael Moritz) — 세쿼이아 · 저널리스트 출신</span>
+            <span class="acc-arrow">▼</span>
+          </div>
+          <div class="acc-body">
+            <p style="">타임지 저널리스트로 스티브 잡스를 취재하며 스타트업 세계에 입문. 세쿼이아 캐피탈 이적 후 구글·야후·페이팔·유튜브 투자. 시사점: <strong>정보를 수집·분석·서술하는 저널리즘 역량</strong>이 창업자의 비전을 읽고 시장을 해석하는 데 직결됨. 특정 산업 전문가가 아닌 제너럴리스트도 탁월한 VC가 될 수 있음을 증명.</p>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-header" onclick="toggleAcc(this)">
+            <span class="acc-title">마크 앤드리슨 (Marc Andreessen) — a16z · 연쇄창업가 출신</span>
+            <span class="acc-arrow">▼</span>
+          </div>
+          <div class="acc-body">
+            <p style="">대학 재학 중 오픈소스 웹브라우저 Mosaic 개발, 넷스케이프 공동창업. 이후 Opsware 등 창업 후 기존 VC 패러다임에 불만을 느껴 Ben Horowitz와 a16z 설립. "Software is eating the world" 선언으로 퍼스널 브랜딩을 구축. 트위터·깃허브 등 다수 투자. 시사점: <strong>창업 경험 + 뚜렷한 투자 철학 선언</strong>이 최고의 딜 플로우를 만든다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section id="insights">
+  <div class="container">
+    <div class="section-title">💡 주요 개념 인사이트</div>
+    <div class="insight-grid">
+
+      <div class="insight-card">
+        <div class="insight-icon">🏄</div>
+        <h3 style="">파도 타기 이론 — 시장 타이밍</h3>
+        <p style="">어떤 투자자도 시장을 이길 수 없다. 서퍼가 파도를 만들 수 없듯, <span class="highlight">거대한 시장 파도를 읽고 기다리는 것</span>이 핵심. 경제·사회·문화적 흐름이 어디서 오는지를 상시 인지해야 한다.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-icon">📈</div>
+        <h3 style="">인프라 → 미들웨어 → 앱 계층론</h3>
+        <p style="">기술 혁신은 <span class="highlight">인프라가 먼저</span> 깔리고 그 위에 미들웨어, 다시 그 위에 애플리케이션이 나오는 계층 구조를 따른다. 어플리케이션에서 큰 혁신이 생기지만, <span class="highlight">벤처투자자는 인프라 단계에서 선제 베팅</span>해야 초과 수익 가능.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-icon">⚖️</div>
+        <h3 style="">리스크 비대칭성 — 벤처투자의 본질</h3>
+        <p style="">벤처투자는 전 투자 카테고리 중 <span class="highlight">가장 높은 리스크</span>. 투자금 전액 손실 가능성 존재. 그러나 반대로 <span class="highlight">100배·1000배 멀티플</span>을 기대할 수 있는 유일한 자산군. 포트폴리오 내 1개의 홈런으로 전체를 커버하는 파워 로우(Power Law) 구조.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-icon">🧠</div>
+        <h3 style="">Unfair Advantage — 창업팀 평가 핵심</h3>
+        <p style="">투자 결정의 핵심은 <span class="highlight">창업팀이 가진 남들이 따라하기 어려운 우위</span>. 시리얼 창업 경험, 세계 최고 기술 내재화, 빠른 이터레이션 능력 중 최소 하나는 반드시 보유해야 함. "미국·이스라엘 스타트업도 못 만드는 기술인가?"를 질문하라.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-icon">🏔️</div>
+        <h3 style="">셰르파 역할론 — 투자자의 본분</h3>
+        <p style="">벤처투자자는 에베레스트를 오르는 등반가(창업자)를 돕는 <span class="highlight">셰르파</span>. 창업자만큼 힘들지 않지만 불확실성을 함께 감내해야 한다. 슈퍼맨(창업자)이 아닌 <span class="highlight">어벤져스 팀을 만드는 파트너</span>.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-icon">📉</div>
+        <h3 style="">역발상 투자 — 위기가 기회다</h3>
+        <p style="">2022년 리세션 구간이 초기 투자자에겐 <span class="highlight">낮은 밸류에이션의 좋은 스타트업을 발굴할 최적기</span>. 닷컴 붕괴 후 구글·아마존·알리바바가 탄생. 금융위기 이후 인스타그램 탄생. 통계적으로 위기 후 5년 VC 수익률이 위기 전 5년 수익률의 2배.</p>
+      </div>
+
+    </div>
+
+    <div class="quote-card">
+      <p style="">"벤처 투자자가 짊어지는 가장 큰 리스크는 잃어버린 투자가 아니라, <strong>인류의 삶을 바꿀 수 있는 스타트업에 투자를 하지 못하는 것</strong>이다."</p>
+      <div class="quote-src">— 권호영, 퓨처플레이 대표</div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSPECTIVES -->
+<section id="perspectives" style="background:var(--navy2);">
+  <div class="container">
+    <div class="section-title">🔭 전문가 관점 3각 분석</div>
+    <div class="perspective-grid">
+
+      <div class="persp-card">
+        <div class="persp-header">
+          <span class="persp-badge badge-investor">💼 투자자 시각</span>
+        </div>
+        <h3 style="">포트폴리오 구성 &amp; 리스크 관리</h3>
+        <ul>
+          <li style="">시드 투자는 7~10년 장기 보유 필수 → 유동성 계획 수립</li>
+          <li style="">파워 로우 구조 이해: 소수 홈런 투자가 전체 펀드 수익 결정</li>
+          <li style="">Gartner Hype Cycle 정기 점검으로 기술 투자 타이밍 최적화</li>
+          <li style="">위기장(2022~2023년) = 낮은 밸류로 우량 딜 소싱 최적기</li>
+          <li style="">Bessemer 안티 포트폴리오처럼 놓친 딜 회고로 오류 패턴 학습</li>
+        </ul>
+      </div>
+
+      <div class="persp-card">
+        <div class="persp-header">
+          <span class="persp-badge badge-vc">🏦 VC 시각</span>
+        </div>
+        <h3 style="">펀드 운영 &amp; 생태계 설계</h3>
+        <ul>
+          <li style="">초기/성장/프리IPO 단계별 전략 명확히 분리: 기대 수익률·보유 기간 완전히 다름</li>
+          <li style="">투자자 퍼스널 브랜딩 필수: a16z "Software is eating the world" 벤치마킹</li>
+          <li style="">이사회 중심 경영 문화 강화: 한국 생태계의 아쉬운 부분</li>
+          <li style="">휴먼 캐피탈 선순환 설계: 페이팔 마피아 모델을 한국형으로 구현</li>
+          <li style="">CBC(기업형 VC) 증가로 생태계 다양성 확대 → 공동 투자 기회 확보</li>
+        </ul>
+      </div>
+
+      <div class="persp-card">
+        <div class="persp-header">
+          <span class="persp-badge badge-founder">🚀 창업가 시각</span>
+        </div>
+        <h3 style="">투자 유치 &amp; 파트너십 전략</h3>
+        <ul>
+          <li style="">린 스타트업 방법론 실천: 프로토타입 → 시장 반응 → 이터레이션 반복</li>
+          <li style="">스케일러블 비즈니스 모델 설계가 스타트업과 소상공인의 본질적 차이</li>
+          <li style="">투자자를 CEO의 진정한 파트너로 활용: HR·조직 고민 공유 대상</li>
+          <li style="">K-컬처·K-테크 Unfair Advantage 활용한 글로벌 첫 진출 전략 수립</li>
+          <li style="">죽음의 계곡(휘인호 사례) 극복: 창업자 의지 + 투자자 조력 + 정부지원 연계</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="container">
+    <div class="section-title">⏳ 기술 혁신 시장 타임라인</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-era">1980년대</div>
+          <h4 style="">메인프레임 시대</h4>
+          <p style="">기계가 돌아가는 구조 이해 시작. 미들웨어 태동기. 인프라가 곧 경쟁력이었던 시대.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-era">1990년대 초반</div>
+          <h4 style="">퍼스널 컴퓨터 혁명</h4>
+          <p style="">PC → Windows OS → Excel·Office 애플리케이션. 탑20 시총 기업: GE, ExxonMobil, AT&amp;T, Coca-Cola 등 전통 인프라 기업 지배.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-era">2000년대 초반</div>
+          <h4 style="">인터넷 / WWW 혁명 (닷컴버블)</h4>
+          <p style="">인터넷 → WWW → Google·Yahoo·Netscape. Microsoft·Cisco·Intel 탑20 진입. 닷컴버블 붕괴 후 ExxonMobil·Walmart·Berkshire 귀환.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-era">2007년 이후</div>
+          <h4 style="">스마트폰 혁명 (iPhone)</h4>
+          <p style="">iPhone → iOS·Android → Uber·Airbnb·Instagram. 금융위기(2008~2009) 직후 구글·아마존·알리바바 같은 역사적 기업들 탄생.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-content">
+          <div class="tl-era">2020년대</div>
+          <h4 style="">AI 인프라 혁명 (현재 진행형)</h4>
+          <p style="">탑5 = Microsoft·Apple·Amazon·Alphabet·Meta로 재편. ChatGPT 등장으로 AI 인프라 → AI 미들웨어 → AI 애플리케이션 계층 재편 시작. 2023년은 새로운 인프라 등장 시점.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section id="glossary" style="background:var(--navy2);">
+  <div class="container">
+    <div class="section-title">📖 핵심 용어 정리</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="">용어</th>
+            <th style="">정의</th>
+            <th style="">강의 맥락</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="">스케일러블 비즈니스 모델</td>
+            <td style="">비용 대비 수익이 기하급수적으로 증가하는 사업 구조</td>
+            <td style="">스타트업과 일반 소상공인을 구분하는 핵심 기준</td>
+          </tr>
+          <tr>
+            <td style="">린 스타트업 (Lean Startup)</td>
+            <td style="">MVP → 시장 검증 → 이터레이션 반복의 사업 방법론</td>
+            <td style="">Square 프로토타입 사례로 설명. 완제품 없이 시장에 내보내는 전략</td>
+          </tr>
+          <tr>
+            <td style="">Unfair Advantage</td>
+            <td style="">경쟁자가 쉽게 모방하기 어려운 독점적 우위</td>
+            <td style="">창업팀 평가 최우선 기준. 기술·경험·네트워크 형태로 보유</td>
+          </tr>
+          <tr>
+            <td style="">파워 로우 (Power Law)</td>
+            <td style="">소수의 탁월한 투자 결과가 전체 수익을 좌우하는 법칙</td>
+            <td style="">벤처투자의 수익 구조: 100배·1000배 멀티플이 나머지 손실 상쇄</td>
+          </tr>
+          <tr>
+            <td style="">컴퍼니 빌딩</td>
+            <td style="">투자사가 내부에서 직접 창업팀을 육성·지원하며 회사를 만드는 방식</td>
+            <td style="">퓨처플레이의 마이너리티 투자와 병행하는 핵심 액티비티</td>
+          </tr>
+          <tr>
+            <td style="">Hype Cycle (Gartner)</td>
+            <td style="">기술의 기대감이 과열→환멸→안정화→생산성 순으로 변화하는 곡선</td>
+            <td style="">2018년 딥뉴럴네트워크 정점 → 3년 후 산업 적용 → 2023년 ChatGPT 폭발</td>
+          </tr>
+          <tr>
+            <td style="">안티 포트폴리오 (Anti-Portfolio)</td>
+            <td style="">투자 기회가 있었으나 거절한 회사 목록</td>
+            <td style="">Bessemer VP 사례: 에어비앤비 $40M 거절 → 나중에 $47B 평가</td>
+          </tr>
+          <tr>
+            <td style="">시드 라운드 (Seed Round)</td>
+            <td style="">스타트업 초창기의 초기 자금 조달 단계</td>
+            <td style="">수십만 개 스타트업 중 생존 필터링을 통과한 회사들이 받는 첫 기관 투자</td>
+          </tr>
+          <tr>
+            <td style="">메타인지 (Meta-Cognition)</td>
+            <td style="">자신의 사고 과정 자체를 인식하고 평가하는 능력</td>
+            <td style="">"나는 어떤 투자자가 될 것인가"를 자기 객관화하는 출발점</td>
+          </tr>
+          <tr>
+            <td style="">휴먼 캐피탈 (Human Capital)</td>
+            <td style="">사람이 보유한 지식·경험·네트워크 등 무형의 역량 자산</td>
+            <td style="">페이팔 마피아처럼 고성장 기업 출신 인재들이 생태계에 재유입되는 선순환 구조</td>
+          </tr>
+          <tr>
+            <td style="">K-컬처 언필 어드밴티지</td>
+            <td style="">K-Pop·드라마·푸드·무비 등 한국 문화의 글로벌 영향력을 활용한 경쟁 우위</td>
+            <td style="">한국 스타트업이 처음부터 글로벌을 목표로 해야 하는 이유</td>
+          </tr>
+          <tr>
+            <td style="">죽음의 협곡 (Valley of Death)</td>
+            <td style="">스타트업이 수익 창출 전 자금이 고갈되는 위기 구간</td>
+            <td style="">휘인호 사례: 25명→1명, 자금 0원 위기를 천사 투자+정부 지원으로 극복</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist">
+  <div class="container">
+    <div class="section-title">✅ 초기 투자자 실행 체크리스트</div>
+
+    <div style="margin-bottom:20px;font-size:.9rem;color:var(--muted);">강의 내용을 기반으로 초기 벤처투자자가 즉시 실천해야 할 행동 리스트입니다.</div>
+
+    <div style="margin-bottom:24px;">
+      <div style="font-size:.85rem;color:var(--gold);font-weight:700;margin-bottom:12px;">📌 시장 이해 영역</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>거시 흐름 파악 습관 구축:</strong> 메리 미커 인터넷 트렌드 리포트, Gartner Hype Cycle 연 1회 정독</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>기술 계층 지도 작성:</strong> 현재 인프라·미들웨어·앱 레이어 각각의 주요 플레이어와 공백 파악</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>시총 변화 추적:</strong> 현재 S&amp;P 탑20 기업과 10년 전을 비교하며 혁신 주기 체감</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>투자 사이클 인지:</strong> 현재가 호황기·위기기·회복기 중 어느 구간인지 매 분기 점검</div></div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <div style="font-size:.85rem;color:var(--gold);font-weight:700;margin-bottom:12px;">🧭 자기 정의 영역</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>투자자 유형 자기 진단:</strong> 극초기/시드/성장/프리IPO 중 자신의 성향·역량과 맞는 단계 확정</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>나만의 Unfair Advantage 정의:</strong> 창업 경험·산업 전문성·성장 경험·전문가 조직 경력 중 보유한 강점 명문화</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>투자 철학 초안 작성:</strong> "나는 어떤 문제를 해결하는 스타트업에 투자할 것인가" 3줄 이내 작성</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>퍼스널 브랜딩 키워드 설정:</strong> a16z "Software is eating the world" 수준의 핵심 메시지 구상</div></div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <div style="font-size:.85rem;color:var(--gold);font-weight:700;margin-bottom:12px;">🔍 스타트업 평가 영역</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>창업팀 Unfair Advantage 검증:</strong> 시리얼 창업 경험 / 선도 기업 핵심 기술 경험 / 빠른 이터레이션 능력 중 보유 여부 확인</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>"역사에 남을 회사인가" 질문:</strong> 매 딜 검토 시 이 기준을 명시적으로 적용</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>고객 근본 문제 해결 여부 확인:</strong> "내 딸이 아프면 100억을 써도 살 제품인가" 수준의 필요성 검토</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>스케일러블 비즈니스 모델 검증:</strong> 국내 → 글로벌 확장이 가능한 구조인지 사업 모델 분석</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:.85rem;color:var(--gold);font-weight:700;margin-bottom:12px;">🤝 파트너십 &amp; 포트폴리오 역할 영역</div>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>CEO 파트너 역할 실천:</strong> 월 1회 이상 사업 본질 대화 세션 설계, 속마음을 꺼낼 수 있는 신뢰 구축</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>펀드레이징 조력 체계화:</strong> 투자할 포트폴리오사의 IR 덱 리뷰 프로세스 및 후속 투자자 네트워크 리스트 관리</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>안티 포트폴리오 기록 시작:</strong> 투자하지 않은 이유와 결과를 기록하여 의사결정 오류 패턴 학습</div></div>
+        <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>덕업일치 확인:</strong> 쉬는 시간에 VC 인터뷰·창업자 스토리 콘텐츠를 즐겁게 소비하는지 자기 점검</div></div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:40px;">
+      <div class="hb-label">🎯 강의 핵심 메시지 요약</div>
+      <p style="">
+        초기 투자자로 성공하려면 두 가지를 반드시 내재화해야 한다.<br>
+        첫째, <span class="highlight">마켓을 이해하라</span> — 시장 사이즈뿐 아니라 전체 사이클 안에서 우리가 어느 단계에 있는지를 거시적으로 파악하라.<br>
+        둘째, <span class="highlight">나만의 투자자 정체성을 정의하라</span> — 내가 스타트업에 줄 수 있는 가치가 무엇인지, 나만의 Unfair Advantage가 무엇인지를 명확히 알고 투자하라.<br><br>
+        초기 투자는 단기 수익을 위한 선택이 아니다. <span class="highlight">불확실성과 함께 7~10년을 걸어갈 준비가 된 사람만이 진정한 초기 투자자</span>가 될 수 있다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>퓨처플레이 권호영 대표 강의 분석 리포트 · 내용은 강의 원문 기반으로 재구성되었습니다.</div>
+  <div style="margin-top:8px;color:var(--card-border);">FuturePlay · Venture Investment · Startup Ecosystem</div>
+</footer>
+
+<script>
+function toggleAcc(header){
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.acc-arrow');
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.acc-body').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.acc-arrow').forEach(a=>a.classList.remove('open'));
+  if(!isOpen){
+    body.classList.add('open');
+    arrow.classList.add('open');
+  }
+}
+</script>
+
+<script type="application/json" id="celab-metadata">
+{"title":"초기 투자자가 꼭 알아야 할 것들 — 퓨처플레이 권호영 대표 강의","description":"퓨처플레이 권호영 대표가 초기 벤처투자자를 위해 공유한 시장 이해, 스타트업 생태계, 투자 철학, 창업팀 평가 기준에 관한 심층 강의를 분석한 리포트. 파도 타기 이론부터 Unfair Advantage 개념, 셰르파 역할론까지 실전 인사이트를 담았다.","category":"투자","tags":["벤처투자","초기투자","퓨처플레이","스타트업생태계","투자철학"],"emoji":"🚀"}
+</script>
+<script id="celab-inline-editor">
+(function(){
+  if(window.location.protocol!=='file:') return;
+  var GOLD='#c9a84c',NAVY='#0d1b2a',RED='#e05c5c',TEAL='#2c7a7b';
+  var SEL='h1,h2,h3,h4,h5,h6,p,li,td,th';
+  var SKIP=['nav','script','style','code','pre','button','a'];
+  var active=false;
+
+  function mkBtn(id,text,color,bottom){
+    var b=document.createElement('div');
+    b.id=id; b.textContent=text;
+    Object.assign(b.style,{position:'fixed',bottom:bottom,right:'28px',zIndex:'99999',
+      background:color,color:color===GOLD?NAVY:'#fff',padding:'10px 20px',borderRadius:'24px',
+      fontWeight:'700',fontSize:'14px',cursor:'pointer',boxShadow:'0 4px 20px rgba(0,0,0,0.5)',
+      fontFamily:'Apple SD Gothic Neo,Noto Sans KR,sans-serif',userSelect:'none',transition:'all .2s'});
+    document.body.appendChild(b); return b;
+  }
+  var fabEdit=mkBtn('celab-fab-edit','✏️ 편집',GOLD,'28px');
+  var fabLayout=mkBtn('celab-fab-layout','🔄 레이아웃',TEAL,'76px');
+
+  function toast(msg,ok){
+    var t=document.createElement('div'); t.textContent=msg;
+    Object.assign(t.style,{position:'fixed',bottom:'132px',right:'28px',zIndex:'99999',
+      background:ok?'#2f855a':'#c53030',color:'#fff',padding:'10px 18px',borderRadius:'12px',
+      fontSize:'13px',fontFamily:'Apple SD Gothic Neo,Noto Sans KR,sans-serif',
+      boxShadow:'0 4px 16px rgba(0,0,0,0.4)',transition:'opacity .4s'});
+    document.body.appendChild(t);
+    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},3000);
+  }
+
+  function getEditables(){
+    return [].filter.call(document.querySelectorAll(SEL),function(el){
+      if(SKIP.some(function(s){return el.closest(s);})) return false;
+      if(['celab-fab-edit','celab-fab-layout'].indexOf(el.id)>=0) return false;
+      return ![].some.call(el.children,function(c){return /^(div|p|ul|ol|table|section|article)$/i.test(c.tagName);});
+    });
+  }
+
+  function serializeHtml(){
+    // DOM 클론으로 저장 — 편집 버튼은 live DOM에 유지, 클론에서만 아티팩트 제거
+    var clone=document.documentElement.cloneNode(true);
+    clone.querySelectorAll('[contenteditable]').forEach(function(el){
+      el.removeAttribute('contenteditable');
+      el.style.outline=''; el.style.borderRadius=''; el.style.minHeight='';
+    });
+    return '<!DOCTYPE html>\n'+clone.outerHTML;
+  }
+
+  // ── 텍스트 편집 버튼 ──────────────────────────────────────
+  fabEdit.addEventListener('click',function(){
+    if(!active){
+      active=true;
+      fabEdit.textContent='💾 저장'; fabEdit.style.background=RED; fabEdit.style.color='#fff';
+      getEditables().forEach(function(el){
+        el.contentEditable='true';
+        el.style.outline='1px dashed rgba(201,168,76,0.5)';
+        el.style.borderRadius='3px'; el.style.minHeight='1em';
+      });
+      toast('편집 모드 — 텍스트를 클릭해 수정하세요',true);
+    } else {
+      active=false;
+      fabEdit.textContent='✏️ 편집'; fabEdit.style.background=GOLD; fabEdit.style.color=NAVY;
+      getEditables().forEach(function(el){
+        el.contentEditable='false'; el.style.outline=''; el.style.borderRadius='';
+      });
+      var html=serializeHtml();
+      var fp=decodeURIComponent(window.location.pathname);
+      if(window.electronAPI&&window.electronAPI.saveHtml){
+        window.electronAPI.saveHtml({filePath:fp,html:html}).then(function(r){
+          if(r.success) toast('✅ 저장 완료 — GitHub 자동 동기화 중',true);
+          else toast('❌ 저장 실패: '+r.error,false);
+        }).catch(function(e){toast('❌ 오류: '+e.message,false);});
+      } else {
+        var a=document.createElement('a');
+        a.href='data:text/html;charset=utf-8,'+encodeURIComponent(html);
+        a.download=(document.title||'celab')+'_edited.html'; a.click();
+        toast('💾 수정본 다운로드 완료',true);
+      }
+    }
+  });
+
+  // ── 레이아웃 업데이트 버튼 ────────────────────────────────
+  fabLayout.addEventListener('click',function(){
+    if(active){ toast('⚠️ 편집 모드를 먼저 저장/취소하세요',false); return; }
+    if(!(window.electronAPI&&window.electronAPI.updateHtmlLayout)){
+      toast('❌ Electron 앱에서만 사용 가능합니다',false); return;
+    }
+    // 메타데이터 추출
+    var meta={};
+    var metaEl=document.getElementById('celab-metadata');
+    if(metaEl){try{meta=JSON.parse(metaEl.textContent);}catch(e){}}
+    // 페이지 텍스트 콘텐츠 구조화
+    var lines=[];
+    document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td').forEach(function(el){
+      if(el.closest('nav,script,style,#celab-fab-edit,#celab-fab-layout')) return;
+      var t=el.textContent.trim();
+      if(t.length<2) return;
+      var tag=el.tagName.toLowerCase();
+      var pfx=tag==='h1'?'# ':tag==='h2'?'## ':tag==='h3'?'### ':tag==='h4'?'#### ':tag==='li'?'- ':'';
+      lines.push(pfx+t);
+    });
+    var textContent=lines.join('\n');
+    var fp=decodeURIComponent(window.location.pathname);
+    fabLayout.textContent='⏳ 재생성 중...'; fabLayout.style.opacity='0.7'; fabLayout.style.cursor='default';
+    window.electronAPI.updateHtmlLayout({filePath:fp,textContent:textContent,metadata:meta})
+      .then(function(r){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        if(r.success) toast('✅ 레이아웃 재생성 완료 — 창 새로고침 중...',true);
+        else toast('❌ 재생성 실패: '+r.error,false);
+      }).catch(function(e){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        toast('❌ 오류: '+e.message,false);
+      });
+  });
+})();
+</script><div id="celab-fab-edit" style="position: fixed; bottom: 28px; right: 28px; z-index: 99999; background: rgb(201, 168, 76); color: rgb(13, 27, 42); padding: 10px 20px; border-radius: 24px; font-weight: 700; font-size: 14px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s;">✏️ 편집</div><div id="celab-fab-layout" style="position: fixed; bottom: 76px; right: 28px; z-index: 99999; background: rgb(44, 122, 123); color: rgb(255, 255, 255); padding: 10px 20px; border-radius: 24px; font-weight: 700; font-size: 14px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s;">🔄 레이아웃</div>
+</body></html>
