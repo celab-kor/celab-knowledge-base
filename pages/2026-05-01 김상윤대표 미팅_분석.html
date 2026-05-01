@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스냅스케일 전략 회의록 | 교수 자문 계약 · 도프텍 협력 · 투자 전략</title>
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy2: #1a2d45;
+  --gold: #c9a84c;
+  --gold2: #e8c96a;
+  --text: #e8edf2;
+  --muted: #8a9bb0;
+  --card-bg: #162030;
+  --card-border: #243450;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,27,42,0.97);
+  border-bottom: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-logo {
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 13px;
+  padding: 12px 10px 12px 0;
+  border-right: 1px solid var(--card-border);
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 12px 8px;
+  transition: color .2s;
+  flex-shrink: 0;
+}
+nav a:hover { color: var(--gold2); }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a2d45 40%, #0f2236 70%, #0d1b2a 100%);
+  padding: 60px 20px 50px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 30%, rgba(26,45,69,0.6) 0%, transparent 50%);
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.35);
+  color: var(--gold2);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  position: relative;
+}
+.hero h1 {
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  position: relative;
+}
+.hero h1 span { color: var(--gold); }
+.hero-sub {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 36px;
+  position: relative;
+}
+.hero-meta {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  position: relative;
+}
+.hero-meta-item {
+  background: rgba(26,45,69,0.7);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hero-meta-item .dot { color: var(--gold); font-size: 16px; }
+.kpi-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.kpi-card {
+  background: rgba(22,32,48,0.85);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 14px;
+  padding: 22px 28px;
+  min-width: 160px;
+  text-align: center;
+}
+.kpi-card .kpi-num {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1;
+}
+.kpi-card .kpi-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+}
+
+/* ── LAYOUT ── */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+section { margin-bottom: 52px; }
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--card-border);
+}
+.section-title .emoji { font-size: 20px; }
+
+/* ── CARD ── */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.card-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 3px 9px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+.tag-blue { background: rgba(56,139,253,0.18); color: #7ab7ff; border: 1px solid rgba(56,139,253,0.3); }
+.tag-gold { background: rgba(201,168,76,0.18); color: var(--gold2); border: 1px solid rgba(201,168,76,0.3); }
+.tag-green { background: rgba(63,185,80,0.15); color: #7ee787; border: 1px solid rgba(63,185,80,0.3); }
+.tag-red { background: rgba(248,81,73,0.15); color: #ff9b92; border: 1px solid rgba(248,81,73,0.3); }
+.tag-purple { background: rgba(188,140,255,0.15); color: #d2a8ff; border: 1px solid rgba(188,140,255,0.3); }
+
+.card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+.card p {
+  font-size: 14px;
+  color: #c0ccd8;
+  line-height: 1.75;
+}
+.card ul {
+  padding-left: 18px;
+  font-size: 13.5px;
+  color: #c0ccd8;
+  line-height: 1.85;
+}
+.card ul li { margin-bottom: 4px; }
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+@media (max-width: 720px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.04) 100%);
+  border: 1px solid rgba(201,168,76,0.4);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+}
+.highlight-box h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold2);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.highlight-box p, .highlight-box ul {
+  font-size: 13.5px;
+  color: #d4dfec;
+  line-height: 1.8;
+}
+.highlight-box ul { padding-left: 18px; }
+.highlight-box ul li { margin-bottom: 5px; }
+
+/* ── DECISION BOX ── */
+.decision-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+}
+.decision-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.decision-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.decision-text p { font-size: 13px; color: #a8bdd0; line-height: 1.7; }
+
+/* ── ACCORDION ── */
+details {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+summary {
+  cursor: pointer;
+  padding: 16px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  color: var(--text);
+}
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: '▾';
+  color: var(--muted);
+  font-size: 16px;
+  transition: transform .25s;
+}
+details[open] summary::after { transform: rotate(180deg); }
+.details-body {
+  padding: 0 20px 18px;
+  font-size: 13.5px;
+  color: #c0ccd8;
+  line-height: 1.8;
+  border-top: 1px solid var(--card-border);
+  padding-top: 14px;
+}
+.details-body ul { padding-left: 18px; }
+.details-body ul li { margin-bottom: 5px; }
+
+/* ── CHECKLIST ── */
+.action-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+}
+.check-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--card-border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  margin-top: 1px;
+}
+.check-circle.pending { border-color: var(--gold); color: var(--gold); }
+.check-circle.urgent { border-color: #ff9b92; color: #ff9b92; }
+.action-content { flex: 1; }
+.action-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.action-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+.action-meta-tag {
+  font-size: 11px;
+  padding: 2px 9px;
+  border-radius: 10px;
+}
+.meta-person { background: rgba(26,45,69,0.8); color: var(--muted); border: 1px solid var(--card-border); }
+.meta-due { background: rgba(201,168,76,0.12); color: var(--gold2); border: 1px solid rgba(201,168,76,0.25); }
+.meta-urgent { background: rgba(248,81,73,0.1); color: #ff9b92; border: 1px solid rgba(248,81,73,0.25); }
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 30px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 22px;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -26px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--navy);
+}
+.tl-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--gold2); }
+.tl-item p { font-size: 13px; color: #a8bdd0; }
+
+/* ── STAT ROW ── */
+.stat-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.stat-pill {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.stat-pill .val { color: var(--gold); font-weight: 700; }
+
+/* ── RISK TABLE ── */
+.risk-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  font-size: 13px;
+}
+.risk-level {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+}
+.risk-high { background: rgba(248,81,73,0.15); color: #ff9b92; }
+.risk-mid { background: rgba(201,168,76,0.15); color: var(--gold2); }
+.risk-low { background: rgba(63,185,80,0.12); color: #7ee787; }
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--card-border), transparent);
+  margin: 8px 0 18px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy2);
+  border-top: 1px solid var(--card-border);
+  text-align: center;
+  padding: 28px 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--navy2); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">📋 스냅스케일 회의록</div>
+    <a href="#overview">회의 개요</a>
+    <a href="#advisor">교수 자문 계약</a>
+    <a href="#doftec">도프텍 협력</a>
+    <a href="#monomus">모노부스 영업</a>
+    <a href="#investment">투자 전략</a>
+    <a href="#decisions">핵심 결정</a>
+    <a href="#actions">액션 아이템</a>
+    <a href="#next">다음 단계</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">INTERNAL STRATEGY MEETING</div>
+  <h1>스냅스케일 <span>전략 회의</span></h1>
+  <p class="hero-sub">교수 자문 계약 구조 · 도프텍 기술 협력 · 모노부스 영업 파트너십 · 투자 전략</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><span class="dot">●</span>5월 7일 오후 4시 서울역 미팅 예정</div>
+    <div class="hero-meta-item"><span class="dot">●</span>참석: 대표 · 이종현 부장 · (교수 화상)</div>
+    <div class="hero-meta-item"><span class="dot">●</span>비공개 내부 회의</div>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-num">3</div>
+      <div class="kpi-label">핵심 참석자</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">5</div>
+      <div class="kpi-label">주요 논의 항목</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">12</div>
+      <div class="kpi-label">액션 아이템</div>
+    </div>
+  </div>
+</section>
+
+<main>
+
+<!-- ── 회의 개요 ── -->
+<section id="overview">
+  <div class="section-title"><span class="emoji">📌</span>회의 개요</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-tag tag-blue">목적</span>
+        <h3>이번 회의의 목표</h3>
+      </div>
+      <ul>
+        <li>유일병 교수 자문 계약 구조(스톡옵션 + 자문료) 최종 확정</li>
+        <li>도프텍(IED2) 기술과의 협력 방향 및 전략 수립</li>
+        <li>모노부스(DIB) 영업 파트너십 계약 구조 논의</li>
+        <li>TIPS 신청 전략 및 투자 라운드 방향 점검</li>
+        <li>스냅스케일 장기 방향(IPO vs M&A) 내부 논의</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-tag tag-green">배경</span>
+        <h3>논의 배경 요약</h3>
+      </div>
+      <ul>
+        <li>교수 자문 계약 → 스톡옵션 4% 기합의, 자문료 미확정</li>
+        <li>도프텍: OCR 룰베이스 P&ID 인식 기술 보유(AI 부재)</li>
+        <li>교수 → 도프텍 M&A 방향 암시, 스냅스케일은 IPO 지향</li>
+        <li>모노부스: 필지권 계약 클로징 기여, 추가 계약 구조 필요</li>
+        <li>5월 말 시드 투자 마감, TIPS 8억 별도 신청 가능</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-pill">교수 스톡옵션 <span class="val">4%</span> 기합의</div>
+    <div class="stat-pill">자문료 <span class="val">연 1,200만원</span> 검토 중</div>
+    <div class="stat-pill">도프텍 기업가치 추정 <span class="val">~80억</span></div>
+    <div class="stat-pill">당사 시드 기업가치 <span class="val">50~70억</span></div>
+    <div class="stat-pill">TIPS 수령 가능액 <span class="val">8억</span></div>
+  </div>
+</section>
+
+<!-- ── 논의 1: 교수 자문 계약 ── -->
+<section id="advisor">
+  <div class="section-title"><span class="emoji">🎓</span>논의 1 · 유일병 교수 자문 계약 구조</div>
+
+  <details open>
+    <summary>스톡옵션 협상 경위</summary>
+    <div class="details-body">
+      <ul>
+        <li>초기 제안: <strong>1%</strong> → 교수 "기대보다 낮다" 반응</li>
+        <li>재협상: 3~4% 범위 언급 → 교수 <strong>"최소 4%" 합의</strong></li>
+        <li>교수 내심 기대치: 5~10% 추정 (표정·발언 근거)</li>
+        <li>현재 스톡옵션 풀: CS 단계 총 10%, 개발자 배정 비중 고려 필요</li>
+        <li><strong>결론: 4% 픽스 완료</strong>, 변경 없음</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>자문료 산정 논리</summary>
+    <div class="details-body">
+      <ul>
+        <li>참고 레퍼런스: 의료 AI 교수 자문역 → 연 1,000~1,500만원 + 소액 스톡옵션</li>
+        <li>검토안: <strong>이종현 부장 연봉의 20% ≈ 연 1,200만원</strong></li>
+        <li>구조: 초기 무급 → 매출 발생 및 연봉 상승에 따라 자문료도 연동 상승</li>
+        <li>교수 제안: "수재람 따라 본인 자문료도 올리는 구조"와 일치</li>
+        <li>재무 계획상 1,000만원 반영 → 1,200만원으로 소폭 상향 검토</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>교수 자문 역할 범위 (외부 공동 협력자 포지션)</summary>
+    <div class="details-body">
+      <ul>
+        <li>📄 <strong>SCI급 공동 연구 논문</strong> 게재 → 기술 신뢰도 및 IR 보강</li>
+        <li>🏛️ <strong>계약 관련 컨설팅</strong> 지속 제공</li>
+        <li>🔗 <strong>산업계 기업 연결</strong>: 도프텍 포함 2~3개사 네트워크</li>
+        <li>🤝 <strong>대기업 미팅 동석</strong>: 교수 참여 만으로 신뢰도 대폭 상승</li>
+        <li>📋 국가과제 관련 컨설팅 및 레퍼런스 구축 지원</li>
+        <li>🌍 DT(디지털 트랜스포메이션) 산업계 네트워크 활용</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="highlight-box">
+    <h3>💡 자문 계약 전략 포인트</h3>
+    <p>교수 측에 <strong>4% 스톡옵션 + 연동 자문료</strong>를 제공하는 대가로 얻는 것: SCI 논문, 산업계 네트워크, 대기업 미팅 지원, 국가과제 컨설팅. 의료 AI 교수 자문역 대비 더 높은 수준이지만 그에 상응하는 아웃풋 기대치를 명확히 설정하고 합의해야 한다. 교수에게 <em>"저희가 드리는 만큼, 저희 사업 성장에 이 정도 기여를 원합니다"</em>는 컨센서스가 필요하다.</p>
+  </div>
+</section>
+
+<!-- ── 논의 2: 도프텍 협력 ── -->
+<section id="doftec">
+  <div class="section-title"><span class="emoji">🏭</span>논의 2 · 도프텍(IED2) 기술 협력 전략</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-tag tag-blue">도프텍 현황</span>
+        <h3>IED2 기술 분석</h3>
+      </div>
+      <ul>
+        <li>P&ID 인식 기술: <strong>완전 룰베이스 OCR</strong> (AI 없음)</li>
+        <li>정확도: <strong>약 95%</strong> (상한선)</li>
+        <li>기능: 리스트 추출, 위상 정보 저장, 심벌 레전드 추론, 디지털 P&ID 반환</li>
+        <li>호환: SPPID, Aveva, AutoCAD 등 각종 소프트웨어 지원</li>
+        <li>AI 기술 부재 → 코스닥 상장에 어려움</li>
+        <li>엔지니어링 외주가 메인, SW 판매는 부차적</li>
+        <li>삼성전자 P&ID 디지털화 유스케이스 보유</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-tag tag-gold">스냅스케일 포지션</span>
+        <h3>우리의 기술 기여점</h3>
+      </div>
+      <ul>
+        <li>온톨로지 기반 AI → <strong>나머지 5% 예외 케이스 처리</strong></li>
+        <li>비전 모델 + 온톨로지로 룰베이스 한계 극복</li>
+        <li>룰 & 레귤레이션 자동 업데이트 반영 (도프텍 미보유)</li>
+        <li>P&ID 외 각종 딜리버러블 온톨로지 매핑 → AI 자동화</li>
+        <li><strong>핵심 차별점</strong>: P&ID 인식 정확도가 아닌 온톨로지 구축 역량</li>
+        <li>도프텍 기술 활용 시 → P&ID 개발 시간 절감, 온톨로지에 집중 가능</li>
+      </ul>
+    </div>
+  </div>
+
+  <details open>
+    <summary>🔴 도프텍 협력 시 핵심 리스크</summary>
+    <div class="details-body">
+      <ul>
+        <li><strong>기술 유출 위험</strong>: AI 탑재 후 도프텍이 독자 영업 가능 → 스냅스케일 배제 가능성</li>
+        <li>IP 소유권 분쟁: 협력 완성 제품의 소유권 구조 미정</li>
+        <li>체급 불균형: 도프텍 매출
