@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="ko"><head></head><body>아래는 지시사항에 따라 수정된 HTML입니다.
+
+수정 내용:
+1. 회사이름 "신의스케일" → "스냅스케일" (title, nav, hero, footer, 다이어그램 텍스트 등 전체)
+2. 참석자 이름 수정: "이종혁 원장/교수, 박규호 부장, 이주영 부장, 다솜, 종성" → "이종현 부장, 박규호 부장, 이재윤, 정다소, 이종석"
+3. 교수님 이름 "이해범" → "이을범" (전체)
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회의록 | 스냅스케일 전체 진행 현황 보고</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy2: #1a2d45;
+  --gold: #c9a84c;
+  --gold2: #e8c96a;
+  --text: #e8edf2;
+  --muted: #8a9bb0;
+  --card-bg: #162030;
+  --card-border: #243450;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  line-height: 1.7;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13, 27, 42, 0.97);
+  border-bottom: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+  padding: 0 1rem;
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  overflow-x: auto;
+  padding: 0.6rem 0;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-logo {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  white-space: nowrap;
+  margin-right: 0.8rem;
+  flex-shrink: 0;
+}
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+nav a:hover {
+  color: var(--gold);
+  background: rgba(201, 168, 76, 0.1);
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a2d45 40%, #0f2237 70%, #162030 100%);
+  padding: 4rem 1.5rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-size: 0.75rem;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.05em;
+}
+.hero h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 0.8rem;
+  line-height: 1.3;
+}
+.hero h1 span { color: var(--gold); }
+.hero-meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.hero-meta span::before { content: '📌 '; }
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.kpi-card {
+  background: rgba(22, 32, 48, 0.8);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1.2rem 0.8rem;
+}
+.kpi-num {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+}
+.kpi-label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+}
+
+/* MAIN LAYOUT */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* SECTION */
+.section {
+  margin-bottom: 2.5rem;
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--card-border);
+}
+.section-title .emoji { font-size: 1.3rem; }
+.section-tag {
+  font-size: 0.7rem;
+  background: rgba(201,168,76,0.15);
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 0.15rem 0.6rem;
+  border-radius: 10px;
+  margin-left: auto;
+}
+
+/* CARD */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1rem;
+}
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+.card-icon {
+  width: 36px; height: 36px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.card-title { font-size: 1rem; font-weight: 700; color: var(--text); }
+.card-subtitle { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+
+/* DETAILS / ACCORDION */
+details {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+}
+details[open] { border-color: rgba(201,168,76,0.4); }
+summary {
+  padding: 1rem 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 0.95rem;
+  list-style: none;
+  user-select: none;
+  transition: background 0.2s;
+}
+summary::-webkit-details-marker { display: none; }
+summary:hover { background: rgba(201,168,76,0.05); }
+summary::after {
+  content: '▼';
+  font-size: 0.65rem;
+  color: var(--gold);
+  transition: transform 0.3s;
+}
+details[open] summary::after { transform: rotate(180deg); }
+.summary-left {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.summary-badge {
+  font-size: 0.68rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 8px;
+  background: rgba(201,168,76,0.15);
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.2);
+}
+.details-body {
+  padding: 1rem 1.4rem 1.4rem;
+  border-top: 1px solid var(--card-border);
+}
+
+/* HIGHLIGHT BOX */
+.highlight-box {
+  background: rgba(201,168,76,0.07);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 10px 10px 0;
+  padding: 1rem 1.2rem;
+  margin: 0.8rem 0;
+}
+.highlight-box .hl-title {
+  color: var(--gold);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.4rem;
+}
+
+.info-box {
+  background: rgba(26,45,69,0.6);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin: 0.8rem 0;
+}
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+
+/* TAGS */
+.tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+  margin: 0.15rem;
+}
+.tag-green { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.25); }
+.tag-blue { background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.25); }
+.tag-yellow { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
+.tag-red { background: rgba(248,113,113,0.12); color: #f87171; border: 1px solid rgba(248,113,113,0.25); }
+.tag-purple { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.25); }
+
+/* PRIORITY BADGE */
+.priority {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.p-high { background: rgba(248,113,113,0.2); color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
+.p-med { background: rgba(251,191,36,0.2); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+.p-low { background: rgba(52,211,153,0.2); color: #34d399; border: 1px solid rgba(52,211,153,0.3); }
+
+/* ACTION ITEM */
+.action-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: start;
+  gap: 0.8rem;
+  padding: 0.9rem 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  margin-bottom: 0.6rem;
+}
+.action-num {
+  width: 24px; height: 24px;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.action-text { font-size: 0.88rem; }
+.action-assignee {
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.action-due {
+  font-size: 0.7rem;
+  color: var(--muted);
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* DECISION TABLE */
+.decision-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.decision-table th {
+  background: rgba(201,168,76,0.1);
+  color: var(--gold);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(201,168,76,0.25);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+.decision-table td {
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid var(--card-border);
+  color: var(--text);
+  vertical-align: top;
+}
+.decision-table tr:last-child td { border-bottom: none; }
+.decision-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* INSIGHT LIST */
+.insight-list { list-style: none; }
+.insight-list li {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(36,52,80,0.5);
+  font-size: 0.88rem;
+}
+.insight-list li:last-child { border-bottom: none; }
+.insight-dot {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  margin-top: 0.55rem;
+  flex-shrink: 0;
+}
+
+/* PROGRESS BAR */
+.progress-wrap { margin: 0.4rem 0; }
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+.progress-bar {
+  height: 6px;
+  background: var(--card-border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold2));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+/* MERMAID */
+.mermaid-wrap {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+  overflow-x: auto;
+}
+.mermaid-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.mermaid { min-width: 100%; }
+
+/* STATUS INDICATOR */
+.status-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 0.4rem;
+}
+.s-confirmed { background: #34d399; box-shadow: 0 0 6px rgba(52,211,153,0.5); }
+.s-progress { background: var(--gold); box-shadow: 0 0 6px rgba(201,168,76,0.5); }
+.s-pending { background: #60a5fa; box-shadow: 0 0 6px rgba(96,165,250,0.5); }
+.s-risk { background: #f87171; box-shadow: 0 0 6px rgba(248,113,113,0.5); }
+
+/* PARTNER CARD */
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.8rem;
+}
+.partner-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+}
+.partner-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+.partner-desc {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* LIST */
+ul.bullet-list {
+  list-style: none;
+  padding: 0;
+}
+ul.bullet-list li {
+  padding: 0.35rem 0;
+  padding-left: 1.2rem;
+  position: relative;
+  font-size: 0.88rem;
+}
+ul.bullet-list li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* FOOTER */
+footer {
+  background: var(--navy2);
+  border-top: 1px solid var(--card-border);
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+footer span { color: var(--gold); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .kpi-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+  .kpi-card { padding: 0.8rem 0.4rem; }
+  .kpi-num { font-size: 1.6rem; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .action-item { grid-template-columns: auto 1fr; }
+  .action-assignee, .action-due { grid-column: 2; }
+  .decision-table { font-size: 0.78rem; }
+  .decision-table th, .decision-table td { padding: 0.5rem 0.5rem; }
+  .partner-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .kpi-num { font-size: 1.3rem; }
+  .kpi-label { font-size: 0.65rem; }
+  .partner-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+
+<div id="celab-home-btn" style="position:fixed;top:14px;right:14px;z-index:10000;">
+  <a href="https://celab-kor.github.io/celab-knowledge-base/" target="_blank" style="display:flex;align-items:center;gap:7px;
+            background:rgba(13,27,42,0.88);color:#c9a84c;
+            padding:7px 13px;border-radius:22px;
+            font-size:13px;font-weight:700;text-decoration:none;
+            box-shadow:0 2px 10px rgba(0,0,0,0.35);
+            border:1px solid rgba(201,168,76,0.35);
+            backdrop-filter:blur(6px);
+            transition:background 0.2s;" onmouseover="this.style.background='rgba(13,27,42,1)'" onmouseout="this.style.background='rgba(13,27,42,0.88)'" title="CELab 지식창고 홈으로">
+    <svg width="15" height="15" viewBox="0 0 20 20" fill="#c9a84c" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z"></path>
+    </svg>
+    CELab 지식창고
+  </a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">⚙️ 스냅스케일</span>
+    <a href="#overview">개요</a>
+    <a href="#contracts">계약 현황</a>
+    <a href="#fields">필즈 프로젝트</a>
+    <a href="#hanul">한울</a>
+    <a href="#others">기타 파이프라인</a>
+    <a href="#partners">파트너십</a>
+    <a href="#financial">재무·투자</a>
+    <a href="#hiring">채용</a>
+    <a href="#tech">기술 Q&amp;A</a>
+    <a href="#actions">액션아이템</a>
+    <a href="#diagrams">다이어그램</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">📋 회의록 · 전체 진행 현황 보고</div>
+  <h1 style="">스냅스케일 <span>사업 진행 현황</span> 보고 회의</h1>
+  <div class="hero-meta">
+    <span>회의 유형: 정기 현황 보고</span>
+    <span>형태: 비대면(슬랙 허들)</span>
+    <span>주요 진행: 상윤 대표 외 부장급·개발팀</span>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <span class="kpi-num">3</span>
+      <div class="kpi-label">계약 확정 파이프라인</div>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-num">8+</span>
+      <div class="kpi-label">논의 안건 수</div>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-num">12</span>
+      <div class="kpi-label">도출 액션아이템</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+  <!-- 회의 개요 -->
+  <div class="section" id="overview">
+    <div class="section-title">
+      <span class="emoji">📌</span> 회의 개요
+      <span class="section-tag">OVERVIEW</span>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">📋</div>
+          <div>
+            <div class="card-title">회의 기본 정보</div>
+            <div class="card-subtitle">Meeting Information</div>
+          </div>
+        </div>
+        <ul class="bullet-list">
+          <li style=""><strong>주재:</strong> 대표 (상윤)</li>
+          <li style=""><strong>참석:</strong> 이종현 부장, 박규호 부장, 이재윤, 정다소, 이종석</li>
+          <li style=""><strong>형태:</strong> 비대면 슬랙 허들 (화면 공유 포함)</li>
+          <li style=""><strong>핵심 목적:</strong> 계약·투자·채용·기술 전반 진행 현황 공유 및 의사결정</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🎯</div>
+          <div>
+            <div class="card-title">주요 안건 요약</div>
+            <div class="card-subtitle">Agenda Summary</div>
+          </div>
+        </div>
+        <ul class="bullet-list">
+          <li style="">필즈 프로젝트 계약 및 견적 자동화 진행</li>
+          <li style="">한울 지원사업 발표 결과 및 계약 방향</li>
+          <li style="">현대엔지니어링·삼두·화물질안전원 파이프라인</li>
+          <li style="">이을범 교수·컨설팅펌 파트너십 계약</li>
+          <li style="">재무 플랜닝 완료 및 5년 로드맵</li>
+          <li style="">투자 라운드 현황 (20개사 파이프라인)</li>
+          <li style="">채용 계획 (개발자·도메인 전문가)</li>
+          <li style="">기술 Q&amp;A (Hydraulic 계산, PSV API)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 계약 현황 -->
+  <div class="section" id="contracts">
+    <div class="section-title">
+      <span class="emoji">📄</span> 계약 현황 및 파이프라인
+      <span class="section-tag">CONTRACTS</span>
+    </div>
+
+    <div class="highlight-box">
+      <div class="hl-title">🏆 계약 확정 파이프라인 (3개사)</div>
+      <div style="display:flex; gap:0.6rem; flex-wrap:wrap; margin-top:0.5rem;">
+        <span class="tag tag-green"><span class="status-dot s-confirmed"></span>필즈 — 계약서 완료·도장 대기</span>
+        <span class="tag tag-green"><span class="status-dot s-confirmed"></span>한울 — 파트너십 계약 예정</span>
+        <span class="tag tag-green"><span class="status-dot s-confirmed"></span>화물질안전원 — 5/7 공고 후 제출</span>
+      </div>
+    </div>
+
+    <details open="">
+      <summary>
+        <div class="summary-left">
+          <span>💰</span>
+          <span>필즈 (FIELDS) — 1억 9천 계약금 확정</span>
+          <span class="summary-badge">계약 완료 임박</span>
+        </div>
+      </summary>
+      <div class="details-body">
+        <div class="grid-2">
+          <div>
+            <p style="font-size: 0.88rem; margin-bottom: 0.8rem;">계약서 작성 완료, 도장 날인만 남은 상태. <strong style="color:var(--gold);">계약금 1억 9천만 원</strong>이 한 달 이내 입금 예정.</p>
+            <div class="progress-wrap">
+              <div class="progress-label"><span>계약 진행률</span><span>90%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-label"><span>인터뷰 완료율</span><span>70%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="info-box">
+              <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.5rem;">프로젝트 범위</div>
+              <ul class="bullet-list" style="font-size:0.82rem;">
+                <li style="">기간: ~2025년 4월 (약 1년)</li>
+                <li style="">피드(FEED) 파트 견적 점주기 자동화</li>
+                <li style="">견적 자동화 전 부서 실무자 인터뷰 진행 중</li>
+                <li style="">전 부서 7시간 논스톱 인터뷰 완료</li>
+                <li style="">추가 인터뷰: 소방·HVAC·구매 부서 (다음 주)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:0.8rem;">
+          <div class="hl-title">🔍 핵심 인사이트</div>
+          <ul class="insight-list">
+            <li style=""><span class="insight-dot"></span><span>견적 자동화가 <strong>설계 전중기 자동화의 초석(初石)</strong> 역할을 하는 것으로 확인 — 각 부서 물량 산출 프로세스가 자동화의 시작점</span></li>
+            <li style=""><span class="insight-dot"></span><span>견적 업무에는 <strong>부분적 도면 인식 + 도면 해석</strong>이 필수 — 라인 수, 장비 수, 계장 수 등 카운팅 자동화 가능성 확인</span></li>
+            <li style=""><span class="insight-dot"></span><span>이재윤: "견적은 정확도보다 스피드" — AI가 사람보다 월등히 빠른 속도를 제공한다는 점에서 충분한 가치 입증</span></li>
+            <li style=""><span class="insight-dot"></span><span>설계 상세 단계 대비 견적 단계는 <strong>정확도 부담 낮음</strong> — 초기 POC 및 레퍼런스 확보에 최적</span></li>
+            <li style=""><span class="insight-dot"></span><span>필즈 대표가 적극 추진, 연구소장이 기본 설계 전중기 자동화 강력 추진 — 내부 챔피언 2명 확보 상태</span></li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <div class="summary-left">
+          <span>🌤️</span>
+          <span>한울 (HANUL) — 지원사업 연계 + 장기 파트너십</span>
+          <span class="summary-badge">발표 완료·결과 대기</span>
+        </div>
+      </summary>
+      <div class="details-body">
+        <div class="grid-2">
+          <div>
+            <div class="info-box">
+              <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.4rem;">지원사업 발표 현황</div>
+              <ul class="bullet-list" style="font-size:0.82rem;">
+                <li style="">서류 통과 → 익일 발표 (준비 시간 부족)</li>
+                <li style="">6팀 중 2팀 선발 구조</li>
+                <li style="">한울 고문(기업측)이 발표 수행</li>
+                <li style="">발표 중단 → 질의응답(15분)에서 AI 전문가(대표)가 보완</li>
+                <li style="">경쟁팀도 준비 미흡 → <strong>당락은 약 50:50</strong></li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div class="info-box">
+              <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.4rem;">계약 방향</div>
+              <ul class="bullet-list" style="font-size:0.82rem;">
+                <li style="">지원사업 당락과 무관하게 <strong>장기 파트너십 계약서</strong> 작성·발송 예정</li>
+                <li style="">단순 용역계약이 아닌 파트너십 형태</li>
+                <li style="">한울: AI 빠른 도입 의지 강함 → 독립적 계약 가능성 높음</li>
+                <li style="">기계 설계 자동화 → 화공플랜트 전주기로 확장 관점</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-box">
+          <div class="hl-title">💡 인사이트</div>
+          <ul class="insight-list">
+            <li style=""><span class="insight-dot"></span><span>지원사업 발표는 <strong>AI 전문가 동행이 필수</strong> — 기업측 담당자만으로는 AX 계획 설명 한계 명확</span></li>
+            <li style=""><span class="insight-dot"></span><span>기계 설계가 화공플랜트와 다른 디스플린이나, 소프트웨어 빠른 자동화 시연으로 <strong>리소스 과다 투입 없이 온보딩 가능</strong> 확인</span></li>
+            <li style=""><span class="insight-dot"></span><span>지원사업 탈락 시에도 한울의 AI 도입 의지로 인해 <strong>독립 계약 전환 확률 높음</strong></span></li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <div class="summary-left">
+          <span>🚚</span>
+          <span>화물질안전원 — 5/7 공고 예정</span>
+          <span class="summary-badge">공고 대기 중</span>
+        </div>
+      </summary>
+      <div class="details-body">
+        <ul class="bullet-list" style="font-size:0.88rem;">
+          <li style=""><strong>공고일:</strong> 2025년 5월 7일</li>
+          <li style="">담당자가 필요 서류·절차 사전 안내 완료</li>
+          <li style="">사전 서류 준비 후 공고 즉시 제출 계획</li>
+          <li style="">경쟁 요인 없으면 계약 가능성 높음 (내부 평가)</li>
+          <li style="">화공플랜트 룰렛 레귤레이션 온톨로지 → 화학안전 규제 온톨로지화 확장 시너지 기대</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <!-- 필즈 프로젝트 상세 -->
+  <div class="section" id="fields">
+    <div class="section-title">
+      <span class="emoji">🏗️</span> 필즈 견적 자동화 — 기술 방법론
+      <span class="section-tag">TECHNICAL</span>
+    </div>
+    <div class="card">
+      <div style="font-size:0.88rem; color:var(--muted); margin-bottom:1rem;">견적 자동화가 설계 전중기 자동화의 초석 역할을 하는 구조 분석</div>
+      <div class="grid-2">
+        <div>
+          <div class="highlight-box">
+            <div class="hl-title">견적 자동화 업무 흐름</div>
+            <ul class="bullet-list" style="font-size:0.82rem;">
+              <li style="">견적팀: 전체 스케줄 작성 → 딜리버러블 산출</li>
+              <li style="">각 부서에 물량 산출 요청 (공정팀, 백원팀 등)</li>
+              <li style="">공정팀: P&amp;ID 장수, 리스트 수 산출</li>
+              <li style="">배관팀: 총 라인 수 산출</li>
+              <li style="">레퍼런스 기반 + 직접 카운팅 병행</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="info-box">
+            <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.4rem;">AI 자동화 적용 포인트</div>
+            <ul class="bullet-list" style="font-size:0.82rem;">
+              <li style="">도면에서 라인·장비·계장 수 자동 카운팅</li>
+              <li style=""><strong>부분적 도면 인식</strong> 기술 적용</li>
+              <li style="">부분적 도면 해석 기술 동반 필요</li>
+              <li style="">정확도보다 <strong>처리 속도</strong> 가치 극대화</li>
+              <li style="">상세 설계 대비 완화된 정확도 기준 → 초기 배포 용이</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 한울 섹션 -->
+  <div class="section" id="hanul">
+    <div class="section-title">
+      <span class="emoji">🌤️</span> 한울 파이프라인 심층 분석
+      <span class="section-tag">PIPELINE</span>
+    </div>
+    <div class="card">
+      <table class="decision-table">
+        <thead>
+          <tr>
+            <th style="">구분</th>
+            <th style="">내용</th>
+            <th style="">상태</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="">지원사업 발표</td>
+            <td style="">서류 통과 후 발표 진행 완료. 발표 중단 후 Q&amp;A에서 AI 전문가 보완.</td>
+            <td style=""><span class="tag tag-yellow">결과 대기</span></td>
+          </tr>
+          <tr>
+            <td style="">당락 확률</td>
+            <td style="">6팀 중 2팀 선발. 경쟁팀도 발표 미흡으로 전반적 수준 비슷 → 반반 예상</td>
+            <td style=""><span class="tag tag-blue">50:50</span></td>
+          </tr>
+          <tr>
+            <td style="">계약 방향</td>
+            <td style="">지원사업 무관 장기 파트너십 계약서 작성 예정. 단순 용역 → 파트너십 구조 전환</td>
+            <td style=""><span class="tag tag-green">진행 중</span></td>
+          </tr>
+          <tr>
+            <td style="">한울 의지</td>
+            <td style="">AI 빠른 도입 강한 의지 → 지원사업 탈락 시에도 독립 계약 가능성 높음</td>
+            <td style=""><span class="tag tag-green">긍정적</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 기타 파이프라인 -->
+  <div class="section" id="others">
+    <div class="section-title">
+      <span class="emoji">🔭</span> 기타 영업 파이프라인
+      <span class="section-tag">PIPELINE</span>
+    </div>
+    <div class="partner-grid">
+      <div class="partner-card">
+        <div class="partner-name"><span class="status-dot s-progress"></span>현대엔지니어링</div>
+        <div class="partner-desc">미래추진단 + IT팀(별도) 동시 컨택 중. IT팀에서 웹사이트 통해 직접 연락. AI팀·IT팀 별도 채널. 추가 업데이트 없음.</div>
+        <div style="margin-top:0.5rem;"><span class="tag tag-blue">IT팀 별도 접촉</span></div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-name"><span class="status-dot s-pending"></span>삼두</div>
+        <div class="partner-desc">지원사업 제출 상태. 이후 연락 없음. 결과 대기 중.</div>
+        <div style="margin-top:0.5rem;"><span class="tag tag-yellow">대기 중</span></div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-name"><span class="status-dot s-progress"></span>PKU</div>
+        <div class="partner-desc">협력 논의 진행 중. 필시(PHILSI) 측과 삼자 협의 필요. 필시 주도로 PKU 방향성 논의 예정.</div>
+        <div style="margin-top:0.5rem;"><span class="tag tag-purple">3자 협의 필요</span></div>
+      </div>
+      <div class="partner-card">
+        <div class="partner-name"><span class="status-dot s-risk"></span>태조(건축)</div>
+        <div class="partner-desc">화공플랜트와 방향성 상이. 추가 영업 없이 자연 소멸 예정.</div>
+        <div style="margin-top:0.5rem;"><span class="tag tag-red">사실상 드롭</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 파트너십 -->
+  <div class="section" id="partners">
+    <div class="section-title">
+      <span class="emoji">🤝</span> 신규 파트너십 계약 추진
+      <span class="section-tag">PARTNERSHIPS</span>
+    </div>
+    <div class="grid-2">
+      <details>
+        <summary>
+          <div class="summary-left">
+            <span>🎓</span>
+            <span>이을범 교수 자문 계약</span>
+            <span class="summary-badge">계약 임박</span>
+          </div>
+        </summary>
+        <div class="details-body">
+          <ul class="bullet-list" style="font-size:0.85rem;">
+            <li style="">S-checkup 논문 공동 연구·공동 제출</li>
+            <li style="">국가 과제 다수 연결 지원</li>
+            <li style="">필즈 포함 향후 계약 전반 컨설팅</li>
+            <li style="">플랜트 IT 기업 2개사 추가 연결 가능</li>
+            <li style="">기술 협력 로드맵 공동 수립 제안</li>
+          </ul>
+          <div class="highlight-box" style="margin-top:0.8rem;">
+            <div class="hl-title">평가</div>
+            <p style="font-size: 0.82rem;">IP(특허)·기술제휴·논문·영업 채널 동시 제공 — 스냅스케일 스케일업에 복합적 가치</p>
+          </div>
+        </div>
+      </details>
+      <details>
+        <summary>
+          <div class="summary-left">
+            <span>🏢</span>
+            <span>컨설팅펌 협력 계약</span>
+            <span class="summary-badge">계약 임박</span>
+          </div>
+        </summary>
+        <div class="details-body">
+          <ul class="bullet-list" style="font-size:0.85rem;">
+            <li style="">아웃바운드 세일즈 지속 수주 역할</li>
+            <li style="">정부·국가 지원사업 서류 완벽 제작 지원</li>
+            <li style="">PT 자료 제작 및 발표 코칭</li>
+            <li style="">법적 이슈 검토 및 서류 전략 컨설팅</li>
+            <li style="">필즈 연결 컨설팅펌으로 신뢰 검증 완료</li>
+          </ul>
+          <div class="highlight-box" style="margin-top:0.8rem;">
+            <div class="hl-title">평가</div>
+            <p style="font-size: 0.82rem;">한울 발표 사례처럼 지원사업 준비 역량 강화 — 향후 동일 문제 재발 방지</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- 재무·투자 -->
+  <div class="section" id="financial">
+    <div class="section-title">
+      <span class="emoji">💹</span> 재무 플랜닝 &amp; 투자 라운드
+      <span class="section-tag">FINANCE</span>
+    </div>
+
+    <details open="">
+      <summary>
+        <div class="summary-left">
+          <span>🗺️</span>
+          <span>5년 사업 로드맵 (2025–2031)</span>
+          <span class="summary-badge">플랜 확정</span>
+        </div>
+      </summary>
+      <div class="details-body">
+        <div class="grid-2">
+          <div>
+            <div class="highlight-box">
+              <div class="hl-title">핵심 전략 방향</div>
+              <ul class="bullet-list" style="font-size:0.82rem;">
+                <li style="">초기 소수 핵심 인력으로 <strong>슈퍼팀</strong> 구성</li>
+                <li style="">MS 오피스처럼 모듈화 → <strong>스위트 패키지</strong>로 판매</li>
+                <li style="">5년 후: 추가 채용 없이 구독형 판매 구조</li>
+                <li style="">목표: <strong>엔지니어링 에이전트 OS</strong> 구축</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div class="info-box">
+              <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.4rem;">3차원 확장 전략</div>
+              <ul class="bullet-list" style="font-size:0.82rem;">
+                <li style=""><strong>수직 확장:</strong> 화공플랜트 내 P&amp;C, 배관 등 세부 분야</li>
+                <li style=""><strong>수평 확장:</strong> 원자력·파워·해양 플랜트</li>
+                <li style=""><strong>지역 확장:</strong> 국내 → 글로벌 동시 공략</li>
+              </ul>
+            </div>
+            <div class="info-box" style="margin-top:0.6rem;">
+              <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.4rem;">배포 모델</div>
+              <ul class="bullet-list" style="font-size:0.82rem;">
+                <li style="">소프트웨어 다운로드 또는</li>
+                <li style="">4주 내 기업 방문 → GPU 서버 설치 → AI 기능 활성화</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <div class="summary-left">
+          <span>💰</span>
+          <span>투자 라운드 현황</span>
+          <span class="summary-badge">진행 중</span>
+        </div>
+      </summary>
+      <div class="details-body">
+        <div class="grid-2">
+          <div>
+            <div class="info-box">
+              <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.4rem;">파이프라인 구조</div>
+              <ul class="bullet-list" style="font-size:0.82rem;">
+                <li style="">총 20개사: 모두 <strong>먼저 연락 온 투자사</strong></li>
+                <li style="">트리거: 정치환경대회 수상 이후 인바운드</li>
+                <li style="">Tier 1 (5개사): 적극적 연락 → 현재 미팅 진행 중</li>
+                <li style="">Tier 2 (5개사): 1~2회 미팅 후 성과 대기 중</li>
+                <li style="">Tier 3 (10개사): 초기 접촉 후 대기 상태</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <div class="highlight-box">
+              <div class="hl-title">자금 수령 예상 일정</div>
+              <ul class="bullet-list" style="font-size:0.82rem;">
+                <li style="">필즈 계약금 1억 9천 → <strong>한 달 내 수령</strong></li>
+                <li style="">투자 납입: 5월 말 가능성 있음 (불확실)</li>
+                <li style="">최종 자금 수령: <strong>5월 말~6월 초</strong> 예상</li>
+                <li style="">자금 수령 즉시 정다소·이종석님 채용 절차 착수</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- 채용 -->
+  <div class="section" id="hiring">
+    <div class="section-title">
+      <span class="emoji">👥</span> 채용 계획
+      <span class="section-tag">HIRING</span>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">💻</div>
+          <div>
+            <div class="card-title">개발자 채용</div>
+            <div class="card-subtitle">Developer Hiring Plan</div>
+          </div>
+        </div>
+        <ul class="bullet-list" style="font-size:0.85rem;">
+          <li style=""><strong>확정:</strong> 정다소·이종석 (POSTECH 선배) — 투자금 수령 후 즉시 채용</li>
+          <li style=""><strong>추가 1인:</strong> LLM 전문가 필수 (물색 중)</li>
+          <li style=""><strong>최대 규모:</strong> 5~10년 기준 개발자 최대 10명</li>
+          <li style="">역량 있는 소수 핵심 → 슈퍼팀 우선</li>
+        </ul>
+        <div style="margin-top:0.8rem;">
+          <span class="tag tag-green">정다소·이종석: 확정</span>
+          <span class="tag tag-yellow">LLM 전문가: 물색 중</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🏗️</div>
+          <div>
+            <div class="card-title">도메인 전문가 운영</div>
+            <div class="card-subtitle">Domain Expert Strategy</div>
+          </div>
+        </div>
+        <ul class="bullet-list" style="font-size:0.85rem;">
+          <li style="">박규호 부장 주도로 전문가 자문단 구성 방향 설계</li>
+          <li style="">이재윤 지속 협력 요청</li>
+          <li style="">외부 전문가 자문단 운영 방식 고민 중</li>
+          <li style="">박규호 부장: 아스팔테크 2차 절차 후 합류 예정</li>
+        </ul>
+        <div style="margin-top:0.8rem;">
+          <span class="tag tag-blue">설계 중</span>
+          <span class="tag tag-yellow">타임라인 조율 중</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 기술 Q&A -->
+  <div class="section" id="tech">
+    <div class="section-title">
+      <span class="emoji">🔧</span> 기술 Q&amp;A — Hydraulic 계산 &amp; PSV
+      <span class="section-tag">TECHNICAL Q&amp;A</span>
+    </div>
+
+    <details>
+      <summary>
+        <div class="summary-left">
+          <span>🌊</span>
+          <span>Hydraulic 계산 — 구간 분할 및 Equivalent Length</span>
+          <span class="summary-badge">이종현 부장 답변</span>
+        </div>
+      </summary>
+      <div class="details-body">
+        <div class="grid-2">
+          <div>
+            <div class="info-box">
+              <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.5rem;">Q1: 구간 분할 기준</div>
+              <p style="font-size: 0.85rem;">고도(Elevation) 기준 가장 높은 지점에서 구간 분할. 밸브·Flowmeter는 별도 구간 처리.</p>
+              <div style="margin-top:0.5rem; font-size:0.82rem; color:var(--muted);">Control Valve·Flowmeter의 ΔP는 Equivalent Length에 미포함 → 전 구간 압력에서 직접 차감 방식 적용</div>
+            </div>
+            <div class="info-box" style="margin-top:0.6rem;">
+              <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.5rem;">Q2: 엘보우 구간 귀속</div>
+              <p style="font-size: 0.85rem;">구간 경계에 걸친 엘보우는 <strong>어느 구간에 넣어도 무관</strong>. 단, Isometric Drawing 표현 기준으로 처리하면 추후 혼동 방지.</p>
+            </div>
+          </div>
+          <div>
+            <div class="info-box">
+              <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.5rem;">Q3: Elevation 오차</div>
+              <p style="font-size: 0.85rem;">파이프 치수 합산값(1,922mm)과 고도 차이값(1,780mm) 불일치(약 140mm) → <strong>휴먼 에러</strong>. 약 14~15cm 오차로 무시 가능 수준.</p>
+            </div>
+            <div class="info-box" style="margin-top:0.6rem;">
+              <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.5rem;">Q4: Isometric 점선 의미</div>
+              <p style="font-size: 0.85rem;">점선 = 해당 페이지에서 미고려 항목 (다음 페이지에서 처리). 실선만 해당 구간 산출에 포함.</p>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-box" style="margin-top:0.8rem;">
+          <div class="hl-title">📢 미팅 플랫폼 개선 결정</div>
+          <p style="font-size: 0.85rem;">슬랙 허들의 화면 공유 딜레이 심각 → <strong>향후 기술 Q&amp;A는 Google Meet으로 전환</strong>. 이종현 부장과 1:1 세션도 동일 적용.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <div class="summary-left">
+          <span>⚡</span>
+          <span>PSV API 문서 해석 — 조동사 의무도</span>
+          <span class="summary-badge">이종현 부장 답변</span>
+        </div>
+      </summary>
+      <div class="details-body">
+        <table class="decision-table">
+          <thead>
+            <tr><th style="">용어</th><th style="">의무 수준</th><th style="">설명</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style=""><strong style="color:var(--gold);">SHALL</strong></td>
+              <td style=""><span class="tag tag-red">최고 강제</span></td>
+              <td style="">협의 여지 0%. 지구가 망해도 반드시 해야 함. MUST보다 상위.</td>
+            </tr>
+            <tr>
+              <td style=""><strong>MUST / HAVE TO</strong></td>
+              <td style=""><span class="tag tag-red">강제</span></td>
+              <td style="">반드시 해야 함. SHALL보다 약간 낮은 강제성.</td>
+            </tr>
+            <tr>
+              <td style=""><strong>SHOULD</strong></td>
+              <td style=""><span class="tag tag-yellow">권고</span></td>
+              <td style="">해야 하는 것이나 일부 예외 가능성 있음.</td>
+            </tr>
+            <tr>
+              <td style=""><strong>MIGHT</strong></td>
+              <td style=""><span class="tag tag-green">선택적</span></td>
+              <td style="">협의 가능. 하는 것이 좋으나 안 할 수도 있음.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:0.8rem; font-size:0.82rem; color:var(--muted);">
+          💡 <em>향후 PSV 관련 추가 질문은 API 문서 분량이 방대하므로, 이해 불가 개념 위주로 정리 후 별도 세션으로 질의 권장.</em>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <div class="summary-left">
+          <span>🏭</span>
+          <span>필즈 인터뷰 신규 용어 — HVAC·ELEC Load List</span>
+          <span class="summary-badge">사전 학습 정보</span>
+        </div>
+      </summary>
+      <div class="details-body">
+        <div class="grid-2">
+          <div class="info-box">
+            <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.4rem;">HVAC</div>
+            <p style="font-size: 0.85rem;"><strong>Heating, Ventilation &amp; Air Conditioning</strong>의 약자. 실내 온도·습도를 일정하게 유지하는 시스템. 반도체 공장·식품 공장 등 환경 제어 필수 시설에 적용.</p>
+          </div>
+          <div class="info-box">
+            <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.4rem;">Electrical Load List / SLD</div>
+            <p style="font-size: 0.85rem;">전기팀 산출물. <strong>전기 부하 목록(Load List)</strong> + <strong>Single Line Diagram(SLD)</strong>. 견적 시 전기 물량 산출 근거 문서.</p>
+          </div>
+          <div class="info-box">
+            <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.4rem;">LD (Liquidated Damages)</div>
+            <p style="font-size: 0.85rem;">계약 지체 시 부과되는 <strong>위약금</strong>. 구매 계약 시 핵심 조건. 지체 일수 × 일정 금액으로 산정.</p>
+          </div>
+          <div class="info-box">
+            <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.4rem;">다음 주 인터뷰 예정 부서</div>
+            <ul class="bullet-list" style="font-size:0.82rem;">
+              <li style="">소방(Fire Protection)</li>
+              <li style="">HVAC</li>
+              <li style="">공사(Construction)</li>
+              <li style="">구매(Procurement)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- 전략적 토론 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="emoji">💬</span> 전략 토론 — 선택과 집중 vs. 다각화
+    </div>
+    <div class="card">
+      <div class="grid-2">
+        <div>
+          <div class="highlight-box">
+            <div class="hl-title">제기된 우려</div>
+            <p style="font-size: 0.85rem;">한울(기계설계)·필즈(해양플랜트 견적)·화학안전원·PKU 등 업종이 상이. 선택과 집중이 필요한 것 아닌가?</p>
+          </div>
+        </div>
+        <div>
+          <div class="highlight-box">
+            <div class="hl-title">대표 답변 (상윤)</div>
+            <p style="font-size: 0.85rem;">"공정 설계만으로는 지속가능 사업 불가. 전주기 타겟팅 필수. 들어온 건이 모두 적극적·협력적 파트너 → 인력 추가로 흡수하며 확장이 최선. '먹을 거 미리 메맞자' 전략."</p>
+          </div>
+        </div>
+      </div>
+      <div class="info-box" style="margin-top:0.8rem;">
+        <div style="font-size:0.78rem; color:var(--gold); font-weight:700; margin-bottom:0.5rem;">이종현 부장 관점 정리</div>
+        <ul class="bullet-list" style="font-size:0.85rem;">
+          <li style="">한울: 리소스 최소 → 온보딩 후 화공플랜트 공정 설계로 연계</li>
+          <li style="">화학안전원: 화공플랜트 레귤레이션 온톨로지 → 화학안전 온톨로지 확장 (기술적 연속성)</li>
+          <li style="">필즈: 견적 시작 → 해양플랜트 전체로 확장 + 투자 전 매출 레퍼런스 확보</li>
+          <li style="">제품화·사업화: 투자 후 개발자 채용 + 이을범 교수 IP 제휴로 가속화 필요</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 핵심 결정사항 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="emoji">✅</span> 핵심 결정사항
+    </div>
+    <div class="card">
+      <table class="decision-table">
+        <thead>
+          <tr>
+            <th style="">#</th>
+            <th style="">결정 내용</th>
+            <th style="">근거</th>
+            <th style="">책임자</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color: var(--gold); font-weight: 700;">D1</td>
+            <td style="">필즈 계약 확정 — 도장 날인 진행</td>
+            <td style="">계약서 작성 완료, 1억 9천 계약금 명시</td>
+            <td style="">대표</td>
+          </tr>
+          <tr>
+            <td style="color: var(--gold); font-weight: 700;">D2</td>
+            <td style="">한울 파트너십 계약서 작성·발송</td>
+            <td style="">지원사업 무관 장기 관계 설정</td>
+            <td style="">대표</td>
+          </tr>
+          <tr>
+            <td style="color: var(--gold); font-weight: 700;">D3</td>
+            <td style="">화물질안전원 5/7 공고 즉시 서류 제출</td>
+            <td style="">사전 안내 완료, 계약 가능성 높음</td>
+            <td style="">대표·담당</td>
+          </tr>
+          <tr>
+            <td style="color: var(--gold); font-weight: 700;">D4</td>
+            <td style="">이을범 교수 자문 계약 체결</td>
+            <td style="">논문·과제·기술제휴 복합 가치</td>
+            <td style="">대표</td>
+          </tr>
+          <tr>
+            <td style="color: var(--gold); font-weight: 700;">D5</td>
+            <td style="">컨설팅펌 협력 계약 체결</td>
+            <td style="">영업·지원사업 역량 강화</td>
+            <td style="">대표</td>
+          </tr>
+          <tr>
+            <td style="color: var(--gold); font-weight: 700;">D6</td>
+            <td style="">투자금 수령 즉시 정다소·이종석 채용 착수</td>
+            <td style="">5~6월 자금 수령 예상</td>
+            <td style="">대표</td>
+          </tr>
+          <tr>
+            <td style="color: var(--gold); font-weight: 700;">D7</td>
+            <td style="">기술 Q&amp;A 세션을 Google Meet으로 전환</td>
+            <td style="">슬랙 허들 화면 공유 딜레이 이슈</td>
+            <td style="">정다소·이종현</td>
+          </tr>
+          <tr>
+            <td style="color: var(--gold); font-weight: 700;">D8</td>
+            <td style="">태조(건축) 파이프라인 드롭 (추가 영업 없음)</td>
+            <td style="">화공플랜트 방향성과 불일치</td>
+            <td style="">대표</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 액션아이템 -->
+  <div class="section" id="actions">
+    <div class="section-title">
+      <span class="emoji">🎯</span> 액션아이템
+      <span class="section-tag">ACTION ITEMS</span>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">1</div>
+      <div class="action-text">
+        <strong>필즈 계약서 도장 날인 완료</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">계약서 최종 확인 후 즉시 날인 진행</div>
+      </div>
+      <div class="action-assignee">👤 대표</div>
+      <div class="action-due"><span class="priority p-high">HIGH</span><br>즉시</div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">2</div>
+      <div class="action-text">
+        <strong>한울 장기 파트너십 계약서 작성 및 발송</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">단순 용역이 아닌 파트너십 구조. 지원사업 당락 무관.</div>
+      </div>
+      <div class="action-assignee">👤 대표</div>
+      <div class="action-due"><span class="priority p-high">HIGH</span><br>이번 주 내</div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">3</div>
+      <div class="action-text">
+        <strong>화물질안전원 공고(5/7) 대비 서류 사전 준비</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">공고 당일 즉시 제출 가능하도록 모든 서류 완성</div>
+      </div>
+      <div class="action-assignee">👤 대표·담당</div>
+      <div class="action-due"><span class="priority p-high">HIGH</span><br>5월 7일 전</div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">4</div>
+      <div class="action-text">
+        <strong>이을범 교수 자문 계약 체결</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">논문 공동 연구, 국가 과제 연결, 기업 연결 등 복합 자문 계약</div>
+      </div>
+      <div class="action-assignee">👤 대표</div>
+      <div class="action-due"><span class="priority p-high">HIGH</span><br>조속히</div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">5</div>
+      <div class="action-text">
+        <strong>컨설팅펌 협력 계약 체결</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">아웃바운드 영업 + 지원사업 서류·PT·법적 검토 역할</div>
+      </div>
+      <div class="action-assignee">👤 대표</div>
+      <div class="action-due"><span class="priority p-med">MED</span><br>조만간</div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">6</div>
+      <div class="action-text">
+        <strong>필즈 소방·HVAC·공사·구매 부서 인터뷰 진행</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">사전 용어 숙지(HVAC, ELL, LD) 후 다음 주 방문</div>
+      </div>
+      <div class="action-assignee">👤 대표(정다소 동행)</div>
+      <div class="action-due"><span class="priority p-high">HIGH</span><br>다음 주</div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">7</div>
+      <div class="action-text">
+        <strong>LLM 전문가 개발자 채용 채널 발굴</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">LLM 전문 경험자 필수. 채용 경로 구체화 필요.</div>
+      </div>
+      <div class="action-assignee">👤 대표</div>
+      <div class="action-due"><span class="priority p-med">MED</span><br>투자 전 준비</div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">8</div>
+      <div class="action-text">
+        <strong>투자 Tier 1 (5개사) 미팅 완료 및 후속 진행</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">적극적 인바운드 5개사 우선 미팅. 납입 가능성 파악.</div>
+      </div>
+      <div class="action-assignee">👤 대표</div>
+      <div class="action-due"><span class="priority p-high">HIGH</span><br>5월 말 목표</div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">9</div>
+      <div class="action-text">
+        <strong>PKU + 필시 삼자 협의 일정 조율</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">필시가 PKU 방향성 논의 주도 → 일정 확인 후 참여</div>
+      </div>
+      <div class="action-assignee">👤 대표·필시</div>
+      <div class="action-due"><span class="priority p-med">MED</span><br>추후</div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">10</div>
+      <div class="action-text">
+        <strong>박규호 부장 — 도메인 전문가 자문단 운영 방안 설계</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">전문가 자문단 구성, 운영 효율화 방안 중심 고민</div>
+      </div>
+      <div class="action-assignee">👤 박규호 부장</div>
+      <div class="action-due"><span class="priority p-med">MED</span><br>합류 후</div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">11</div>
+      <div class="action-text">
+        <strong>정다소 — Hydraulic 계산서 수정 (ΔP 반영·엘보우 귀속 정리)</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">FE/FV ΔP 차감 반영, 구간 경계 엘보우 귀속 확정</div>
+      </div>
+      <div class="action-assignee">👤 정다소</div>
+      <div class="action-due"><span class="priority p-med">MED</span><br>이번 주</div>
+    </div>
+
+    <div class="action-item">
+      <div class="action-num">12</div>
+      <div class="action-text">
+        <strong>이후 기술 Q&amp;A 세션 Google Meet으로 전환</strong>
+        <div style="color:var(--muted);font-size:0.78rem;margin-top:0.2rem;">슬랙 허들 딜레이 이슈 → Google Meet 링크 공유 (정다소→이종석 등 발송)</div>
+      </div>
+      <div class="action-assignee">👤 정다소</div>
+      <div class="action-due"><span class="priority p-low">LOW</span><br>다음 세션부터</div>
+    </div>
+  </div>
+
+  <!-- 다이어그램 -->
+  <div class="section" id="diagrams">
+    <div class="section-title">
+      <span class="emoji">📊</span> 시각화 다이어그램
+      <span class="section-tag">DIAGRAMS</span>
+    </div>
+
+    <!-- 다이어그램 1 -->
+    <div class="mermaid-wrap">
+      <div class="mermaid-title">📌 다이어그램 1: 견적 자동화 → 설계 자동화 확장 워크플로우</div>
+      <div class="mermaid" data-processed="true"><svg id="mermaid-1777703293934" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 778.6640625px;" viewBox="0 0 778.6640625 966" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mermaid-1777703293934{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-1777703293934 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-1777703293934 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-1777703293934 .error-icon{fill:#a44141;}#mermaid-1777703293934 .error-text{fill:#ddd;stroke:#ddd;}#mermaid-1777703293934 .edge-thickness-normal{stroke-width:1px;}#mermaid-1777703293934 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1777703293934 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1777703293934 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1777703293934 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1777703293934 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1777703293934 .marker{fill:#c9a84c;stroke:#c9a84c;}#mermaid-1777703293934 .marker.cross{stroke:#c9a84c;}#mermaid-1777703293934 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1777703293934 p{margin:0;}#mermaid-1777703293934 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#ccc;}#mermaid-1777703293934 .cluster-label text{fill:#c9a84c;}#mermaid-1777703293934 .cluster-label span{color:#c9a84c;}#mermaid-1777703293934 .cluster-label span p{background-color:transparent;}#mermaid-1777703293934 .label text,#mermaid-1777703293934 span{fill:#ccc;color:#ccc;}#mermaid-1777703293934 .node rect,#mermaid-1777703293934 .node circle,#mermaid-1777703293934 .node ellipse,#mermaid-1777703293934 .node polygon,#mermaid-1777703293934 .node path{fill:#162030;stroke:#243450;stroke-width:1px;}#mermaid-1777703293934 .rough-node .label text,#mermaid-1777703293934 .node .label text,#mermaid-1777703293934 .image-shape .label,#mermaid-1777703293934 .icon-shape .label{text-anchor:middle;}#mermaid-1777703293934 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-1777703293934 .rough-node .label,#mermaid-1777703293934 .node .label,#mermaid-1777703293934 .image-shape .label,#mermaid-1777703293934 .icon-shape .label{text-align:center;}#mermaid-1777703293934 .node.clickable{cursor:pointer;}#mermaid-1777703293934 .root .anchor path{fill:#c9a84c!important;stroke-width:0;stroke:#c9a84c;}#mermaid-1777703293934 .arrowheadPath{fill:lightgrey;}#mermaid-1777703293934 .edgePath .path{stroke:#c9a84c;stroke-width:1px;}#mermaid-1777703293934 .flowchart-link{stroke:#c9a84c;fill:none;}#mermaid-1777703293934 .edgeLabel{background-color:#162030;text-align:center;}#mermaid-1777703293934 .edgeLabel p{background-color:#162030;}#mermaid-1777703293934 .edgeLabel rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1777703293934 .labelBkg{background-color:rgba(22, 32, 48, 0.5);}#mermaid-1777703293934 .cluster rect{fill:#1a2d45;stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#mermaid-1777703293934 .cluster text{fill:#c9a84c;}#mermaid-1777703293934 .cluster span{color:#c9a84c;}#mermaid-1777703293934 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:#0d1b2a;border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1777703293934 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#mermaid-1777703293934 rect.text{fill:none;stroke-width:0;}#mermaid-1777703293934 .icon-shape,#mermaid-1777703293934 .image-shape{background-color:#162030;text-align:center;}#mermaid-1777703293934 .icon-shape p,#mermaid-1777703293934 .image-shape p{background-color:#162030;padding:2px;}#mermaid-1777703293934 .icon-shape .label rect,#mermaid-1777703293934 .image-shape .label rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1777703293934 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-1777703293934 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-1777703293934 .node .neo-node{stroke:#243450;}#mermaid-1777703293934 [data-look="neo"].node rect,#mermaid-1777703293934 [data-look="neo"].cluster rect,#mermaid-1777703293934 [data-look="neo"].node polygon{stroke:url(#mermaid-1777703293934-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293934 [data-look="neo"].node path{stroke:url(#mermaid-1777703293934-gradient);stroke-width:1px;}#mermaid-1777703293934 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293934 [data-look="neo"].node .neo-line path{stroke:#243450;filter:none;}#mermaid-1777703293934 [data-look="neo"].node circle{stroke:url(#mermaid-1777703293934-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293934 [data-look="neo"].node circle .state-start{fill:#000000;}#mermaid-1777703293934 [data-look="neo"].icon-shape .icon{fill:url(#mermaid-1777703293934-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293934 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mermaid-1777703293934-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293934 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="mermaid-1777703293934_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777703293934_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777703293934_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777703293934_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mermaid-1777703293934_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777703293934_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777703293934_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777703293934_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777703293934_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777703293934_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777703293934_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mermaid-1777703293934_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M399.828,86L399.828,90.167C399.828,94.333,399.828,102.667,399.828,110.333C399.828,118,399.828,125,399.828,128.5L399.828,132" id="mermaid-1777703293934-L_A_B_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6Mzk5LjgyODEyNSwieSI6ODZ9LHsieCI6Mzk5LjgyODEyNSwieSI6MTExfSx7IngiOjM5OS44MjgxMjUsInkiOjEzNn1d" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M399.828,214L399.828,218.167C399.828,222.333,399.828,230.667,399.828,238.333C399.828,246,399.828,253,399.828,256.5L399.828,260" id="mermaid-1777703293934-L_B_C_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6Mzk5LjgyODEyNSwieSI6MjE0fSx7IngiOjM5OS44MjgxMjUsInkiOjIzOX0seyJ4IjozOTkuODI4MTI1LCJ5IjoyNjR9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M297.906,307.983L262.88,313.819C227.853,319.655,157.799,331.328,122.773,340.664C87.746,350,87.746,357,87.746,360.5L87.746,364" id="mermaid-1777703293934-L_C_D_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6Mjk3LjkwNjI1LCJ5IjozMDcuOTgyNTE0MTEyNjI1Nn0seyJ4Ijo4Ny43NDYwOTM3NSwieSI6MzQzfSx7IngiOjg3Ljc0NjA5Mzc1LCJ5IjozNjh9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M346.045,318L337.745,322.167C329.445,326.333,312.846,334.667,304.546,342.333C296.246,350,296.246,357,296.246,360.5L296.246,364" id="mermaid-1777703293934-L_C_E_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_E_0" data-points="W3sieCI6MzQ2LjA0NTE0NzIzNTU3NjksInkiOjMxOH0seyJ4IjoyOTYuMjQ2MDkzNzUsInkiOjM0M30seyJ4IjoyOTYuMjQ2MDkzNzUsInkiOjM2OH1d" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M453.611,318L461.911,322.167C470.211,326.333,486.81,334.667,495.11,342.333C503.41,350,503.41,357,503.41,360.5L503.41,364" id="mermaid-1777703293934-L_C_F_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_F_0" data-points="W3sieCI6NDUzLjYxMTEwMjc2NDQyMzEsInkiOjMxOH0seyJ4Ijo1MDMuNDEwMTU2MjUsInkiOjM0M30seyJ4Ijo1MDMuNDEwMTU2MjUsInkiOjM2OH1d" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M501.75,308.584L534.999,314.32C568.247,320.056,634.745,331.528,667.993,340.764C701.242,350,701.242,357,701.242,360.5L701.242,364" id="mermaid-1777703293934-L_C_G_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_G_0" data-points="W3sieCI6NTAxLjc1LCJ5IjozMDguNTgzNTc3NDA4NTY5fSx7IngiOjcwMS4yNDIxODc1LCJ5IjozNDN9LHsieCI6NzAxLjI0MjE4NzUsInkiOjM2OH1d" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M87.746,446L87.746,450.167C87.746,454.333,87.746,462.667,122.346,473.929C156.945,485.191,226.144,499.382,260.744,506.477L295.343,513.573" id="mermaid-1777703293934-L_D_H_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_H_0" data-points="W3sieCI6ODcuNzQ2MDkzNzUsInkiOjQ0Nn0seyJ4Ijo4Ny43NDYwOTM3NSwieSI6NDcxfSx7IngiOjI5OS4yNjE3MTg3NSwieSI6NTE0LjM3NjQxNTk1NjM0MTZ9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M296.246,446L296.246,450.167C296.246,454.333,296.246,462.667,302.423,470.65C308.599,478.632,320.952,486.265,327.128,490.081L333.305,493.897" id="mermaid-1777703293934-L_E_H_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_H_0" data-points="W3sieCI6Mjk2LjI0NjA5Mzc1LCJ5Ijo0NDZ9LHsieCI6Mjk2LjI0NjA5Mzc1LCJ5Ijo0NzF9LHsieCI6MzM2LjcwNzgyNDcwNzAzMTI1LCJ5Ijo0OTZ9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M503.41,446L503.41,450.167C503.41,454.333,503.41,462.667,497.234,470.65C491.057,478.632,478.704,486.265,472.528,490.081L466.351,493.897" id="mermaid-1777703293934-L_F_H_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_H_0" data-points="W3sieCI6NTAzLjQxMDE1NjI1LCJ5Ijo0NDZ9LHsieCI6NTAzLjQxMDE1NjI1LCJ5Ijo0NzF9LHsieCI6NDYyLjk0ODQyNTI5Mjk2ODc1LCJ5Ijo0OTZ9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M701.242,446L701.242,450.167C701.242,454.333,701.242,462.667,668.42,473.803C635.597,484.939,569.952,498.877,537.13,505.846L504.307,512.816" id="mermaid-1777703293934-L_G_H_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_G_H_0" data-points="W3sieCI6NzAxLjI0MjE4NzUsInkiOjQ0Nn0seyJ4Ijo3MDEuMjQyMTg3NSwieSI6NDcxfSx7IngiOjUwMC4zOTQ1MzEyNSwieSI6NTEzLjY0NjQ4NDAyMDYzMTl9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M399.828,574L399.828,578.167C399.828,582.333,399.828,590.667,399.828,598.333C399.828,606,399.828,613,399.828,616.5L399.828,620" id="mermaid-1777703293934-L_H_I_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_H_I_0" data-points="W3sieCI6Mzk5LjgyODEyNSwieSI6NTc0fSx7IngiOjM5OS44MjgxMjUsInkiOjU5OX0seyJ4IjozOTkuODI4MTI1LCJ5Ijo2MjR9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M399.828,702L399.828,706.167C399.828,710.333,399.828,718.667,399.828,726.333C399.828,734,399.828,741,399.828,744.5L399.828,748" id="mermaid-1777703293934-L_I_J_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_I_J_0" data-points="W3sieCI6Mzk5LjgyODEyNSwieSI6NzAyfSx7IngiOjM5OS44MjgxMjUsInkiOjcyN30seyJ4IjozOTkuODI4MTI1LCJ5Ijo3NTJ9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M333.856,830L326.808,834.167C319.76,838.333,305.663,846.667,298.615,854.333C291.566,862,291.566,869,291.566,872.5L291.566,876" id="mermaid-1777703293934-L_J_K_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_J_K_0" data-points="W3sieCI6MzMzLjg1NjE0MDEzNjcxODc1LCJ5Ijo4MzB9LHsieCI6MjkxLjU2NjQwNjI1LCJ5Ijo4NTV9LHsieCI6MjkxLjU2NjQwNjI1LCJ5Ijo4ODB9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path><path d="M465.8,830L472.848,834.167C479.897,838.333,493.993,846.667,501.042,854.333C508.09,862,508.09,869,508.09,872.5L508.09,876" id="mermaid-1777703293934-L_J_L_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_J_L_0" data-points="W3sieCI6NDY1LjgwMDEwOTg2MzI4MTI1LCJ5Ijo4MzB9LHsieCI6NTA4LjA4OTg0Mzc1LCJ5Ijo4NTV9LHsieCI6NTA4LjA4OTg0Mzc1LCJ5Ijo4ODB9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293934_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_C_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_D_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_E_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_F_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_G_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_H_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_E_H_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_H_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_G_H_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_H_I_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_I_J_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_J_K_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_J_L_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default  " id="mermaid-1777703293934-flowchart-A-0" data-look="classic" transform="translate(399.828125, 47)"><rect class="basic label-container" style="fill:#1a2d45 !important;stroke:#c9a84c !important" x="-83.26171875" y="-39" width="166.5234375" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-53.26171875, -24)"><rect></rect><foreignObject width="106.5234375" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel "><p style="">🏢 필즈 견적팀<br>전체 스케줄 작성</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293934-flowchart-B-1" data-look="classic" transform="translate(399.828125, 175)"><rect class="basic label-container" style="" x="-80.8515625" y="-39" width="161.703125" height="78"></rect><g class="label" style="" transform="translate(-50.8515625, -24)"><rect></rect><foreignObject width="101.703125" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p style="">딜리버러블 목록<br>도출</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293934-flowchart-C-3" data-look="classic" transform="translate(399.828125, 291)"><rect class="basic label-container" style="" x="-101.921875" y="-27" width="203.84375" height="54"></rect><g class="label" style="" transform="translate(-71.921875, -12)"><rect></rect><foreignObject width="143.84375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p style="">각 부서 물량 산출 요청</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293934-flowchart-D-5" data-look="classic" transform="translate(87.74609375, 407)"><rect class="basic label-container" style="" x="-79.74609375" y="-39" width="159.4921875" height="78"></rect><g class="label" style="" transform="translate(-49.74609375, -24)"><rect></rect><foreignObject width="99.4921875" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p style="">공정팀<br>P&amp;ID 장수 산출</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293934-flowchart-E-7" data-look="classic" transform="translate(296.24609375, 407)"><rect class="basic label-container" style="" x="-78.75390625" y="-39" width="157.5078125" height="78"></rect><g class="label" style="" transform="translate(-48.75390625, -24)"><rect></rect><foreignObject width="97.5078125" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p style="">배관팀<br>총 라인 수 산출</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293934-flowchart-F-9" data-look="classic" transform="translate(503.41015625, 407)"><rect class="basic label-container" style="" x="-78.41015625" y="-39" width="156.8203125" height="78"></rect><g class="label" style="" transform="translate(-48.41015625, -24)"><rect></rect><foreignObject width="96.8203125" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p style="">전기팀<br>Load List 산출</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293934-flowchart-G-11" data-look="classic" transform="translate(701.2421875, 407)"><rect class="basic label-container" style="" x="-69.421875" y="-39" width="138.84375" height="78"></rect><g class="label" style="" transform="translate(-39.421875, -24)"><rect></rect><foreignObject width="78.84375" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p style="">계장팀<br>계장 수 산출</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293934-flowchart-H-13" data-look="classic" transform="translate(399.828125, 535)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#60a5fa !important" x="-100.56640625" y="-39" width="201.1328125" height="78"></rect><g class="label" style="color:#60a5fa !important" transform="translate(-70.56640625, -24)"><rect></rect><foreignObject width="141.1328125" height="48"><div style="color: rgb(96, 165, 250) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#60a5fa !important" class="nodeLabel "><p style="">도면 인식 AI<br>라인·장비·계장 카운팅</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293934-flowchart-I-21" data-look="classic" transform="translate(399.828125, 663)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#c9a84c !important" x="-67.01171875" y="-39" width="134.0234375" height="78"></rect><g class="label" style="color:#c9a84c !important;font-weight:bold !important" transform="translate(-37.01171875, -24)"><rect></rect><foreignObject width="74.0234375" height="48"><div style="color: rgb(201, 168, 76) !important; font-weight: bold !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#c9a84c !important;font-weight:bold !important" class="nodeLabel "><p style="">견적 자동화<br>완성</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293934-flowchart-J-23" data-look="classic" transform="translate(399.828125, 791)"><rect class="basic label-container" style="fill:#243450 !important;stroke:#e8c96a !important" x="-83.26171875" y="-39" width="166.5234375" height="78"></rect><g class="label" style="color:#e8c96a !important;font-weight:bold !important" transform="translate(-53.26171875, -24)"><rect></rect><foreignObject width="106.5234375" height="48"><div style="color: rgb(232, 201, 106) !important; font-weight: bold !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8c96a !important;font-weight:bold !important" class="nodeLabel "><p style="">설계 전중기<br>자동화 초석 역할</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293934-flowchart-K-25" data-look="classic" transform="translate(291.56640625, 919)"><rect class="basic label-container" style="" x="-83.26171875" y="-39" width="166.5234375" height="78"></rect><g class="label" style="" transform="translate(-53.26171875, -24)"><rect></rect><foreignObject width="106.5234375" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p style="">기본 설계 자동화<br>(연구소장 추진)</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293934-flowchart-L-27" data-look="classic" transform="translate(508.08984375, 919)"><rect class="basic label-container" style="" x="-83.26171875" y="-39" width="166.5234375" height="78"></rect><g class="label" style="" transform="translate(-53.26171875, -24)"><rect></rect><foreignObject width="106.5234375" height="48"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="nodeLabel "><p style="">상세 설계 자동화<br>(장기 목표)</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mermaid-1777703293934-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><defs><filter id="mermaid-1777703293934-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><linearGradient id="mermaid-1777703293934-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"></stop></linearGradient></svg></div>
+    </div>
+
+    <!-- 다이어그램 2 -->
+    <div class="mermaid-wrap">
+      <div class="mermaid-title">🕸️ 다이어그램 2: 파이프라인·파트너십 관계도</div>
+      <div class="mermaid" data-processed="true"><svg id="mermaid-1777703293973" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 1117.3046875px;" viewBox="0 0 1117.3046875 880" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mermaid-1777703293973{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-1777703293973 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-1777703293973 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-1777703293973 .error-icon{fill:#a44141;}#mermaid-1777703293973 .error-text{fill:#ddd;stroke:#ddd;}#mermaid-1777703293973 .edge-thickness-normal{stroke-width:1px;}#mermaid-1777703293973 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1777703293973 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1777703293973 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1777703293973 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1777703293973 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1777703293973 .marker{fill:#c9a84c;stroke:#c9a84c;}#mermaid-1777703293973 .marker.cross{stroke:#c9a84c;}#mermaid-1777703293973 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1777703293973 p{margin:0;}#mermaid-1777703293973 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#ccc;}#mermaid-1777703293973 .cluster-label text{fill:#c9a84c;}#mermaid-1777703293973 .cluster-label span{color:#c9a84c;}#mermaid-1777703293973 .cluster-label span p{background-color:transparent;}#mermaid-1777703293973 .label text,#mermaid-1777703293973 span{fill:#ccc;color:#ccc;}#mermaid-1777703293973 .node rect,#mermaid-1777703293973 .node circle,#mermaid-1777703293973 .node ellipse,#mermaid-1777703293973 .node polygon,#mermaid-1777703293973 .node path{fill:#162030;stroke:#243450;stroke-width:1px;}#mermaid-1777703293973 .rough-node .label text,#mermaid-1777703293973 .node .label text,#mermaid-1777703293973 .image-shape .label,#mermaid-1777703293973 .icon-shape .label{text-anchor:middle;}#mermaid-1777703293973 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-1777703293973 .rough-node .label,#mermaid-1777703293973 .node .label,#mermaid-1777703293973 .image-shape .label,#mermaid-1777703293973 .icon-shape .label{text-align:center;}#mermaid-1777703293973 .node.clickable{cursor:pointer;}#mermaid-1777703293973 .root .anchor path{fill:#c9a84c!important;stroke-width:0;stroke:#c9a84c;}#mermaid-1777703293973 .arrowheadPath{fill:lightgrey;}#mermaid-1777703293973 .edgePath .path{stroke:#c9a84c;stroke-width:1px;}#mermaid-1777703293973 .flowchart-link{stroke:#c9a84c;fill:none;}#mermaid-1777703293973 .edgeLabel{background-color:#162030;text-align:center;}#mermaid-1777703293973 .edgeLabel p{background-color:#162030;}#mermaid-1777703293973 .edgeLabel rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1777703293973 .labelBkg{background-color:rgba(22, 32, 48, 0.5);}#mermaid-1777703293973 .cluster rect{fill:#1a2d45;stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#mermaid-1777703293973 .cluster text{fill:#c9a84c;}#mermaid-1777703293973 .cluster span{color:#c9a84c;}#mermaid-1777703293973 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:#0d1b2a;border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1777703293973 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#mermaid-1777703293973 rect.text{fill:none;stroke-width:0;}#mermaid-1777703293973 .icon-shape,#mermaid-1777703293973 .image-shape{background-color:#162030;text-align:center;}#mermaid-1777703293973 .icon-shape p,#mermaid-1777703293973 .image-shape p{background-color:#162030;padding:2px;}#mermaid-1777703293973 .icon-shape .label rect,#mermaid-1777703293973 .image-shape .label rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1777703293973 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-1777703293973 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-1777703293973 .node .neo-node{stroke:#243450;}#mermaid-1777703293973 [data-look="neo"].node rect,#mermaid-1777703293973 [data-look="neo"].cluster rect,#mermaid-1777703293973 [data-look="neo"].node polygon{stroke:url(#mermaid-1777703293973-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293973 [data-look="neo"].node path{stroke:url(#mermaid-1777703293973-gradient);stroke-width:1px;}#mermaid-1777703293973 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293973 [data-look="neo"].node .neo-line path{stroke:#243450;filter:none;}#mermaid-1777703293973 [data-look="neo"].node circle{stroke:url(#mermaid-1777703293973-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293973 [data-look="neo"].node circle .state-start{fill:#000000;}#mermaid-1777703293973 [data-look="neo"].icon-shape .icon{fill:url(#mermaid-1777703293973-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293973 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mermaid-1777703293973-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293973 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="mermaid-1777703293973_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777703293973_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777703293973_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777703293973_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mermaid-1777703293973_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777703293973_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777703293973_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777703293973_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1777703293973_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777703293973_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1777703293973_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mermaid-1777703293973_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"><g class="cluster " id="mermaid-1777703293973-PARTNERS" data-look="classic"><rect style="" x="208.0234375" y="374" width="232.4765625" height="404"></rect><g class="cluster-label " transform="translate(286.16796875, 374)"><foreignObject width="76.1875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5;"><span class="nodeLabel "><p style="">🤝 파트너십</p></span></div></foreignObject></g></g><g class="cluster " id="mermaid-1777703293973-PIPELINE" data-look="classic"><rect style="" x="902.421875" y="8" width="206.8828125" height="770"></rect><g class="cluster-label " transform="translate(972.28125, 8)"><foreignObject width="67.1640625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5;"><span class="nodeLabel "><p style="">🔭 추진 중</p></span></div></foreignObject></g></g><g class="cluster " id="mermaid-1777703293973-CONTRACTS" data-look="classic"><rect style="" x="550.6875" y="85" width="197.8671875" height="407"></rect><g class="cluster-label " transform="translate(609.1171875, 85)"><foreignObject width="81.0078125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5;"><span class="nodeLabel "><p style="">✅ 계약 확정</p></span></div></foreignObject></g></g></g><g class="edgePaths"><path d="M93.478,390L108.402,351.5C123.327,313,153.175,236,172.266,197.5C191.357,159,199.69,159,223.23,159C246.77,159,285.516,159,324.262,159C363.008,159,401.754,159,430.309,159C458.865,159,477.229,159,495.594,159C513.958,159,532.323,159,546.28,159C560.237,159,569.786,159,574.561,159L579.336,159" id="mermaid-1777703293973-L_SHIN_FIELDS_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_SHIN_FIELDS_0" data-points="W3sieCI6OTMuNDc4MDYxNDA5ODgzNzIsInkiOjM5MH0seyJ4IjoxODMuMDIzNDM3NSwieSI6MTU5fSx7IngiOjIwOC4wMjM0Mzc1LCJ5IjoxNTl9LHsieCI6MzI0LjI2MTcxODc1LCJ5IjoxNTl9LHsieCI6NDQwLjUsInkiOjE1OX0seyJ4Ijo0OTUuNTkzNzUsInkiOjE1OX0seyJ4Ijo1NTAuNjg3NSwieSI6MTU5fSx7IngiOjU4My4zMzU5Mzc1LCJ5IjoxNTl9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293973_flowchart-v2-pointEnd)"></path><path d="M97.687,390L111.91,363.833C126.133,337.667,154.578,285.333,172.967,259.167C191.357,233,199.69,233,223.23,233C246.77,233,285.516,233,324.262,233C363.008,233,401.754,233,430.309,233C458.865,233,477.229,233,495.594,233C513.958,233,532.323,233,546.135,235.667C559.946,238.334,569.205,243.669,573.834,246.336L578.464,249.003" id="mermaid-1777703293973-L_SHIN_HANUL_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_SHIN_HANUL_0" data-points="W3sieCI6OTcuNjg3MzUxMzkyNjYzMDUsInkiOjM5MH0seyJ4IjoxODMuMDIzNDM3NSwieSI6MjMzfSx7IngiOjIwOC4wMjM0Mzc1LCJ5IjoyMzN9LHsieCI6MzI0LjI2MTcxODc1LCJ5IjoyMzN9LHsieCI6NDQwLjUsInkiOjIzM30seyJ4Ijo0OTUuNTkzNzUsInkiOjIzM30seyJ4Ijo1NTAuNjg3NSwieSI6MjMzfSx7IngiOjU4MS45Mjk2ODc1LCJ5IjoyNTF9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293973_flowchart-v2-pointEnd)"></path><path d="M125.874,390L135.399,384C144.924,378,163.974,366,177.665,360C191.357,354,199.69,354,223.23,354C246.77,354,285.516,354,324.262,354C363.008,354,401.754,354,430.309,364.667C458.865,375.333,477.229,396.667,495.594,407.333C513.958,418,532.323,418,545.407,418C558.491,418,566.294,418,570.196,418L574.098,418" id="mermaid-1777703293973-L_SHIN_CARGO_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_SHIN_CARGO_0" data-points="W3sieCI6MTI1Ljg3Mzg4MzkyODU3MTQzLCJ5IjozOTB9LHsieCI6MTgzLjAyMzQzNzUsInkiOjM1NH0seyJ4IjoyMDguMDIzNDM3NSwieSI6MzU0fSx7IngiOjMyNC4yNjE3MTg3NSwieSI6MzU0fSx7IngiOjQ0MC41LCJ5IjozNTR9LHsieCI6NDk1LjU5Mzc1LCJ5Ijo0MTh9LHsieCI6NTUwLjY4NzUsInkiOjQxOH0seyJ4Ijo1NzguMDk3NjU2MjUsInkiOjQxOH1d" data-look="classic" marker-end="url(#mermaid-1777703293973_flowchart-v2-pointEnd)"></path><path d="M90.683,390L106.073,335.833C121.463,281.667,152.243,173.333,171.8,119.167C191.357,65,199.69,65,223.23,65C246.77,65,285.516,65,324.262,65C363.008,65,401.754,65,430.309,65C458.865,65,477.229,65,495.594,65C513.958,65,532.323,65,557.994,65C583.665,65,616.643,65,649.621,65C682.599,65,715.577,65,744.888,65C774.199,65,799.844,65,825.488,65C851.133,65,876.777,65,893.144,66.371C909.512,67.742,916.601,70.483,920.146,71.854L923.691,73.225" id="mermaid-1777703293973-L_SHIN_HYUNDAI_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_SHIN_HYUNDAI_0" data-points="W3sieCI6OTAuNjgzMDcyMTc2ODQ2NiwieSI6MzkwfSx7IngiOjE4My4wMjM0Mzc1LCJ5Ijo2NX0seyJ4IjoyMDguMDIzNDM3NSwieSI6NjV9LHsieCI6MzI0LjI2MTcxODc1LCJ5Ijo2NX0seyJ4Ijo0NDAuNSwieSI6NjV9LHsieCI6NDk1LjU5Mzc1LCJ5Ijo2NX0seyJ4Ijo1NTAuNjg3NSwieSI6NjV9LHsieCI6NjQ5LjYyMTA5Mzc1LCJ5Ijo2NX0seyJ4Ijo3NDguNTU0Njg3NSwieSI6NjV9LHsieCI6ODI1LjQ4ODI4MTI1LCJ5Ijo2NX0seyJ4Ijo5MDIuNDIxODc1LCJ5Ijo2NX0seyJ4Ijo5MjcuNDIxODc1LCJ5Ijo3NC42NjczMDg2MzYzODA4fV0=" data-look="classic" marker-end="url(#mermaid-1777703293973_flowchart-v2-pointEnd)"></path><path d="M90.099,444L105.587,503C121.074,562,152.049,680,171.703,739C191.357,798,199.69,798,223.23,798C246.77,798,285.516,798,324.262,798C363.008,798,401.754,798,430.309,761C458.865,724,477.229,650,495.594,613C513.958,576,532.323,576,557.994,576C583.665,576,616.643,576,649.621,576C682.599,576,715.577,576,744.888,576C774.199,576,799.844,576,825.488,576C851.133,576,876.777,576,896.158,576C915.538,576,928.654,576,935.212,576L941.77,576" id="mermaid-1777703293973-L_SHIN_SAMDU_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_SHIN_SAMDU_0" data-points="W3sieCI6OTAuMDk5MTYzMzg1ODI2NzcsInkiOjQ0NH0seyJ4IjoxODMuMDIzNDM3NSwieSI6Nzk4fSx7IngiOjIwOC4wMjM0Mzc1LCJ5Ijo3OTh9LHsieCI6MzI0LjI2MTcxODc1LCJ5Ijo3OTh9LHsieCI6NDQwLjUsInkiOjc5OH0seyJ4Ijo0OTUuNTkzNzUsInkiOjU3Nn0seyJ4Ijo1NTAuNjg3NSwieSI6NTc2fSx7IngiOjY0OS42MjEwOTM3NSwieSI6NTc2fSx7IngiOjc0OC41NTQ2ODc1LCJ5Ijo1NzZ9LHsieCI6ODI1LjQ4ODI4MTI1LCJ5Ijo1NzZ9LHsieCI6OTAyLjQyMTg3NSwieSI6NTc2fSx7IngiOjk0NS43Njk1MzEyNSwieSI6NTc2fV0=" data-look="classic" marker-end="url(#mermaid-1777703293973_flowchart-v2-pointEnd)"></path><path d="M88.946,444L104.626,515.333C120.305,586.667,151.664,729.333,171.511,800.667C191.357,872,199.69,872,223.23,872C246.77,872,285.516,872,324.262,872C363.008,872,401.754,872,430.309,835C458.865,798,477.229,724,495.594,687C513.958,650,532.323,650,557.994,650C583.665,650,616.643,650,649.621,650C682.599,650,715.577,650,744.888,650C774.199,650,799.844,650,825.488,650C851.133,650,876.777,650,896.233,653.463C915.689,656.926,928.956,663.852,935.59,667.315L942.224,670.778" id="mermaid-1777703293973-L_SHIN_PKU_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_SHIN_PKU_0" data-points="W3sieCI6ODguOTQ2NDgwMDgyNDE3NTgsInkiOjQ0NH0seyJ4IjoxODMuMDIzNDM3NSwieSI6ODcyfSx7IngiOjIwOC4wMjM0Mzc1LCJ5Ijo4NzJ9LHsieCI6MzI0LjI2MTcxODc1LCJ5Ijo4NzJ9LHsieCI6NDQwLjUsInkiOjg3Mn0seyJ4Ijo0OTUuNTkzNzUsInkiOjY1MH0seyJ4Ijo1NTAuNjg3NSwieSI6NjUwfSx7IngiOjY0OS42MjEwOTM3NSwieSI6NjUwfSx7IngiOjc0OC41NTQ2ODc1LCJ5Ijo2NTB9LHsieCI6ODI1LjQ4ODI4MTI1LCJ5Ijo2NTB9LHsieCI6OTAyLjQyMTg3NSwieSI6NjUwfSx7IngiOjk0NS43Njk1MzEyNSwieSI6NjcyLjYyODk3OTI2ODE1NDZ9XQ==" data-look="classic" marker-end="url(#mermaid-1777703293973_flowchart-v2-pointEnd)"></path><path d="M99.995,444L113.833,466C127.671,488,155.347,532,173.352,554C191.357,576,199.69,576,208.023,576C216.357,576,224.69,576,228.857,576L233.023,576" id="mermaid-1777703293973-L_SHIN_PROF_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_SHIN_PROF_0" data-points="W3sieCI6OTkuOTk0ODQwODAxODg2OCwieSI6NDQ0fSx7IngiOjE4My4wMjM0Mzc1LCJ5Ijo1NzZ9LHsieCI6MjA4LjAyMzQzNzUsInkiOjU3Nn0seyJ4IjoyMzMuMDIzNDM3NSwieSI6NTc2fV0=" data-look="classic"></path><path d="M158.023,440.251L162.19,441.542C166.357,442.834,174.69,445.417,183.023,446.708C191.357,448,199.69,448,210.82,448C221.949,448,235.875,448,242.838,448L249.801,448" id="mermaid-1777703293973-L_SHIN_CONSULT_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_SHIN_CONSULT_0" data-points="W3sieCI6MTU4LjAyMzQzNzUsInkiOjQ0MC4yNTA5MDgwOTY3MDc0fSx7IngiOjE4My4wMjM0Mzc1LCJ5Ijo0NDh9LHsieCI6MjA4LjAyMzQzNzUsInkiOjQ0OH0seyJ4IjoyNDkuODAwNzgxMjUsInkiOjQ0OH1d" data-look="classic"></path><path d="M92.42,444L107.521,487.333C122.621,530.667,152.822,617.333,172.09,660.667C191.357,704,199.69,704,210.079,704C220.469,704,232.914,704,239.137,704L245.359,704" id="mermaid-1777703293973-L_SHIN_POSTECH_0" class=" edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_SHIN_POSTECH_0" data-points="W3sieCI6OTIuNDIwNDg2NzE2MDI3ODgsInkiOjQ0NH0seyJ4IjoxODMuMDIzNDM3NSwieSI6NzA0fSx7IngiOjIwOC4wMjM0Mzc1LCJ5Ijo3MDR9LHsieCI6MjQ1LjM1OTM3NSwieSI6NzA0fV0=" data-look="classic"></path><path d="M715.906,159L721.348,159C726.789,159,737.672,159,755.936,159C774.199,159,799.844,159,825.488,159C851.133,159,876.777,159,893.798,156.809C910.818,154.617,919.214,150.234,923.412,148.043L927.61,145.851" id="mermaid-1777703293973-L_FIELDS_HYUNDAI_0" class=" edge-thickness-normal edge-pattern-dotted edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_FIELDS_HYUNDAI_0" data-points="W3sieCI6NzE1LjkwNjI1LCJ5IjoxNTl9LHsieCI6NzQ4LjU1NDY4NzUsInkiOjE1OX0seyJ4Ijo4MjUuNDg4MjgxMjUsInkiOjE1OX0seyJ4Ijo5MDIuNDIxODc1LCJ5IjoxNTl9LHsieCI6OTMxLjE1NTU5ODk1ODMzMzQsInkiOjE0NH1d" data-look="classic" marker-end="url(#mermaid-1777703293973_flowchart-v2-pointEnd)"></path><path d="M415.5,576L419.667,576C423.833,576,432.167,576,445.516,600C458.865,624,477.229,672,495.594,696C513.958,720,532.323,720,557.994,720C583.665,720,616.643,720,649.621,720C682.599,720,715.577,720,744.888,720C774.199,720,799.844,720,825.488,720C851.133,720,876.777,720,896.165,718.984C915.553,717.969,928.685,715.938,935.251,714.922L941.817,713.907" id="mermaid-1777703293973-L_PROF_PKU_0" class=" edge-thickness-normal edge-pattern-dotted edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_PROF_PKU_0" data-points="W3sieCI6NDE1LjUsInkiOjU3Nn0seyJ4Ijo0NDAuNSwieSI6NTc2fSx7IngiOjQ5NS41OTM3NSwieSI6NzIwfSx7IngiOjU1MC42ODc1LCJ5Ijo3MjB9LHsieCI6NjQ5LjYyMTA5Mzc1LCJ5Ijo3MjB9LHsieCI6NzQ4LjU1NDY4NzUsInkiOjcyMH0seyJ4Ijo4MjUuNDg4MjgxMjUsInkiOjcyMH0seyJ4Ijo5MDIuNDIxODc1LCJ5Ijo3MjB9LHsieCI6OTQ1Ljc2OTUzMTI1LCJ5Ijo3MTMuMjk1MTE3MjUzODgwMX1d" data-look="classic" marker-end="url(#mermaid-1777703293973_flowchart-v2-pointEnd)"></path><path d="M398.723,448L405.686,448C412.648,448,426.574,448,442.719,429.667C458.865,411.333,477.229,374.667,495.594,356.333C513.958,338,532.323,338,545.072,336.269C557.821,334.539,564.955,331.078,568.522,329.347L572.089,327.617" id="mermaid-1777703293973-L_CONSULT_HANUL_0" class=" edge-thickness-normal edge-pattern-dotted edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_CONSULT_HANUL_0" data-points="W3sieCI6Mzk4LjcyMjY1NjI1LCJ5Ijo0NDh9LHsieCI6NDQwLjUsInkiOjQ0OH0seyJ4Ijo0OTUuNTkzNzUsInkiOjMzOH0seyJ4Ijo1NTAuNjg3NSwieSI6MzM4fSx7IngiOjU3NS42ODc1LCJ5IjozMjUuODcwNjUxODczNDk0N31d" data-look="classic" marker-end="url(#mermaid-1777703293973_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_SHIN_FIELDS_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_SHIN_HANUL_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_SHIN_CARGO_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_SHIN_HYUNDAI_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_SHIN_SAMDU_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_SHIN_PKU_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_SHIN_PROF_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_SHIN_CONSULT_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_SHIN_POSTECH_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(825.48828125, 159)"><g class="label" data-id="L_FIELDS_HYUNDAI_0" transform="translate(-51.93359375, -12)"><foreignObject width="103.8671875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p style="">견적→설계 확장</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(649.62109375, 720)"><g class="label" data-id="L_PROF_PKU_0" transform="translate(-30.09375, -12)"><foreignObject width="60.1875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p style="">기술 연결</p></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(495.59375, 338)"><g class="label" data-id="L_CONSULT_HANUL_0" transform="translate(-30.09375, -12)"><foreignObject width="60.1875" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel "><p style="">영업 지원</p></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default  " id="mermaid-1777703293973-flowchart-SHIN-0" data-look="classic" transform="translate(83.01171875, 417)"><rect class="basic label-container" style="fill:#c9a84c !important;stroke:#e8c96a !important" x="-75.01171875" y="-27" width="150.0234375" height="54"></rect><g class="label" style="color:#0d1b2a !important;font-weight:bold !important" transform="translate(-45.01171875, -12)"><rect></rect><foreignObject width="90.0234375" height="24"><div style="color: rgb(13, 27, 42) !important; font-weight: bold !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#0d1b2a !important;font-weight:bold !important" class="nodeLabel "><p style="">🏢 스냅스케일</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293973-flowchart-FIELDS-1" data-look="classic" transform="translate(649.62109375, 159)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#34d399 !important" x="-66.28515625" y="-39" width="132.5703125" height="78"></rect><g class="label" style="color:#34d399 !important" transform="translate(-36.28515625, -24)"><rect></rect><foreignObject width="72.5703125" height="48"><div style="color: rgb(52, 211, 153) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#34d399 !important" class="nodeLabel "><p style="">필즈<br>1억9천·1년</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293973-flowchart-HANUL-2" data-look="classic" transform="translate(649.62109375, 290)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#34d399 !important" x="-73.93359375" y="-39" width="147.8671875" height="78"></rect><g class="label" style="color:#34d399 !important" transform="translate(-43.93359375, -24)"><rect></rect><foreignObject width="87.8671875" height="48"><div style="color: rgb(52, 211, 153) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#34d399 !important" class="nodeLabel "><p style="">한울<br>파트너십 예정</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293973-flowchart-CARGO-3" data-look="classic" transform="translate(649.62109375, 418)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#34d399 !important" x="-71.5234375" y="-39" width="143.046875" height="78"></rect><g class="label" style="color:#34d399 !important" transform="translate(-41.5234375, -24)"><rect></rect><foreignObject width="83.046875" height="48"><div style="color: rgb(52, 211, 153) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#34d399 !important" class="nodeLabel "><p style="">화물질안전원<br>5/7 공고</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293973-flowchart-HYUNDAI-4" data-look="classic" transform="translate(1005.86328125, 105)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#60a5fa !important" x="-78.44140625" y="-39" width="156.8828125" height="78"></rect><g class="label" style="color:#60a5fa !important" transform="translate(-48.44140625, -24)"><rect></rect><foreignObject width="96.8828125" height="48"><div style="color: rgb(96, 165, 250) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#60a5fa !important" class="nodeLabel "><p style="">현대엔지니어링<br>IT팀+AI팀 듀얼</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293973-flowchart-SAMDU-5" data-look="classic" transform="translate(1005.86328125, 576)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#fbbf24 !important" x="-60.09375" y="-39" width="120.1875" height="78"></rect><g class="label" style="color:#fbbf24 !important" transform="translate(-30.09375, -24)"><rect></rect><foreignObject width="60.1875" height="48"><div style="color: rgb(251, 191, 36) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#fbbf24 !important" class="nodeLabel "><p style="">삼두<br>결과 대기</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293973-flowchart-PKU-6" data-look="classic" transform="translate(1005.86328125, 704)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#a78bfa !important" x="-60.09375" y="-39" width="120.1875" height="78"></rect><g class="label" style="color:#a78bfa !important" transform="translate(-30.09375, -24)"><rect></rect><foreignObject width="60.1875" height="48"><div style="color: rgb(167, 139, 250) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#a78bfa !important" class="nodeLabel "><p style="">PKU<br>삼자 협의</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293973-flowchart-PROF-7" data-look="classic" transform="translate(324.26171875, 576)"><rect class="basic label-container" style="fill:#243450 !important;stroke:#e8c96a !important" x="-91.23828125" y="-39" width="182.4765625" height="78"></rect><g class="label" style="color:#e8c96a !important" transform="translate(-61.23828125, -24)"><rect></rect><foreignObject width="122.4765625" height="48"><div style="color: rgb(232, 201, 106) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8c96a !important" class="nodeLabel "><p style="">이을범 교수<br>논문·과제·기술제휴</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293973-flowchart-CONSULT-8" data-look="classic" transform="translate(324.26171875, 448)"><rect class="basic label-container" style="fill:#243450 !important;stroke:#e8c96a !important" x="-74.4609375" y="-39" width="148.921875" height="78"></rect><g class="label" style="color:#e8c96a !important" transform="translate(-44.4609375, -24)"><rect></rect><foreignObject width="88.921875" height="48"><div style="color: rgb(232, 201, 106) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8c96a !important" class="nodeLabel "><p style="">컨설팅펌<br>영업·지원사업</p></span></div></foreignObject></g></g><g class="node default  " id="mermaid-1777703293973-flowchart-POSTECH-9" data-look="classic" transform="translate(324.26171875, 704)"><rect class="basic label-container" style="fill:#243450 !important;stroke:#e8c96a !important" x="-78.90234375" y="-39" width="157.8046875" height="78"></rect><g class="label" style="color:#e8c96a !important" transform="translate(-48.90234375, -24)"><rect></rect><foreignObject width="97.8046875" height="48"><div style="color: rgb(232, 201, 106) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8c96a !important" class="nodeLabel "><p style="">정다소·이종석<br>POSTECH 출신</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mermaid-1777703293973-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><defs><filter id="mermaid-1777703293973-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><linearGradient id="mermaid-1777703293973-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"></stop></linearGradient></svg></div>
+    </div>
+
+    <!-- 다이어그램 3 -->
+    <div class="mermaid-wrap">
+      <div class="mermaid-title">📅 다이어그램 3: 주요 마일스톤 타임라인 (2025–2026)</div>
+      <div class="mermaid" data-processed="true"><svg id="mermaid-1777703293997" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1002 484" style="max-width: 1002px;" role="graphics-document document" aria-roledescription="gantt"><style>#mermaid-1777703293997{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-1777703293997 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-1777703293997 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-1777703293997 .error-icon{fill:#a44141;}#mermaid-1777703293997 .error-text{fill:#ddd;stroke:#ddd;}#mermaid-1777703293997 .edge-thickness-normal{stroke-width:1px;}#mermaid-1777703293997 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1777703293997 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1777703293997 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1777703293997 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1777703293997 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1777703293997 .marker{fill:#c9a84c;stroke:#c9a84c;}#mermaid-1777703293997 .marker.cross{stroke:#c9a84c;}#mermaid-1777703293997 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-1777703293997 p{margin:0;}#mermaid-1777703293997 .mermaid-main-font{font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1777703293997 .exclude-range{fill:hsl(52.9411764706, 28.813559322%, 48.431372549%);}#mermaid-1777703293997 .section{stroke:none;opacity:0.2;}#mermaid-1777703293997 .section0{fill:hsl(52.9411764706, 28.813559322%, 58.431372549%);}#mermaid-1777703293997 .section2{fill:#EAE8D9;}#mermaid-1777703293997 .section1,#mermaid-1777703293997 .section3{fill:#0d1b2a;opacity:0.2;}#mermaid-1777703293997 .sectionTitle0{fill:#c9a84c;}#mermaid-1777703293997 .sectionTitle1{fill:#c9a84c;}#mermaid-1777703293997 .sectionTitle2{fill:#c9a84c;}#mermaid-1777703293997 .sectionTitle3{fill:#c9a84c;}#mermaid-1777703293997 .sectionTitle{text-anchor:start;font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1777703293997 .grid .tick{stroke:lightgrey;opacity:0.8;shape-rendering:crispEdges;}#mermaid-1777703293997 .grid .tick text{font-family:"trebuchet ms",verdana,arial,sans-serif;fill:#ccc;}#mermaid-1777703293997 .grid path{stroke-width:0;}#mermaid-1777703293997 .today{fill:none;stroke:#DB5757;stroke-width:2px;}#mermaid-1777703293997 .task{stroke-width:2;}#mermaid-1777703293997 .taskText{text-anchor:middle;font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1777703293997 .taskTextOutsideRight{fill:#2c2c2c;text-anchor:start;font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1777703293997 .taskTextOutsideLeft{fill:#2c2c2c;text-anchor:end;}#mermaid-1777703293997 .task.clickable{cursor:pointer;}#mermaid-1777703293997 .taskText.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#mermaid-1777703293997 .taskTextOutsideLeft.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#mermaid-1777703293997 .taskTextOutsideRight.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#mermaid-1777703293997 .taskText0,#mermaid-1777703293997 .taskText1,#mermaid-1777703293997 .taskText2,#mermaid-1777703293997 .taskText3{fill:hsl(28.5714285714, 17.3553719008%, 86.2745098039%);}#mermaid-1777703293997 .task0,#mermaid-1777703293997 .task1,#mermaid-1777703293997 .task2,#mermaid-1777703293997 .task3{fill:hsl(216.9230769231, 37.1428571429%, 36.7254901961%);stroke:#ffffff;}#mermaid-1777703293997 .taskTextOutside0,#mermaid-1777703293997 .taskTextOutside2{fill:lightgrey;}#mermaid-1777703293997 .taskTextOutside1,#mermaid-1777703293997 .taskTextOutside3{fill:lightgrey;}#mermaid-1777703293997 .active0,#mermaid-1777703293997 .active1,#mermaid-1777703293997 .active2,#mermaid-1777703293997 .active3{fill:#81B1DB;stroke:#ffffff;}#mermaid-1777703293997 .activeText0,#mermaid-1777703293997 .activeText1,#mermaid-1777703293997 .activeText2,#mermaid-1777703293997 .activeText3{fill:#2c2c2c!important;}#mermaid-1777703293997 .done0,#mermaid-1777703293997 .done1,#mermaid-1777703293997 .done2,#mermaid-1777703293997 .done3{stroke:grey;fill:lightgrey;stroke-width:2;}#mermaid-1777703293997 .doneText0,#mermaid-1777703293997 .doneText1,#mermaid-1777703293997 .doneText2,#mermaid-1777703293997 .doneText3{fill:#2c2c2c!important;}#mermaid-1777703293997 .doneText0.taskTextOutsideLeft,#mermaid-1777703293997 .doneText0.taskTextOutsideRight,#mermaid-1777703293997 .doneText1.taskTextOutsideLeft,#mermaid-1777703293997 .doneText1.taskTextOutsideRight,#mermaid-1777703293997 .doneText2.taskTextOutsideLeft,#mermaid-1777703293997 .doneText2.taskTextOutsideRight,#mermaid-1777703293997 .doneText3.taskTextOutsideLeft,#mermaid-1777703293997 .doneText3.taskTextOutsideRight{fill:lightgrey!important;}#mermaid-1777703293997 .crit0,#mermaid-1777703293997 .crit1,#mermaid-1777703293997 .crit2,#mermaid-1777703293997 .crit3{stroke:#E83737;fill:#E83737;stroke-width:2;}#mermaid-1777703293997 .activeCrit0,#mermaid-1777703293997 .activeCrit1,#mermaid-1777703293997 .activeCrit2,#mermaid-1777703293997 .activeCrit3{stroke:#E83737;fill:#81B1DB;stroke-width:2;}#mermaid-1777703293997 .doneCrit0,#mermaid-1777703293997 .doneCrit1,#mermaid-1777703293997 .doneCrit2,#mermaid-1777703293997 .doneCrit3{stroke:#E83737;fill:lightgrey;stroke-width:2;cursor:pointer;shape-rendering:crispEdges;}#mermaid-1777703293997 .milestone{transform:rotate(45deg) scale(0.8,0.8);}#mermaid-1777703293997 .milestoneText{font-style:italic;}#mermaid-1777703293997 .doneCritText0,#mermaid-1777703293997 .doneCritText1,#mermaid-1777703293997 .doneCritText2,#mermaid-1777703293997 .doneCritText3{fill:#2c2c2c!important;}#mermaid-1777703293997 .doneCritText0.taskTextOutsideLeft,#mermaid-1777703293997 .doneCritText0.taskTextOutsideRight,#mermaid-1777703293997 .doneCritText1.taskTextOutsideLeft,#mermaid-1777703293997 .doneCritText1.taskTextOutsideRight,#mermaid-1777703293997 .doneCritText2.taskTextOutsideLeft,#mermaid-1777703293997 .doneCritText2.taskTextOutsideRight,#mermaid-1777703293997 .doneCritText3.taskTextOutsideLeft,#mermaid-1777703293997 .doneCritText3.taskTextOutsideRight{fill:lightgrey!important;}#mermaid-1777703293997 .vert{stroke:#00BFFF;}#mermaid-1777703293997 .vertText{font-size:15px;text-anchor:middle;fill:#00BFFF!important;}#mermaid-1777703293997 .activeCritText0,#mermaid-1777703293997 .activeCritText1,#mermaid-1777703293997 .activeCritText2,#mermaid-1777703293997 .activeCritText3{fill:#2c2c2c!important;}#mermaid-1777703293997 .titleText{text-anchor:middle;font-size:18px;fill:#c9a84c;font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-1777703293997 .node .neo-node{stroke:#243450;}#mermaid-1777703293997 [data-look="neo"].node rect,#mermaid-1777703293997 [data-look="neo"].cluster rect,#mermaid-1777703293997 [data-look="neo"].node polygon{stroke:url(#mermaid-1777703293997-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293997 [data-look="neo"].node path{stroke:url(#mermaid-1777703293997-gradient);stroke-width:1px;}#mermaid-1777703293997 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293997 [data-look="neo"].node .neo-line path{stroke:#243450;filter:none;}#mermaid-1777703293997 [data-look="neo"].node circle{stroke:url(#mermaid-1777703293997-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293997 [data-look="neo"].node circle .state-start{fill:#000000;}#mermaid-1777703293997 [data-look="neo"].icon-shape .icon{fill:url(#mermaid-1777703293997-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293997 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mermaid-1777703293997-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1777703293997 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g></g><g class="grid" transform="translate(75, 434)" fill="none" font-size="10" font-family="sans-serif" text-anchor="middle"><path class="domain" stroke="currentColor" d="M0,-399V0H852V-399"></path><g class="tick" opacity="1" transform="translate(0,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2025-05</text></g><g class="tick" opacity="1" transform="translate(72,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2025-06</text></g><g class="tick" opacity="1" transform="translate(142,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2025-07</text></g><g class="tick" opacity="1" transform="translate(215,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2025-08</text></g><g class="tick" opacity="1" transform="translate(287,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2025-09</text></g><g class="tick" opacity="1" transform="translate(357,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2025-10</text></g><g class="tick" opacity="1" transform="translate(430,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2025-11</text></g><g class="tick" opacity="1" transform="translate(500,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2025-12</text></g><g class="tick" opacity="1" transform="translate(572,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2026-01</text></g><g class="tick" opacity="1" transform="translate(644,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2026-02</text></g><g class="tick" opacity="1" transform="translate(710,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2026-03</text></g><g class="tick" opacity="1" transform="translate(782,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2026-04</text></g><g class="tick" opacity="1" transform="translate(852,0)"><line stroke="currentColor" y2="-399"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;">2026-05</text></g></g><g><rect x="0" y="48" width="964.5" height="24" class="section section0"></rect><rect x="0" y="120" width="964.5" height="24" class="section section0"></rect><rect x="0" y="144" width="964.5" height="24" class="section section1"></rect><rect x="0" y="240" width="964.5" height="24" class="section section2"></rect><rect x="0" y="288" width="964.5" height="24" class="section section3"></rect><rect x="0" y="72" width="964.5" height="24" class="section section0"></rect><rect x="0" y="96" width="964.5" height="24" class="section section0"></rect><rect x="0" y="264" width="964.5" height="24" class="section section2"></rect><rect x="0" y="168" width="964.5" height="24" class="section section1"></rect><rect x="0" y="192" width="964.5" height="24" class="section section1"></rect><rect x="0" y="312" width="964.5" height="24" class="section section3"></rect><rect x="0" y="216" width="964.5" height="24" class="section section1"></rect><rect x="0" y="384" width="964.5" height="24" class="section section0"></rect><rect x="0" y="336" width="964.5" height="24" class="section section3"></rect><rect x="0" y="408" width="964.5" height="24" class="section section0"></rect><rect x="0" y="360" width="964.5" height="24" class="section section3"></rect></g><g><rect id="mermaid-1777703293997-des1" rx="3" ry="3" x="75" y="50" width="16" height="20" transform-origin="83px 60px" class="task done0 "></rect><rect id="mermaid-1777703293997-des4" rx="3" ry="3" x="75" y="122" width="70" height="20" transform-origin="110px 132px" class="task task0 "></rect><rect id="mermaid-1777703293997-inv1" rx="3" ry="3" x="75" y="146" width="70" height="20" transform-origin="110px 156px" class="task active1 "></rect><rect id="mermaid-1777703293997-par1" rx="3" ry="3" x="75" y="242" width="33" height="20" transform-origin="91.5px 252px" class="task active2 "></rect><rect id="mermaid-1777703293997-fld1" rx="3" ry="3" x="75" y="290" width="33" height="20" transform-origin="91.5px 300px" class="task active3 "></rect><rect id="mermaid-1777703293997-des2" rx="3" ry="3" x="89" y="74" width="70" height="20" transform-origin="124px 84px" class="task active0 "></rect><rect id="mermaid-1777703293997-des3" rx="3" ry="3" x="89" y="98" width="33" height="20" transform-origin="105.5px 108px" class="task task0 "></rect><rect id="mermaid-1777703293997-par2" rx="3" ry="3" x="89" y="266" width="33" height="20" transform-origin="105.5px 276px" class="task task2 "></rect><rect id="mermaid-1777703293997-inv2" rx="3" ry="3" x="131" y="170" width="33" height="20" transform-origin="147.5px 180px" class="task task1 "></rect><rect id="mermaid-1777703293997-hire1" rx="3" ry="3" x="147" y="194" width="33" height="20" transform-origin="163.5px 204px" class="task task1 "></rect><rect id="mermaid-1777703293997-fld2" rx="3" ry="3" x="147" y="314" width="210" height="20" transform-origin="252px 324px" class="task task3 "></rect><rect id="mermaid-1777703293997-hire2" rx="3" ry="3" x="217" y="218" width="140" height="20" transform-origin="287px 228px" class="task task1 "></rect><rect id="mermaid-1777703293997-prod1" rx="3" ry="3" x="290" y="386" width="280" height="20" transform-origin="430px 396px" class="task task0 "></rect><rect id="mermaid-1777703293997-fld3" rx="3" ry="3" x="362" y="338" width="70" height="20" transform-origin="397px 348px" class="task task3 "></rect><rect id="mermaid-1777703293997-prod2" rx="3" ry="3" x="647" y="410" width="210" height="20" transform-origin="752px 420px" class="task task0 "></rect><rect id="mermaid-1777703293997-fld4" rx="3" ry="3" x="857" y="362" width="70" height="20" transform-origin="892px 372px" class="task task3 "></rect><text id="mermaid-1777703293997-des1-text" font-size="12" x="96" y="64" text-height="20" class=" taskTextOutsideRight taskTextOutside0  doneText0 width-93.890625">필즈 계약 도장 날인       </text><text id="mermaid-1777703293997-des4-text" font-size="12" x="150" y="136" text-height="20" class=" taskTextOutsideRight taskTextOutside0  width-114.6484375">한울 파트너십 계약 체결   </text><text id="mermaid-1777703293997-inv1-text" font-size="12" x="150" y="160" text-height="20" class=" taskTextOutsideRight taskTextOutside1 activeText1 width-122.390625">Tier1 투자사 미팅(5개사)  </text><text id="mermaid-1777703293997-par1-text" font-size="12" x="113" y="256" text-height="20" class=" taskTextOutsideRight taskTextOutside2 activeText2 width-104.2734375">이을범 교수 자문 계약      </text><text id="mermaid-1777703293997-fld1-text" font-size="12" x="113" y="304" text-height="20" class=" taskTextOutsideRight taskTextOutside3 activeText3 width-93.890625">전 부서 인터뷰 완료        </text><text id="mermaid-1777703293997-des2-text" font-size="12" x="164" y="88" text-height="20" class=" taskTextOutsideRight taskTextOutside0 activeText0 width-122.0546875">필즈 계약금 수령(1억9천)  </text><text id="mermaid-1777703293997-des3-text" font-size="12" x="127" y="112" text-height="20" class=" taskTextOutsideRight taskTextOutside0  width-111.828125">화물질안전원 공고·제출    </text><text id="mermaid-1777703293997-par2-text" font-size="12" x="127" y="280" text-height="20" class=" taskTextOutsideRight taskTextOutside2  width-90.2734375">컨설팅펌 협력 계약         </text><text id="mermaid-1777703293997-inv2-text" font-size="12" x="169" y="184" text-height="20" class=" taskTextOutsideRight taskTextOutside1  width-69.515625">투자 납입 목표             </text><text id="mermaid-1777703293997-hire1-text" font-size="12" x="185" y="208" text-height="20" class=" taskTextOutsideRight taskTextOutside1  width-94.6796875">정다소·이종석 채용 착수    </text><text id="mermaid-1777703293997-fld2-text" font-size="12" x="252" y="328" text-height="20" class=" taskText taskText3  width-105.546875">견적 자동화 MVP 개발        </text><text id="mermaid-1777703293997-hire2-text" font-size="12" x="287" y="232" text-height="20" class=" taskText taskText1  width-79.796875">LLM 전문가 채용            </text><text id="mermaid-1777703293997-prod1-text" font-size="12" x="430" y="400" text-height="20" class=" taskText taskText0  width-103.65625">에이전트 OS 1차 모듈       </text><text id="mermaid-1777703293997-fld3-text" font-size="12" x="397" y="352" text-height="20" class=" taskText taskText3  width-65.4296875">필즈 1차 납품              </text><text id="mermaid-1777703293997-prod2-text" font-size="12" x="752" y="424" text-height="20" class=" taskText taskText0  width-95.0859375">해외 시장 POC 시작         </text><text id="mermaid-1777703293997-fld4-text" font-size="12" x="852" y="376" text-height="20" class=" taskTextOutsideLeft taskTextOutside3 ">필즈 프로젝트 완료         </text></g><g><text dy="0em" x="10" y="98" font-size="11" class="sectionTitle sectionTitle0"><tspan alignment-baseline="central" x="10">계약·매출</tspan></text><text dy="0em" x="10" y="194" font-size="11" class="sectionTitle sectionTitle1"><tspan alignment-baseline="central" x="10">투자·채용</tspan></text><text dy="0em" x="10" y="266" font-size="11" class="sectionTitle sectionTitle2"><tspan alignment-baseline="central" x="10">파트너십</tspan></text><text dy="0em" x="10" y="338" font-size="11" class="sectionTitle sectionTitle3"><tspan alignment-baseline="central" x="10">필즈 프로젝트</tspan></text><text dy="0em" x="10" y="410" font-size="11" class="sectionTitle sectionTitle0"><tspan alignment-baseline="central" x="10">제품화</tspan></text></g><g class="today"><line x1="931" x2="931" y1="25" y2="459" class="today"></line></g><text x="501" y="25" class="titleText">스냅스케일 주요 마일스톤 (2025-2026)</text></svg></div>
+    </div>
+  </div>
+
+  <!-- 다음 단계 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="emoji">🚀</span> 다음 단계 및 후속 과제
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <div>
+            <div class="card-title">즉시 (이번 주)</div>
+          </div>
+        </div>
+        <ul class="bullet-list" style="font-size:0.82rem;">
+          <li style="">필즈 계약서 날인</li>
+          <li style="">한울 파트너십 계약서 작성·발송</li>
+          <li style="">이을범 교수 자문 계약 체결</li>
+          <li style="">컨설팅펌 계약 진행</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">📆</div>
+          <div>
+            <div class="card-title">단기 (1~2주)</div>
+          </div>
+        </div>
+        <ul class="bullet-list" style="font-size:0.82rem;">
+          <li style="">필즈 소방·HVAC·구매 인터뷰</li>
+          <li style="">화물질안전원 5/7 공고 제출</li>
+          <li style="">투자 Tier1 미팅 완료</li>
+          <li style="">기술 Q&amp;A → Google Meet 전환</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🎯</div>
+          <div>
+            <div class="card-title">중기 (5~6월)</div>
+          </div>
+        </div>
+        <ul class="bullet-list" style="font-size:0.82rem;">
+          <li style="">투자금·계약금 수령 (5월 말~6월 초)</li>
+          <li style="">정다소·이종석 채용 공식 착수</li>
+          <li style="">LLM 전문가 채용 채널 확보</li>
+          <li style="">PKU·필시 삼자 협의</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 리스크 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="emoji">⚠️</span> 잠재 리스크 &amp; 기회요소
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div style="color:#f87171; font-weight:700; font-size:0.85rem; margin-bottom:0.8rem;">⚠️ 리스크</div>
+        <ul class="bullet-list" style="font-size:0.85rem;">
+          <li style="">필즈 데이터 품질 불확실 — 실제 데이터 수령 전까지 자동화 정확도 미지수</li>
+          <li style="">한울 지원사업 탈락 시 계약 규모 축소 가능</li>
+          <li style="">다각화 파이프라인 → 동시 다발 프로젝트 리소스 분산 위험</li>
+          <li style="">LLM 전문가 채용 난이도 높음 — 시장 내 희소 인재</li>
+          <li style="">투자 납입 시점 불확실 → 채용 일정 변동 가능</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div style="color:#34d399; font-weight:700; font-size:0.85rem; margin-bottom:0.8rem;">✨ 기회요소</div>
+        <ul class="bullet-list" style="font-size:0.85rem;">
+          <li style="">견적 자동화 = 설계 자동화 초석 — 진입 후 자연스러운 업셀링 경로 확보</li>
+          <li style="">20개사 인바운드 투자 파이프라인 — 대회 수상 효과 지속</li>
+          <li style="">이을범 교수 네트워크 → 플랜트 IT 기업 2개사 추가 연결 가능</li>
+          <li style="">화물질안전원 온톨로지 경험 → 다양한 산업 규제 도메인 확장 레퍼런스</li>
+          <li style="">컨설팅펌 파트너십 → 지원사업 수주 확률 대폭 향상</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  <p style="">📋 스냅스케일 전체 진행 현황 보고 회의록</p>
+  <p style="margin-top: 0.5rem;">자동 생성 회의록 · <span>스냅스케일(SnapScale)</span> 내부 문서</p>
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#162030',
+      primaryTextColor: '#e8edf2',
+      primaryBorderColor: '#243450',
+      lineColor: '#c9a84c',
+      secondaryColor: '#1a2d45',
+      tertiaryColor: '#0d1b2a',
+      background: '#0d1b2a',
+      mainBkg: '#162030',
+      nodeBorder: '#243450',
+      clusterBkg: '#1a2d45',
+      titleColor: '#c9a84c',
+      edgeLabelBackground: '#162030',
+      ganttAxisFormat: '%m/%d',
+    },
+    flowchart: { curve: 'basis', htmlLabels: true },
+    gantt: { axisFormat: '%Y-%m', fontSize: 12 },
+    securityLevel: 'loose'
+  });
+</script>
+
+<script type="application/json" id="celab-metadata">
+{"title":"스냅스케일 전체 진행 현황 보고 회의록","description":"필즈(1억9천 계약금), 한울, 화물질안전원 등 3개 계약 확정 파이프라인과 투자 라운드 20개사, 5년 에이전트 OS 로드맵, 채용 계획, Hydraulic 기술 Q&A를 망라한 스냅스케일 정기 현황 보고 회의록.","category":"전략","tags":["플랜트AI","견적자동화","스타트업","회의록","스냅스케일"],"emoji":"⚙️"}
+</script>
+<div id="celab-logo-badge" style="position:fixed;bottom:18px;right:18px;z-index:9999;
+  width:52px;height:52px;border-radius:50%;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,0.35);cursor:pointer;" title="CELab · Chemical Engineering Lab" onclick="window.open('https://celab-kor.github.io/celab-knowledge-base/','_blank')">
+  <img src="data:image/jpeg;base64,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" style="width:100%;height:100%;object-fit:cover;display:block;">
+</div>
+
+<div class="mermaidTooltip" style="opacity: 0; position: absolute; text-align: center; max-width: 200px; padding: 2px; font-size: 12px; background: rgb(255, 255, 222); border: 1px solid rgb(51, 51, 51); border-radius: 2px; pointer-events: none; z-index: 100;"></div><div style="position: fixed; bottom: 228px; right: 28px; z-index: 100000; background: rgb(47, 133, 90); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 12px; font-size: 13px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; box-shadow: rgba(0, 0, 0, 0.4) 0px 4px 16px; transition: opacity 0.4s; max-width: 320px; line-height: 1.5; opacity: 0;">✍️ 직접 편집 모드 — 수정 후 💾 저장을 누르세요</div><div id="celab-fab-save" style="position: fixed; bottom: 28px; right: 28px; z-index: 99999; background: rgb(39, 103, 73); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap; opacity: 1;">💾 저장</div><div id="celab-fab-direct" style="position: fixed; bottom: 76px; right: 28px; z-index: 99999; background: rgb(224, 123, 57); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">✍️ 직접 편집</div><div id="celab-fab-edit" style="position: fixed; bottom: 124px; right: 28px; z-index: 99999; background: rgb(201, 168, 76); color: rgb(13, 27, 42); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">✏️ AI 편집</div><div id="celab-fab-layout" style="position: fixed; bottom: 172px; right: 28px; z-index: 99999; background: rgb(44, 122, 123); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">🔄 레이아웃</div></body></html>
