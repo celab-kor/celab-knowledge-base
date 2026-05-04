@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>플랜트 AI 스타트업 창업자 인터뷰 분석 | 시냅스케일 &amp; 커리어 인사이트</title>
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy2: #1a2d45;
+    --gold: #c9a84c;
+    --gold2: #e8c96a;
+    --text: #e8edf2;
+    --muted: #8a9bb0;
+    --card-bg: #162030;
+    --card-border: #243450;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,27,42,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--card-border);
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    height: 52px;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    white-space: nowrap;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  nav a:hover { color: var(--gold2); background: rgba(201,168,76,0.12); }
+  .nav-logo {
+    font-weight: 700;
+    color: var(--gold) !important;
+    font-size: 14px !important;
+    margin-right: 8px;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a2d45 40%, #0f2236 70%, #162030 100%);
+    padding: 72px 24px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold2);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(24px, 5vw, 42px);
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 span { color: var(--gold2); }
+  .hero-sub {
+    color: var(--muted);
+    font-size: clamp(14px, 2vw, 16px);
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+  .kpi-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .kpi-card {
+    background: rgba(22,32,48,0.8);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 22px 32px;
+    min-width: 180px;
+    flex: 1;
+    max-width: 240px;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold2));
+  }
+  .kpi-num {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--gold2);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .kpi-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 64px 24px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-title {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 32px;
+    padding-left: 46px;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid var(--card-border);
+    margin: 0;
+  }
+
+  /* PROFILE */
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media(max-width:700px){ .profile-grid { grid-template-columns: 1fr; } }
+  .profile-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .profile-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold2);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .profile-card h3 .dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .timeline-item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    width: 10px; height: 10px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+    background: var(--navy);
+  }
+  .tl-text { font-size: 14px; color: var(--text); }
+  .tl-text strong { color: var(--gold2); }
+  .tl-text span { color: var(--muted); font-size: 12px; display: block; margin-top: 2px; }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .tag {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.25);
+    color: var(--gold2);
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  .tag.blue {
+    background: rgba(100,160,220,0.1);
+    border-color: rgba(100,160,220,0.25);
+    color: #89c4e1;
+  }
+
+  /* QUOTES */
+  .quote-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .quote-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .quote-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(201,168,76,0.4);
+  }
+  .quote-card.featured {
+    border-color: rgba(201,168,76,0.4);
+    background: linear-gradient(135deg, #162030 0%, #1a2d3a 100%);
+  }
+  .quote-card::before {
+    content: '"';
+    position: absolute;
+    top: 12px; right: 20px;
+    font-size: 64px;
+    color: rgba(201,168,76,0.1);
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .quote-speaker {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .quote-speaker .badge {
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .badge-a { background: rgba(201,168,76,0.2); color: var(--gold2); }
+  .badge-b { background: rgba(100,160,220,0.2); color: #89c4e1; }
+  .quote-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .quote-text em {
+    color: var(--gold2);
+    font-style: normal;
+    font-weight: 700;
+  }
+  .quote-context {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--muted);
+    padding-top: 12px;
+    border-top: 1px solid var(--card-border);
+  }
+
+  /* THEME ANALYSIS */
+  .accordion-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .accordion-item.open { border-color: rgba(201,168,76,0.35); }
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 24px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .acc-num {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+  .acc-title {
+    font-size: 16px;
+    font-weight: 700;
+    flex: 1;
+  }
+  .acc-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .acc-arrow {
+    width: 24px; height: 24px;
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    font-size: 10px;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .accordion-item.open .acc-arrow { transform: rotate(180deg); border-color: var(--gold); color: var(--gold); }
+  .accordion-body {
+    display: none;
+    padding: 0 24px 24px;
+  }
+  .accordion-item.open .accordion-body { display: block; }
+  .acc-content { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  .acc-content p { margin-bottom: 12px; }
+  .acc-content p:last-child { margin-bottom: 0; }
+  .highlight-box {
+    background: rgba(201,168,76,0.07);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .highlight-box.blue {
+    background: rgba(100,160,220,0.07);
+    border-color: #89c4e1;
+  }
+  .mini-list { margin: 10px 0 0 0; padding-left: 0; list-style: none; }
+  .mini-list li {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    padding-left: 8px;
+  }
+  .mini-list li::before {
+    content: '→';
+    color: var(--gold);
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+
+  /* INSIGHT CARDS */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .insight-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 24px;
+    transition: transform 0.2s;
+  }
+  .insight-card:hover { transform: translateY(-2px); }
+  .insight-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .insight-card h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--gold2);
+  }
+  .insight-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .insight-card.warning { border-color: rgba(220,100,80,0.3); }
+  .insight-card.warning h4 { color: #f08080; }
+  .insight-card.positive { border-color: rgba(80,180,120,0.3); }
+  .insight-card.positive h4 { color: #7dd9a3; }
+
+  /* FOLLOWUP */
+  .followup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .followup-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .followup-card:hover { border-color: rgba(201,168,76,0.35); }
+  .fq-num {
+    width: 28px; height: 28px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .fq-content h5 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .fq-content p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* SECTION ALTERNATING */
+  section:nth-child(odd) { background: transparent; }
+  section:nth-child(even) { background: rgba(22,32,48,0.4); }
+
+  /* RESPONSIVE */
+  @media(max-width:600px) {
+    .hero { padding: 52px 16px 48px; }
+    .kpi-card { min-width: 130px; padding: 18px 18px; }
+    .kpi-num { font-size: 28px; }
+    section { padding: 48px 16px; }
+    .accordion-header { padding: 16px 18px; }
+    .accordion-body { padding: 0 18px 18px; }
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy2);
+    border-top: 1px solid var(--card-border);
+    padding: 32px 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  footer strong { color: var(--gold); }
+
+  /* SCROLL BEHAVIOR */
+  html { scroll-behavior: smooth; }
+  :target { scroll-margin-top: 70px; }
+</style>
+</head>
+<body>
+<div id="celab-home-btn" style="position:fixed;top:14px;right:14px;z-index:10000;">
+  <a href="https://celab-kor.github.io/celab-knowledge-base/" target="_blank" style="display:flex;align-items:center;gap:7px;
+            background:rgba(13,27,42,0.88);color:#c9a84c;
+            padding:7px 13px;border-radius:22px;
+            font-size:13px;font-weight:700;text-decoration:none;
+            box-shadow:0 2px 10px rgba(0,0,0,0.35);
+            border:1px solid rgba(201,168,76,0.35);
+            backdrop-filter:blur(6px);
+            transition:background 0.2s;" onmouseover="this.style.background='rgba(13,27,42,1)'" onmouseout="this.style.background='rgba(13,27,42,0.88)'" title="CELab 지식창고 홈으로">
+    <svg width="15" height="15" viewBox="0 0 20 20" fill="#c9a84c" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z"></path>
+    </svg>
+    CELab 지식창고
+  </a>
+</div>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">🏭 SynapScale</a>
+    <a href="#profile">인터뷰이 프로필</a>
+    <a href="#quotes">핵심 발언</a>
+    <a href="#themes">주제별 분석</a>
+    <a href="#insights">시사점</a>
+    <a href="#followup">후속 탐구</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="padding:0;">
+  <div class="hero">
+    <div class="hero-badge">🎙 인터뷰 분석 리포트</div>
+    <h1 style="">플랜트 AI 스타트업 <span>스냅스케일</span><br>창업자 커피챗 인터뷰</h1>
+    <p class="hero-sub" style="">엔지니어 출신 창업자가 그리는 플랜트 산업 AI 혁신 — 온톨로지 기반 설계 자동화의 현재와 미래</p>
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-num">14+</div>
+        <div class="kpi-label">인터뷰이 경력 (년)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">18</div>
+        <div class="kpi-label">핵심 발언 포인트</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">6</div>
+        <div class="kpi-label">심층 분석 주제</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile">
+  <div class="container">
+    <div class="section-title">
+      <div class="icon">👤</div>
+      인터뷰이 프로필
+    </div>
+    <p class="section-desc" style="">이번 커피챗 인터뷰에 등장하는 두 인물의 배경과 전문성을 정리합니다.</p>
+    <div class="profile-grid">
+      <!-- 인터뷰이 A -->
+      <div class="profile-card">
+        <h3><div class="dot"></div>화공 엔지니어 출신 창업자 (기호)</h3>
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div class="tl-text"><strong>현중 → 대우조선해양 (미국 휴스턴)</strong><span>조선·플랜트 엔지니어링 필드 경험</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div class="tl-text"><strong>석사 취득</strong><span>멘토 추천으로 진학, 이후 커리어 전환점</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div class="tl-text"><strong>아스펜테크 컨설턴트 (4년 반)</strong><span>산업 특화 소프트웨어 컨설팅</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div class="tl-text"><strong>시냅스케일 공동 창업 준비</strong><span>플랜트 AI 온톨로지 기반 설계 자동화</span></div>
+        </div>
+        <div class="tag-list">
+          <span class="tag">화공 엔지니어링</span>
+          <span class="tag">AI 창업</span>
+          <span class="tag">온톨로지</span>
+          <span class="tag">P&amp;ID</span>
+          <span class="tag">화공연구소</span>
+        </div>
+      </div>
+
+      <!-- 인터뷰이 B (멘토) -->
+      <div class="profile-card">
+        <h3><div class="dot" style="background:#89c4e1;"></div>멘토 / 선배 컨설턴트 (싱가포르 기반)</h3>
+        <div class="timeline-item">
+          <div class="tl-dot" style="border-color:#89c4e1;"></div>
+          <div class="tl-text"><strong>현중 7년 근무 (조선 전공)</strong><span>네이벌 아키텍트, 해양 플랜트</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot" style="border-color:#89c4e1;"></div>
+          <div class="tl-text"><strong>휴스턴 이직: Bechtel → McKinsey 등</strong><span>글로벌 오일&amp;가스 붐기 경험</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot" style="border-color:#89c4e1;"></div>
+          <div class="tl-text"><strong>딜리버리 히어로 전략 이사 (싱가포르)</strong><span>식품 배달 플랫폼 전략</span></div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot" style="border-color:#89c4e1;"></div>
+          <div class="tl-text"><strong>부티크 컨설팅펌 (현재, 3,000명 규모)</strong><span>글로벌 오퍼레이션 · 성과 개선 컨설팅, 싱가포르 베이스</span></div>
+        </div>
+        <div class="tag-list">
+          <span class="tag blue">경영 컨설팅</span>
+          <span class="tag blue">구조조정 전문</span>
+          <span class="tag blue">글로벌 커리어</span>
+          <span class="tag blue">싱가포르</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- QUOTES -->
+<section id="quotes">
+  <div class="container">
+    <div class="section-title">
+      <div class="icon">💬</div>
+      핵심 발언 인용구
+    </div>
+    <p class="section-desc" style="">대화 중 가장 임팩트 있는 발언들을 선별하여 분석합니다.</p>
+    <div class="quote-grid">
+
+      <div class="quote-card featured">
+        <div class="quote-speaker">
+          <span class="badge badge-b">멘토</span>
+          스토리텔링의 핵심
+        </div>
+        <div class="quote-text">
+          <em>"다이어그램 보여주면 바로 실수를 잡아내주는 툴"</em> — 이 한 줄이 전체 제품을 설명한다. 회장님이나 사장님은 인내심이 <em>10초를 안 넘어가요.</em>
+        </div>
+        <div class="quote-context">MVP 피칭 전략 조언: 배경 설명 전에 핵심 기능을 먼저 보여주라는 경고</div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-speaker">
+          <span class="badge badge-b">멘토</span>
+          가치사슬 포지셔닝
+        </div>
+        <div class="quote-text">
+          이거 앞으로 갈수록 사실 <em>부가가치가 큰데, 이건 약간 뒷단에 있어.</em> 뒷단에 있을수록 가치가 안 높거든.
+        </div>
+        <div class="quote-context">P&amp;ID 검증 vs. 컨셉 설계 자동화의 가치 차이에 대한 날카로운 지적</div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-speaker">
+          <span class="badge badge-b">멘토</span>
+          LD 스토리텔링
+        </div>
+        <div class="quote-text">
+          <em>LD 한 건이 보통 몇 백에서 몇 천만 원</em> 하니까, 이걸로 LD를 열 건만 줄여도 몇 억짜리 효과. <em>1분 안에 다 설명한다</em>는 게 내가 항상 추구하는 거야.
+        </div>
+        <div class="quote-context">가치 기반 프라이싱 및 투자자 설득 프레임워크 제시</div>
+      </div>
+
+      <div class="quote-card featured">
+        <div class="quote-speaker">
+          <span class="badge badge-a">창업자</span>
+          창업의 결심
+        </div>
+        <div class="quote-text">
+          <em>40살에 아이가 태어나면서</em>, 워라벨과 안정을 택할 건지 창업을 할 건지 생각했어요. <em>이때 아니면 못할 것 같다</em>는 생각이 들어서.
+        </div>
+        <div class="quote-context">인생의 변곡점에서의 결단 — 창업 타이밍에 대한 내면의 목소리</div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-speaker">
+          <span class="badge badge-b">멘토</span>
+          창업 생태계 경고
+        </div>
+        <div class="quote-text">
+          그 바닥이 <em>너무 좁고 보수적이야.</em> 뚫고 들어간 것만큼 힘든 게 없어요, 정신적으로. <em>너무 지치지 않게 마인드를 관리하라</em>는 거랑 다른 캐시카우를 꼭 만들어라.
+        </div>
+        <div class="quote-context">플랜트 AI 창업 선배들의 고통에서 나온 경험적 조언</div>
+      </div>
+
+      <div class="quote-card">
+        <div class="quote-speaker">
+          <span class="badge badge-a">창업자</span>
+          기술의 핵심 통찰
+        </div>
+        <div class="quote-text">
+          95%까지 정확도가 나와도 <em>쓸 수가 없다</em>. 맞는지 안 맞는지 찾기 위해 전부 다 봐야 되고, <em>할루시네이션이 너무 많아서</em> — 그래서 온톨로지가 필요합니다.
+        </div>
+        <div class="quote-context">현대엔지니어링 사내 AI 실패 사례에서 도출한 기술적 차별점</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- THEMES -->
+<section id="themes">
+  <div class="container">
+    <div class="section-title">
+      <div class="icon">🔍</div>
+      주제별 심층 분석
+    </div>
+    <p class="section-desc" style="">대화에서 도출된 5개의 핵심 테마를 심층 분석합니다. 클릭하여 내용을 펼쳐보세요.</p>
+
+    <div class="accordion-item" onclick="toggleAcc(this)">
+      <div class="accordion-header">
+        <div class="acc-num">1</div>
+        <div>
+          <div class="acc-title">플랜트 AI의 기술 차별점 — 온톨로지 vs. 일반 LLM</div>
+          <div class="acc-sub">왜 ChatGPT로는 안 되는가? 산업 특화 AI의 본질</div>
+        </div>
+        <div class="acc-arrow">▼</div>
+      </div>
+      <div class="accordion-body">
+        <div class="acc-content">
+          <div class="highlight-box">
+            핵심 주장: 플랜트 설계에서 범용 LLM의 95% 정확도는 사실상 무용지물이다. 5%의 오류를 찾기 위해 전체를 재검증해야 하기 때문이다.
+          </div>
+          <p style="">창업자는 현대엔지니어링의 사내 AI 개발 실패 사례를 근거로, 산업 특화 데이터에 LLM을 파인튜닝하는 접근법의 근본적 한계를 설명했다. 플랜트 설계의 특성상 오류 하나가 LD(지체보상금) 수백만~수천만 원으로 이어지기 때문에, 99% 이상의 정확도가 요구된다.</p>
+          <p style="">시냅스케일의 해법은 <strong>그래프 알고리즘 기반 온톨로지(지식체계)</strong>를 구축하여 API, ASME 코드, 레슨런드, 설계 경험을 연결하는 것이다. 이 지식 네트워크 위에서 AI가 작동할 때 비로소 신뢰할 수 있는 결과가 나온다는 논리다.</p>
+          <ul class="mini-list">
+            <li style="">P&amp;ID 인식률 99% 달성 가능 — 온톨로지 기반 구조화 덕분</li>
+            <li style="">HYSYS 자동화 연동 구현 완료 (해양 플랜트 스펙 기반)</li>
+            <li style="">AutoCAD API 연동으로 도면 수정 자동 반영 기능 개발 중</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item" onclick="toggleAcc(this)">
+      <div class="accordion-header">
+        <div class="acc-num">2</div>
+        <div>
+          <div class="acc-title">피칭 전략 — 핵심을 먼저 꺼내는 역피라미드 구조</div>
+          <div class="acc-sub">멘토가 직접 지적한 스타트업 피칭의 치명적 실수</div>
+        </div>
+        <div class="acc-arrow">▼</div>
+      </div>
+      <div class="accordion-body">
+        <div class="acc-content">
+          <p style="">멘토는 창업자의 30분 가까운 설명을 들은 후, 기억에 남은 것은 단 두 가지였다고 직접적으로 피드백했다. ① 다이어그램 → CAD 자동 생성, ② 다이어그램 → 오류 자동 탐지. 그러나 이 두 가지가 설명의 후반부에 등장했다는 것이 문제였다.</p>
+          <div class="highlight-box">
+            "회장님, 사장님은 인내심이 10초를 안 넘어가요. 한 줄을 안 넘어가요." — 멘토의 핵심 조언
+          </div>
+          <p style="">멘토가 제안한 이상적인 1분 피칭 구조:</p>
+          <ul class="mini-list">
+            <li style=""><strong>개념 한 줄:</strong> "P&amp;ID 다이어그램 보여주면 실수를 즉시 잡아주는 툴"</li>
+            <li style=""><strong>가치 연결:</strong> "이 실수 하나가 LD 몇 천만 원인데, 이걸 줄여드립니다"</li>
+            <li style=""><strong>비전 부연:</strong> 온톨로지로 연결되면 다음 단계(설계 자동화)까지 확장 가능</li>
+          </ul>
+          <div class="highlight-box blue">
+            더 높은 가치 포인트: "없는 데서 다이어그램을 그려주는" 업스트림(컨셉추얼 디자인) 자동화가 훨씬 큰 시장이자 투자자 흥분 포인트다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item" onclick="toggleAcc(this)">
+      <div class="accordion-header">
+        <div class="acc-num">3</div>
+        <div>
+          <div class="acc-title">글로벌 엔지니어링 시장 변화 — 휴스턴의 10년 정체</div>
+          <div class="acc-sub">오일&amp;가스 르네상스에서 공장 공정으로 전락한 딥워터 엔지니어링</div>
+        </div>
+        <div class="acc-arrow">▼</div>
+      </div>
+      <div class="accordion-body">
+        <div class="acc-content">
+          <div class="highlight-box">
+            충격 데이터: 휴스턴 엔지니어링 업계, 10년간 실질 연봉 동결 (연 1% 인상률)
+          </div>
+          <p style="">멘토는 2000년대 중반까지 딥워터 엔지니어링이 "PhD들이 힘을 합쳐 만드는 르네상스 시대"였다고 회고했다. 그러나 현재는 설계 방법론이 표준화·커머디티화되었고, 실질 작업은 인도 하청으로 이전됐다.</p>
+          <p style="">이는 창업자의 비즈니스 모델에 중요한 시사점을 준다. 한국 EPC 기업들의 글로벌 FEED 수주 확대(삼성E&amp;A, 대우건설 등)와 원가절감 압박이 AI 솔루션 도입의 핵심 드라이버가 될 수 있다.</p>
+          <ul class="mini-list">
+            <li style="">건설사 고객 확보 용이 — 하지만 지불 능력 및 단가 제한이 리스크</li>
+            <li style="">조선소(LNG선 등 고부가) — 상대적으로 단가 가치 높음</li>
+            <li style="">엔지니어링 회사(하람코 등 글로벌) — 최적의 타겟으로 지목</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item" onclick="toggleAcc(this)">
+      <div class="accordion-header">
+        <div class="acc-num">4</div>
+        <div>
+          <div class="acc-title">GTM 전략 — POC 레퍼런스 확보와 파트너십의 함정</div>
+          <div class="acc-sub">PKU 파트너십, 현대엔지니어링 POC, 정주영 창업 경진대회의 가치 분석</div>
+        </div>
+        <div class="acc-arrow">▼</div>
+      </div>
+      <div class="accordion-body">
+        <div class="acc-content">
+          <p style="">창업자는 현재 다양한 채널을 통해 레퍼런스를 확보하고 있다. 중견 엔지니어링사 2개사와 POC 계약(1억 9천 포함), 현대엔지니어링 내부 검토 단계, 대림건설 미팅 완료, 한국화학물질안전원 관심 표명 등이다.</p>
+          <div class="highlight-box">
+            멘토의 POC 구조 해석: "단발성에 가까운 것"으로, 스케일업을 위한 반복 수익(Recurring Revenue)으로 전환하는 것이 과제.
+          </div>
+          <p style="">미국 PKU 파트너십에 대해 멘토는 냉정한 조언을 했다:</p>
+          <ul class="mini-list">
+            <li style="">레퍼런스 용도로는 유효 — "PKU, 미국 파트너사" 명칭 활용 가능</li>
+            <li style="">영업력 과대 기대 금지 — 작은 회사의 말빨에는 한계</li>
+            <li style="">시간 투자 최소화 권고 — 한국 시장이 우선</li>
+          </ul>
+          <div class="highlight-box blue">
+            수수료 20%의 딜레마: 첫 계약에서 컨설턴트에게 20%를 지불한 것은 "깃발을 꽂기 위한 플래그 전략"으로 이해할 수 있으나, 구조적으로 지속 가능한 수익 모델이 아니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item" onclick="toggleAcc(this)">
+      <div class="accordion-header">
+        <div class="acc-num">5</div>
+        <div>
+          <div class="acc-title">창업자의 부업 전략 — 화공연구소 브랜드와 생태계 구축</div>
+          <div class="acc-sub">캐시카우 다변화와 커뮤니티 플랫폼을 통한 장기 생존 전략</div>
+        </div>
+        <div class="acc-arrow">▼</div>
+      </div>
+      <div class="accordion-body">
+        <div class="acc-content">
+          <p style="">멘토는 "엔지니어링 바닥은 너무 좁고 보수적"이라며 별도의 캐시카우를 반드시 마련하라고 권고했다. 창업자는 이미 '화공연구소' 브랜드로 유튜브 채널(구독자 약 200명), 온라인 강의(월 1천만 원 달성 경험), 노션 기반 지식 큐레이션 시스템을 운영 중이다.</p>
+          <p style="">더 나아가 창업자는 다음과 같은 생태계를 구상 중이다:</p>
+          <ul class="mini-list">
+            <li style="">인터넷 화학공학회 사이트 리뉴얼 참여 (90년대 레거시 커뮤니티 현대화)</li>
+            <li style="">사우디 아람코 엔지니어(장영기 선생님)와의 협업 — AI 계산기 플랫폼</li>
+            <li style="">은퇴 시니어 엔지니어 ↔ 신진 엔지니어 연결 플랫폼</li>
+            <li style="">엔지니어 AI 활용 서밋 &amp; 커뮤니티 → 채용 시장 연결</li>
+          </ul>
+          <div class="highlight-box">
+            바이브 코딩(Vibe Coding) 활용: Claude Code, Codex 등 AI 코딩 도구로 노션 연동 자동화 회의록 시스템, 갤러리뷰 지식 큐레이션 등을 직접 구현 중. 이를 대학 특강으로도 활용.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item open" onclick="toggleAcc(this)">
+      <div class="accordion-header">
+        <div class="acc-num">6</div>
+        <div>
+          <div class="acc-title">멘토의 커리어 아키텍처 — 글로벌 포트폴리오 인생 설계</div>
+          <div class="acc-sub">조선 → 오일가스 → 컨설팅 → 싱가포르 플랫폼 전략의 구조</div>
+        </div>
+        <div class="acc-arrow">▼</div>
+      </div>
+      <div class="accordion-body">
+        <div class="acc-content">
+          <p style="">멘토의 커리어는 특정 산업에 종속되지 않는 '포트폴리오형 경력 설계'의 교과서적 사례다. 조선(현중 7년) → 해양 오일가스(Bechtel, 휴스턴) → 경영 컨설팅(McKinsey 외) → 플랫폼 전략(딜리버리 히어로) → 성과 개선 컨설팅(현재)의 전환 경로는 각 단계에서 새로운 가치를 누적했다.</p>
+          <div class="highlight-box">
+            현재 업무 방식: 부티크 컨설팅펌 (3,000명 규모), FA 시장처럼 프로젝트별 배치. 일본·싱가포르·뉴질랜드·미국 등 연간 4개국 이상 이동. "사업이 극단적으로 어려울 때 쓰는 회사" — 구조조정·사업부 매각·내각 전문.
+          </div>
+          <p style="">멘토의 자기 포지셔닝 인사이트:</p>
+          <ul class="mini-list">
+            <li style="">"MBB처럼 다 잘합니다가 아니라, 이건 우리가 제일 잘합니다가 있어야 된다"</li>
+            <li style="">창업에는 "지금이 딱 좋을 때"를 40대 기준으로 제시</li>
+            <li style="">자신은 스타트업 시리즈 B/C 전략 임원 옵션을 고려 중</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- INSIGHTS -->
+<section id="insights">
+  <div class="container">
+    <div class="section-title">
+      <div class="icon">💡</div>
+      시사점 및 인사이트 카드
+    </div>
+    <p class="section-desc" style="">이번 인터뷰에서 도출된 핵심 인사이트를 카드 형태로 요약합니다.</p>
+    <div class="insight-grid">
+
+      <div class="insight-card positive">
+        <div class="insight-icon">🎯</div>
+        <h4 style="">기술 방향성의 타당성</h4>
+        <p style="">온톨로지 기반 AI의 기술 접근법은 범용 LLM의 한계를 정확히 짚은 솔루션이다. 현대엔지니어링 실패 사례가 강력한 시장 근거가 된다.</p>
+      </div>
+
+      <div class="insight-card warning">
+        <div class="insight-icon">⚠️</div>
+        <h4 style="">피칭 구조 전면 재검토 필요</h4>
+        <p style="">현재 피칭은 배경→기술→기능 순서로 투자자의 이탈을 유발한다. "P&amp;ID 오류 즉시 탐지 → LD 비용 절감"의 역피라미드 구조로 재편이 시급하다.</p>
+      </div>
+
+      <div class="insight-card warning">
+        <div class="insight-icon">📉</div>
+        <h4 style="">가치사슬 포지션 업스트림 이동</h4>
+        <p style="">현재 제품(P&amp;ID 검증)은 가치사슬 후단이다. 컨셉추얼 설계 자동화(전단)로 이동할수록 부가가치와 투자 매력도가 비약적으로 상승한다.</p>
+      </div>
+
+      <div class="insight-card positive">
+        <div class="insight-icon">🌐</div>
+        <h4 style="">글로벌 데이터 자산의 희소성</h4>
+        <p style="">한국 EPC 20년 데이터 + 실리콘밸리/휴스턴 현장 100인 인터뷰 + HYSYS 자동화 구현은 경쟁자가 단기간에 복제하기 어려운 진입장벽이다.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-icon">🔄</div>
+        <h4 style="">캐시카우 분리의 전략적 가치</h4>
+        <p style="">화공연구소 강의 사업, 커뮤니티 운영, 바이브 코딩 강의는 단순 수익이 아닌 고객 인사이트 채널이자 브랜드 자산이다. 핵심 사업과 시너지 구조로 재설계해야 한다.</p>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-icon">🤝</div>
+        <h4 style="">멘토십의 복리 효과</h4>
+        <p style="">2014년의 단 한 번의 만남이 석사 진학 → 아스펜테크 → 창업으로 이어졌다. 네트워크는 직선이 아닌 복리로 작동한다. 커피챗 한 시간의 ROI는 수년치 경력을 바꾼다.</p>
+      </div>
+
+      <div class="insight-card positive">
+        <div class="insight-icon">⏰</div>
+        <h4 style="">창업 타이밍의 최적성</h4>
+        <p style="">40세, 첫 아이 출생, AI 전환기 — 세 가지 변수가 동시에 교차하는 지금이 창업의 최적 타이밍이라는 멘토의 확언은 의사결정의 중요한 외부 확인이다.</p>
+      </div>
+
+      <div class="insight-card warning">
+        <div class="insight-icon">🏗️</div>
+        <h4 style="">제품 완성도 vs. 투자 유치의 닭-달걀 딜레마</h4>
+        <p style="">제품이 아직 미완성이지만 대기업들은 완성품을 기다린다. 투자를 받아 제품을 완성해야 하는데, 투자자는 완성품을 원한다. 이 구조를 깨는 것이 현재 최대 과제다.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FOLLOWUP -->
+<section id="followup">
+  <div class="container">
+    <div class="section-title">
+      <div class="icon">🔭</div>
+      후속 탐구 영역
+    </div>
+    <p class="section-desc" style="">이번 인터뷰에서 충분히 다루지 못했거나, 심화 탐구가 필요한 주제들입니다.</p>
+    <div class="followup-grid">
+
+      <div class="followup-card">
+        <div class="fq-num">1</div>
+        <div class="fq-content">
+          <h5 style="">온톨로지 구축의 실제 소요 기간 및 비용</h5>
+          <p style="">20년치 EPC 데이터를 구조화하는 데 필요한 엔지니어·데이터 리소스와 타임라인이 명확히 제시되지 않았다.</p>
+        </div>
+      </div>
+
+      <div class="followup-card">
+        <div class="fq-num">2</div>
+        <div class="fq-content">
+          <h5 style="">경쟁사 분석 — AVEVA, Intergraph 등과의 차별화</h5>
+          <p style="">기존 플랜트 설계 소프트웨어 강자들이 이미 AI를 내재화하고 있는데, 스타트업이 어떻게 포지셔닝할 것인지에 대한 논의가 없었다.</p>
+        </div>
+      </div>
+
+      <div class="followup-card">
+        <div class="fq-num">3</div>
+        <div class="fq-content">
+          <h5 style="">현대엔지니어링 POC 결과 및 전환 가능성</h5>
+          <p style="">내부 검토 중이라고 했는데, 어떤 평가 기준으로 결정될 것인지, 타임라인은 어떻게 되는지 후속 확인이 필요하다.</p>
+        </div>
+      </div>
+
+      <div class="followup-card">
+        <div class="fq-num">4</div>
+        <div class="fq-content">
+          <h5 style="">해외 시장 진출 경로 — 중동 vs. 유럽 vs. 미국</h5>
+          <p style="">사우디 아람코와의 연결점이 있음에도 해외 시장 전략이 구체화되지 않았다. 어느 시장을 언제 어떻게 공략할 것인가?</p>
+        </div>
+      </div>
+
+      <div class="followup-card">
+        <div class="fq-num">5</div>
+        <div class="fq-content">
+          <h5 style="">공동 창업자 김상윤의 기술 역량 검증</h5>
+          <p style="">100명 인터뷰 + 실제 코딩 역량은 인상적이나, 현재 개발된 것과 개발 예정인 것의 경계가 불명확하다.</p>
+        </div>
+      </div>
+
+      <div class="followup-card">
+        <div class="fq-num">6</div>
+        <div class="fq-content">
+          <h5 style="">노션 기반 PKM 시스템 공개 공유</h5>
+          <p style="">멘토가 직접 관심을 보인 영역. 창업자의 자동화 회의록 시스템과 지식 큐레이션 방법론을 체계적으로 정리해 공유하면 빠른 팔로워 확보 가능.</p>
+        </div>
+      </div>
+
+      <div class="followup-card">
+        <div class="fq-num">7</div>
+        <div class="fq-content">
+          <h5 style="">정주영 창업 경진대회 투자 전환율 분석</h5>
+          <p style="">대회 수상 후 실제 메시어 벤처스, 블루포인트 등과의 투자 논의가 어떻게 진행되는지 5월 결과 추적 필요.</p>
+        </div>
+      </div>
+
+      <div class="followup-card">
+        <div class="fq-num">8</div>
+        <div class="fq-content">
+          <h5 style="">엔지니어 AI 전환 교육 시장 규모</h5>
+          <p style="">은퇴 시니어 엔지니어 + 신진 엔지니어 연결 플랫폼 + AI 교육이 결합된 생태계의 실제 TAM(전체 시장 규모) 산정이 필요하다.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p style="">📊 인터뷰 분석 리포트 | <strong>스냅스케일 × 멘토 커피챗</strong></p>
+  <p style="margin-top: 8px; font-size: 12px;">플랜트 AI 스타트업 창업 여정 — 온톨로지 기반 설계 자동화의 도전</p>
+</footer>
+
+<script>
+function toggleAcc(el) {
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.accordion-item').forEach(a => a.classList.remove('open'));
+  if (!isOpen) el.classList.add('open');
+}
+</script>
+
+<script type="application/json" id="celab-metadata">
+{"title":"플랜트 AI 스타트업 시냅스케일 창업자 커피챗 인터뷰 분석","description":"엔지니어 출신 공동창업자가 플랜트 산업 특화 온톨로지 기반 AI 설계 자동화 스타트업 시냅스케일을 창업하며 글로벌 컨설턴트 멘토와 나눈 커피챗. 피칭 전략, 가치사슬 포지셔닝, 창업 생태계 조언을 심층 분석한다.","category":"전략","tags":["플랜트AI","온톨로지","스타트업창업","P&ID자동화","엔지니어링AI","시냅스케일","커피챗멘토링"],"emoji":"🏭"}
+</script>
+<div id="celab-logo-badge" style="position:fixed;bottom:18px;right:18px;z-index:9999;
+  width:52px;height:52px;border-radius:50%;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,0.35);cursor:pointer;" title="CELab · Chemical Engineering Lab" onclick="window.open('https://celab-kor.github.io/celab-knowledge-base/','_blank')">
+  <img src="data:image/jpeg;base64,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" style="width:100%;height:100%;object-fit:cover;display:block;">
+</div>
+
+
+<div id="celab-fab-trigger" style="position: fixed; bottom: 28px; right: 28px; z-index: 100001; width: 44px; height: 44px; border-radius: 50%; background: rgb(201, 168, 76); color: rgb(13, 27, 42); font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; user-select: none; transition: background 0.2s, transform 0.2s; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; transform: rotate(45deg) scale(1.05);">✏️</div><div id="celab-fab-panel" style="position: fixed; bottom: 82px; right: 28px; z-index: 100000; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; transition: opacity 0.25s, transform 0.25s; opacity: 1; transform: translateY(0px); pointer-events: auto;"><div id="celab-fab-layout" style="background: rgb(44, 122, 123); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">🔄 레이아웃</div><div id="celab-fab-edit" style="background: rgb(201, 168, 76); color: rgb(13, 27, 42); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">✏️ AI 편집</div><div id="celab-fab-direct" style="background: rgb(224, 123, 57); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgb(255, 255, 255) 0px 0px 0px 2.5px, rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">✅ 편집 중</div><div id="celab-fab-save" style="background: rgb(39, 103, 73); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">💾 저장</div></div></body></html>
