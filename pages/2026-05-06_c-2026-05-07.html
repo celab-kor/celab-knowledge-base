@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SnapScale 전략 회의 | 인화공 기반 시니어 커뮤니티·협의체·온톨로지 전략</title>
+<style>
+:root{
+  --navy:#1e3c72;--navy2:#2a5298;--green:#32B489;--orange:#f39c12;
+  --red:#e74c3c;--purple:#8e44ad;--teal:#00796B;--gold:#F9A825;
+  --old:#1B5E20;--newc:#0D47A1;
+  /* 신규 패널 */
+  --stefano:#5D4037;   /* 인화공 운영자 - 갈색 신뢰 */
+  --jang:#006064;      /* 장영기 - 딥시안 글로벌 */
+  --lee:#33691E;       /* 이종현 부장 - 올리브 실무 */
+  --prof:#4527A0;      /* POSTECH 교수 - 딥퍼플 학계 */
+  --bg:#f5f4f0;--card:#fff;--ink:#1a2332;--muted:#637082;
+  --border:#e2e8f0;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;}
+
+/* ── COVER ── */
+.cover{background:linear-gradient(135deg,#0a1628,var(--navy));min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 70px,rgba(50,180,137,.03) 70px,rgba(50,180,137,.03) 71px),repeating-linear-gradient(90deg,transparent,transparent 70px,rgba(50,180,137,.03) 70px,rgba(50,180,137,.03) 71px);}
+.cover-inner{position:relative;z-index:1;text-align:center;max-width:860px;}
+.cover-badge{display:inline-block;border:1px solid var(--green);color:var(--green);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:7px 20px;border-radius:2px;margin-bottom:36px;}
+.cover h1{font-size:clamp(26px,4vw,46px);font-weight:300;color:#fff;line-height:1.25;margin-bottom:16px;letter-spacing:-.5px;}
+.cover h1 strong{font-weight:700;color:var(--green);}
+.cover-desc{font-size:14px;color:rgba(255,255,255,.5);max-width:600px;margin:0 auto 48px;line-height:1.8;}
+.cover-meta{display:flex;gap:0;flex-wrap:wrap;justify-content:center;border:1px solid rgba(50,180,137,.2);border-radius:6px;overflow:hidden;}
+.cm-item{padding:20px 28px;text-align:center;border-right:1px solid rgba(50,180,137,.2);min-width:120px;}
+.cm-item:last-child{border-right:none;}
+.cm-label{font-size:10px;letter-spacing:2px;color:var(--green);text-transform:uppercase;margin-bottom:5px;}
+.cm-val{font-size:14px;color:rgba(255,255,255,.85);}
+
+/* ── WARN ── */
+.warn{background:#fff8e1;border-left:4px solid var(--orange);padding:14px 20px;margin:32px auto;max-width:960px;border-radius:0 6px 6px 0;font-size:13px;color:#5d4037;}
+
+/* ── PAGE ── */
+.page{max-width:960px;margin:0 auto;padding:48px 32px;}
+
+/* ── SECTION HEADER ── */
+.sec-badge{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+.sec-title{font-size:clamp(20px,2.5vw,28px);font-weight:300;color:var(--navy);margin-bottom:6px;}
+.sec-desc{font-size:13px;color:var(--muted);max-width:640px;line-height:1.7;margin-bottom:36px;}
+
+/* ── PANEL ROSTER ── */
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:48px;}
+.roster-card{border-radius:8px;padding:16px;border:1px solid var(--border);background:var(--card);display:flex;gap:12px;align-items:flex-start;}
+.rc-dot{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;}
+.rc-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.rc-role{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* ── SESSION DIVIDER ── */
+.session-header{background:var(--navy);color:#fff;border-radius:8px;padding:16px 22px;margin:40px 0 24px;display:flex;justify-content:space-between;align-items:center;}
+.sh-left .sh-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:4px;}
+.sh-left .sh-title{font-size:16px;font-weight:700;}
+.sh-right{font-size:12px;color:rgba(255,255,255,.5);}
+
+/* ── SPEECH BUBBLE ── */
+.speech{display:flex;gap:14px;margin-bottom:20px;}
+.speech.right{flex-direction:row-reverse;}
+.sp-avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;margin-top:4px;}
+.sp-wrap{flex:1;max-width:80%;}
+.sp-name{font-size:11px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:8px;}
+.sp-badge{font-size:9px;padding:2px 7px;border-radius:10px;color:#fff;font-weight:700;}
+.sp-bubble{background:var(--card);border:1px solid var(--border);border-radius:2px 12px 12px 12px;padding:14px 18px;font-size:13px;line-height:1.75;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.speech.right .sp-bubble{border-radius:12px 2px 12px 12px;}
+.sp-bubble strong{color:var(--navy);}
+.sp-bubble em{font-style:normal;background:#fff3cd;padding:1px 3px;border-radius:2px;}
+
+/* ── INSIGHT BOX ── */
+.ibox{border-radius:8px;padding:16px 20px;margin:16px 0;font-size:13px;line-height:1.75;}
+.ibox.green{background:#e8faf0;border:1px solid #a5d6a7;border-left:4px solid var(--green);}
+.ibox.orange{background:#fff8e1;border:1px solid #ffe082;border-left:4px solid var(--orange);}
+.ibox.red{background:#fde8e3;border:1px solid #ef9a9a;border-left:4px solid var(--red);}
+.ibox.blue{background:#e3f2fd;border:1px solid #90caf9;border-left:4px solid #1565C0;}
+.ibox.gold{background:#fffde7;border:1px solid #f9a825;border-left:4px solid var(--gold);}
+.ibox.teal{background:#e0f2f1;border:1px solid #80cbc4;border-left:4px solid var(--teal);}
+.ibox.purple{background:#f3e5f5;border:1px solid #ce93d8;border-left:4px solid var(--purple);}
+.ibox.navy{background:#e8eaf6;border:1px solid #9fa8da;border-left:4px solid var(--navy);}
+.ibox.stefano{background:#efebe9;border:1px solid #bcaaa4;border-left:4px solid var(--stefano);}
+.ibox-title{font-weight:700;margin-bottom:6px;font-size:12px;letter-spacing:.5px;text-transform:uppercase;}
+.ibox ul{padding-left:18px;margin-top:6px;}
+.ibox li{margin-bottom:4px;}
+
+/* ── VERDICT ── */
+.verdict{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:12px;padding:28px 32px;margin:32px 0;}
+.vd-title{font-size:13px;font-weight:700;color:var(--green);letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;}
+.vd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+.vd-item{background:rgba(255,255,255,.08);border-radius:8px;padding:16px;}
+.vd-item-label{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.vd-item-val{font-size:14px;font-weight:700;color:#fff;line-height:1.5;}
+
+/* ── 3-1-1 BOX ── */
+.box311{background:var(--navy);color:#fff;border-radius:10px;padding:22px 28px;margin:24px 0;}
+.b311-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:14px;}
+.b311-conclusion{font-size:15px;font-weight:700;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1);}
+.b311-grounds{list-style:none;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1);}
+.b311-grounds li{padding:4px 0;font-size:13px;color:rgba(255,255,255,.8);}
+.b311-grounds li::before{content:"→ ";color:var(--green);}
+.b311-action{font-size:13px;color:var(--gold);}
+.b311-action::before{content:"⚡ 즉시 액션: ";font-weight:700;}
+
+/* ── ACTION TABLE ── */
+.action-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:16px;}
+.action-table th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-size:11px;letter-spacing:.5px;}
+.action-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
+.action-table tr:last-child td{border-bottom:none;}
+.priority{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.priority.high{background:#fde8e3;color:#c62828;}
+.priority.med{background:#fff8e1;color:#f57f17;}
+.priority.low{background:#e8f5e9;color:#2e7d32;}
+
+/* ── STRUCTURE DIAGRAM ── */
+.struct-diagram{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:0;align-items:stretch;margin:24px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.struct-node{padding:18px;text-align:center;background:var(--card);}
+.struct-node-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.struct-node-val{font-size:13px;color:var(--ink);}
+.struct-arrow{display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--border);background:var(--bg);padding:0 4px;}
+
+/* ── FOOTER ── */
+footer{background:var(--navy);color:rgba(255,255,255,.5);padding:32px 40px;text-align:center;font-size:12px;line-height:2;}
+footer strong{color:var(--red);}
+.ver{font-size:11px;color:rgba(255,255,255,.3);margin-top:8px;}
+
+/* ── COMMUNITY LAYER DIAGRAM ── */
+.comm-layers{display:flex;flex-direction:column;gap:3px;margin:20px 0;}
+.comm-layer{display:flex;gap:16px;align-items:center;padding:14px 20px;border-radius:8px;border:1px solid var(--border);}
+.cl-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.cl-platform{font-size:12px;font-weight:700;min-width:120px;}
+.cl-target{font-size:12px;color:var(--muted);flex:1;}
+.cl-goal{font-size:11px;font-weight:700;}
+
+/* ── ONTOLOGY FLOW ── */
+.onto-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0;}
+.onto-node{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center;}
+.onto-icon{font-size:24px;margin-bottom:8px;}
+.onto-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.onto-desc{font-size:11px;color:var(--muted);line-height:1.5;}
+.onto-arrow{display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--green);}
+.onto-result{background:linear-gradient(135deg,#e8eaf6,#e0f2f1);border:2px solid var(--green);border-radius:10px;padding:18px;text-align:center;grid-column:1/-1;}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ COVER ═══════════ -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-badge">MTG-CUSTOM · SnapScale 전략 회의 · 2026.05.07</div>
+    <h1>인터넷화학공학회 기반<br><strong>시니어 커뮤니티·협의체·온톨로지 DB</strong><br>구축 전략</h1>
+    <p class="cover-desc">
+      CELab(주니어 취준생) vs 시니어 실무자 커뮤니티 분리 전략 · 인화공 20년 DB 활용 방안<br>
+      산학연 협의체 구성 · 업계 민감성 극복 · 온톨로지 큐레이션 로드맵
+    </p>
+    <div class="cover-meta">
+      <div class="cm-item"><div class="cm-label">날짜</div><div class="cm-val">2026.05.07</div></div>
+      <div class="cm-item"><div class="cm-label">패널</div><div class="cm-val">8인</div></div>
+      <div class="cm-item"><div class="cm-label">세션</div><div class="cm-val">5개</div></div>
+      <div class="cm-item"><div class="cm-label">핵심 자산</div><div class="cm-val">인화공 DB 5,000건+</div></div>
+      <div class="cm-item"><div class="cm-label">보안</div><div class="cm-val">CONFIDENTIAL</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="warn">
+  ⚠️ 본 회의록은 AI 기술을 활용하여 녹취록 및 공유 문서를 기반으로 작성되었으며, 일부 정확도가 떨어질 수 있습니다. 최종 판단은 반드시 실제 당사자의 확인을 거치십시오.
+</div>
+
+<!-- ═══════════ PANEL ROSTER ═══════════ -->
+<div class="page">
+  <div class="sec-badge">Panel Roster</div>
+  <h2 class="sec-title">참여 패널 — 이번 세션 신규 구성</h2>
+  <p class="sec-desc">기존 등록 패널 외 이번 의제 특화 신규 패널 4인을 추가 소집합니다.</p>
+  <div class="roster">
+
+    <div class="roster-card">
+      <div class="rc-dot" style="background:var(--newc);">박</div>
+      <div><div class="rc-name">박규호 — CELab 창업자</div><div class="rc-role">AspenTech 시니어 컨설턴트 · SnapScale 공동창업자<br>화공·공정 커뮤니티 460명+ 운영 · 주니어 취준생 플랫폼 CELab</div></div>
+    </div>
+    <div class="roster-card">
+      <div class="rc-dot" style="background:var(--navy);">김</div>
+      <div><div class="rc-name">김상윤 — 모더레이터</div><div class="rc-role">SnapScale CEO · POSTECH 컴공<br>3-1-1 포맷 소통 원칙 · 결론·근거·액션</div></div>
+    </div>
+    <div class="roster-card">
+      <div class="rc-dot" style="background:var(--stefano);">스</div>
+      <div><div class="rc-name">스테파노 — 인화공 운영자 ★신규</div><div class="rc-role">인터넷화학공학회 운영 · 20년간 커뮤니티 신뢰 구축<br>5,000건+ Q&A DB 보유 · 사이트 리뉴얼 협약 완료</div></div>
+    </div>
+    <div class="roster-card">
+      <div class="rc-dot" style="background:var(--jang);">장</div>
+      <div><div class="rc-name">장영기 선생님 — 사우디아람코 임원 ★신규</div><div class="rc-role">인화공 90년대 최초 구축자 · 사우디아람코 임원급 엔지니어<br>바이브코딩 실무 AI 개발자 · 사내 엔지니어링 AI 도입 실전</div></div>
+    </div>
+    <div class="roster-card">
+      <div class="rc-dot" style="background:var(--lee);">이</div>
+      <div><div class="rc-name">이종현 부장 — UOP 기본설계 ★신규</div><div class="rc-role">UOP 20년 기본설계(Basic Engineering) 베테랑<br>공정 설계 원론의 살아있는 레퍼런스 · 도메인 지식의 정점</div></div>
+    </div>
+    <div class="roster-card">
+      <div class="rc-dot" style="background:var(--prof);">교</div>
+      <div><div class="rc-name">POSTECH 플랜트AI 교수 ★신규</div><div class="rc-role">산업대학원 플랜트 AI 담당 · 산학연 협력 프레임워크 전문<br>정부과제 연계·논문·특허 관점 · 자문 역할 수용</div></div>
+    </div>
+    <div class="roster-card">
+      <div class="rc-dot" style="background:var(--old);">한</div>
+      <div><div class="rc-name">한승민 — Industrial Tech VC</div><div class="rc-role">B2B SaaS 30개사+ 포트폴리오 · AspenTech 초기 투자<br>커뮤니티→제품 전환 패턴 실증 보유</div></div>
+    </div>
+    <div class="roster-card">
+      <div class="rc-dot" style="background:#BF360C;">오</div>
+      <div><div class="rc-name">오태준 — 연쇄창업가</div><div class="rc-role">엔지니어링 SW $45M Exit · 제조 AI $180M Exit<br>업계 커뮤니티 기반 GTM 실전 경험</div></div>
+    </div>
+  </div>
+
+<!-- ══════════════════════════════════════════
+     SESSION 1: 현황 재정의
+══════════════════════════════════════════ -->
+  <div class="session-header">
+    <div class="sh-left">
+      <div class="sh-tag">Session 1 · 30분</div>
+      <div class="sh-title">CELab과 인화공의 위상 재정의 — 우리가 가진 것의 실체</div>
+    </div>
+    <div class="sh-right">의제: 두 자산의 현재 포지션 명확화 → 커뮤니티 전략 분기점 설정</div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--navy);">김</div>
+    <div class="sp-wrap">
+      <div class="sp-name">김상윤 <span class="sp-badge" style="background:var(--navy);">모더레이터</span></div>
+      <div class="sp-bubble">오늘 회의 핵심은 하나입니다. 우리가 가진 두 개의 커뮤니티 자산 — CELab과 인화공 — 이 지금 어디에 서 있는지를 냉정하게 정의하고, 그 위에 무엇을 얹을지 결정하는 것입니다. 박규호 부장, 먼저 CELab 현황부터 솔직하게 말씀해주세요.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--newc);">박</div>
+    <div class="sp-wrap">
+      <div class="sp-name">박규호 <span class="sp-badge" style="background:var(--newc);">CELab 창업자</span></div>
+      <div class="sp-bubble">솔직히 말씀드립니다. CELab의 460명은 <strong>주니어 취준생이 핵심 타겟</strong>이었습니다. HYSYS 자격증 따고 싶은 학생들, EPC 취업 준비생들이 주로 들어왔고, 실제로 120명 이상의 자격증 취득자를 배출했습니다. 이건 성과이지만, <em>동시에 한계이기도 합니다.</em> 460명 중 삼성E&A 현역 수석 엔지니어가 몇 명이나 있느냐고 물으면… 거의 없습니다. 그래서 오늘 논의가 필요한 거죠.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--stefano);">스</div>
+    <div class="sp-wrap">
+      <div class="sp-name">스테파노 <span class="sp-badge" style="background:var(--stefano);">인화공 운영자</span></div>
+      <div class="sp-bubble">인화공은 반대 구조입니다. 20년을 운영하면서 쌓인 5,000건 이상의 질의응답, 그 안에 담긴 사람들은 <strong>현역 실무자들과 시니어 엔지니어들</strong>이었습니다. 장영기 선생님이 90년대에 처음 만드셨을 때부터, 이 공간은 '현장에서 막힌 문제를 동료 엔지니어에게 묻는 곳'이었습니다. 가입자만 봐도 현직 경력자들이 훨씬 많아요. 문제는 그 사람들이 <em>지금 활성화되어 있지 않다</em>는 거죠. 플랫폼이 낡았고, 새 자극이 없었기 때문입니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--jang);">장</div>
+    <div class="sp-wrap">
+      <div class="sp-name">장영기 선생님 <span class="sp-badge" style="background:var(--jang);">사우디아람코 임원</span></div>
+      <div class="sp-bubble">사우디에서 제가 지금 하는 일이 힌트가 될 수 있습니다. 저는 사내에서 바이브코딩으로 엔지니어링 업무 자동화 도구를 직접 만들고 있어요. 아람코 같은 회사에서도 <em>'AI를 어떻게 써야 할지 모르는 시니어 엔지니어들'</em>이 넘쳐납니다. 그들이 원하는 건 간단합니다 — <strong>내 경험과 도메인 지식을 AI와 결합하면 무엇이 가능한가</strong>를 보여주는 사람과 공간이 필요한 거예요. 인화공이 그 역할을 할 수 있다고 봅니다. 하지만 그러려면 '질문 답변 게시판'이 아니라 <strong>실무 AI 도입 플랫폼</strong>으로 리뉴얼되어야 합니다.</div>
+    </div>
+  </div>
+
+  <div class="ibox gold">
+    <div class="ibox-title">★ 세션 1 핵심 발견</div>
+    <ul>
+      <li><strong>CELab</strong>: 주니어 취준생 460명+. HYSYS 교육·취업 퍼널로 명확히 포지션. 시니어 커뮤니티와 역할 분리 필요.</li>
+      <li><strong>인화공</strong>: 5,000건+ Q&A 실무자 DB. 현역 시니어 가입자 다수 보유. 단, 플랫폼 낡아 비활성화 상태.</li>
+      <li><strong>장영기 선생님의 진단</strong>: 시니어들이 원하는 것 = "AI + 내 도메인 = 무엇이 가능한가"를 보여주는 공간.</li>
+      <li><strong>결론</strong>: 두 커뮤니티는 타겟이 다르다. 분리 운영이 맞다. 인화공을 시니어 실무 AI 도입 플랫폼으로 전환.</li>
+    </ul>
+  </div>
+
+<!-- ══════════════════════════════════════════
+     SESSION 2: 시니어 동기부여와 보상 구조
+══════════════════════════════════════════ -->
+  <div class="session-header">
+    <div class="sh-left">
+      <div class="sh-tag">Session 2 · 45분</div>
+      <div class="sh-title">시니어 엔지니어 동기부여와 보상 구조 — 왜 참여하는가</div>
+    </div>
+    <div class="sh-right">의제: 시니어가 지식을 공유할 이유를 만드는 구조 설계</div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--old);">한</div>
+    <div class="sp-wrap">
+      <div class="sp-name">한승민 <span class="sp-badge" style="background:var(--old);">Industrial VC</span></div>
+      <div class="sp-bubble">VC 관점에서 투자사들의 패턴을 보면, 커뮤니티 기반 B2B 제품에서 실패하는 가장 흔한 이유가 있습니다. <strong>시니어 공급자의 동기부여를 금전으로만 풀려 한다는 것</strong>입니다. AspenTech처럼 30년 경력의 엔지니어에게 자문료 20만원을 드린다? 그건 모욕에 가깝습니다. 그들이 원하는 건 <em>레거시</em>입니다. 자기가 30년 동안 쌓은 것이 사라지지 않고 다음 세대에 전달된다는 느낌. 이것이 시니어를 움직이는 1번 동기입니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--lee);">이</div>
+    <div class="sp-wrap">
+      <div class="sp-name">이종현 부장 <span class="sp-badge" style="background:var(--lee);">UOP 기본설계 20년</span></div>
+      <div class="sp-bubble">솔직히 말씀드리겠습니다. 저 같은 사람이 지식을 외부에 공개하는 데 가장 큰 심리적 장벽이 뭔지 아십니까? <strong>'이 정보가 어디로 흘러가는가'</strong> 입니다. UOP에서 20년 동안 배운 공정 설계 방법론은 분명히 회사의 자산이기도 합니다. 경업금지 계약도 있고, NDA도 있고. 그 경계선이 어디냐에 대한 불안이 첫 번째 장벽입니다. 두 번째는 — 내가 이 커뮤니티에 기여했을 때 <em>내 이름이 남느냐</em>는 것입니다. 익명으로 기여하고 싶은 사람은 없어요.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--jang);">장</div>
+    <div class="sp-wrap">
+      <div class="sp-name">장영기 선생님 <span class="sp-badge" style="background:var(--jang);">사우디아람코</span></div>
+      <div class="sp-bubble">이종현 부장님 말씀이 정확합니다. 그래서 <em>콘텐츠의 성격을 처음부터 명확히 해야</em> 합니다. 우리가 다루는 것은 <strong>회사 기밀이 아니라 '엔지니어링 방법론'</strong>입니다. "열교환기 설계 시 TEMA 기준을 AI로 어떻게 자동 검증하는가"는 회사 기밀이 아닙니다. 이미 교과서에 나온 내용입니다. 반면 "우리 회사 특정 프로젝트의 P&ID"는 기밀이죠. 이 선을 명확히 그으면, 참여의 심리적 장벽이 크게 낮아집니다. 제가 아람코에서도 이 방식으로 AI 도입 세션을 운영하고 있어요.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:#BF360C;">오</div>
+    <div class="sp-wrap">
+      <div class="sp-name">오태준 <span class="sp-badge" style="background:#BF360C);">연쇄창업가</span></div>
+      <div class="sp-bubble">제 두 번째 회사 Exit할 때 경험한 것이 있는데, 엔지니어링 SW 커뮤니티에서 가장 강력한 동기는 <strong>'Cursor for Engineers' 포지셔닝</strong>입니다. 올해 모든 업계의 화두가 AI 실무 도입이잖아요. 시니어 엔지니어들도 이걸 모르면 뒤처진다는 불안이 있습니다. 이 불안을 역으로 활용하는 겁니다. "30년 경험에 AI를 얹으면 당신은 주니어 50명의 생산성을 낼 수 있습니다" — 이게 동기입니다. 두려움을 기회로 전환하는 프레이밍이죠.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--prof);">교</div>
+    <div class="sp-wrap">
+      <div class="sp-name">POSTECH 교수 <span class="sp-badge" style="background:var(--prof);">산학연 자문</span></div>
+      <div class="sp-bubble">학계 입장에서 보면 하나를 추가해야 합니다. <strong>산학연 협의체에 참여하는 것 자체가 공식 이력이 됩니다.</strong> 기업 엔지니어 입장에서 "POSTECH 산업대학원 플랜트 AI 협의체 자문위원"이라는 타이틀은 내부 승진이나 이직 시 매우 가치 있는 크레덴셜입니다. 이것을 제도화할 수 있습니다. 연구 참여, 공동 발표, 논문 공저 — 이런 것들이 시니어에게 금전 이상의 가치를 줍니다. 그리고 대학 입장에서는 정부 산학연 과제의 기업 파트너로 SnapScale을 연결할 수 있습니다.</div>
+    </div>
+  </div>
+
+  <div class="ibox blue">
+    <div class="ibox-title">시니어 엔지니어 동기부여 4-Layer 구조</div>
+    <ul>
+      <li><strong>Layer 1 — 레거시 욕구</strong>: 30년 경험이 사라지지 않고 다음 세대에 전달된다는 느낌. "내 이름이 남는다."</li>
+      <li><strong>Layer 2 — 불안의 역전환</strong>: AI를 모르면 뒤처진다 → AI+도메인 = 주니어 50명의 생산성. "Cursor for Engineers."</li>
+      <li><strong>Layer 3 — 공식 크레덴셜</strong>: POSTECH 협의체 자문위원 타이틀. 논문·발표·이력서 가치.</li>
+      <li><strong>Layer 4 — 금전적 보상</strong>: 자문료(월 정액) + 스톡옵션(장기 참여자). 단, 이것만으로는 부족.</li>
+    </ul>
+  </div>
+
+  <div class="ibox orange">
+    <div class="ibox-title">⚠️ 참여 장벽 — 반드시 선제 해결해야 할 것</div>
+    <ul>
+      <li><strong>NDA·기술 유출 불안</strong>: "회사 기밀 vs 엔지니어링 방법론" 선을 명확히. 방법론 공유는 NDA 위반 아님을 법적으로 확인하고 가이드라인 배포.</li>
+      <li><strong>겸업금지 우려</strong>: 자문료 수령이 겸업으로 분류될 수 있음. 자문 계약 구조를 강의료·연구참여비 형태로 설계.</li>
+      <li><strong>좁은 업계 소문</strong>: "SnapScale에 기여했다"는 것이 경쟁사에 알려질 우려. 비공개 어드바이저리 그룹 트랙 별도 운영.</li>
+    </ul>
+  </div>
+
+<!-- ══════════════════════════════════════════
+     SESSION 3: 업계 민감성 극복
+══════════════════════════════════════════ -->
+  <div class="session-header">
+    <div class="sh-left">
+      <div class="sh-tag">Session 3 · 30분</div>
+      <div class="sh-title">업계 민감성 극복 전략 — 좁고 예민한 세계에서 신뢰 구축</div>
+    </div>
+    <div class="sh-right">의제: 기술 유출·겸업금지·소문 우려를 구조적으로 해소하는 방법</div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--stefano);">스</div>
+    <div class="sp-wrap">
+      <div class="sp-name">스테파노 <span class="sp-badge" style="background:var(--stefano);">인화공 운영자</span></div>
+      <div class="sp-bubble">인화공을 20년 운영하면서 배운 것이 있습니다. 화공플랜트 업계는 <em>국내에서 실무자가 몇천 명 수준</em>입니다. 현대엔지니어링에서 GS건설으로 이직한 사람이 전 직장 동료랑 같은 포럼에 있는 게 일상이에요. 그래서 인화공이 20년 동안 살아남은 비결이 있습니다. <strong>회사 이름을 드러내지 않고 기술 문제만 논의하는 문화</strong>를 만든 거죠. "우리 프로젝트에서..." 가 아니라 "일반적으로 이런 상황에서 어떻게 계산하나요?" — 이 프레이밍이 핵심입니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--newc);">박</div>
+    <div class="sp-wrap">
+      <div class="sp-name">박규호 <span class="sp-badge" style="background:var(--newc);">SnapScale 공동창업자</span></div>
+      <div class="sp-bubble">그렇다면 공개 커뮤니티와 비공개 자문단을 이중 트랙으로 운영하는 구조가 맞겠네요. <strong>공개 트랙</strong>은 "AI를 활용한 엔지니어링 방법론" 중심 — 회사 기밀 없이 누구나 참여 가능. <strong>비공개 어드바이저리 트랙</strong>은 NDA를 맺은 소수 전문가 그룹 — 온톨로지 DB 직접 기여, 제품 피드백, 자문료 정식 지급. 이종현 부장님이나 장영기 선생님 같은 분들이 비공개 트랙에 계시고, 공개 트랙에서는 "이런 분들이 뒤에서 검증한 내용"이라는 신뢰만 주는 구조입니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--lee);">이</div>
+    <div class="sp-wrap">
+      <div class="sp-name">이종현 부장 <span class="sp-badge" style="background:var(--lee);">UOP 기본설계</span></div>
+      <div class="sp-bubble">그 구조라면 제가 참여할 수 있습니다. 핵심은 두 가지입니다. 첫째, <strong>내가 기여한 콘텐츠의 저작권이 나에게 있어야 합니다.</strong> SnapScale이 제 이름으로 된 방법론을 제품화할 때, 그것이 "이종현의 기여물"로 명시되어야 해요. 둘째, <strong>내 회사(UOP) 관련 정보는 일절 다루지 않는다는 명시적 합의</strong>가 있어야 합니다. 이 두 가지가 계약서에 들어가면, 저는 기꺼이 기여할 의향이 있습니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--jang);">장</div>
+    <div class="sp-wrap">
+      <div class="sp-name">장영기 선생님 <span class="sp-badge" style="background:var(--jang);">사우디아람코</span></div>
+      <div class="sp-bubble">좋은 포인트입니다. 그리고 한 가지 더 — <strong>제가 인화공을 처음 만든 사람으로서 커뮤니티에 갖는 신뢰도</strong>가 있습니다. 제가 "이 플랫폼은 안전하다, 내가 보증한다"라고 공개적으로 말하면, 20년간 인화공을 믿었던 기존 회원들이 움직입니다. 이게 스테파노님과 저의 레퓨테이션 자산입니다. SnapScale과 CELab은 기술과 운영을 주고, 우리는 신뢰와 커뮤니티를 줍니다. <em>이 교환이 공정해야 장기적으로 지속됩니다.</em></div>
+    </div>
+  </div>
+
+  <div class="ibox teal">
+    <div class="ibox-title">✅ 업계 민감성 극복 — 합의된 5가지 원칙</div>
+    <ul>
+      <li><strong>원칙 1 — 방법론 vs 기밀 구분선</strong>: "일반 엔지니어링 방법론"은 공유 대상. "특정 회사·프로젝트 데이터"는 절대 불가. 가이드라인 문서화 후 배포.</li>
+      <li><strong>원칙 2 — 이중 트랙 구조</strong>: 공개 커뮤니티(AI+방법론 공유) + 비공개 어드바이저리(NDA·자문료·온톨로지 기여).</li>
+      <li><strong>원칙 3 — 기여자 저작권 명시</strong>: 기여한 콘텐츠의 저작권은 기여자에게. SnapScale은 사용권만 취득. 기여자 이름 명시 필수.</li>
+      <li><strong>원칙 4 — 레퓨테이션 선봉대</strong>: 장영기·스테파노·이종현 등 검증된 인물이 "나도 참여한다"고 공개 선언. 그 후 후속 참여자 모집.</li>
+      <li><strong>원칙 5 — 겸업 리스크 차단</strong>: 자문 계약을 "강의료·연구참여비" 형태로 구조화. 법적으로 겸업 분류 회피 가능 여부 법무 검토 필요.</li>
+    </ul>
+  </div>
+
+<!-- ══════════════════════════════════════════
+     SESSION 4: 산학연 협의체 구성
+══════════════════════════════════════════ -->
+  <div class="session-header">
+    <div class="sh-left">
+      <div class="sh-tag">Session 4 · 45분</div>
+      <div class="sh-title">산학연 협의체 구성 — 역할 분담과 운영 방법론</div>
+    </div>
+    <div class="sh-right">의제: 인화공·SnapScale·CELab·POSTECH·이종현 부장의 역할 명확화</div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--prof);">교</div>
+    <div class="sp-wrap">
+      <div class="sp-name">POSTECH 교수 <span class="sp-badge" style="background:var(--prof);">학계 자문</span></div>
+      <div class="sp-bubble">산학연 협의체를 제대로 구성하려면 <strong>각 주체가 무엇을 주고 무엇을 받는지</strong>를 먼저 명확히 해야 합니다. 제가 학계에서 보는 전형적인 실패 패턴은, 모두가 '받는' 역할만 기대하다가 기여가 없어 해체되는 경우입니다. 그래서 제안드립니다 — 각 주체의 기여물(Input)과 혜택(Output)을 명시한 <em>협의체 헌장</em>을 처음부터 작성하십시오. 저는 이 헌장 초안 작성을 지원할 수 있습니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--navy);">김</div>
+    <div class="sp-wrap">
+      <div class="sp-name">김상윤 <span class="sp-badge" style="background:var(--navy);">모더레이터</span></div>
+      <div class="sp-bubble">좋습니다. 그럼 각 주체의 역할을 지금 이 자리에서 명확히 합시다. 인화공은? SnapScale은? CELab은? POSTECH은? 이종현 부장님은? 그리고 그 외에 한두 분이 더 들어와야 한다고 했는데, 어떤 포지션이 필요한지도 정의해야 합니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--stefano);">스</div>
+    <div class="sp-wrap">
+      <div class="sp-name">스테파노 <span class="sp-badge" style="background:var(--stefano);">인화공 운영자</span></div>
+      <div class="sp-bubble">인화공의 역할은 명확합니다. <strong>커뮤니티 플랫폼과 20년 레퓨테이션</strong>입니다. 5,000건+ Q&A DB도 드릴 수 있고, 기존 회원들에 대한 신뢰 채널도 드릴 수 있습니다. 우리가 받을 것은 — 플랫폼 리뉴얼, 운영 고도화, 그리고 인화공이 업계에서 더 강한 위상을 갖게 되는 것입니다. 단, 저희 기존 커뮤니티 문화가 훼손되어서는 안 됩니다. 상업화가 너무 전면에 나오면 회원들이 떠납니다. <em>SnapScale과 CELab은 '후원자·파트너' 포지션으로 있고, 전면에는 인화공이 나서야 합니다.</em></div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--newc);">박</div>
+    <div class="sp-wrap">
+      <div class="sp-name">박규호 <span class="sp-badge" style="background:var(--newc);">CELab</span></div>
+      <div class="sp-bubble">스테파노님 말씀에 동의합니다. CELab의 역할은 <strong>교육 콘텐츠 제작과 주니어 퍼널</strong>입니다. HYSYS 자격증 과정, AI 입문 교육, 취업 연계 — 이건 CELab이 잘 할 수 있습니다. 시니어 커뮤니티와 주니어 커뮤니티가 연결되는 지점은 <em>멘토링 프로그램</em>입니다. 시니어 엔지니어가 CELab 주니어 멘토링을 해주면, 시니어는 레거시 욕구가 충족되고 CELab은 콘텐츠 품질이 올라갑니다. 이게 두 커뮤니티를 연결하는 자연스러운 접착제입니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--lee);">이</div>
+    <div class="sp-wrap">
+      <div class="sp-name">이종현 부장 <span class="sp-badge" style="background:var(--lee);">UOP 기본설계</span></div>
+      <div class="sp-bubble">제가 기여할 수 있는 것은 <strong>기본설계(Basic Engineering) 방법론의 정교화</strong>입니다. FEED 단계에서 공정 엔지니어가 실제로 어떤 결정을 내리는지, 그 결정의 논리 구조를 체계화하는 것 — 이게 AutoFlow 온톨로지의 핵심 뼈대가 될 수 있습니다. UOP에서 20년 동안 쌓은 건 이겁니다. 하지만 저는 월 1~2회 이상의 시간을 내기 어렵습니다. <em>내가 기여할 수 있는 최대치를 미리 명시하고 시작해야</em> 나중에 서로 실망하지 않습니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--jang);">장</div>
+    <div class="sp-wrap">
+      <div class="sp-name">장영기 선생님 <span class="sp-badge" style="background:var(--jang);">사우디아람코</span></div>
+      <div class="sp-bubble">저는 <strong>글로벌 연결과 기술 방향성</strong>을 맡겠습니다. 사우디아람코를 비롯한 중동 발주처가 어떤 AI 도구를 보고 있는지, 어떤 문제를 풀고 싶은지를 피드백할 수 있습니다. 이건 한국 EPC가 글로벌 수주를 할 때 결정적인 정보입니다. 그리고 인화공 출신으로서 한국의 시니어 엔지니어 네트워크를 글로벌로 연결하는 허브 역할을 할 수 있습니다. 단, 저도 시간이 매우 제한적입니다. <em>분기별 1회 온라인 세션 + 수시 비동기 피드백</em> 정도가 현실적입니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--old);">한</div>
+    <div class="sp-wrap">
+      <div class="sp-name">한승민 <span class="sp-badge" style="background:var(--old);">Industrial VC</span></div>
+      <div class="sp-bubble">VC 관점에서 이 협의체 구조를 투자자에게 설명할 때 가장 강력한 포인트가 뭔지 말씀드립니다. <strong>"20년 인화공 DB + 사우디아람코 임원 + POSTECH + UOP 출신 — 이 조합이 경쟁사가 5년 안에 복제할 수 없는 구조"</strong>입니다. Hexagon도 AVEVA도 이런 커뮤니티가 없습니다. 투자자는 기술보다 <em>해자(moat)</em>를 봅니다. 이 협의체 자체가 SnapScale의 가장 강력한 해자입니다. 이걸 IR 덱에 명확히 넣어야 합니다.</div>
+    </div>
+  </div>
+
+  <!-- 역할 분담 구조 -->
+  <div class="ibox navy">
+    <div class="ibox-title">산학연 협의체 역할 분담 — 확정안</div>
+    <ul>
+      <li><strong>인화공(스테파노)</strong>: 커뮤니티 플랫폼 + 20년 레퓨테이션 + 5,000건+ DB → 시니어 커뮤니티의 얼굴. 전면에 나섬. 상업화는 후면.</li>
+      <li><strong>장영기 선생님</strong>: 글로벌 연결 + 기술 방향성 + 인화공 원조 레퓨테이션 → 분기 1회 온라인 + 비동기 피드백. 중동·북미 EPC 피드백 채널.</li>
+      <li><strong>이종현 부장</strong>: 기본설계(FEED) 방법론 정교화 → 온톨로지 핵심 뼈대 기여. 월 1~2회 비공개 세션.</li>
+      <li><strong>POSTECH 교수</strong>: 산학연 협력 프레임워크 + 정부과제 연계 + 학문적 검증 → 협의체 헌장 초안 작성. 논문·특허 공동 참여.</li>
+      <li><strong>박규호·CELab</strong>: 교육 콘텐츠 + 주니어 퍼널 + 스프린트 운영 → 시니어 멘토링 연결. 온톨로지 큐레이션 실무.</li>
+      <li><strong>SnapScale(김상윤)</strong>: 제품 + 상업화 + 투자 조달 → 협의체 운영비 지원. AutoFlow/온톨로지 기술 구현.</li>
+      <li><strong>추가 1~2인 필요 포지션</strong>: ① 배관·기계 도메인 시니어 (공정 외 영역 커버) ② 국내 EPC 대기업 현역 임원급 (현대엔지니어링·GS건설 출신).</li>
+    </ul>
+  </div>
+
+  <div class="ibox red">
+    <div class="ibox-title">🚨 충돌 지점 — 미해결 과제</div>
+    <ul>
+      <li><strong>인화공 DB의 지식재산권</strong>: 20년간 쌓인 Q&A의 저작권은 질문자/답변자에게 있음. SnapScale이 이를 AI 학습에 활용하려면 개별 동의 또는 집합 약관 개정 필요. 법무 검토 필수.</li>
+      <li><strong>상업화와 커뮤니티 문화 충돌</strong>: 스테파노의 우려 — SnapScale이 너무 전면에 나오면 커뮤니티 이탈. 수익 배분 구조와 브랜딩 우선순위를 명확히 해야 함.</li>
+      <li><strong>기여자 보상의 형평성</strong>: 장영기(분기 1회)와 이종현(월 1~2회)의 기여량이 다른데 보상 구조가 같으면 불공정. 기여 시간×난이도 기반 차등 보상 설계 필요.</li>
+    </ul>
+  </div>
+
+<!-- ══════════════════════════════════════════
+     SESSION 5: 온톨로지 DB 큐레이션 로드맵
+══════════════════════════════════════════ -->
+  <div class="session-header">
+    <div class="sh-left">
+      <div class="sh-tag">Session 5 · 30분</div>
+      <div class="sh-title">온톨로지 DB 큐레이션 로드맵 — 인화공 DB를 어떻게 SnapScale 자산으로 전환하는가</div>
+    </div>
+    <div class="sh-right">의제: 5,000건+ Q&A → AutoFlow 온톨로지 뼈대 구축 실행 계획</div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--newc);">박</div>
+    <div class="sp-wrap">
+      <div class="sp-name">박규호 <span class="sp-badge" style="background:var(--newc);">온톨로지 실무 책임</span></div>
+      <div class="sp-bubble">인화공 DB 5,000건을 어떻게 쓸지를 구체적으로 생각해봤습니다. 이 Q&A들을 그냥 AI에 집어넣으면 안 됩니다. <strong>먼저 분류 체계를 만들고 그 다음에 큐레이션해야</strong> 합니다. 제가 생각하는 3단계입니다. 1단계: SnapScale AI가 5,000건을 1차 분류 — 공정 단계(FEED/상세설계/시운전), 주제(열교환기/배관/제어/안전), 난이도(기초/중급/고급). 2단계: 이종현 부장님과 장영기 선생님이 분류 결과를 검증하고 오류 수정. 3단계: 검증된 항목들을 AutoFlow 온톨로지 노드로 변환.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--lee);">이</div>
+    <div class="sp-wrap">
+      <div class="sp-name">이종현 부장 <span class="sp-badge" style="background:var(--lee);">기본설계 검증</span></div>
+      <div class="sp-bubble">현실적으로 말씀드립니다. 5,000건을 제가 직접 검토하는 건 불가능합니다. 하지만 <strong>월 1회 테마를 정해서 집중적으로 리뷰하는 스프린트 방식</strong>이라면 가능합니다. 예를 들어 이번 달은 "열교환기 설계 판단 기준" — 관련 Q&A 200건만 뽑아서 집중 리뷰. 다음 달은 "증류탑 설계 오류 패턴" — 이런 식으로. 이렇게 하면 1년에 12개 주제를 깊이 있게 처리할 수 있고, 그것만으로도 AutoFlow의 핵심 노드를 커버합니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--jang);">장</div>
+    <div class="sp-wrap">
+      <div class="sp-name">장영기 선생님 <span class="sp-badge" style="background:var(--jang);">글로벌 방향성</span></div>
+      <div class="sp-bubble">스프린트 방식에 한 가지를 더하겠습니다. 각 스프린트의 결과물을 <strong>공개 블로그 포스트 또는 인화공 리뉴얼 플랫폼의 '심층 아티클'로 발행</strong>하는 것입니다. "열교환기 설계에서 AI가 놓치는 5가지 판단 포인트 — 이종현 부장의 20년 경험에서" 같은 형태로요. 이것이 커뮤니티를 활성화하는 콘텐츠가 되고, 동시에 SnapScale의 도메인 레퍼런스가 됩니다. 그리고 이 아티클을 쓴 이종현 부장님은 업계에서 이름이 더 알려집니다. <em>모두가 이기는 구조</em>입니다.</div>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="sp-avatar" style="background:var(--prof);">교</div>
+    <div class="sp-wrap">
+      <div class="sp-name">POSTECH 교수 <span class="sp-badge" style="background:var(--prof);">학술 연계</span></div>
+      <div class="sp-bubble">그 아티클들을 모아서 <strong>학술 논문 또는 기술 보고서로 전환</strong>할 수 있습니다. POSTECH 산업대학원 이름으로 공동 발행하면 학술적 신뢰도가 붙습니다. 그리고 이것이 정부 산학연 과제 신청 시 "기 확보된 연구 성과"로 제시될 수 있습니다. 산업부 디지털 혁신 과제, 과기부 플랫폼 과제 — 연간 3~10억 규모의 정부 R&D 자금을 확보할 수 있는 경로가 열립니다. SnapScale의 자체 투자 외에 <em>정부 자금이 온톨로지 구축 비용의 일부를 커버</em>하는 구조가 됩니다.</div>
+    </div>
+  </div>
+
+  <div class="onto-flow">
+    <div class="onto-node">
+      <div class="onto-icon">🗃️</div>
+      <div class="onto-title">인화공 DB 5,000건+</div>
+      <div class="onto-desc">20년 Q&A 원본<br>SnapScale AI 1차 분류<br>(공정단계·주제·난이도)</div>
+    </div>
+    <div class="onto-arrow" style="font-size:28px;">→</div>
+    <div class="onto-node">
+      <div class="onto-icon">🔬</div>
+      <div class="onto-title">월별 테마 스프린트</div>
+      <div class="onto-desc">이종현·장영기 검증<br>월 1회 200건 집중 리뷰<br>오류 수정·태깅</div>
+    </div>
+    <div class="onto-arrow" style="font-size:28px;">→</div>
+    <div class="onto-node">
+      <div class="onto-icon">📝</div>
+      <div class="onto-title">공개 아티클 발행</div>
+      <div class="onto-desc">인화공 플랫폼 심층 포스트<br>POSTECH 공동 논문<br>정부과제 성과 활용</div>
+    </div>
+    <div class="onto-result">
+      <strong style="font-size:16px;color:var(--navy);">🌐 플랜트 특화 온톨로지 DB</strong>
+      <p style="font-size:13px;color:var(--muted);margin-top:8px;">AutoFlow 노드 변환 → SnapScale 제품 직접 반영<br>AVEVA·Hexagon이 5년 내 복제 불가한 구조적 해자</p>
+    </div>
+  </div>
+
+  <div class="ibox green">
+    <div class="ibox-title">✅ 온톨로지 큐레이션 확정 로드맵</div>
+    <ul>
+      <li><strong>M1~M2 (0~60일)</strong>: 인화공 DB AI 1차 분류 완료. 인화공 플랫폼 리뉴얼 계약 정식화. 협의체 헌장 초안(POSTECH 교수 주도) 완성.</li>
+      <li><strong>M3~M6 (60~180일)</strong>: 월별 스프린트 시작. 첫 12개 테마 선정. 이종현·장영기 검증 세션 1회/월. 첫 아티클 3편 발행.</li>
+      <li><strong>M7~M12 (180~360일)</strong>: 스프린트 결과물 AutoFlow 온톨로지 노드 통합. 정부 산학연 과제 신청. 연간 써밋 1회 개최.</li>
+      <li><strong>Y2+ (1년 이후)</strong>: 추가 자문단 2인 합류. 글로벌 아람코·중동 EPC 피드백 루프 가동. 온톨로지 1,000노드 달성 목표.</li>
+    </ul>
+  </div>
+
+<!-- ═══════════ VERDICT ═══════════ -->
+  <div class="verdict">
+    <div class="vd-title">최종 합의 — Verdict</div>
+    <div class="vd-grid">
+      <div class="vd-item">
+        <div class="vd-item-label">커뮤니티 구조</div>
+        <div class="vd-item-val">CELab(주니어 취준생) + 인화공 리뉴얼(시니어 실무자) — 완전 분리 운영, 멘토링으로 연결</div>
+      </div>
+      <div class="vd-item">
+        <div class="vd-item-label">핵심 포지셔닝</div>
+        <div class="vd-item-val">"Cursor for Engineers" — AI + 30년 도메인 = 주니어 50명의 생산성</div>
+      </div>
+      <div class="vd-item">
+        <div class="vd-item-label">업계 민감성 해결</div>
+        <div class="vd-item-val">방법론 vs 기밀 구분선 명시 + 이중 트랙(공개/비공개) + 레퓨테이션 선봉대(장영기·스테파노)</div>
+      </div>
+      <div class="vd-item">
+        <div class="vd-item-label">협의체 핵심 자산</div>
+        <div class="vd-item-val">인화공 DB 5,000건+ · 사우디아람코 임원 · POSTECH · UOP 20년 = 복제 불가 해자</div>
+      </div>
+      <div class="vd-item">
+        <div class="vd-item-label">온톨로지 큐레이션</div>
+        <div class="vd-item-val">AI 1차 분류 → 월별 스프린트(이종현·장영기) → 공개 아티클 → AutoFlow 노드 전환</div>
+      </div>
+      <div class="vd-item">
+        <div class="vd-item-label">정부 자금 경로</div>
+        <div class="vd-item-val">POSTECH 공동과제 → 산업부·과기부 산학연 과제 연 3~10억 수주 가능성</div>
+      </div>
+    </div>
+  </div>
+
+<!-- 3-1-1 요약 -->
+  <div class="box311">
+    <div class="b311-title">3-1-1 요약 — 김상윤 대표에게</div>
+    <div class="b311-conclusion">인화공 20년 DB와 두 선생님의 레퓨테이션을 기반으로, 시니어 실무자 커뮤니티를 CELab과 분리하여 구축한다. 이것이 SnapScale의 복제 불가 해자다.</div>
+    <ul class="b311-grounds">
+      <li>인화공 5,000건+ Q&A = 20년간의 설계 실패 패턴 아카이브. 월별 스프린트로 AutoFlow 온톨로지의 뼈대가 된다.</li>
+      <li>장영기·이종현·POSTECH — 이 조합을 경쟁사가 5년 안에 만들 수 없다. Hexagon도 AVEVA도 이 레퓨테이션 네트워크가 없다.</li>
+      <li>업계 민감성(NDA·겸업금지·소문)은 '방법론 vs 기밀 구분선 + 이중 트랙 + 강의료 형태 계약'으로 구조적으로 해소 가능하다.</li>
+    </ul>
+    <div class="b311-action">이번 주 안에 협의체 헌장 초안 작성 착수 (POSTECH 교수 주도). 동시에 인화공 DB 지적재산권 법무 검토 의뢰.</div>
+  </div>
+
+<!-- ═══════════ ACTION TABLE ═══════════ -->
+  <div class="sec-badge" style="margin-top:40px;">Action Items</div>
+  <h2 class="sec-title">즉시 실행 과제</h2>
+  <table class="action-table">
+    <thead>
+      <tr><th>과제</th><th>담당</th><th>기한</th><th>우선순위</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>인화공 DB 지식재산권 법무 검토</strong><br><span style="font-size:11px;color:#637082;">5,000건 Q&A를 AI 학습에 활용하기 위한 약관 개정 또는 개별 동의 방법 검토</span></td>
+        <td>김상윤 + 법무</td>
+        <td>2주 이내</td>
+        <td><span class="priority high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td><strong>협의체 헌장 초안 작성</strong><br><span style="font-size:11px;color:#637082;">각 주체의 기여(Input) · 혜택(Output) · 보상 구조 명시. POSTECH 교수 주도.</span></td>
+        <td>POSTECH 교수 + 박규호</td>
+        <td>2주 이내</td>
+        <td><span class="priority high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td><strong>인화공 DB AI 1차 분류 시작</strong><br><span style="font-size:11px;color:#637082;">공정단계·주제·난이도 3축 분류 체계 설계 후 5,000건 자동 태깅</span></td>
+        <td>SnapScale 개발팀 + 박규호</td>
+        <td>4주 이내</td>
+        <td><span class="priority high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td><strong>자문 계약 구조 설계 (겸업 리스크 차단)</strong><br><span style="font-size:11px;color:#637082;">"강의료·연구참여비" 형태 계약서 초안. 이종현 부장·장영기 선생님 서명 목표.</span></td>
+        <td>김상윤 + 법무</td>
+        <td>4주 이내</td>
+        <td><span class="priority high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td><strong>인화공 플랫폼 리뉴얼 스펙 확정</strong><br><span style="font-size:11px;color:#637082;">스테파노님과 리뉴얼 방향 합의. 커뮤니티 문화 훼손 없는 UX 설계 원칙 확정.</span></td>
+        <td>스테파노 + 박규호</td>
+        <td>4주 이내</td>
+        <td><span class="priority high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td><strong>CELab ↔ 시니어 커뮤니티 분리 선언 콘텐츠 기획</strong><br><span style="font-size:11px;color:#637082;">"CELab은 주니어 취준생 플랫폼, 시니어는 인화공 리뉴얼로" 공식 포지셔닝 콘텐츠</span></td>
+        <td>박규호</td>
+        <td>2주 이내</td>
+        <td><span class="priority med">MED</span></td>
+      </tr>
+      <tr>
+        <td><strong>추가 자문단 2인 후보 리스트업</strong><br><span style="font-size:11px;color:#637082;">① 배관·기계 도메인 시니어 ② 현대엔지니어링·GS건설 출신 임원급</span></td>
+        <td>박규호 + 이종현 부장</td>
+        <td>6주 이내</td>
+        <td><span class="priority med">MED</span></td>
+      </tr>
+      <tr>
+        <td><strong>정부 산학연 과제 신청 가능성 스캔</strong><br><span style="font-size:11px;color:#637082;">산업부 디지털혁신 / 과기부 플랫폼 과제 중 매칭 가능 RFP 파악</span></td>
+        <td>POSTECH 교수</td>
+        <td>8주 이내</td>
+        <td><span class="priority low">LOW</span></td>
+      </tr>
+      <tr>
+        <td><strong>월별 스프린트 첫 회 개최</strong><br><span style="font-size:11px;color:#637082;">테마: 열교환기 설계 판단 기준. 인화공 DB 관련 Q&A 200건 추출 후 이종현 부장 리뷰.</span></td>
+        <td>박규호 + 이종현 부장</td>
+        <td>M3 (60일 후)</td>
+        <td><span class="priority med">MED</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Confidential &amp; Proprietary | SnapScale Internal Use Only</strong><br>
+  근거 자료: 인터넷화학공학회 20년 DB · 9개월 협업 실증 데이터 · 기존 세션 레지스트리<br>
+  참고 자료 경로: /Users/visionschool/Documents/02 CELab/00. 창업 40s/00. 문건 파일 관리/02. BM &amp; Pricing<br>
+  저장 위치: /Users/visionschool/Documents/02 CELab/00. 창업 40s/00. 문건 파일 관리/01. 피칭덱 IR/260507 IR준비_박규호
+  <div class="ver">MTG-CUSTOM · Version 1.0 · 2026.05.07 · 인화공 기반 시니어 커뮤니티·협의체·온톨로지 전략 최초 작성</div>
+</footer>
+
+</body>
+</html>
