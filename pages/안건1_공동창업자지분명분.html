@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>안건 1 | 공동창업자 지분 30% 명분 — SnapScale IR</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#0d1b2e; --navy2:#1b2d45; --gold:#c8a44a;
+  --teal:#1a8c7a; --red:#dc2626; --blue:#2563eb;
+  --green:#16a34a; --text:#e8f0fe; --muted:rgba(232,240,254,.55);
+  --border:rgba(200,164,74,.2); --card:rgba(30,50,80,.7);
+}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);color:var(--text);line-height:1.7;}
+.page{width:210mm;min-height:297mm;margin:0 auto;padding:8mm 10mm;display:flex;flex-direction:column;gap:5mm;}
+
+/* HEADER */
+.hd{background:linear-gradient(135deg,#060d1a,var(--navy2));border:1px solid var(--border);border-radius:8px;padding:6mm 8mm;display:flex;justify-content:space-between;align-items:flex-start;}
+.hd-left h1{font-size:16pt;font-weight:900;letter-spacing:-.5px;}
+.hd-left h1 em{color:var(--gold);font-style:normal;}
+.hd-sub{font-size:7.5pt;color:var(--muted);margin-top:1mm;line-height:1.6;}
+.hd-badge{display:inline-block;border:1px solid var(--gold);color:var(--gold);font-size:6.5pt;font-weight:700;padding:1mm 3mm;border-radius:3px;margin-top:2mm;letter-spacing:1px;}
+.hd-right{text-align:right;font-size:7pt;color:var(--muted);line-height:1.8;}
+.hd-right strong{color:var(--gold);}
+
+/* ALERT */
+.alert{background:rgba(200,164,74,.1);border:1px solid var(--gold);border-radius:5px;padding:2.5mm 4mm;font-size:7.5pt;font-weight:700;color:var(--gold);text-align:center;}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;background:rgba(255,255,255,.02);}
+.kpi-cell{padding:4mm 3mm;text-align:center;border-right:1px solid var(--border);}
+.kpi-cell:last-child{border-right:none;}
+.kpi-num{font-size:18pt;font-weight:300;color:#fff;line-height:1;}
+.kpi-num b{font-size:10pt;}
+.kpi-label{font-size:6pt;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-top:1mm;}
+
+/* MAIN GRID */
+.main{display:grid;grid-template-columns:1fr 1fr;gap:4mm;flex:1;}
+.box{border-radius:6px;padding:4mm 5mm;border:1px solid var(--border);background:var(--card);}
+.box.gold{border-color:rgba(200,164,74,.4);background:rgba(200,164,74,.06);}
+.box.teal{border-color:rgba(26,140,122,.4);background:rgba(26,140,122,.06);}
+.box.red{border-color:rgba(220,38,38,.4);background:rgba(220,38,38,.04);}
+.box.blue{border-color:rgba(37,99,235,.4);background:rgba(37,99,235,.04);}
+.box.green{border-color:rgba(22,163,74,.4);background:rgba(22,163,74,.04);}
+.box.full{grid-column:1/-1;}
+
+.box-label{font-size:7pt;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:2mm;}
+.box-label.t{color:#1a8c7a;}
+.box-label.r{color:#dc2626;}
+.box-label.b{color:#60a5fa;}
+.box-label.g{color:#4ade80;}
+.box-title{font-size:10pt;font-weight:700;color:#fff;margin-bottom:3mm;}
+
+/* CAREER TIMELINE */
+.tl{display:flex;flex-direction:column;gap:0;}
+.tl-row{display:flex;gap:2.5mm;padding:2mm 0;border-bottom:1px solid rgba(200,164,74,.1);}
+.tl-row:last-child{border-bottom:none;}
+.tl-yr{font-size:7.5pt;font-weight:700;color:var(--gold);min-width:18mm;text-align:right;padding-top:.5mm;}
+.tl-body strong{font-size:8pt;color:#fff;display:block;line-height:1.4;}
+.tl-body span{font-size:6.5pt;color:var(--muted);}
+.tl-tag{display:inline-block;font-size:5.5pt;font-weight:700;padding:.5mm 1.5mm;border-radius:2px;margin-left:1.5mm;vertical-align:middle;}
+.tag-epc{background:rgba(200,164,74,.2);color:var(--gold);}
+.tag-ai{background:rgba(26,140,122,.2);color:#1a8c7a;}
+
+/* THREE PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;}
+.pillar{border-radius:5px;padding:3mm;text-align:center;border:1px solid var(--border);background:rgba(255,255,255,.03);}
+.p-icon{font-size:16pt;margin-bottom:1.5mm;}
+.p-title{font-size:8pt;font-weight:700;color:#fff;margin-bottom:1.5mm;}
+.p-desc{font-size:6.5pt;color:var(--muted);line-height:1.5;}
+
+/* PROOF TABLE */
+.proof-table{width:100%;border-collapse:collapse;font-size:7pt;}
+.proof-table th{background:rgba(200,164,74,.15);color:var(--gold);padding:2mm 2.5mm;text-align:left;font-size:6.5pt;letter-spacing:.5px;}
+.proof-table td{padding:1.8mm 2.5mm;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top;}
+.proof-table td.num{font-weight:700;color:#fff;font-size:9pt;}
+.proof-table td.meaning{color:var(--muted);}
+
+/* PITCH BOX */
+.pitch{background:linear-gradient(135deg,rgba(200,164,74,.15),rgba(26,140,122,.1));border:1.5px solid var(--gold);border-radius:6px;padding:4mm 5mm;}
+.pitch-label{font-size:6.5pt;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:2mm;}
+.pitch-text{font-size:8.5pt;line-height:1.8;color:#fff;}
+.pitch-text strong{color:var(--gold);}
+.pitch-kw{display:flex;flex-wrap:wrap;gap:1.5mm;margin-top:2.5mm;}
+.kw{background:rgba(200,164,74,.15);border:1px solid rgba(200,164,74,.3);border-radius:20px;padding:1mm 3mm;font-size:6.5pt;color:var(--gold);}
+
+/* CONTRACT BOX */
+.contract-grid{display:grid;grid-template-columns:1fr 1fr;gap:2mm;}
+.contract-item{background:rgba(255,255,255,.04);border-radius:4px;padding:2.5mm;border-left:2px solid var(--teal);}
+.ci-label{font-size:6pt;color:#1a8c7a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1mm;}
+.ci-val{font-size:8pt;font-weight:700;color:#fff;}
+.ci-desc{font-size:6pt;color:var(--muted);margin-top:.5mm;}
+
+/* SOLOPRENEUR GRID */
+.solo-grid{display:grid;grid-template-columns:1fr 1fr;gap:2mm;}
+.solo-item{background:rgba(255,255,255,.04);border-radius:4px;padding:2.5mm;display:flex;gap:2mm;align-items:flex-start;}
+.solo-icon{font-size:12pt;flex-shrink:0;margin-top:.5mm;}
+.solo-val{font-size:10pt;font-weight:700;color:#4ade80;}
+.solo-label{font-size:6pt;color:var(--muted);}
+
+/* QA */
+.qa-list{display:flex;flex-direction:column;gap:2mm;}
+.qa-item{background:rgba(255,255,255,.03);border-radius:4px;padding:2.5mm 3mm;}
+.qa-q{font-size:7pt;font-weight:700;color:#fca5a5;margin-bottom:1mm;}
+.qa-a{font-size:7pt;color:var(--muted);line-height:1.5;}
+.qa-a strong{color:#fff;}
+
+/* FOOTER */
+.footer{background:rgba(255,255,255,.02);border-radius:4px;padding:2mm 4mm;display:flex;justify-content:space-between;align-items:center;font-size:6pt;color:var(--muted);border:1px solid var(--border);}
+.footer strong{color:var(--red);}
+
+@media print{
+  body{background:#0d1b2e;}
+  .page{width:210mm;min-height:297mm;margin:0;padding:8mm 10mm;}
+  @page{size:A4;margin:0;}
+}
+@media screen{body{background:#060d1a;padding:10mm;}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="hd">
+  <div class="hd-left">
+    <h1>안건 1 | 공동창업자 지분 <em>30%</em> 명분</h1>
+    <div class="hd-sub">투자자 설득 논거 · 박규호 (Kyuho Jade Park) Co-Founder · SnapScale</div>
+    <div class="hd-badge">INVESTOR BRIEFING · CONFIDENTIAL</div>
+  </div>
+  <div class="hd-right">2026.05.07<br><strong>INTERNAL ONLY</strong><br>Rev 1 · IR 사전 준비</div>
+</div>
+
+<!-- ALERT -->
+<div class="alert">
+  투자자가 지분을 승인하는 3가지 기준 — ① 대체 불가능성 &nbsp;|&nbsp; ② 실증된 기여 &nbsp;|&nbsp; ③ 이탈 리스크 통제 &nbsp;— &nbsp;세 가지 모두 충족
+</div>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi-cell">
+    <div class="kpi-num">48<b>건</b></div>
+    <div class="kpi-label">총 협업 미팅</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kpi-num">2,080<b>분</b></div>
+    <div class="kpi-label">녹화 협업 시간</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kpi-num">6<b>사</b></div>
+    <div class="kpi-label">직접 영업 수행</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kpi-num">460<b>명+</b></div>
+    <div class="kpi-label">커뮤니티 규모</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kpi-num">₩1,000<b>만</b></div>
+    <div class="kpi-label">독립 수익화/월</div>
+  </div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="main">
+
+  <!-- LEFT: 커리어 이력 -->
+  <div class="box gold">
+    <div class="box-label">① 대체 불가능성 — 도메인 모노폴리</div>
+    <div class="box-title">EPC 전주기 10년+ 커리어</div>
+    <div class="tl">
+      <div class="tl-row">
+        <div class="tl-yr">2013</div>
+        <div class="tl-body"><strong>한화오션(구 대우조선해양) <span class="tl-tag tag-epc">EPCIC</span></strong><span>공정/기계 상세설계 엔지니어 · 미국 파견 · 전략혁신</span></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-yr">2016</div>
+        <div class="tl-body"><strong>산자부 국비 유학 장학생 선발</strong><span>Dual Degree Program · Conceptual Engineering</span></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-yr">2017</div>
+        <div class="tl-body"><strong>영국 Newcastle Univ. 공학 석사 수석 + 인하대 조선해양공학 석사 <span class="tl-tag tag-epc">Dual</span></strong><span>Russell Group · FEED·Basic Engineering</span></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-yr">2019</div>
+        <div class="tl-body"><strong>현대중공업 — 공정 기본설계 + R&D <span class="tl-tag tag-epc">FEED</span></strong><span>Basic Engineering · 공정 개발 연구</span></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-yr">2022</div>
+        <div class="tl-body"><strong>AspenTech — 공정 기술 컨설턴트 <span class="tl-tag tag-ai">AI</span></strong><span>Certified Expert: HYSYS · EDR · ACCE · ABE</span></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-yr">6년+</div>
+        <div class="tl-body"><strong>삼성·현대·포스코 대기업 기술 컨설팅·사내 강의</strong><span>국내 최고 EPC 기업 대상 직접 출강 경력</span></div>
+      </div>
+    </div>
+    <div style="margin-top:2.5mm;background:rgba(200,164,74,.1);border-radius:4px;padding:2mm 3mm;font-size:7pt;color:var(--gold);">
+      ★ AutoFlow 온톨로지의 P&ID 인식 체계 · ASME/ISO 분류 구조 — 오픈소스로 획득 불가한 현장 암묵지
+    </div>
+  </div>
+
+  <!-- RIGHT TOP: 실증 기여 -->
+  <div class="box blue">
+    <div class="box-label b">② 실증된 기여 — 9개월 협업 수치</div>
+    <div class="box-title">숫자로 보는 공동창업 실적</div>
+    <table class="proof-table">
+      <thead><tr><th>지표</th><th>수치</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td>CEO 1:1 미팅</td><td class="num">30건</td><td class="meaning">전략 설계의 공동 당사자</td></tr>
+        <tr><td>기업 영업 수행</td><td class="num">6사</td><td class="meaning">현대건설·대림·포스코·현대E&C·한국조선해양·현대중공업</td></tr>
+        <tr><td>VC 피칭 수행</td><td class="num">2건</td><td class="meaning">퓨처플레이·소풍벤처스 직접 발표</td></tr>
+        <tr><td>TIC 가격 모델</td><td class="num">직접 설계</td><td class="meaning">ACCE 실측 + 현장 벤치마크 기반</td></tr>
+        <tr><td>주주간 계약</td><td class="num">완료</td><td class="meaning">변호사 3인 자문 · 조항 명문화</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:2.5mm;background:rgba(37,99,235,.1);border-radius:4px;padding:2mm 3mm;font-size:7pt;color:#93c5fd;">
+      본업(AspenTech 시니어 컨설턴트) 유지 중에 달성한 수치. 풀타임 전환 이후의 기여는 역산 가능.
+    </div>
+  </div>
+
+  <!-- 솔로프리너 실증 -->
+  <div class="box green">
+    <div class="box-label g">② 독립 수익화 — "무에서 유를 만드는 실행력"</div>
+    <div class="box-title">AI 솔로프리너 실증 지표</div>
+    <div class="solo-grid">
+      <div class="solo-item">
+        <div class="solo-icon">🏗️</div>
+        <div><div class="solo-val">460명+</div><div class="solo-label">화공·공정 전문가 커뮤니티 직접 구축</div></div>
+      </div>
+      <div class="solo-item">
+        <div class="solo-icon">💰</div>
+        <div><div class="solo-val">₩1,000만/월</div><div class="solo-label">CELab 퍼스널 브랜딩 수익화 · 구글 SEO 1위</div></div>
+      </div>
+      <div class="solo-item">
+        <div class="solo-icon">🎓</div>
+        <div><div class="solo-val">120명+</div><div class="solo-label">HYSYS 자격증 취득자 직접 배출</div></div>
+      </div>
+      <div class="solo-item">
+        <div class="solo-icon">🎤</div>
+        <div><div class="solo-val">제 1회</div><div class="solo-label">Job 콘서트 기획·개최 (CELab 주관)</div></div>
+      </div>
+      <div class="solo-item">
+        <div class="solo-icon">🤖</div>
+        <div><div class="solo-val">GPTers</div><div class="solo-label">국내 최대 AI 커뮤니티 스터디리더 · AI 퍼스널브랜딩</div></div>
+      </div>
+      <div class="solo-item">
+        <div class="solo-icon">🎯</div>
+        <div><div class="solo-val">VC Sprint 8기</div><div class="solo-label">초기액셀러레이터협회·EO스튜디오 수료</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 계약 구조 -->
+  <div class="box red">
+    <div class="box-label r">③ 이탈 리스크 통제 — 계약으로 이미 해결됨</div>
+    <div class="box-title">주주간 계약 핵심 조항</div>
+    <div class="contract-grid">
+      <div class="contract-item">
+        <div class="ci-label">지분 반환 조항</div>
+        <div class="ci-val">귀책·자발 퇴사 시</div>
+        <div class="ci-desc">보유 지분 전량 액면가로 회사 반환 명문화</div>
+      </div>
+      <div class="contract-item">
+        <div class="ci-label">예외 조건</div>
+        <div class="ci-val">Term Sheet 합의 시</div>
+        <div class="ci-desc">별도 합의된 구주 매각 조건에 해당하는 경우 예외 허용</div>
+      </div>
+      <div class="contract-item">
+        <div class="ci-label">드래그얼롱</div>
+        <div class="ci-val">Drag-Along</div>
+        <div class="ci-desc">M&A·IPO 시 공동 매각 의무 조항</div>
+      </div>
+      <div class="contract-item">
+        <div class="ci-label">태그얼롱</div>
+        <div class="ci-val">Tag-Along</div>
+        <div class="ci-desc">대주주 매각 시 공동 매각 권리 보장</div>
+      </div>
+      <div class="contract-item" style="grid-column:1/-1;">
+        <div class="ci-label">경업금지</div>
+        <div class="ci-val">Non-compete 포함</div>
+        <div class="ci-desc">변호사 3인 자문 완료 · 계약서 작성 확정 (2026.04.09)</div>
+      </div>
+    </div>
+    <div style="margin-top:2.5mm;background:rgba(220,38,38,.1);border-radius:4px;padding:2mm 3mm;font-size:7pt;color:#fca5a5;">
+      "지분 30%는 권리가 아니라 의무입니다. 이탈 시 반환 조건이 계약서에 이미 명시돼 있습니다."
+    </div>
+  </div>
+
+</div>
+
+<!-- 1분 스피칭 -->
+<div class="pitch">
+  <div class="pitch-label">1분 스피칭 — 핵심 키워딩</div>
+  <div class="pitch-text">
+    "저는 10년 동안 플랜트가 <strong>어디서 실패하는지 직접 봐왔습니다</strong>. SnapScale이 막으려는 그 실패들을, 저는 몸으로 겪었습니다. 이 시장에서 현대·대림·포스코의 엔지니어실 문을 열 수 있는 사람이 지금 이 팀에 있습니다. <strong>기술은 복사할 수 있어도, 신뢰와 도메인은 복사가 안 됩니다</strong>. 혼자서 460명을 모았고, 혼자서 월 1,000만원을 만들었습니다. 조직과 예산이 주어졌을 때 어떤 일이 일어날지는, 계산하기 어렵지 않습니다."
+  </div>
+  <div class="pitch-kw">
+    <span class="kw">도메인 모노폴리</span>
+    <span class="kw">대체 불가능한 신뢰</span>
+    <span class="kw">무에서 유를 만드는 실행력</span>
+    <span class="kw">9개월·48건·2,080분</span>
+    <span class="kw">계약으로 이미 보호된 구조</span>
+    <span class="kw">풀타임 전환 시 기여의 밀도</span>
+  </div>
+</div>
+
+<!-- 예상 Q&A -->
+<div class="box full">
+  <div class="box-label">투자자 예상 Q&A</div>
+  <div class="qa-list" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2mm;">
+    <div class="qa-item">
+      <div class="qa-q">Q. 왜 30%인가? 더 낮춰야 하지 않나?</div>
+      <div class="qa-a">A. 초기 멤버 30%는 글로벌 기술 스타트업 표준 범위(20~40%). <strong>9개월 실증 기여 + 대체 불가능한 도메인</strong> 기준 하한선이 30%. 계약서상 이탈 시 전량 반환 조항이 투자자 리스크를 대부분 커버.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">Q. 현업(AspenTech)이 있는데 풀타임인가?</div>
+      <div class="qa-a">A. <strong>투자 유치 완료 시점에 풀타임 전환 예정</strong>. 현재 본업 유지 중 48건·2,080분 협업이 이미 실증됨. 풀타임 전환 이후 기여 밀도는 현재의 2~3배 수준.</div>
+    </div>
+    <div class="qa-item">
+      <div class="qa-q">Q. 나가면 어떻게 되나?</div>
+      <div class="qa-a">A. <strong>귀책·자발 퇴사 시 지분 전량 액면가 반환</strong>이 이미 계약서에 명문화. 변호사 3인 검토 완료. 드래그얼롱·경업금지 포함. 투자자가 우려하는 시나리오는 이미 계약으로 해소.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div><strong>CONFIDENTIAL</strong> | SnapScale Internal Use Only | 안건 1 · Rev 1</div>
+  <div>기준: 9개월 협업 실증 데이터 · 주주간 계약서 (2026.04.09)</div>
+  <div>2026.05.07 | 담당: 박규호</div>
+</div>
+
+</div>
+</body>
+</html>
