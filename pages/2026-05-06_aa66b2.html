@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SnapScale 투자금 사용처 계산기 v1.0</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#0d1b2e;--navy2:#1b2d45;--gold:#c8a44a;
+  --teal:#1a8c7a;--red:#dc2626;--blue:#2563eb;
+  --green:#16a34a;--purple:#7c3aed;--orange:#d97706;
+  --text:#e8f0fe;--muted:rgba(232,240,254,.6);
+  --border:rgba(200,164,74,.2);--card:rgba(30,50,80,.6);
+}
+body{font-family:'Noto Sans KR',sans-serif;background:linear-gradient(135deg,#060d1a,var(--navy));min-height:100vh;color:var(--text);padding:20px;}
+.wrap{max-width:1080px;margin:0 auto;}
+
+header{text-align:center;padding:28px 0 20px;}
+header h1{font-size:22px;font-weight:900;margin-bottom:6px;}
+header h1 em{color:var(--gold);font-style:normal;}
+header p{font-size:12px;color:var(--muted);}
+
+.v-bar{background:rgba(200,164,74,.12);border:1px solid rgba(200,164,74,.35);border-radius:8px;padding:10px 18px;text-align:center;font-size:12px;font-weight:700;color:var(--gold);margin-bottom:18px;}
+
+/* SUMMARY STRIP */
+.summary-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.summary-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+.sc-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.sc-val{font-size:24px;font-weight:300;color:#fff;}
+.sc-val b{font-size:14px;}
+.sc-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+.sc-status{font-size:11px;font-weight:700;margin-top:4px;}
+.sc-status.ok{color:#4ade80;}
+.sc-status.warn{color:#fbbf24;}
+.sc-status.over{color:#f87171;}
+
+/* PILLAR CARDS */
+.pillars{display:flex;flex-direction:column;gap:16px;}
+.pillar-card{background:var(--card);border-radius:12px;overflow:hidden;}
+.pillar-header{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;cursor:pointer;user-select:none;}
+.ph-left{display:flex;align-items:center;gap:12px;}
+.ph-badge{font-size:10px;font-weight:900;letter-spacing:1px;padding:4px 10px;border-radius:20px;}
+.ph-title{font-size:15px;font-weight:700;}
+.ph-right{display:flex;align-items:center;gap:12px;}
+.ph-total{font-size:16px;font-weight:700;}
+.ph-toggle{font-size:18px;transition:.2s;color:var(--muted);}
+.pillar-body{padding:0 20px;overflow:hidden;transition:max-height .3s ease;}
+
+/* ITEMS TABLE */
+.items-wrap{padding-bottom:16px;}
+.items-header{display:grid;grid-template-columns:3fr 1.5fr 1.5fr 1.5fr 1.5fr 80px;gap:8px;padding:8px 12px;background:rgba(255,255,255,.04);border-radius:6px;margin-bottom:8px;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.5px;}
+.item-row{display:grid;grid-template-columns:3fr 1.5fr 1.5fr 1.5fr 1.5fr 80px;gap:8px;padding:6px 12px;border-radius:6px;margin-bottom:4px;align-items:center;background:rgba(255,255,255,.02);}
+.item-row:hover{background:rgba(255,255,255,.04);}
+
+input[type=text]{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:5px;padding:5px 8px;color:#fff;font-size:12px;font-family:'Noto Sans KR',sans-serif;}
+input[type=text]:focus{outline:none;border-color:var(--gold);}
+input[type=number]{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:5px;padding:5px 8px;color:#fff;font-size:12px;text-align:right;font-family:'Noto Sans KR',sans-serif;}
+input[type=number]:focus{outline:none;border-color:var(--gold);}
+select{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:5px;padding:5px 8px;color:#fff;font-size:11px;font-family:'Noto Sans KR',sans-serif;}
+select option{background:#1b2d45;}
+
+.item-amt{font-size:13px;font-weight:700;text-align:right;}
+.del-btn{background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);color:#f87171;border-radius:5px;padding:4px 8px;cursor:pointer;font-size:11px;transition:.2s;width:100%;}
+.del-btn:hover{background:rgba(220,38,38,.3);}
+
+.add-btn{background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.2);color:var(--muted);border-radius:6px;padding:8px;cursor:pointer;font-size:12px;width:100%;transition:.2s;margin-top:4px;}
+.add-btn:hover{background:rgba(200,164,74,.08);border-color:rgba(200,164,74,.4);color:var(--gold);}
+
+.pillar-subtotal{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(255,255,255,.03);border-radius:6px;margin-top:8px;}
+.pst-label{font-size:11px;color:var(--muted);}
+.pst-val{font-size:15px;font-weight:700;}
+
+/* NOTE BOX */
+.note-box{margin-top:8px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:6px;display:flex;gap:8px;align-items:flex-start;}
+.note-box textarea{flex:1;background:transparent;border:none;color:var(--muted);font-size:11px;font-family:'Noto Sans KR',sans-serif;resize:none;line-height:1.6;min-height:32px;}
+.note-box textarea:focus{outline:none;color:#fff;}
+
+/* ADD PILLAR */
+.add-pillar-wrap{margin-top:12px;}
+.add-pillar-btn{width:100%;background:rgba(124,58,237,.08);border:1px dashed rgba(124,58,237,.4);color:#a78bfa;border-radius:10px;padding:14px;cursor:pointer;font-size:13px;font-weight:700;transition:.2s;}
+.add-pillar-btn:hover{background:rgba(124,58,237,.15);border-color:rgba(124,58,237,.6);}
+
+/* TOTAL SECTION */
+.total-section{background:linear-gradient(135deg,rgba(200,164,74,.12),rgba(26,140,122,.08));border:1.5px solid var(--gold);border-radius:14px;padding:24px;margin-top:20px;}
+.total-title{font-size:14px;font-weight:700;color:var(--gold);margin-bottom:16px;}
+.total-breakdown{display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
+.tb-row{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:6px;font-size:12px;}
+.tb-row:hover{background:rgba(255,255,255,.03);}
+.tb-name{color:var(--muted);}
+.tb-bar-wrap{flex:1;margin:0 12px;background:rgba(255,255,255,.06);border-radius:3px;height:6px;overflow:hidden;}
+.tb-bar-fill{height:100%;border-radius:3px;transition:width .4s ease;}
+.tb-pct{color:var(--muted);font-size:11px;min-width:36px;text-align:right;}
+.tb-amt{font-weight:700;min-width:80px;text-align:right;}
+.tb-row.total-row{background:rgba(200,164,74,.1);border:1px solid rgba(200,164,74,.2);margin-top:6px;}
+.tb-row.total-row .tb-name{color:var(--gold);font-weight:700;font-size:13px;}
+.tb-row.total-row .tb-amt{color:#fff;font-size:16px;}
+
+/* BUDGET CAP */
+.cap-section{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:16px;}
+.cap-card{border-radius:8px;padding:14px;text-align:center;}
+.cap-card.target{background:rgba(200,164,74,.08);border:1px solid rgba(200,164,74,.3);}
+.cap-card.current{background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.3);}
+.cap-card.diff{border:1px solid var(--border);}
+.cc-label{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.cc-val{font-size:20px;font-weight:700;}
+.cc-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+.budget-bar{margin-top:16px;}
+.bb-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:6px;}
+.bb-track{background:rgba(255,255,255,.06);border-radius:6px;height:16px;overflow:hidden;position:relative;}
+.bb-fill{height:100%;border-radius:6px;transition:width .5s ease;position:relative;}
+.bb-fill.ok{background:linear-gradient(90deg,var(--teal),#4ade80);}
+.bb-fill.warn{background:linear-gradient(90deg,var(--orange),#fbbf24);}
+.bb-fill.over{background:linear-gradient(90deg,var(--red),#f87171);}
+
+/* ACTION BUTTONS */
+.actions{display:flex;gap:10px;margin-top:20px;}
+.act-btn{flex:1;padding:12px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.2s;}
+.act-btn.copy{background:linear-gradient(135deg,var(--teal),#16a34a);color:#fff;}
+.act-btn.reset{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:var(--muted);}
+.act-btn:hover{opacity:.85;}
+
+.disclaimer{font-size:10px;color:rgba(255,255,255,.3);text-align:center;margin-top:16px;line-height:1.6;}
+
+/* PILLAR COLOR THEMES */
+.p1-header{background:rgba(37,99,235,.12);border-bottom:1px solid rgba(37,99,235,.2);}
+.p1-badge{background:rgba(37,99,235,.2);color:#93c5fd;}
+.p1-color{color:#93c5fd;}
+.p1-bar{background:linear-gradient(90deg,#2563eb,#60a5fa);}
+.p1-sub{background:rgba(37,99,235,.08);color:#93c5fd;}
+
+.p2-header{background:rgba(200,164,74,.1);border-bottom:1px solid rgba(200,164,74,.2);}
+.p2-badge{background:rgba(200,164,74,.2);color:var(--gold);}
+.p2-color{color:var(--gold);}
+.p2-bar{background:linear-gradient(90deg,#a16207,var(--gold));}
+.p2-sub{background:rgba(200,164,74,.08);color:var(--gold);}
+
+.p3-header{background:rgba(26,140,122,.1);border-bottom:1px solid rgba(26,140,122,.2);}
+.p3-badge{background:rgba(26,140,122,.2);color:#34d399;}
+.p3-color{color:#34d399;}
+.p3-bar{background:linear-gradient(90deg,#065f46,#34d399);}
+.p3-sub{background:rgba(26,140,122,.08);color:#34d399;}
+
+.p4-header{background:rgba(124,58,237,.1);border-bottom:1px solid rgba(124,58,237,.2);}
+.p4-badge{background:rgba(124,58,237,.2);color:#a78bfa;}
+.p4-color{color:#a78bfa;}
+.p4-bar{background:linear-gradient(90deg,#5b21b6,#a78bfa);}
+.p4-sub{background:rgba(124,58,237,.08);color:#a78bfa;}
+
+.p5-header{background:rgba(220,38,38,.1);border-bottom:1px solid rgba(220,38,38,.2);}
+.p5-badge{background:rgba(220,38,38,.2);color:#fca5a5;}
+.p5-color{color:#fca5a5;}
+.p5-bar{background:linear-gradient(90deg,#991b1b,#f87171);}
+.p5-sub{background:rgba(220,38,38,.08);color:#fca5a5;}
+
+.p6-header{background:rgba(217,119,6,.1);border-bottom:1px solid rgba(217,119,6,.2);}
+.p6-badge{background:rgba(217,119,6,.2);color:#fcd34d;}
+.p6-color{color:#fcd34d;}
+.p6-bar{background:linear-gradient(90deg,#92400e,#fbbf24);}
+.p6-sub{background:rgba(217,119,6,.08);color:#fcd34d;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>SnapScale <em>투자금 사용처</em> 계산기 <span style="font-size:13px;background:#dc2626;padding:2px 8px;border-radius:4px;margin-left:6px;">v1.0</span></h1>
+  <p>항목·인원·단가·기간 직접 수정 가능 | 안건 추가 기능 포함 | ILLUSTRATIVE ONLY</p>
+</header>
+
+<div class="v-bar">
+  ⚡ 목표 — 자문·협의체·커뮤니티·DB 합산 연 <strong style="color:#fff;">₩1억 이내</strong> &nbsp;|&nbsp; 나머지 전액 <strong style="color:#fff;">개발자 채용 + 제품 개발</strong>에 집중
+</div>
+
+<!-- SUMMARY STRIP -->
+<div class="summary-strip">
+  <div class="summary-card">
+    <div class="sc-label">연간 총액</div>
+    <div class="sc-val" id="sum_annual">—</div>
+    <div class="sc-sub">전체 안건 합산</div>
+    <div class="sc-status" id="sum_status">계산 중...</div>
+  </div>
+  <div class="summary-card">
+    <div class="sc-label">월 런레이트</div>
+    <div class="sc-val" id="sum_monthly">—</div>
+    <div class="sc-sub">연간 ÷ 12</div>
+  </div>
+  <div class="summary-card">
+    <div class="sc-label">예산 소진율</div>
+    <div class="sc-val" id="sum_pct">—</div>
+    <div class="sc-sub">목표 ₩1억 대비</div>
+  </div>
+  <div class="summary-card">
+    <div class="sc-label">여유 예산</div>
+    <div class="sc-val" id="sum_remain">—</div>
+    <div class="sc-sub" id="sum_remain_sub">목표 ₩1억 기준</div>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<div class="pillars" id="pillarsContainer"></div>
+
+<!-- ADD PILLAR -->
+<div class="add-pillar-wrap">
+  <button class="add-pillar-btn" onclick="addPillar()">＋ 새 안건 추가</button>
+</div>
+
+<!-- TOTAL -->
+<div class="total-section">
+  <div class="total-title">전체 예산 상세 내역</div>
+  <div class="total-breakdown" id="totalBreakdown"></div>
+
+  <div class="budget-bar">
+    <div class="bb-label">
+      <span>₩0</span>
+      <span id="bb_current_label">현재 —</span>
+      <span>목표 ₩1억</span>
+    </div>
+    <div class="bb-track">
+      <div class="bb-fill ok" id="budgetBar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="cap-section">
+    <div class="cap-card target">
+      <div class="cc-label">목표 상한</div>
+      <div class="cc-val" style="color:var(--gold);">₩1억</div>
+      <div class="cc-sub">자문·협의체·커뮤니티·DB</div>
+    </div>
+    <div class="cap-card current">
+      <div class="cc-label">현재 합산</div>
+      <div class="cc-val" id="cap_current" style="color:#60a5fa;">—</div>
+      <div class="cc-sub">전체 안건 연간</div>
+    </div>
+    <div class="cap-card diff">
+      <div class="cc-label">차이</div>
+      <div class="cc-val" id="cap_diff">—</div>
+      <div class="cc-sub" id="cap_diff_sub">목표 대비</div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIONS -->
+<div class="actions">
+  <button class="act-btn copy" onclick="copyResult()">📋 계산 결과 복사 (미팅용)</button>
+  <button class="act-btn reset" onclick="resetAll()">↺ 초기값으로 리셋</button>
+</div>
+
+<div class="disclaimer">
+  ILLUSTRATIVE ONLY — 실제 집행 금액은 투자 클로징 이후 팀 협의로 확정 | SnapScale Internal Use Only<br>
+  Rev 1 | 2026.05.07 | 담당: 박규호
+</div>
+
+</div>
+
+<script>
+// ===== DATA MODEL =====
+const COLORS = ['p1','p2','p3','p4','p5','p6'];
+
+const defaultPillars = [
+  {
+    id: 'p1', color: 'p1',
+    title: 'Pillar 1 | 개발-도메인 협의체',
+    note: '박규호 공동창업자 직접 수행 → 외부 인건비 없음. 스프린트 운영 도구·문서화 비용만 계상.',
+    items: [
+      { name: '협의체 운영 도구·플랫폼', unit: 50, period: 12, type: 'monthly', headcount: 1 },
+      { name: '온톨로지 문서화 초기 셋업', unit: 200, period: 1, type: 'onetime', headcount: 1 },
+    ]
+  },
+  {
+    id: 'p2', color: 'p2',
+    title: 'Pillar 2 | 도메인 전문가 자문단',
+    note: '기술 자문 2인 + 영업 자문 1인. 현대엔지니어링·포스코·대림건설 컨택 이력 활용하여 자문 전환 비용 최소화.',
+    items: [
+      { name: '기술 자문 A (온톨로지 검증·PoC 동행)', unit: 200, period: 12, type: 'monthly', headcount: 1 },
+      { name: '기술 자문 B (설계 규칙·고객사 신뢰)', unit: 200, period: 12, type: 'monthly', headcount: 1 },
+      { name: '영업 자문 (포스코·대림 라인 연결)', unit: 100, period: 12, type: 'monthly', headcount: 1 },
+    ]
+  },
+  {
+    id: 'p3', color: 'p3',
+    title: 'Pillar 3 | 커뮤니티·써밋·콘텐츠 (CELab + 인화공 이중 트랙)',
+    note: '이중 트랙: CELab 460명(주니어 취준생) + 인화공 기반 시니어 실무자 커뮤니티(구축 중). 스테파노·장영기 선생님 레퓨테이션 기반으로 시니어 참여 유도. 두 채널 모두 SnapScale 고객 퍼널로 연결.',
+    items: [
+      { name: '인화공 플랜트 AI 써밋 (시니어 50명 + CELab 50명)', unit: 1200, period: 1, type: 'onetime', headcount: 1 },
+      { name: '월간 온라인 세션 운영', unit: 100, period: 12, type: 'monthly', headcount: 1 },
+      { name: '콘텐츠 제작·배포', unit: 50, period: 12, type: 'monthly', headcount: 1 },
+    ]
+  },
+  {
+    id: 'p4', color: 'p4',
+    title: 'Pillar 4 | 플랜트 온톨로지 DB 인프라',
+    note: '큐레이션은 박규호 직접 수행. P1·P2·P3 수렴 → 구조적 해자. AVEVA·Hexagon 대비 10년 선점.',
+    items: [
+      { name: '클라우드·벡터DB 인프라', unit: 80, period: 12, type: 'monthly', headcount: 1 },
+    ]
+  }
+];
+
+let pillars = JSON.parse(JSON.stringify(defaultPillars));
+let pillarCounter = 5;
+
+// ===== HELPERS =====
+function fmtKRW(v) {
+  const abs = Math.abs(v);
+  if (abs >= 1e8) return (v >= 0 ? '' : '-') + (abs/1e8).toFixed(2) + '억원';
+  if (abs >= 1e4) return (v >= 0 ? '' : '-') + Math.round(abs/1e4).toLocaleString() + '만원';
+  return Math.round(v).toLocaleString() + '원';
+}
+function calcItem(item) {
+  const u = parseFloat(item.unit) || 0;
+  const p = parseFloat(item.period) || 1;
+  const h = parseFloat(item.headcount) || 1;
+  if (item.type === 'monthly') return u * p * h * 10000;
+  return u * h * 10000;
+}
+function calcPillar(p) {
+  return p.items.reduce((s,i) => s + calcItem(i), 0);
+}
+function totalAnnual() {
+  return pillars.reduce((s,p) => s + calcPillar(p), 0);
+}
+
+// ===== RENDER =====
+function render() {
+  renderPillars();
+  renderSummary();
+}
+
+function renderPillars() {
+  const container = document.getElementById('pillarsContainer');
+  container.innerHTML = '';
+  pillars.forEach((p, pi) => {
+    const pTotal = calcPillar(p);
+    const c = p.color || COLORS[pi % COLORS.length];
+    const div = document.createElement('div');
+    div.className = 'pillar-card';
+    div.id = 'pillar_' + pi;
+
+    div.innerHTML = `
+      <div class="${c}-header pillar-header" onclick="togglePillar(${pi})">
+        <div class="ph-left">
+          <span class="ph-badge ${c}-badge">${c.toUpperCase()}</span>
+          <input type="text" class="ph-title" style="background:transparent;border:none;font-size:15px;font-weight:700;color:#fff;font-family:'Noto Sans KR',sans-serif;width:360px;"
+            value="${p.title}" onchange="updatePillarTitle(${pi},this.value)" onclick="event.stopPropagation()" />
+        </div>
+        <div class="ph-right">
+          <span class="ph-total ${c}-color">${fmtKRW(pTotal)}</span>
+          <span class="ph-toggle" id="toggle_${pi}">▾</span>
+          ${pillars.length > 1 ? `<button onclick="event.stopPropagation();deletePillar(${pi})" style="background:rgba(220,38,38,.2);border:1px solid rgba(220,38,38,.3);color:#f87171;border-radius:5px;padding:3px 8px;cursor:pointer;font-size:11px;">삭제</button>` : ''}
+        </div>
+      </div>
+      <div class="pillar-body" id="body_${pi}">
+        <div class="items-wrap">
+          <div class="items-header">
+            <span>항목명</span><span style="text-align:right;">인원/수량</span><span style="text-align:right;">단가(만원)</span><span>기간</span><span style="text-align:right;">소계</span><span></span>
+          </div>
+          <div id="items_${pi}">
+            ${p.items.map((item, ii) => renderItemRow(pi, ii, item, c)).join('')}
+          </div>
+          <button class="add-btn" onclick="addItem(${pi})">＋ 항목 추가</button>
+          <div class="pillar-subtotal">
+            <span class="pst-label">소계</span>
+            <span class="pst-val ${c}-color" id="subtotal_${pi}">${fmtKRW(pTotal)}</span>
+          </div>
+          <div class="note-box">
+            <span style="font-size:10px;color:var(--muted);flex-shrink:0;padding-top:3px;">메모:</span>
+            <textarea rows="1" placeholder="안건 설명, 근거, 메모..." onchange="updateNote(${pi},this.value)" oninput="autoResize(this)">${p.note || ''}</textarea>
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function renderItemRow(pi, ii, item, c) {
+  const amt = calcItem(item);
+  const typeOpts = ['monthly','onetime'].map(t =>
+    `<option value="${t}" ${item.type===t?'selected':''}>${t==='monthly'?'개월 반복':'1회성'}</option>`
+  ).join('');
+  return `
+    <div class="item-row" id="item_${pi}_${ii}">
+      <input type="text" value="${item.name}" onchange="updateItem(${pi},${ii},'name',this.value)" placeholder="항목명" />
+      <input type="number" value="${item.headcount}" min="0.5" step="0.5" onchange="updateItem(${pi},${ii},'headcount',this.value)" style="text-align:right;" title="인원 수" />
+      <input type="number" value="${item.unit}" min="0" step="10" onchange="updateItem(${pi},${ii},'unit',this.value)" style="text-align:right;" title="단가(만원)" />
+      <div style="display:flex;gap:4px;">
+        <select onchange="updateItem(${pi},${ii},'type',this.value)">${typeOpts}</select>
+        ${item.type==='monthly'?`<input type="number" value="${item.period}" min="1" max="60" onchange="updateItem(${pi},${ii},'period',this.value)" style="width:44px;text-align:center;" />`:
+        '<span style="font-size:11px;color:var(--muted);display:flex;align-items:center;padding-left:4px;">—</span>'}
+      </div>
+      <span class="item-amt ${c}-color">${fmtKRW(amt)}</span>
+      <button class="del-btn" onclick="deleteItem(${pi},${ii})">삭제</button>
+    </div>
+  `;
+}
+
+function renderSummary() {
+  const total = totalAnnual();
+  const monthly = total / 12;
+  const cap = 100000000; // ₩1억
+  const pct = total / cap * 100;
+  const remain = cap - total;
+
+  // Summary strip
+  document.getElementById('sum_annual').textContent = fmtKRW(total);
+  document.getElementById('sum_monthly').textContent = fmtKRW(monthly);
+  document.getElementById('sum_pct').textContent = pct.toFixed(1) + '%';
+  document.getElementById('sum_remain').textContent = fmtKRW(Math.abs(remain));
+  document.getElementById('sum_remain_sub').textContent = remain >= 0 ? '예산 내 여유' : '목표 초과';
+
+  const statusEl = document.getElementById('sum_status');
+  if (pct <= 90) { statusEl.textContent = '✅ 목표 이내'; statusEl.className = 'sc-status ok'; }
+  else if (pct <= 100) { statusEl.textContent = '⚠️ 상한 근접'; statusEl.className = 'sc-status warn'; }
+  else { statusEl.textContent = '❌ 목표 초과'; statusEl.className = 'sc-status over'; }
+
+  // Total breakdown
+  const breakdown = document.getElementById('totalBreakdown');
+  breakdown.innerHTML = '';
+  pillars.forEach((p, pi) => {
+    const pt = calcPillar(p);
+    const bpct = total > 0 ? pt / total * 100 : 0;
+    const c = p.color || COLORS[pi % COLORS.length];
+    breakdown.innerHTML += `
+      <div class="tb-row">
+        <span class="tb-name">${p.title}</span>
+        <div class="tb-bar-wrap"><div class="tb-bar-fill ${c}-bar" style="width:${bpct.toFixed(1)}%"></div></div>
+        <span class="tb-pct">${bpct.toFixed(0)}%</span>
+        <span class="tb-amt ${c}-color">${fmtKRW(pt)}</span>
+      </div>
+    `;
+  });
+  breakdown.innerHTML += `
+    <div class="tb-row total-row">
+      <span class="tb-name">연간 총계</span>
+      <div class="tb-bar-wrap"><div class="tb-bar-fill" style="width:100%;background:linear-gradient(90deg,var(--gold),var(--teal))"></div></div>
+      <span class="tb-pct">100%</span>
+      <span class="tb-amt">${fmtKRW(total)}</span>
+    </div>
+  `;
+
+  // Budget bar
+  const barEl = document.getElementById('budgetBar');
+  const barPct = Math.min(pct, 120);
+  barEl.style.width = barPct + '%';
+  barEl.className = 'bb-fill ' + (pct <= 90 ? 'ok' : pct <= 100 ? 'warn' : 'over');
+  document.getElementById('bb_current_label').textContent = `현재 ${fmtKRW(total)} (${pct.toFixed(1)}%)`;
+
+  // Cap section
+  document.getElementById('cap_current').textContent = fmtKRW(total);
+  document.getElementById('cap_diff').textContent = fmtKRW(Math.abs(remain));
+  document.getElementById('cap_diff_sub').textContent = remain >= 0 ? '✅ 예산 여유' : '❌ 목표 초과';
+  document.getElementById('cap_diff').style.color = remain >= 0 ? '#4ade80' : '#f87171';
+}
+
+// ===== INTERACTIONS =====
+function togglePillar(pi) {
+  const body = document.getElementById('body_' + pi);
+  const toggle = document.getElementById('toggle_' + pi);
+  if (body.style.maxHeight && body.style.maxHeight !== '0px') {
+    body.style.maxHeight = '0px';
+    toggle.textContent = '▸';
+  } else {
+    body.style.maxHeight = body.scrollHeight + 200 + 'px';
+    toggle.textContent = '▾';
+  }
+}
+
+function updatePillarTitle(pi, val) {
+  pillars[pi].title = val;
+  renderSummary();
+}
+
+function updateNote(pi, val) {
+  pillars[pi].note = val;
+}
+
+function updateItem(pi, ii, field, val) {
+  pillars[pi].items[ii][field] = field === 'name' ? val : (field === 'type' ? val : parseFloat(val) || 0);
+  const amt = calcItem(pillars[pi].items[ii]);
+  const c = pillars[pi].color || COLORS[pi % COLORS.length];
+  const amtEl = document.querySelector(`#item_${pi}_${ii} .item-amt`);
+  if (amtEl) amtEl.textContent = fmtKRW(amt);
+  const pTotal = calcPillar(pillars[pi]);
+  const subtotalEl = document.getElementById('subtotal_' + pi);
+  if (subtotalEl) subtotalEl.textContent = fmtKRW(pTotal);
+  const phTotal = document.querySelector(`#pillar_${pi} .ph-total`);
+  if (phTotal) phTotal.textContent = fmtKRW(pTotal);
+  renderSummary();
+  if (field === 'type') { renderPillars(); openPillar(pi); }
+}
+
+function addItem(pi) {
+  pillars[pi].items.push({ name: '신규 항목', unit: 100, period: 12, type: 'monthly', headcount: 1 });
+  renderPillars();
+  openPillar(pi);
+  renderSummary();
+}
+
+function deleteItem(pi, ii) {
+  if (pillars[pi].items.length <= 1) { alert('항목이 최소 1개 이상 있어야 합니다.'); return; }
+  pillars[pi].items.splice(ii, 1);
+  renderPillars();
+  openPillar(pi);
+  renderSummary();
+}
+
+function addPillar() {
+  const colors = ['p5', 'p6', 'p1', 'p2', 'p3', 'p4'];
+  const nextColor = colors[pillars.length % colors.length];
+  pillars.push({
+    id: 'p' + pillarCounter++,
+    color: nextColor,
+    title: '신규 안건 ' + pillarCounter,
+    note: '',
+    items: [{ name: '항목명 입력', unit: 100, period: 12, type: 'monthly', headcount: 1 }]
+  });
+  renderPillars();
+  renderSummary();
+  openPillar(pillars.length - 1);
+}
+
+function deletePillar(pi) {
+  if (!confirm(`"${pillars[pi].title}" 안건을 삭제하시겠습니까?`)) return;
+  pillars.splice(pi, 1);
+  renderPillars();
+  renderSummary();
+}
+
+function openPillar(pi) {
+  setTimeout(() => {
+    const body = document.getElementById('body_' + pi);
+    const toggle = document.getElementById('toggle_' + pi);
+    if (body) { body.style.maxHeight = body.scrollHeight + 200 + 'px'; }
+    if (toggle) toggle.textContent = '▾';
+  }, 50);
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+function resetAll() {
+  if (!confirm('모든 항목을 초기값으로 리셋하시겠습니까?')) return;
+  pillars = JSON.parse(JSON.stringify(defaultPillars));
+  pillarCounter = 5;
+  renderPillars();
+  renderSummary();
+}
+
+function copyResult() {
+  const total = totalAnnual();
+  const monthly = total / 12;
+  const cap = 100000000;
+  const pct = total / cap * 100;
+  let text = `[SnapScale 투자금 사용처 계산 결과 — v1.0]\n`;
+  text += `계산일: 2026.05.07\n\n`;
+  text += `=== 안건별 내역 ===\n`;
+  pillars.forEach(p => {
+    text += `\n[${p.title}] ${fmtKRW(calcPillar(p))}\n`;
+    p.items.forEach(item => {
+      const amt = calcItem(item);
+      text += `  · ${item.name}: ₩${item.unit}만 × ${item.headcount}${item.type==='monthly'?` × ${item.period}개월`:'(1회)'} = ${fmtKRW(amt)}\n`;
+    });
+    if (p.note) text += `  메모: ${p.note}\n`;
+  });
+  text += `\n=== 합계 ===\n`;
+  text += `연간 총계: ${fmtKRW(total)}\n`;
+  text += `월 런레이트: ${fmtKRW(monthly)}\n`;
+  text += `목표 ₩1억 대비: ${pct.toFixed(1)}% (${total <= cap ? '✅ 이내' : '❌ 초과'})\n`;
+  text += `\nILLUSTRATIVE ONLY | SnapScale Internal Use Only`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.act-btn.copy');
+    btn.textContent = '✅ 복사 완료!';
+    setTimeout(() => { btn.textContent = '📋 계산 결과 복사 (미팅용)'; }, 2000);
+  });
+}
+
+// ===== INIT =====
+render();
+// Open all pillars by default
+setTimeout(() => { pillars.forEach((_, i) => openPillar(i)); }, 100);
+</script>
+</body>
+</html>
