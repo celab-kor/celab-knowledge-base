@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회의록 | 스냅스킬 × 카이스트투자지주 미팅 (2026.05.07)</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy2: #1a2d45;
+  --gold: #c9a84c;
+  --gold2: #e8c96a;
+  --text: #e8edf2;
+  --muted: #8a9bb0;
+  --card-bg: #162030;
+  --card-border: #243450;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* NAV */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,27,42,0.97);
+  border-bottom: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  white-space: nowrap;
+  height: 52px;
+}
+.nav-inner a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.nav-inner a:hover { color: var(--gold); background: var(--navy2); }
+.nav-logo {
+  font-weight: 700;
+  color: var(--gold) !important;
+  margin-right: 8px;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a2d45 40%, #0f2235 70%, #0d1b2a 100%);
+  padding: 64px 20px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(201,168,76,0.15);
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.hero h1 span { color: var(--gold); }
+.hero-meta {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 36px;
+}
+.hero-meta strong { color: var(--text); }
+.kpi-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.kpi-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 22px 32px;
+  min-width: 160px;
+  text-align: center;
+}
+.kpi-num {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+}
+.kpi-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+  display: block;
+}
+
+/* MAIN LAYOUT */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+section { margin-bottom: 48px; }
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+  border-left: 4px solid var(--gold);
+  padding-left: 14px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* CARDS */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.card-num {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: var(--navy);
+  font-weight: 800;
+  font-size: 13px;
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.card-title { font-weight: 700; font-size: 16px; }
+
+/* DETAILS/ACCORDION */
+details {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+summary {
+  padding: 18px 22px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  user-select: none;
+  transition: background 0.2s;
+}
+summary:hover { background: rgba(201,168,76,0.05); }
+summary::after {
+  content: '▼';
+  margin-left: auto;
+  color: var(--gold);
+  font-size: 11px;
+  transition: transform 0.2s;
+}
+details[open] summary::after { transform: rotate(180deg); }
+.details-body {
+  padding: 0 22px 22px;
+  border-top: 1px solid var(--card-border);
+  padding-top: 18px;
+}
+
+/* HIGHLIGHT BOX */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.05));
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 14px 0;
+}
+.highlight-box .hl-title {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.hl-list {
+  list-style: none;
+  padding: 0;
+}
+.hl-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(36,52,80,0.5);
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+}
+.hl-list li:last-child { border-bottom: none; }
+.hl-list li::before { content: '✦'; color: var(--gold); flex-shrink: 0; font-size: 10px; margin-top: 4px; }
+
+/* INSIGHT TAGS */
+.insight-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+}
+.insight-list li {
+  background: rgba(26,45,69,0.6);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.insight-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold2);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+/* ACTION ITEMS */
+.action-table { width: 100%; border-collapse: collapse; }
+.action-table th {
+  background: var(--navy2);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+.action-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--card-border);
+  font-size: 14px;
+  vertical-align: top;
+}
+.action-table tr:last-child td { border-bottom: none; }
+.action-table tr:hover td { background: rgba(201,168,76,0.03); }
+.priority-high {
+  background: rgba(220,60,60,0.15);
+  color: #f87171;
+  border: 1px solid rgba(220,60,60,0.3);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.priority-mid {
+  background: rgba(201,168,76,0.15);
+  color: var(--gold2);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.priority-low {
+  background: rgba(100,160,100,0.15);
+  color: #86efac;
+  border: 1px solid rgba(100,160,100,0.3);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.person-tag {
+  background: var(--navy2);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 12px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* DECISIONS */
+.decision-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+}
+.decision-card .d-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.d-badge {
+  background: rgba(201,168,76,0.15);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(201,168,76,0.25);
+}
+.d-desc { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+/* DIAGRAM */
+.diagram-wrap {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 28px 20px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+.diagram-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mermaid { min-height: 80px; }
+
+/* PARTICIPANTS */
+.participant-list {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.participant {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px 22px;
+  text-align: center;
+  min-width: 160px;
+}
+.participant .p-icon { font-size: 28px; margin-bottom: 8px; }
+.participant .p-name { font-weight: 700; font-size: 15px; }
+.participant .p-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* RISK */
+.risk-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.risk-item {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  flex: 1;
+  min-width: 200px;
+}
+.risk-item .r-type {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.risk-item.danger .r-type { color: #f87171; }
+.risk-item.warn .r-type { color: var(--gold); }
+.risk-item.opport .r-type { color: #86efac; }
+.risk-item p { font-size: 13px; color: var(--muted); }
+
+/* NEXT STEPS */
+.step-list {
+  counter-reset: step;
+  list-style: none;
+  padding: 0;
+}
+.step-list li {
+  counter-increment: step;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--card-border);
+  font-size: 14px;
+}
+.step-list li:last-child { border-bottom: none; }
+.step-list li::before {
+  content: counter(step);
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: var(--navy);
+  font-weight: 800;
+  font-size: 13px;
+  min-width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* TAG */
+.tag {
+  display: inline-block;
+  background: var(--navy2);
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  color: var(--muted);
+  margin: 2px;
+}
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 700px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .kpi-card { min-width: 120px; padding: 16px 20px; }
+  .action-table { font-size: 13px; }
+  .hero { padding: 44px 16px 36px; }
+  .nav-inner { gap: 2px; }
+  .participant-list { gap: 10px; }
+  .participant { min-width: 130px; }
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--card-border);
+  padding: 28px 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+</style>
+</head>
+<body>
+<div id="celab-home-btn" style="position:fixed;top:14px;right:14px;z-index:10000;">
+  <a href="https://celab-kor.github.io/celab-knowledge-base/" target="_blank"
+     style="display:flex;align-items:center;gap:7px;
+            background:rgba(13,27,42,0.88);color:#c9a84c;
+            padding:7px 13px;border-radius:22px;
+            font-size:13px;font-weight:700;text-decoration:none;
+            box-shadow:0 2px 10px rgba(0,0,0,0.35);
+            border:1px solid rgba(201,168,76,0.35);
+            backdrop-filter:blur(6px);
+            transition:background 0.2s;"
+     onmouseover="this.style.background='rgba(13,27,42,1)'"
+     onmouseout="this.style.background='rgba(13,27,42,0.88)'"
+     title="CELab 지식창고 홈으로">
+    <svg width="15" height="15" viewBox="0 0 20 20" fill="#c9a84c" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z"/>
+    </svg>
+    CELab 지식창고
+  </a>
+</div>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">📋 회의록</a>
+    <a href="#overview">개요</a>
+    <a href="#agenda1">세일즈현황</a>
+    <a href="#agenda2">기술전략</a>
+    <a href="#agenda3">채용/조직</a>
+    <a href="#agenda4">투자유치</a>
+    <a href="#agenda5">글로벌전략</a>
+    <a href="#agenda6">자문단/네트워킹</a>
+    <a href="#decisions">결정사항</a>
+    <a href="#actions">액션아이템</a>
+    <a href="#diagrams">다이어그램</a>
+    <a href="#nextsteps">다음단계</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-badge">MEETING MINUTES · CONFIDENTIAL</div>
+  <h1>스냅스킬 × <span>카이스트투자지주</span> 정기 미팅</h1>
+  <p class="hero-meta">
+    <strong>2026년 5월 7일</strong> &nbsp;|&nbsp; 화상 미팅 &nbsp;|&nbsp;
+    <strong>안준현 이사</strong>(카이스트투자지주) · <strong>김상윤 대표</strong> · <strong>박규호 부장</strong>
+  </p>
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <span class="kpi-num">3</span>
+      <span class="kpi-label">참석자 수</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-num">7</span>
+      <span class="kpi-label">주요 논의 안건</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-num">12</span>
+      <span class="kpi-label">도출 액션아이템</span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <!-- 참석자 -->
+  <section id="overview">
+    <div class="section-title">👥 참석자 및 회의 개요</div>
+    <div class="participant-list">
+      <div class="participant">
+        <div class="p-icon">🏛️</div>
+        <div class="p-name">안준현 이사</div>
+        <div class="p-role">카이스트투자지주</div>
+      </div>
+      <div class="participant">
+        <div class="p-icon">🚀</div>
+        <div class="p-name">김상윤 대표</div>
+        <div class="p-role">스냅스킬 CEO</div>
+      </div>
+      <div class="participant">
+        <div class="p-icon">⚙️</div>
+        <div class="p-name">박규호 부장</div>
+        <div class="p-role">스냅스킬 도메인 전문가</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <div><span class="tag">화상회의</span><span class="tag">비정기</span><span class="tag">투자IR준비</span></div>
+        <div><span class="tag">플랜트엔지니어링AI</span><span class="tag">온톨로지</span><span class="tag">시드라운드</span></div>
+      </div>
+      <p style="margin-top:12px;font-size:14px;color:var(--muted);">
+        별도 고정 아젠다 없이 진행 상황 공유 및 투자·사업 방향성 논의 목적의 비정기 미팅.
+        세일즈 현황, 기술 로드맵, 채용, 투자유치 진행 상황, 글로벌 전략, 자문단 운영 전략에 걸쳐 폭넓게 논의.
+      </p>
+    </div>
+  </section>
+
+  <!-- 안건 1: 세일즈 현황 -->
+  <section id="agenda1">
+    <div class="section-title">💼 안건 1 — 세일즈 현황 및 계약 체결</div>
+
+    <details open>
+      <summary><span class="card-num">1</span> 현재 계약 체결 현황 및 파이프라인</summary>
+      <div class="details-body">
+        <p style="font-size:14px;margin-bottom:14px;">회의 당일 대기업 1개사, 중소기업 1개사와 계약 체결 완료. 단순 용역계약이 아닌 <strong>파트너십 계약 병행</strong> 방식으로 구성하여 장기 협력 관계를 구조화.</p>
+
+        <div class="highlight-box">
+          <div class="hl-title">📌 파트너십 계약 핵심 조항</div>
+          <ul class="hl-list">
+            <li>협력기업이 자사 파트너를 스냅스킬에 소개 시 → 구독비 크레딧 환급 (레퍼럴 인센티브 구조)</li>
+            <li>공동개발 기능은 타 기업 공급 시 추가 공동개발 기회 우선 부여 (기술 의존성 심화)</li>
+            <li>파트너십 계약 + 용역계약 이원화로 관계 장기화 설계</li>
+          </ul>
+        </div>
+
+        <p style="font-size:14px;margin-bottom:10px;"><strong>계약 확정 파이프라인 요약:</strong></p>
+        <ul class="hl-list" style="list-style:none;padding:0;">
+          <li style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--card-border);font-size:14px;"><span style="color:var(--gold)">✔</span> 대기업 1개사 — 계약 완료 (당일)</li>
+          <li style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--card-border);font-size:14px;"><span style="color:var(--gold)">✔</span> 중소기업 1개사 — 계약 완료 (당일), 미국 법인 별도 컨택 진행 중</li>
+          <li style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--card-border);font-size:14px;"><span style="color:var(--gold)">⏳</span> 화공플랜트 안전 공공기관 — 5월 중 계약 예정, 약 8주 프로젝트 (온톨로지 기반 문서정합성 검증)</li>
+          <li style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--card-border);font-size:14px;"><span style="color:var(--gold)">⏳</span> 울산 소재 기업 — 정부지원사업 결과 대기 중</li>
+          <li style="display:flex;gap:8px;padding:6px 0;font-size:14px;"><span style="color:var(--muted)">❓</span> 정부지원금 2억 집행처 — 진행 여부 불확실 (매우 애매한 상태)</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="card-num">I</span> 안건 1 인사이트</summary>
+      <div class="details-body">
+        <ul class="insight-list">
+          <li>
+            <div class="insight-label">💡 INSIGHT 1 — 파트너십 계약의 전략적 가치</div>
+            단순 용역에 그치지 않고 파트너십 계약을 병행함으로써 고객을 채널 파트너로 전환. 구독 크레딧 환급 구조는 비용 없이 레퍼럴 네트워크를 확장하는 레버리지 메커니즘.
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 2 — POC 중심 수주의 한계 인식</div>
+            안준현 이사가 명시적으로 "POC는 단발성 확률이 높다"고 지적. 데이터 확보 목적이 아닌 매출 파이프라인 관점에서의 전략 재검토 필요.
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 3 — 화공플랜트 공공기관 계약의 레퍼런스 가치</div>
+            공공기관의 ASME(아스맥) 코드와 한국산업표준 비교 온톨로지 프로젝트는 기술 검증 레퍼런스로 활용 가능. 규제 기반 도메인에서의 신뢰도 획득 기회.
+          </li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- 안건 2: 기술 전략 -->
+  <section id="agenda2">
+    <div class="section-title">🔬 안건 2 — 기술 전략 및 제품화 로드맵</div>
+
+    <details open>
+      <summary><span class="card-num">2</span> 온톨로지 기반 제품화 단계 및 핵심 기술 과제</summary>
+      <div class="details-body">
+        <p style="font-size:14px;margin-bottom:14px;">박규호 부장이 기술 깊이(Depth)를 3단계로 구조화하여 설명. 현재는 1차 레벨에 집중하며 순차적 확장 전략을 제시.</p>
+
+        <div class="highlight-box">
+          <div class="hl-title">🔑 기술 개발 3단계 프레임워크</div>
+          <ul class="hl-list">
+            <li><strong>1단계 (현재):</strong> 룰·레귤레이션 기반 온톨로지 구축 → P&ID 문서정합성 검증 (룰베이스 AI 적용 구간)</li>
+            <li><strong>2단계 (6~12개월):</strong> 구동 가능한 제품형태 구현 + 온톨로지 정확도 향상 + 외부 자문단 검증 체계 확립</li>
+            <li><strong>3단계 (시리즈A 이후):</strong> 기본설계·개념설계 단계 진출 + 특허 확보 + PHD 인력 영입 + HYSYS 등 설계툴 연동</li>
+          </ul>
+        </div>
+
+        <p style="font-size:14px;margin-top:14px;margin-bottom:10px;"><strong>온톨로지 스키마 구축을 위한 지식 내재화 구조:</strong></p>
+        <div class="card" style="background:var(--navy2);border-color:var(--card-border);">
+          <p style="font-size:14px;">
+            <span style="color:var(--gold);font-weight:700;">핵심 원리:</span> AI 엔지니어가 플랜트 워크프로세스를 충분히 이해해야 일관된 온톨로지 스키마 설계 가능.<br><br>
+            레슨스런드(Lesson Learned) 데이터 — 각 회사 내 누적 경험치 — 는 AI 엔지니어가 직접 해석하는 것이 아니라, <strong>소수의 시니어 자문단이 중간 해석자(브리지)로서 개발팀에 전달</strong>하는 구조.
+          </p>
+        </div>
+
+        <div class="grid-2" style="margin-top:14px;">
+          <div class="card" style="background:rgba(13,27,42,0.7);">
+            <div style="color:var(--gold);font-weight:700;margin-bottom:8px;font-size:13px;">✅ 온톨로지의 역할</div>
+            <p style="font-size:13px;color:var(--muted);">AI 추론의 근거를 모두 추적(Trace) 가능하게 하여 에러 발생 시 원인 소급 및 책임 소재 명확화 → 산업 안전 분야에서의 필수 요건</p>
+          </div>
+          <div class="card" style="background:rgba(13,27,42,0.7);">
+            <div style="color:var(--gold);font-weight:700;margin-bottom:8px;font-size:13px;">⚠️ 제품화의 2대 병목</div>
+            <p style="font-size:13px;color:var(--muted);">① 구동 가능한 제품 형태 완성 ② 온톨로지 정확도 + 공신력 있는 자문단 검증 — 이 두 가지가 반복 수주 가능성의 전제조건</p>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="card-num">I</span> 안건 2 인사이트</summary>
+      <div class="details-body">
+        <ul class="insight-list">
+          <li>
+            <div class="insight-label">💡 INSIGHT 1 — 지식 내재화의 레버리지 구조</div>
+            자문단을 단순 컨설턴트가 아닌 '지식 해석자'로 포지셔닝하면 소수 인원으로 대규모 도메인 지식을 AI 개발팀에 전달 가능. 이 구조가 비용 효율적으로 확장 가능한 핵심 경쟁력.
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 2 — 경쟁사 차별화의 핵심은 '회사별 안목지(Tacit Knowledge)'</div>
+            동일 AI를 사용하더라도 각 회사의 레슨스런드를 학습한 기업이 압도적 우위. 이는 강력한 고객 락인(Lock-in) 메커니즘이자 복제 불가능한 해자(Moat).
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 3 — 포스텍 교수님 연계 기업과의 M&A 리스크</div>
+            제품화된 플랜트IT 기업과의 협업/M&A는 빠른 제품화 경로이나, 해당 기업의 상장 이익 실현 목적과 스냅스킬 독립 성장 방향이 충돌할 수 있음. 신중한 구조 설계 필요.
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 4 — FDE(Field Development Engineer) AI 활용 시장 선점 가능성</div>
+            플랜트 엔지니어링 분야에서 AI 활용 방법론을 공유하는 커뮤니티 자체가 부재. 이 공백이 곧 시장 창출 기회이며 커뮤니티 운영이 간접적 제품 마케팅 채널로 기능 가능.
+          </li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- 안건 3: 채용 -->
+  <section id="agenda3">
+    <div class="section-title">👷 안건 3 — 채용 전략 및 조직 구성</div>
+
+    <details>
+      <summary><span class="card-num">3</span> 개발자 채용 현황 및 전략</summary>
+      <div class="details-body">
+        <div class="highlight-box">
+          <div class="hl-title">📋 채용 현황 요약</div>
+          <ul class="hl-list">
+            <li>현재 개발자 인원 부족으로 다수 POC 수주건 동시 감당 불가 상태</li>
+            <li>투자금 확보 즉시 일괄 채용 방침 — 점진적 채용보다 한 번에 다수 채용 후 함께 학습 효율이 높다고 판단</li>
+            <li>면접 진행 중 (공개 채용 + 네트워크 기반 채용 병행)</li>
+            <li>채용 타겟: 순수 AI/IT 개발자보다 글로벌 정세·산업 이슈에 관심 있는 복합형 인재 선호</li>
+          </ul>
+        </div>
+        <p style="font-size:14px;margin-top:12px;"><strong>채용 소스:</strong> KAIST/POSTECH 연구실 선후배 네트워크, 결혼식·모임 등 비공식 채널, 화공연구소 카톡방(약 500명) 네트워크 활용 중.</p>
+        <p style="font-size:14px;margin-top:8px;color:var(--muted);">박규호 부장은 2026년 7월 육아휴직 예정(5/28 출산). 3개월간 듀얼 역할 후 정식 합류 예정(2026년 내 조인 확정).</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="card-num">I</span> 안건 3 인사이트</summary>
+      <div class="details-body">
+        <ul class="insight-list">
+          <li>
+            <div class="insight-label">💡 INSIGHT 1 — 도메인 이해도가 채용 필수 기준</div>
+            "국제 정세, 글로벌 트렌드에 관심 있는 개발자"가 제품 이해도와 기여도가 높음. 채용 기준에 기술 역량 외 '산업 이해도 적합성' 명시 필요.
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 2 — 박규호 부장 합류 타임라인 리스크</div>
+            핵심 도메인 전문가의 풀타임 합류까지 약 3~6개월 공백 구간 존재. 이 기간 중 기술 방향성 오류 방지를 위한 주간 브리핑 등 대안 필요.
+          </li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- 안건 4: 투자 유치 -->
+  <section id="agenda4">
+    <div class="section-title">💰 안건 4 — 투자유치 전략 및 투자사 현황</div>
+
+    <details open>
+      <summary><span class="card-num">4</span> 시드 라운드 목표 및 투자사 검토</summary>
+      <div class="details-body">
+        <div class="highlight-box">
+          <div class="hl-title">🎯 자금 조달 목표</div>
+          <ul class="hl-list">
+            <li><strong>총 목표:</strong> 투자금 + TIPS = 약 10억원 (시드 라운드 안정화 및 시리즈A 연결)</li>
+            <li><strong>목적:</strong> 개발자 일괄 채용 + 제품화 최우선 투입</li>
+            <li><strong>IR 일정:</strong> 5월 말 진행 예정 (카이스트투자지주 내부 공유 포함)</li>
+          </ul>
+        </div>
+
+        <p style="font-size:14px;margin-top:14px;margin-bottom:10px;"><strong>투자사별 현황 및 평가:</strong></p>
+
+        <div class="grid-2">
+          <div class="decision-card">
+            <div class="d-title"><span class="d-badge">핏 우수</span> 스트롱벤처스</div>
+            <div class="d-desc">문제 해결 및 도메인 특화 강점 이해도 높음. 5억~50억 정형화된 투자 포트폴리오 운용. 첫 컨택 이사와 관계 양호.</div>
+          </div>
+          <div class="decision-card">
+            <div class="d-title"><span class="d-badge">핏 우수</span> 슈미트벤처스</div>
+            <div class="d-desc">DSC 상장사 구조로 팔로우 투자 가능. 기술 이해도 높은 교수 출신 심사역. 문제 정확 이해를 최우선 기준으로 평가.</div>
+          </div>
+          <div class="decision-card">
+            <div class="d-title"><span class="d-badge">검토 중</span> 카카오 (CVC)</div>
+            <div class="d-desc">내부 검토 중. 명확한 입장 미정.</div>
+          </div>
+          <div class="decision-card">
+            <div class="d-title"><span class="d-badge">연결 진행</span> X플로우 (GS CVC)</div>
+            <div class="d-desc">대표 지속 연락 중. GS 내부 채널 뚫는 작업 진행 중. 산업 밸류체인 연결 기대.</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px;background:rgba(13,27,42,0.7);">
+          <div style="color:var(--gold);font-weight:700;margin-bottom:8px;font-size:13px;">🏛️ 카이스트투자지주의 역할 (안준현 이사 발언)</div>
+          <p style="font-size:14px;color:var(--muted);">포스코, 삼성 종기원 회장/부회장 개인 출자 등 탑다운 연결 사례 보유. 필요 기업 연결 지원 가능. 
+          <strong style="color:var(--text);">5월 말 IR에서 내부 설득 진행 예정.</strong> 인위적 강요 없이 자체 판단 기반 결정 원칙.</p>
+        </div>
+
+        <div class="card" style="margin-top:10px;border-color:rgba(248,113,113,0.3);">
+          <div style="color:#f87171;font-weight:700;margin-bottom:8px;font-size:13px;">⚠️ 포스텍홀딩스 상황 (안준현 이사 공유)</div>
+          <p style="font-size:14px;color:var(--muted);">포스텍홀딩스 대표이사 과오로 학교 총장이 제재 조치. 약 1년간 갱생 기간 부여 상태. 관련 투자/출자 기대는 현재 시점에서 보류 필요.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="card-num">I</span> 안건 4 인사이트</summary>
+      <div class="details-body">
+        <ul class="insight-list">
+          <li>
+            <div class="insight-label">💡 INSIGHT 1 — "문제 이해도"가 핵심 투자사 선별 기준</div>
+            김상윤 대표가 강조하는 최우선 투자사 기준은 '도메인 문제를 정확히 이해하는가'. 단순 수익률 중심 투자사보다 파트너형 투자사가 어려운 시기의 자원으로 기능.
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 2 — 시드에서 투자자 수 최소화 전략</div>
+            안준현 이사가 "초반에는 투자자 수가 적은 게 좋다"고 조언. 제품 개발 집중 단계에서 IR 부담을 최소화하고 실행력 유지 필요.
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 3 — CVC 연계는 고객사 연결의 지름길</div>
+            X플로우(GS그룹)와 같은 CVC 투자는 단순 재무적 투자 이상으로, 대기업 그룹의 플랜트 계열사(GS건설 등) 직접 연결 기회 제공.
+          </li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- 안건 5: 글로벌 전략 -->
+  <section id="agenda5">
+    <div class="section-title">🌏 안건 5 — 글로벌 진출 전략</div>
+
+    <details>
+      <summary><span class="card-num">5</span> 국내 레퍼런스 → 글로벌 확장 로드맵</summary>
+      <div class="details-body">
+        <p style="font-size:14px;margin-bottom:14px;"><strong>안준현 이사 제안 전략:</strong> 국내에서 최소 레퍼런스 확보 후 곧바로 글로벌(중동·인도) 플립.</p>
+
+        <div class="highlight-box">
+          <div class="hl-title">🗺️ 글로벌 진출 시나리오</div>
+          <ul class="hl-list">
+            <li><strong>2026년 내:</strong> 국내 핵심 플랜트 건설사 1~2개사 레퍼런스 확보 (현대ENG, GS건설, 대우건설 등)</li>
+            <li><strong>2027년:</strong> 법인 플립 또는 글로벌 법인 설립. 중동(사우디아람코 네트워크 활용) 또는 인도(대규모 외주 플랜트 엔지니어링 시장) 우선 진출</li>
+            <li><strong>미국 루트:</strong> 계약사 미국 법인과의 협력으로 미국 테스트베드 활용 가능성 (현재 협의 중)</li>
+          </ul>
+        </div>
+
+        <div class="card" style="background:rgba(13,27,42,0.7);margin-top:12px;">
+          <div style="color:var(--gold);font-weight:700;margin-bottom:8px;font-size:13px;">🌐 글로벌 시장 구조 인식 (박규호 부장)</div>
+          <p style="font-size:14px;color:var(--muted);">미국 시장: 지난 10년간 엔지니어 연봉 동결. 반복 문서작업이 인도 외주로 전환됨. 
+          <strong style="color:var(--text);">전략 1:</strong> 인도 외주업체가 스냅스킬 사용 → 효율화.
+          <strong style="color:var(--text);">전략 2:</strong> 한국 중소 엔지니어링사가 낮은 단가로 스냅스킬 활용 → 선진국 시장 역진출 지원.</p>
+        </div>
+
+        <p style="font-size:14px;margin-top:12px;"><strong>국내 주요 타겟 기업 (안준현 이사 정리):</strong></p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+          <span class="tag" style="color:var(--gold);border-color:rgba(201,168,76,0.3);">현대건설</span>
+          <span class="tag" style="color:var(--gold);border-color:rgba(201,168,76,0.3);">현대엔지니어링</span>
+          <span class="tag">삼성ENA</span>
+          <span class="tag">GS건설</span>
+          <span class="tag">대우건설</span>
+          <span class="tag">대림(DL이앤씨)</span>
+          <span class="tag">포스코ENC</span>
+          <span class="tag" style="color:#f87171;border-color:rgba(248,113,113,0.3);">SK (플랜트 철수)</span>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="card-num">I</span> 안건 5 인사이트</summary>
+      <div class="details-body">
+        <ul class="insight-list">
+          <li>
+            <div class="insight-label">💡 INSIGHT 1 — 국내 대기업 50개 확보 전략의 비효율성</div>
+            안준현 이사가 명시: 국내 중견 기업 50개 확보 목표는 자원 낭비. 핵심 Tier-1 레퍼런스 1~2개로 글로벌 진출이 효율적. 대기업 수주는 '하청 확산' 효과로 연결.
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 2 — 사우디아람코 네트워크의 글로벌 교두보 가치</div>
+            자문단 내 사우디아람코 임원이 CES에서 AI 엔지니어링 사례 발표 중. 이 네트워크는 중동 진출 시 최고 레벨의 검증 레퍼런스로 기능 가능.
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 3 — 인도 외주 시장의 잠재적 고객군</div>
+            현재 미국 대형 프로젝트의 반복 설계 문서를 인도 외주업체가 저가 수행 중. 이들이 스냅스킬 도입 시 비용 절감 + 품질 향상 → B2B SaaS 대규모 확산 가능성.
+          </li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- 안건 6: 자문단/커뮤니티 -->
+  <section id="agenda6">
+    <div class="section-title">🤝 안건 6 — 자문단 운영 및 엔지니어 커뮤니티 전략</div>
+
+    <details>
+      <summary><span class="card-num">6</span> 시니어 자문단 구성 및 커뮤니티 모델</summary>
+      <div class="details-body">
+        <div class="highlight-box">
+          <div class="hl-title">🏆 현재 자문단 자산 현황</div>
+          <ul class="hl-list">
+            <li>화학공학 Q&A 사이트 데이터베이스 (25~30년 운영, 약 5,000~7,000건 Q&A) 확보 및 사이트 리뉴얼 완료</li>
+            <li>사우디아람코 임원 — AI 엔지니어링 활용 사례 CES 발표 중. 최고 권위 레퍼런스</li>
+            <li>포스텍 교수 (현대엔지니어링 10년 + 버클리 12년 + 미국 연방도로청 연구 경력) — 플랜트AI 집중 연구, 스냅스킬 연구소장 의향 표명</li>
+            <li>포스텍 교수 연결 플랜트IT 기업 2~3개사 (기업가치 수십~수백억, 상장 검토 중)</li>
+          </ul>
+        </div>
+
+        <p style="font-size:14px;margin-top:14px;margin-bottom:10px;"><strong>커뮤니티 투트랙 운영 모델:</strong></p>
+        <div class="grid-2">
+          <div class="card" style="background:rgba(13,27,42,0.7);">
+            <div style="color:var(--gold);font-weight:700;margin-bottom:8px;font-size:13px;">Track A — 핵심 자문단 (소수 정예)</div>
+            <p style="font-size:13px;color:var(--muted);">• 자문료 지급 + 스톡옵션 부여<br>• NDA 체결 후 기술개발 직접 참여<br>• AI 기반 커리어 전환 희망자 우선 영입<br>• 역할: 도메인 지식 → 개발팀 브리지</p>
+          </div>
+          <div class="card" style="background:rgba(13,27,42,0.7);">
+            <div style="color:var(--gold);font-weight:700;margin-bottom:8px;font-size:13px;">Track B — 업계 네트워킹 허브 (다수)</div>
+            <p style="font-size:13px;color:var(--muted);">• 월간 스프린트/세미나/서밋 운영<br>• AI 활용 엔지니어링 스터디 그룹<br>• 각 기업 챔피언 발굴 → 간접 마케팅<br>• 역할: 시장 수요 파악 + 마케팅 채널</p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <div style="color:var(--gold);font-weight:700;margin-bottom:8px;font-size:13px;">📊 포스텍 교수 스톡옵션 조건 (협의 내용)</div>
+          <p style="font-size:14px;color:var(--muted);">스톡옵션 3% 부여 제안. 자문료는 박규호 부장 합류 시 연봉의 20% 수준 (연 약 1,000만원). 초기에는 스톡옵션으로 장기 인센티브 설계. 자본주의적 성과 지향 철학 보유.</p>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="card-num">I</span> 안건 6 인사이트</summary>
+      <div class="details-body">
+        <ul class="insight-list">
+          <li>
+            <div class="insight-label">💡 INSIGHT 1 — 커뮤니티가 제품 검증의 비용 효율적 채널</div>
+            세미나에서 나오는 Q&A를 에이전틱 AI로 실시간 큐레이션하면 개발 피드백을 저비용으로 수집 가능. 자문단의 해석 역할이 이 구조의 핵심.
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 2 — 시니어 FDE의 AI 포모(FOMO) 심리 활용</div>
+            플랜트 시니어 엔지니어들이 AI 커리어 전환에 강한 불안감과 관심을 동시에 보유. 권위 있는 인물(사우디아람코 임원)이 주도하는 세미나는 자발적 참여 유인 극대화.
+          </li>
+          <li>
+            <div class="insight-label">💡 INSIGHT 3 — 기업 소속 챔피언의 참여 지속가능성 리스크</div>
+            현재는 비공식 지원이지만, 스냅스킬이 성장할수록 해당 기업의 거래처가 됨 → 내부 직원의 비공식 지원 활동이 이해충돌로 전환될 가능성. 사전 구조 설계 필요.
+          </li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- 결정사항 -->
+  <section id="decisions">
+    <div class="section-title">✅ 핵심 결정사항</div>
+
+    <div class="decision-card">
+      <div class="d-title"><span class="d-badge">결정 #1</span> 5월 말 IR 진행</div>
+      <div class="d-desc">카이스트투자지주 내부 공유를 포함한 IR을 5월 말 실시. 안준현 이사가 내부 설득 진행. 해당 자리에서 가능하면 당일 투자 결정 목표. 투자금 규모는 약 10억원(TIPS 포함) 시드 라운드 목표.</div>
+    </div>
+
+    <div class="decision-card">
+      <div class="d-title"><span class="d-badge">결정 #2</span> 투자 수령 즉시 개발자 일괄 채용</div>
+      <div class="d-desc">점진적 채용 대신 투자금 확보 즉시 다수 채용 및 동시 학습 방식으로 제품화 속도 극대화. 개발자는 온톨로지 스키마 구축을 위한 플랜트 워크프로세스 이해 교육 필수.</div>
+    </div>
+
+    <div class="decision-card">
+      <div class="d-title"><span class="d-badge">결정 #3</span> 2026년 내 국내 레퍼런스 → 2027년 글로벌 플립</div>
+      <div class="d-desc">2026년 내 핵심 국내 플랜트 기업 레퍼런스 확보 후, 2027년 중동(사우디) 또는 인도 우선 글로벌 진출. 국내 중견기업 50개 확보 전략은 채택하지 않음.</div>
+    </div>
+
+    <div class="decision-card">
+      <div class="d-title"><span class="d-badge">결정 #4</span> 포스텍 교수 자문 조건 합의 방향</div>
+      <div class="d-desc">스톡옵션 3% + 연 자문료 약 1,000만원 조건으로 자문 계약 추진. 연구소장 직함 부여 방향 검토. 플랜트IT 기업 M&A 제안은 독립 성장 방향성 충돌 우려로 신중 검토.</div>
+    </div>
+
+    <div class="decision-card">
+      <div class="d-title"><span class="d-badge">결정 #5</span> 박규호 부장 2026년 내 풀타임 합류</div>
+      <div class="d-desc">7월 육아휴직 시작 후 약 3개월간 파트타임 지원, 이후 정식 합류. 합류 전까지 주요 기술 방향성 검토는 정기 화상 미팅으로 보완.</div>
+    </div>
+  </section>
+
+  <!-- 액션아이템 -->
+  <section id="actions">
+    <div class="section-title">📌 액션아이템 체크리스트</div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div style="overflow-x:auto;">
+        <table class="action-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>과제</th>
+              <th>담당자</th>
+              <th>기한</th>
+              <th>우선순위</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-01</td>
+              <td>5월 말 IR 자료 최종 정리 및 카이스트투자지주 내부 공유 준비</td>
+              <td><span class="person-tag">김상윤</span> <span class="person-tag">안준현</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">2026.05.말</td>
+              <td><span class="priority-high">HIGH</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-02</td>
+              <td>현재 진행 중인 개발자 면접 완료 및 채용 후보자 풀 확정 (투자 수령 즉시 온보딩 준비)</td>
+              <td><span class="person-tag">김상윤</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">2026.05.말</td>
+              <td><span class="priority-high">HIGH</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-03</td>
+              <td>공공기관 화공플랜트 계약 최종 체결 및 킥오프 일정 확정 (8주 프로젝트)</td>
+              <td><span class="person-tag">김상윤</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">2026.05.중</td>
+              <td><span class="priority-high">HIGH</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-04</td>
+              <td>포스텍 교수 자문 계약 조건 협의 완료 (스톡옵션 3% + 자문료 연 1,000만원)</td>
+              <td><span class="person-tag">김상윤</span> <span class="person-tag">박규호</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">2026.06.초</td>
+              <td><span class="priority-high">HIGH</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-05</td>
+              <td>스트롱벤처스, 슈미트벤처스 IR 미팅 일정 확정 및 투자 조건 협의</td>
+              <td><span class="person-tag">김상윤</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">2026.05.말</td>
+              <td><span class="priority-high">HIGH</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-06</td>
+              <td>X플로우(GS CVC) 투자 연계 GS그룹 내부 채널 연결 현황 확인 및 미팅 추진</td>
+              <td><span class="person-tag">김상윤</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">2026.06.</td>
+              <td><span class="priority-mid">MID</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-07</td>
+              <td>미국 법인 보유 계약사와 미국 테스트베드 활용 조건 구체 협의</td>
+              <td><span class="person-tag">김상윤</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">2026.06.</td>
+              <td><span class="priority-mid">MID</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-08</td>
+              <td>FDE 엔지니어 AI 커뮤니티 첫 스프린트/세미나 기획 (사우디아람코 임원·화공사이트 선배 필두)</td>
+              <td><span class="person-tag">김상윤</span> <span class="person-tag">박규호</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">2026.07.</td>
+              <td><span class="priority-mid">MID</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-09</td>
+              <td>화공연구소 카톡방(500명) 대상 주니어 엔지니어 네트워킹 행사 기획</td>
+              <td><span class="person-tag">박규호</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">2026.07.</td>
+              <td><span class="priority-mid">MID</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-10</td>
+              <td>울산 기업 정부지원사업 결과 확인 후 계약 여부 결정</td>
+              <td><span class="person-tag">김상윤</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">결과 확인 후</td>
+              <td><span class="priority-low">LOW</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-11</td>
+              <td>라이징에스벤처스(금성백조 계열) 건설테크 네트워크 활용 가능성 검토</td>
+              <td><span class="person-tag">안준현</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">2026.06.</td>
+              <td><span class="priority-low">LOW</span></td>
+            </tr>
+            <tr>
+              <td style="color:var(--muted);font-size:12px;">A-12</td>
+              <td>박규호 부장 풀타임 합류 전 주간 기술 방향성 브리핑 체계 수립</td>
+              <td><span class="person-tag">김상윤</span> <span class="person-tag">박규호</span></td>
+              <td style="color:var(--gold);white-space:nowrap;">2026.07.前</td>
+              <td><span class="priority-mid">MID</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 다이어그램 -->
+  <section id="diagrams">
+    <div class="section-title">📊 시각화 다이어그램</div>
+
+    <div class="diagram-wrap">
+      <div class="diagram-title">🔄 Diagram 1 — 제품화 및 수주 프로세스 플로우</div>
+      <div class="mermaid">
+flowchart TD
+    A["🔍 고객사 POC 요청"] --> B{"요구 유형"}
+    B -->|"온톨로지 구축"| C["룰·레귤레이션 매핑\n온톨로지 스키마 설계"]
+    B -->|"문서정합성 검증"| D["P&ID 다문서\n일관성 검사"]
+    B -->|"제품 구동형"| E["OS형 플랫폼\n구현"]
+    C --> F["자문단 검증\n(사우디아람코·포스텍 교수)"]
+    D --> F
+    E --> F
+    F --> G{"검증 통과?"}
+    G -->|"✅ Pass"| H["레퍼런스 확보\n계약 완료"]
+    G -->|"❌ Fail"| I["온톨로지 정확도\n개선 루프"]
+    I --> C
+    H --> J["파트너십 계약 병행\n(레퍼럴·공동개발)"]
+    J --> K["하청사 확산\n자동 레퍼런스 증가"]
+    K --> L["🌏 글로벌 진출\n(중동·인도)"]
+
+    style A fill:#1a2d45,stroke:#243450,color:#e8edf2
+    style F fill:#162030,stroke:#c9a84c,color:#c9a84c
+    style H fill:#162030,stroke:#c9a84c,color:#e8c96a
+    style L fill:#0d1b2a,stroke:#c9a84c,color:#e8c96a
+    style I fill:#1a1028,stroke:#f87171,color:#f87171
+      </div>
+    </div>
+
+    <div class="diagram-wrap">
+      <div class="diagram-title">🕸️ Diagram 2 — 안건 간 연관성 및 이해관계자 관계도</div>
+      <div class="mermaid">
+graph LR
+    SNAP["🏢 스냅스킬"]
+
+    subgraph "기술 자산"
+        ONTO["온톨로지 DB"]
+        QADB["화공 Q&A DB\n5,000~7,000건"]
+        TECH["AI 엔진"]
+    end
+
+    subgraph "자문단"
+        SAUDI["사우디아람코 임원"]
+        POSTECH["포스텍 교수"]
+        SENR["시니어 FDE\n엔지니어"]
+    end
+
+    subgraph "고객/파트너"
+        LARGE["대기업 (현대ENG 등)"]
+        SME["중견기업"]
+        GOV["공공기관\n(화공플랜트 안전)"]
+        US["미국 법인 파트너"]
+    end
+
+    subgraph "투자사"
+        KAIST["카이스트투자지주"]
+        STRONG["스트롱벤처스"]
+        SCHMIDT["슈미트벤처스"]
+        XFLOW["X플로우 CVC"]
+    end
+
+    SAUDI -->|"검증·네트워크"| SNAP
+    POSTECH -->|"기술자문·연구소장"| SNAP
+    SENR -->|"도메인지식 브리지"| SNAP
+    QADB -->|"데이터 내재화"| ONTO
+    ONTO -->|"AI 정확도"| TECH
+    TECH -->|"제품 공급"| LARGE
+    TECH -->|"제품 공급"| SME
+    TECH -->|"제품 공급"| GOV
+    LARGE -->|"레슨스런드 데이터"| ONTO
+    KAIST -->|"투자+연결"| SNAP
+    STRONG -->|"투자 검토"| SNAP
+    SCHMIDT -->|"투자 검토"| SNAP
+    XFLOW -->|"CVC+고객연결"| SNAP
+    US -->|"미국 테스트베드"| SNAP
+    SME -->|"파트너십 레퍼럴"| LARGE
+
+    style SNAP fill:#1a2d45,stroke:#c9a84c,color:#e8c96a
+    style ONTO fill:#162030,stroke:#243450,color:#e8edf2
+    style KAIST fill:#0d1b2a,stroke:#c9a84c,color:#c9a84c
+      </div>
+    </div>
+
+    <div class="diagram-wrap">
+      <div class="diagram-title">📅 Diagram 3 — 마일스톤 타임라인 (2026–2027)</div>
+      <div class="mermaid">
+gantt
+    title 스냅스킬 주요 마일스톤 (2026-2027)
+    dateFormat  YYYY-MM-DD
+    axisFormat  %Y.%m
+
+    section 📋 계약/세일즈
+    대기업·중소기업 계약 완료          :done,    s1, 2026-05-07, 1d
+    공공기관 화공플랜트 계약 체결       :active,  s2, 2026-05-10, 7d
+    공공기관 프로젝트 수행 (8주)        :         s3, 2026-05-17, 56d
+    미국 법인 파트너 협의               :         s4, 2026-06-01, 30d
+
+    section 💰 투자유치
+    IR 자료 준비 완료                  :active,  i1, 2026-05-07, 21d
+    카이스트투자지주 IR 진행            :         i2, 2026-05-25, 5d
+    스트롱·슈미트 IR 미팅               :         i3, 2026-05-20, 14d
+    시드 라운드 클로징 목표             :crit,    i4, 2026-06-15, 1d
+    TIPS 신청/수령                     :         i5, 2026-06-01, 30d
+
+    section 👥 채용/조직
+    개발자 면접 및 풀 확정             :active,  h1, 2026-05-07, 21d
+    투자 수령 후 일괄 채용             :         h2, 2026-06-15, 21d
+    박규호 부장 육아휴직               :         h3, 2026-07-01, 90d
+    박규호 부장 풀타임 합류            :crit,    h4, 2026-10-01, 1d
+
+    section 🔬 기술개발
+    포스텍 교수 자문 계약 완료         :         t1, 2026-06-01, 14d
+    온톨로지 스키마 고도화             :         t2, 2026-06-15, 120d
+    제품 베타버전 완성                 :crit,    t3, 2026-12-01, 1d
+
+    section 🤝 커뮤니티
+    1차 FDE 세미나 개최                :         c1, 2026-07-01, 14d
+    정기 스프린트 월례 운영 시작       :         c2, 2026-08-01, 30d
+
+    section 🌏 글로벌
+    국내 핵심 레퍼런스 완성            :crit,    g1, 2026-12-31, 1d
+    글로벌 법인 플립 검토              :         g2, 2027-01-01, 60d
+    중동·인도 진출 시작                :         g3, 2027-03-01, 90d
+      </div>
+    </div>
+  </section>
+
+  <!-- 리스크 및 기회 -->
+  <section>
+    <div class="section-title">⚠️ 리스크 & 기회 요소</div>
+    <div class="risk-row">
+      <div class="risk-item danger">
+        <div class="r-type">🔴 HIGH RISK</div>
+        <p>개발자 부족으로 인한 POC 수주 이행 불능 리스크. 투자 지연 시 계약 의무 불이행 가능성.</p>
+      </div>
+      <div class="risk-item danger">
+        <div class="r-type">🔴 HIGH RISK</div>
+        <p>포스텍 교수 연계 M&A 시 스냅스킬의 독립 성장 방향성 훼손 및 지배구조 리스크.</p>
+      </div>
+      <div class="risk-item warn">
+        <div class="r-type">🟡 MEDIUM RISK</div>
+        <p>기업 소속 챔피언의 비공식 기술 지원이 이해충돌로 전환될 가능성. 법적 구조 부재 시 관계 단절 리스크.</p>
+      </div>
+      <div class="risk-item warn">
+        <div class="r-type">🟡 MEDIUM RISK</div>
+        <p>박규호 부장의 풀타임 합류 전 3~6개월 공백 기간 중 기술 방향성 오류 발생 가능성.</p>
+      </div>
+      <div class="risk-item opport">
+        <div class="r-type">🟢 OPPORTUNITY</div>
+        <p>사우디아람코 임원 네트워크를 활용한 중동 시장 선점. 타 스타트업 대비 비교불가 레퍼런스 보유.</p>
+      </div>
+      <div class="risk-item opport">
+        <div class="r-type">🟢 OPPORTUNITY</div>
+        <p>FDE 엔지니어 AI 커뮤니티 공백 시장. 선점 시 산업 내 지식 허브로 기능하며 마케팅 비용 Zero에 수렴.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 다음 단계 -->
+  <section id="nextsteps">
+    <div class="section-title">🚀 다음 단계 및 후속 과제</div>
+    <div class="card">
+      <ul class="step-list">
+        <li>
+          <div>
+            <strong>5월 말 IR 실행</strong><br>
+            <span style="color:var(--muted);font-size:13px;">카이스트투자지주 내부 발표 + 스트롱·슈미트 미팅 동시 진행. 가능하면 당일 투자 결정 목표. 제품 데모 + 레퍼런스 3건 + 팀 로드맵 중심으로 자료 구성.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>공공기관 프로젝트 킥오프 및 성공 사례 확보</strong><br>
+            <span style="color:var(--muted);font-size:13px;">ASME 코드 vs 한국산업표준 온톨로지 비교 프로젝트(8주)를 최우선 완성 과제로 설정. 이 레퍼런스가 IR 자료의 핵심 증거로 활용.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>포스텍 교수 자문 계약 체결 및 연구소 설립 검토</strong><br>
+            <span style="color:var(--muted);font-size:13px;">스냅스킬 연구소(가칭) 설립 구조, 연구소장 직함, 스톡옵션 및 자문료 조건 최종 합의. M&A 제안에 대한 스냅스킬 입장 정리 후 전달.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>1차 FDE AI 세미나 기획 및 개최 (7월 목표)</strong><br>
+            <span style="color:var(--muted);font-size:13px;">사우디아람코 임원, 화공 Q&A 사이트 운영자를 주빈으로 모시고 시니어 엔지니어 AI 활용 입문 세미나 개최. 화공연구소 카톡방 500명 동원.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>2026년 내 제품 베타 완성 및 구독 모델 전환</strong><br>
+            <span style="color:var(--muted);font-size:13px;">현재 POC 기반 용역에서 구독 기반 SaaS 또는 성과기반(LD) 프라이싱으로 전환. 대기업 1개사가 구독형으로 사용하는 시점이 시리즈A 트리거.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <strong>2027년 글로벌 플립 준비 (중동·인도 시장)</strong><br>
+            <span style="color:var(--muted);font-size:13px;">국내 레퍼런스 완성 후 미국·중동·인도 중 최적 시장 선정. 사우디아람코 네트워크를 중동 진입 교두보로 활용. 플립 구조(델라웨어 C-Corp 등) 법무 검토 시작.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>📋 스냅스킬 × 카이스트투자지주 회의록 · 2026년 5월 7일 · CONFIDENTIAL</p>
+  <p style="margin-top:6px;">안준현 이사 (카이스트투자지주) · 김상윤 대표 · 박규호 부장</p>
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#1a2d45',
+      primaryTextColor: '#e8edf2',
+      primaryBorderColor: '#243450',
+      lineColor: '#c9a84c',
+      secondaryColor: '#162030',
+      tertiaryColor: '#0d1b2a',
+      background: '#0d1b2a',
+      mainBkg: '#162030',
+      nodeBorder: '#243450',
+      clusterBkg: '#0d1b2a',
+      titleColor: '#c9a84c',
+      edgeLabelBackground: '#1a2d45',
+      actorBkg: '#162030',
+      actorBorder: '#243450',
+      actorTextColor: '#e8edf2',
+      fontFamily: 'Apple SD Gothic Neo, Noto Sans KR, sans-serif',
+      fontSize: '13px'
+    },
+    flowchart: { curve: 'basis', htmlLabels: true },
+    gantt: { axisFormat: '%Y.%m', useWidth: 900 }
+  });
+</script>
+
+<script type="application/json" id="celab-metadata">
+{"title":"스냅스킬 × 카이스트투자지주 미팅 회의록 (2026.05.07)","description":"플랜트 엔지니어링 AI 스타트업 스냅스킬의 세일즈 현황, 온톨로지 기술 전략, 시드 투자유치, 글로벌 진출 로드맵, 자문단 운영 전략을 논의한 정기 미팅 회의록. 대기업·중소기업·공공기관 계약 체결 현황과 5월 말 IR 일정 포함.","category":"IR","tags":["회의록","플랜트엔지니어링","온톨로지","스타트업IR","시드라운드","AI","카이스트투자지주"],"emoji":"📋"}
+</script>
+<div id="celab-logo-badge" style="position:fixed;bottom:18px;right:18px;z-index:9999;
+  width:52px;height:52px;border-radius:50%;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,0.35);cursor:pointer;"
+  title="CELab · Chemical Engineering Lab"
+  onclick="window.open('https://celab-kor.github.io/celab-knowledge-base/','_blank')">
+  <img src="data:image/jpeg;base64,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" style="width:100%;height:100%;object-fit:cover;display:block;">
+</div>
+<script id="celab-inline-editor">
+(function(){
+  if(window.location.protocol!=='file:') return;
+  var GOLD='#c9a84c',NAVY='#0d1b2a',TEAL='#2c7a7b';
+  var FF='Apple SD Gothic Neo,Noto Sans KR,sans-serif';
+
+  function mkBtn(id,text,color,bottom){
+    var b=document.createElement('div');
+    b.id=id; b.textContent=text;
+    Object.assign(b.style,{position:'fixed',bottom:bottom,right:'28px',zIndex:'99999',
+      background:color,color:color===GOLD?NAVY:'#fff',padding:'10px 20px',borderRadius:'24px',
+      fontWeight:'700',fontSize:'14px',cursor:'pointer',boxShadow:'0 4px 20px rgba(0,0,0,0.5)',
+      fontFamily:FF,userSelect:'none',transition:'all .2s'});
+    document.body.appendChild(b); return b;
+  }
+  var fabEdit=mkBtn('celab-fab-edit','✏️ 편집',GOLD,'28px');
+  var fabLayout=mkBtn('celab-fab-layout','🔄 레이아웃',TEAL,'76px');
+
+  function toast(msg,ok){
+    var t=document.createElement('div'); t.textContent=msg;
+    Object.assign(t.style,{position:'fixed',bottom:'132px',right:'28px',zIndex:'100000',
+      background:ok?'#2f855a':'#c53030',color:'#fff',padding:'10px 18px',borderRadius:'12px',
+      fontSize:'13px',fontFamily:FF,boxShadow:'0 4px 16px rgba(0,0,0,0.4)',transition:'opacity .4s'});
+    document.body.appendChild(t);
+    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},4000);
+  }
+
+  function getFilePath(){
+    return decodeURIComponent(window.location.pathname);
+  }
+
+  // ── 편집 다이얼로그 ────────────────────────────────────────
+  fabEdit.addEventListener('click',function(){
+    var existing=document.getElementById('celab-edit-dlg');
+    if(existing){ existing.remove(); return; }
+
+    var overlay=document.createElement('div');
+    overlay.id='celab-edit-dlg';
+    Object.assign(overlay.style,{
+      position:'fixed',bottom:'90px',right:'28px',width:'380px',
+      background:'#fff',borderRadius:'18px',padding:'22px 20px 18px',
+      boxShadow:'0 8px 40px rgba(0,0,0,0.35)',zIndex:'99998',
+      fontFamily:FF,boxSizing:'border-box'
+    });
+
+    overlay.innerHTML=
+      '<div style="font-weight:800;font-size:15px;color:#0d1b2a;margin-bottom:4px;">✏️ AI 편집 요청</div>'+
+      '<div style="font-size:12px;color:#888;margin-bottom:12px;">수정하고 싶은 내용을 자유롭게 적어주세요</div>'+
+      '<textarea id="celab-edit-ta" placeholder="예시)\n• \'6월 목표\' → \'7월 목표\'로 변경\n• 투자금 항목 삭제\n• LLM 전문가 채용 일정 추가\n• 장기 목표에 해외 진출 항목 추가" '+
+        'style="width:100%;height:150px;padding:11px 12px;border:1.5px solid #ddd;border-radius:10px;'+
+        'font-size:13px;font-family:'+FF+';resize:vertical;box-sizing:border-box;line-height:1.6;outline:none;"></textarea>'+
+      '<div style="display:flex;gap:8px;margin-top:12px;">'+
+        '<button id="celab-edit-ok" style="flex:1;padding:11px;background:#c9a84c;color:#0d1b2a;border:none;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;font-family:'+FF+';">🚀 AI 편집 적용</button>'+
+        '<button id="celab-edit-x" style="padding:11px 16px;background:#f0f0f0;color:#555;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;font-family:'+FF+';">✕</button>'+
+      '</div>';
+
+    document.body.appendChild(overlay);
+    document.getElementById('celab-edit-ta').focus();
+
+    document.getElementById('celab-edit-x').onclick=function(){ overlay.remove(); };
+
+    document.getElementById('celab-edit-ok').onclick=function(){
+      var instructions=document.getElementById('celab-edit-ta').value.trim();
+      if(!instructions){ document.getElementById('celab-edit-ta').focus(); return; }
+      if(!(window.electronAPI&&window.electronAPI.updateHtmlLayout)){
+        toast('❌ Electron 앱에서만 사용 가능합니다',false); return;
+      }
+      var btn=document.getElementById('celab-edit-ok');
+      btn.textContent='⏳ AI 편집 중...'; btn.disabled=true; btn.style.opacity='0.7';
+      var fp=getFilePath();
+      window.electronAPI.updateHtmlLayout({filePath:fp,instructions:instructions})
+        .then(function(r){
+          if(r.success){
+            toast('✅ 편집 완료 — 페이지를 새로고침합니다',true);
+            overlay.remove();
+          } else {
+            toast('❌ 편집 실패: '+r.error,false);
+            btn.textContent='🚀 AI 편집 적용'; btn.disabled=false; btn.style.opacity='1';
+          }
+        }).catch(function(e){
+          toast('❌ 오류: '+e.message,false);
+          btn.textContent='🚀 AI 편집 적용'; btn.disabled=false; btn.style.opacity='1';
+        });
+    };
+
+    // Enter+Ctrl/Cmd 단축키로 전송
+    document.getElementById('celab-edit-ta').addEventListener('keydown',function(e){
+      if((e.ctrlKey||e.metaKey)&&e.key==='Enter') document.getElementById('celab-edit-ok').click();
+    });
+  });
+
+  // ── 레이아웃 재생성 버튼 ──────────────────────────────────
+  fabLayout.addEventListener('click',function(){
+    if(!(window.electronAPI&&window.electronAPI.updateHtmlLayout)){
+      toast('❌ Electron 앱에서만 사용 가능합니다',false); return;
+    }
+    var meta={};
+    var metaEl=document.getElementById('celab-metadata');
+    if(metaEl){try{meta=JSON.parse(metaEl.textContent);}catch(e){}}
+    var lines=[];
+    document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td').forEach(function(el){
+      if(el.closest('nav,script,style,#celab-fab-edit,#celab-fab-layout,#celab-edit-dlg')) return;
+      var t=el.textContent.trim();
+      if(t.length<2) return;
+      var tag=el.tagName.toLowerCase();
+      var pfx=tag==='h1'?'# ':tag==='h2'?'## ':tag==='h3'?'### ':tag==='h4'?'#### ':tag==='li'?'- ':'';
+      lines.push(pfx+t);
+    });
+    var fp=getFilePath();
+    fabLayout.textContent='⏳ 재생성 중...'; fabLayout.style.opacity='0.7'; fabLayout.style.cursor='default';
+    window.electronAPI.updateHtmlLayout({filePath:fp,textContent:lines.join('\n'),metadata:meta})
+      .then(function(r){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        if(r.success) toast('✅ 레이아웃 재생성 완료 — 새로고침 중...',true);
+        else toast('❌ 재생성 실패: '+r.error,false);
+      }).catch(function(e){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        toast('❌ 오류: '+e.message,false);
+      });
+  });
+})();
+</script>
+</html>
