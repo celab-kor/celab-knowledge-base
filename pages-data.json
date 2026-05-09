@@ -1,13 +1,17 @@
 [
   {
-    "id": 1778500000001,
+    "id": 1778308965718,
     "title": "AI 자동화 비서 만들기 — 2시간 실전 강의",
-    "desc": "Slack + Claude AI + Google Calendar 자동화 전 과정. VS Code 설치부터 Cloudflare Worker 배포, 스케줄러까지. Mac/Windows 모두 지원.",
+    "desc": "일정관리자동화",
     "category": "기타",
-    "tags": ["자동화", "Claude", "Slack", "강의"],
+    "tags": [
+      "강의",
+      "AI",
+      "자동화"
+    ],
     "date": "2026-05-09",
-    "emoji": "🤖",
-    "url": "pages/2026-05-09_ai-automation-lecture.html"
+    "emoji": "📄",
+    "url": "pages/2026-05-09_index.html"
   },
   {
     "id": 1778242049932,
