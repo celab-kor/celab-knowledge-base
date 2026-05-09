@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SnapScale 전략 회의 v2.0 | 인화공 기반 실행 심화 & 박규호 리더십 포지셔닝 & 예산 설계</title>
+<style>
+:root {
+  --navy:   #1e3c72;
+  --navy2:  #2a5298;
+  --green:  #32B489;
+  --orange: #f39c12;
+  --red:    #e74c3c;
+  --purple: #8e44ad;
+  --teal:   #00796B;
+  --gold:   #F9A825;
+  --old:    #1B5E20;
+  --newc:   #0D47A1;
+  --light:  #f4f6fa;
+  --border: #dde3ef;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; background: #f0f2f8; color: #222; font-size: 15px; line-height: 1.7; }
+
+/* ─── HEADER ─── */
+header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 60%, #32B489 100%);
+  color: white; padding: 36px 40px 28px; position: relative; overflow: hidden;
+}
+header::before {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+.badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.hbadge {
+  background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+}
+.hbadge.new { background: var(--green); border-color: var(--green); }
+h1 { font-size: 26px; font-weight: 800; line-height: 1.35; margin-bottom: 10px; }
+.subtitle { font-size: 14px; opacity: 0.82; }
+.hmeta {
+  margin-top: 18px; display: flex; gap: 20px; flex-wrap: wrap;
+  font-size: 13px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 14px;
+}
+.hmeta span { opacity: 0.85; }
+.hmeta strong { opacity: 1; color: #a8f0d0; }
+
+/* ─── WARN ─── */
+.warn {
+  background: #fff8e1; border-left: 4px solid var(--orange); color: #5c4000;
+  padding: 12px 20px; font-size: 13px; margin: 0;
+}
+
+/* ─── CONTAINER ─── */
+.container { max-width: 980px; margin: 0 auto; padding: 30px 20px 60px; }
+
+/* ─── SECTION HEADER ─── */
+.session-header {
+  background: linear-gradient(90deg, var(--navy) 0%, var(--navy2) 100%);
+  color: white; border-radius: 12px 12px 0 0;
+  padding: 16px 24px; margin-top: 36px; display: flex; align-items: center; gap: 14px;
+}
+.session-num {
+  background: var(--green); color: white;
+  font-weight: 800; font-size: 13px; border-radius: 50px;
+  padding: 3px 12px; white-space: nowrap;
+}
+.session-title { font-size: 18px; font-weight: 700; }
+.session-time { font-size: 12px; opacity: 0.7; margin-left: auto; white-space: nowrap; }
+.session-body {
+  background: white; border-radius: 0 0 12px 12px;
+  border: 1px solid var(--border); border-top: none;
+  padding: 26px 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ─── PANEL SPEECHES ─── */
+.speech { display: flex; gap: 14px; margin: 18px 0; }
+.badge {
+  min-width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: white; text-align: center;
+  line-height: 1.2; flex-shrink: 0;
+}
+.bubble {
+  background: #f7f9fc; border: 1px solid var(--border);
+  border-radius: 0 12px 12px 12px; padding: 14px 18px; flex: 1;
+  position: relative;
+}
+.bubble::before {
+  content: ''; position: absolute; left: -8px; top: 16px;
+  border: 6px solid transparent; border-right-color: var(--border);
+}
+.speaker-name { font-size: 12px; font-weight: 700; color: #555; margin-bottom: 6px; }
+.bubble p { margin-bottom: 8px; }
+.bubble p:last-child { margin-bottom: 0; }
+.bubble cite { font-size: 12px; color: #888; font-style: normal; }
+
+/* moderator */
+.speech.mod .bubble { background: #eef2ff; border-color: #c5cff7; }
+.speech.mod .bubble::before { border-right-color: #c5cff7; }
+
+/* ─── INSIGHT BOXES ─── */
+.ibox {
+  border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 14px;
+  border-left: 5px solid; position: relative;
+}
+.ibox.green  { background: #e8f8f2; border-color: var(--green); color: #0a4a30; }
+.ibox.orange { background: #fff8e1; border-color: var(--orange); color: #5c4000; }
+.ibox.red    { background: #fdecea; border-color: var(--red); color: #7b1c1c; }
+.ibox.blue   { background: #e3f2fd; border-color: #1976d2; color: #0d3b6e; }
+.ibox.gold   { background: #fffde7; border-color: var(--gold); color: #5c4000; }
+.ibox.teal   { background: #e0f2f1; border-color: var(--teal); color: #003d35; }
+.ibox.purple { background: #f3e5f5; border-color: var(--purple); color: #4a1060; }
+.ibox.navy   { background: #e8eaf6; border-color: var(--navy); color: #1a237e; }
+.ibox label  { font-weight: 800; display: block; margin-bottom: 6px; font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+
+/* ─── TABLES ─── */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+th { background: var(--navy); color: white; padding: 10px 14px; text-align: left; font-size: 13px; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:nth-child(even) td { background: #f8fafc; }
+tr:hover td { background: #eef2ff; }
+.tag-high { background: #ffe0e0; color: #c0392b; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+.tag-med  { background: #fff3cd; color: #856404; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+.tag-low  { background: #d1ecf1; color: #0c5460; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+.tag-new  { background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+
+/* ─── VERDICT ─── */
+.verdict {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: white; border-radius: 14px; padding: 26px 30px; margin: 28px 0;
+}
+.verdict h3 { font-size: 17px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.verdict ul { padding-left: 20px; }
+.verdict li { margin-bottom: 8px; font-size: 14px; opacity: 0.92; }
+.verdict li strong { color: #a8f0d0; }
+
+/* ─── 3-1-1 SUMMARY ─── */
+.summary311 {
+  background: linear-gradient(135deg, #0d2137 0%, var(--navy) 100%);
+  color: white; border-radius: 14px; padding: 28px 32px; margin: 28px 0;
+}
+.summary311 .s-label { font-size: 11px; font-weight: 800; letter-spacing: 1px; opacity: 0.6; text-transform: uppercase; margin-bottom: 6px; }
+.summary311 .s-con { font-size: 20px; font-weight: 800; color: #a8f0d0; margin-bottom: 16px; line-height: 1.4; }
+.summary311 .s-reason { font-size: 14px; opacity: 0.88; margin-bottom: 4px; padding-left: 14px; border-left: 3px solid rgba(168,240,208,0.5); margin-left: 4px; }
+.summary311 .s-action { margin-top: 16px; font-size: 15px; background: rgba(50,180,137,0.2); border: 1px solid rgba(50,180,137,0.4); border-radius: 8px; padding: 12px 16px; }
+
+/* ─── BUDGET TABLE ─── */
+.budget-table th { background: #0d2137; }
+.budget-sum td { font-weight: 800; background: #e8f4ff !important; color: var(--navy); font-size: 15px; }
+.budget-bar { height: 10px; border-radius: 6px; margin-top: 4px; }
+
+/* ─── COMPETENCY CARDS ─── */
+.comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 16px 0; }
+.comp-card {
+  border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px;
+  background: white; border-top: 4px solid var(--green);
+}
+.comp-card h4 { font-size: 14px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+.comp-card p { font-size: 13px; color: #444; }
+.comp-card .level { font-size: 11px; color: var(--green); font-weight: 700; margin-top: 8px; }
+
+/* ─── PANEL ROSTER ─── */
+.panel-roster { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+.panel-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: white; border: 1px solid var(--border);
+  border-radius: 30px; padding: 6px 14px 6px 8px; font-size: 13px;
+}
+.panel-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--navy); color: rgba(255,255,255,0.7);
+  padding: 28px 40px; font-size: 13px; text-align: center; margin-top: 40px; line-height: 2;
+}
+footer strong { color: white; }
+.ver { font-size: 11px; opacity: 0.5; margin-top: 8px; }
+
+/* ─── DIVIDER ─── */
+.divider { height: 2px; background: linear-gradient(90deg, var(--green), transparent); margin: 28px 0; border: none; }
+
+/* ─── TRANSITION BOX ─── */
+.transition {
+  background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 10px;
+  padding: 12px 18px; margin: 20px 0; font-size: 14px; color: var(--navy);
+  display: flex; align-items: center; gap: 10px;
+}
+.transition::before { content: '→'; font-weight: 800; color: var(--green); font-size: 18px; }
+
+/* ─── ACTION TABLE ─── */
+.action-section { margin-top: 36px; }
+.action-section h2 { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 16px; border-bottom: 2px solid var(--green); padding-bottom: 8px; }
+
+@media (max-width: 640px) {
+  header { padding: 24px 18px; }
+  h1 { font-size: 20px; }
+  .session-body { padding: 18px 14px; }
+  .comp-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="celab-home-btn" style="position:fixed;top:14px;left:14px;z-index:99999;">
+  <a href="../index.html"
+     style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;
+            background:rgba(13,27,42,0.88);color:#c9a84c;text-decoration:none;
+            border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.3px;
+            backdrop-filter:blur(6px);box-shadow:0 2px 12px rgba(0,0,0,0.35);
+            border:1px solid rgba(201,168,76,0.3);transition:all .2s;
+            font-family:-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;"
+     onmouseover="this.style.background='rgba(201,168,76,0.18)';this.style.color='#fff';"
+     onmouseout="this.style.background='rgba(13,27,42,0.88)';this.style.color='#c9a84c';">
+    🏠 <span>지식창고 홈</span>
+  </a>
+</div>
+
+<header>
+  <div class="badge-row">
+    <span class="hbadge">MTG-CUSTOM v2.0</span>
+    <span class="hbadge new">후속 전략 회의</span>
+    <span class="hbadge">2026.05.09</span>
+    <span class="hbadge">4 세션 · 약 2.5시간</span>
+    <span class="hbadge">씨드 1억 예산 설계 포함</span>
+  </div>
+  <h1>SnapScale 전략 회의 v2.0<br/>인화공 커뮤니티·협의체·온톨로지 실행 심화<br/>박규호 공동창업자 포지셔닝 & 씨드 예산 1억 배분</h1>
+  <p class="subtitle">3번 문서 후속 | 기존 안건 전면 실행 가능 수준 재기획 + 신규 세션: 박규호 리더십 포지셔닝</p>
+  <div class="hmeta">
+    <span>📅 <strong>2026년 5월 9일 (토)</strong></span>
+    <span>👥 <strong>패널 9명</strong></span>
+    <span>📂 <strong>근거: 3번 문서 · ACCE 실측 · Forbes 2026 · OPEC WOO 2025</strong></span>
+    <span>🔒 <strong>Internal Confidential</strong></span>
+    <span>💰 <strong>예산 시뮬레이션: 씨드 1억원</strong></span>
+  </div>
+</header>
+
+<div class="warn">
+  ⚠️ 안내사항: 본 회의록은 AI 기술을 활용하여 기존 회의 문서(3번 문서: 2026-05-06_c-2026-05-07.html) 및 등록된 패널 캐릭터를 기반으로 시뮬레이션된 내용입니다. 일부 표현 및 수치 추정은 실제와 차이가 있을 수 있으며, 의사결정 전 검증이 필요합니다.
+</div>
+
+<div class="container">
+
+<!-- ═══ PANEL ROSTER ═══ -->
+<div style="background:white; border-radius:12px; border:1px solid var(--border); padding:20px 24px; margin-bottom:8px;">
+  <div style="font-size:13px; font-weight:800; color:var(--navy); margin-bottom:12px;">🎙️ 오늘의 패널 구성</div>
+  <div class="panel-roster">
+    <div class="panel-chip"><div class="panel-dot" style="background:#0D47A1"></div>정재원 CFO</div>
+    <div class="panel-chip"><div class="panel-dot" style="background:#1B5E20"></div>한승민 VC</div>
+    <div class="panel-chip"><div class="panel-dot" style="background:#BF360C"></div>오태준 창업가</div>
+    <div class="panel-chip"><div class="panel-dot" style="background:#1565C0"></div>이종현 (UOP 출신)</div>
+    <div class="panel-chip"><div class="panel-dot" style="background:#E65100"></div>장영기 (아람코 전문가)</div>
+    <div class="panel-chip"><div class="panel-dot" style="background:#6A1B9A"></div>스테파노 (인화공 이탈리아 석학)</div>
+    <div class="panel-chip"><div class="panel-dot" style="background:#8e44ad"></div>POSTECH 교수</div>
+    <div class="panel-chip"><div class="panel-dot" style="background:#32B489"></div>박규호 부장 (신규팀)</div>
+    <div class="panel-chip"><div class="panel-dot" style="background:#1e3c72"></div>김상윤 대표 (모더레이터)</div>
+  </div>
+</div>
+
+<!-- ═══ 이전 회의 연결 고리 ═══ -->
+<div class="ibox blue" style="margin-top:16px;">
+  <label>📎 이전 세션(3번 문서) 핵심 합의 — 연결 고리</label>
+  이전 회의에서 합의된 사항: ① CELab(SnapScale 법인)과 인화공(20년 커뮤니티)을 <strong>분리 운영</strong>하되 콘텐츠 협력 구조 유지 ② 시니어 전문가 참여 동기는 "IP 공유 &gt; 명예/소속감 &gt; 수익" 3단계 모델 ③ 산학연 협의체는 <strong>Advisory Board 형태로 법인 외부 구성</strong> ④ 온톨로지 DB 구축 1단계: 인화공 Q&amp;A 5,000건 커레이션 ⑤ 상업화·커뮤니티 충돌, NDA, 기여자 보상 이슈는 <strong>미해결 상태</strong>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SESSION 1: 기존 HIGH 과제 실행 단계 분해 -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="session-header">
+  <span class="session-num">세션 1</span>
+  <span class="session-title">기존 HIGH 과제 5개 — 실행 단계 분해 및 병목 제거</span>
+  <span class="session-time">약 40분</span>
+</div>
+<div class="session-body">
+
+  <div class="ibox orange">
+    <label>⚡ 세션 목적</label>
+    이전 회의에서 "HIGH 우선순위"로 분류된 과제들이 실제 실행에서 막히는 이유는 과제가 너무 추상적이기 때문이다. 이 세션에서는 각 HIGH 과제를 <strong>주 단위 실행 가능 스텝</strong>으로 분해하고, 병목 구간을 미리 제거한다.
+  </div>
+
+  <!-- H1: 인화공 운영진 협의 -->
+  <div style="font-size:15px; font-weight:800; color:var(--navy); margin:24px 0 12px; border-left:4px solid var(--green); padding-left:12px;">
+    HIGH-1 | 인화공 운영진과 "콘텐츠 협력 MOA" 체결
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#32B489;">박규호</div>
+    <div class="bubble">
+      <div class="speaker-name">박규호 부장 (신규팀)</div>
+      <p>이전 회의에서 MOA 체결이 HIGH로 잡혔는데, 실제로는 "인화공 운영진이 누구인지, 결정권자가 누구인지"조차 불명확한 상태입니다. 커뮤니티 특성상 공식 대표가 없을 가능성도 있어요. 이 부분을 먼저 풀어야 합니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#6A1B9A;">스테파노</div>
+    <div class="bubble">
+      <div class="speaker-name">스테파노 (인화공 이탈리아 석학)</div>
+      <p>인화공은 20년 역사를 가진 곳입니다. 외부에서 "법인"이 MOA를 요청하면 구성원들이 경계심을 갖습니다. 제가 제안하는 접근법은 공식 MOA보다 먼저 <strong>"콘텐츠 기여자 우선 활동"</strong>을 통해 신뢰를 쌓는 것입니다. 2~3명의 핵심 기여자가 먼저 SnapScale과 협력하는 사례를 만들고, 6개월 후 그 결과물로 운영진 협의에 들어가는 게 현실적입니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#BF360C;">오태준</div>
+    <div class="bubble">
+      <div class="speaker-name">오태준 (창업가)</div>
+      <p>스테파노 교수님 말씀에 동의합니다. 제 두 번째 회사 Exit할 때 커뮤니티 파트너십 협상 경험이 있는데요. 커뮤니티는 공식 계약보다 <strong>"우리 멤버가 먼저 좋은 경험을 했다"는 내부 전파</strong>가 훨씬 강력합니다. Week 1~2는 운영진 접촉이 아니라 활동적 멤버 3~5명 식별이 우선입니다.</p>
+    </div>
+  </div>
+
+  <div class="ibox green">
+    <label>✅ HIGH-1 실행 스텝 분해</label>
+    <strong>Week 1~2:</strong> 인화공 게시판에서 최근 6개월 Q&amp;A 100건 이상 작성한 "슈퍼기여자" 3~5명 식별 (박규호 직접)<br/>
+    <strong>Week 3~4:</strong> 슈퍼기여자 개별 DM/이메일로 SnapScale 소개 + "본인 Q&amp;A가 온톨로지 씨드 데이터로 활용되는 것에 동의하는지" 비공식 확인<br/>
+    <strong>Month 2:</strong> 동의한 1~2명과 파일럿 큐레이션 (50건) 시작 → 결과물 공개<br/>
+    <strong>Month 3:</strong> 파일럿 결과물로 인화공 운영진 미팅 요청 → MOA 드래프트 제시<br/>
+    <strong>병목 해제:</strong> "운영진이 누구인가" → 박규호가 인화공 오래된 게시물에서 관리자 계정 확인 또는 스테파노 교수님께 브릿지 요청
+  </div>
+
+  <!-- H2: 시니어 전문가 자문단 3인 발굴 -->
+  <div style="font-size:15px; font-weight:800; color:var(--navy); margin:24px 0 12px; border-left:4px solid var(--green); padding-left:12px;">
+    HIGH-2 | 시니어 전문가 자문단 3인 공식 합류 (Advisory Board v0.1)
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#1565C0;">이종현</div>
+    <div class="bubble">
+      <div class="speaker-name">이종현 (UOP 출신)</div>
+      <p>이미 이 자리에 있는 저와 장영기 박사님이 Advisory Board 1번, 2번이 될 수 있습니다. 근데 공식 참여의 조건으로 저는 두 가지를 요구합니다. 첫째, <strong>SnapScale의 기술적 방향이 내가 검토할 수 있는 형태로 공개되어야 한다.</strong> 둘째, <strong>내 이름이 외부 IR이나 영업에 무단으로 쓰이지 않을 것.</strong> 이게 보장되면 지금 당장 서명할 수 있습니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#E65100;">장영기</div>
+    <div class="bubble">
+      <div class="speaker-name">장영기 (아람코 전문가)</div>
+      <p>이 박사님 조건에 저도 동의합니다. 추가로 제가 보는 것은 <strong>중동 시장 진출 로드맵이 있느냐</strong>입니다. 아람코를 비롯한 중동 발주처는 "한국 스타트업이 만든 AI 도구"에 대해 레퍼런스보다 <strong>기술적 신뢰성 문서</strong>를 더 먼저 봅니다. 기술 백서 초안이 있으면 내가 검토해서 아람코 내부 채널에 소개할 수 있습니다.</p>
+    </div>
+  </div>
+
+  <div class="ibox green">
+    <label>✅ HIGH-2 실행 스텝 분해</label>
+    <strong>이번 주:</strong> Advisory Board 참여 의향서 1페이지 초안 (박규호 작성) — 역할/보상/무단 사용 금지 조항 명시<br/>
+    <strong>Week 2:</strong> 이종현 박사님·장영기 박사님께 의향서 개별 공유 → 피드백 반영<br/>
+    <strong>Week 3:</strong> 스테파노 교수님께도 동일 전달 → 3인 Advisory Board v0.1 확정<br/>
+    <strong>Month 2:</strong> 기술 백서 초안(영문 5페이지) 완성 → 이종현·장영기 검토 → 아람코 채널 소개<br/>
+    <strong>3인 외 추가 발굴:</strong> POSTECH 교수님 인脈으로 국내 학계 1인, 인화공 슈퍼기여자 중 1인
+  </div>
+
+  <!-- H3: 온톨로지 DB 커레이션 -->
+  <div style="font-size:15px; font-weight:800; color:var(--navy); margin:24px 0 12px; border-left:4px solid var(--green); padding-left:12px;">
+    HIGH-3 | 온톨로지 씨드 DB 500건 완성 (1단계 스프린트)
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#8e44ad;">POSTECH 교수</div>
+    <div class="bubble">
+      <div class="speaker-name">POSTECH 교수</div>
+      <p>온톨로지 구축의 병목은 "무엇을 모을 것인가"가 아니라 <strong>"Q&amp;A를 어떤 스키마로 구조화할 것인가"</strong>입니다. 현재 인화공 Q&amp;A는 자유 형식인데, 이를 "공정-장치-현상-해결책" 4단계 태그 구조로 변환해야 AutoFlow가 활용할 수 있습니다. 이 스키마 설계가 먼저 완성되어야 커레이션을 시작할 수 있습니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#32B489;">박규호</div>
+    <div class="bubble">
+      <div class="speaker-name">박규호 부장</div>
+      <p>그렇다면 스키마 설계를 POSTECH 교수님과 저 2인이 먼저 워킹 세션으로 진행하면 어떨까요? <strong>2시간 짜리 AI 보조 워크숍</strong> 방식으로 — 제가 Claude를 활용해서 기존 인화공 Q&amp;A 100건을 샘플링하고, 교수님과 함께 분류 체계를 실시간으로 만드는 거죠.</p>
+    </div>
+  </div>
+
+  <div class="ibox green">
+    <label>✅ HIGH-3 실행 스텝 분해</label>
+    <strong>Week 1:</strong> 박규호 + POSTECH 교수 2시간 워킹 세션 → 온톨로지 스키마 v0.1 확정 (공정-장치-현상-해결책 + 난이도/빈도 태그)<br/>
+    <strong>Week 2~3:</strong> 인화공 Q&amp;A 100건 파일럿 커레이션 (박규호 + Claude AI 보조) → 스키마 적합성 검증<br/>
+    <strong>Week 4~8:</strong> 슈퍼기여자 3~5명과 협력하여 500건까지 확장<br/>
+    <strong>품질 기준:</strong> 각 Q&amp;A에 4개 태그 + 출처 표기 + 스테파노/이종현 중 1인 리뷰 완료
+  </div>
+
+  <!-- H4: 상업화-커뮤니티 충돌 해소 -->
+  <div style="font-size:15px; font-weight:800; color:var(--navy); margin:24px 0 12px; border-left:4px solid var(--green); padding-left:12px;">
+    HIGH-4 | 상업화·커뮤니티 충돌 해소 원칙 문서화
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#0D47A1;">정재원 CFO</div>
+    <div class="bubble">
+      <div class="speaker-name">정재원 CFO</div>
+      <p>CFO 관점에서 솔직히 말씀드립니다. 이 충돌 문제는 "원칙 문서"로 해결이 안 됩니다. 법적으로 명확해야 합니다. <strong>IP 귀속 조항, 기여자 보상 산식, 커뮤니티 데이터 사용 범위</strong> — 이 세 가지가 계약서 수준으로 정리되어야 Advisory Board 멤버들도 안심하고 이름을 올립니다. 원칙 문서는 법무 검토 이후에 나와야 합니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#1B5E20;">한승민 VC</div>
+    <div class="bubble">
+      <div class="speaker-name">한승민 VC</div>
+      <p>VC 관점에서 투자사들의 패턴을 보면, IP 문제가 불명확한 스타트업에 투자할 때 반드시 Due Diligence에서 걸립니다. 지금 이 단계에서 <strong>커뮤니티 데이터 사용에 관한 법무 의견서 1장</strong>을 받아두는 것이 나중에 Series A에서 걸림돌 제거하는 가장 빠른 방법입니다. 비용은 50~100만원 수준입니다.</p>
+    </div>
+  </div>
+
+  <div class="ibox green">
+    <label>✅ HIGH-4 실행 스텝 분해</label>
+    <strong>Week 1:</strong> 스타트업 전문 법무법인에 "오픈 커뮤니티 DB 활용 시 IP 귀속 기준" 법무 의견서 요청 (예산 50~80만원)<br/>
+    <strong>Week 2:</strong> 법무 의견서 기반으로 "커뮤니티 데이터 사용 원칙 3가지" 내부 확정 (김상윤 + 박규호)<br/>
+    <strong>Week 3:</strong> Advisory Board 멤버들에게 원칙 공유 → 동의서 서명 요청<br/>
+    <strong>Month 2:</strong> 인화공 슈퍼기여자들에게 "기여자 동의서" 배포 (개인정보 + IP 사용 동의)
+  </div>
+
+  <!-- H5: CELab-인화공 분리 구조 명문화 -->
+  <div style="font-size:15px; font-weight:800; color:var(--navy); margin:24px 0 12px; border-left:4px solid var(--green); padding-left:12px;">
+    HIGH-5 | CELab↔인화공 분리 운영 구조 명문화 및 외부 소통 언어 통일
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#BF360C;">오태준</div>
+    <div class="bubble">
+      <div class="speaker-name">오태준 (창업가)</div>
+      <p>이건 제가 직접 경험한 문제입니다. IR할 때 "우리는 이 커뮤니티를 활용한다"고 말하면 투자자는 "커뮤니티가 법인의 자산인가요?"라고 묻습니다. 이 대답이 불명확하면 투자 진행이 멈춥니다. <strong>외부용 언어</strong>가 필요합니다: "인화공은 독립 커뮤니티이며, SnapScale은 그 지식을 API 형태로 접근하는 라이선스 파트너십 관계"라는 단 한 줄의 공식 언어를 지금 만들어야 합니다.</p>
+    </div>
+  </div>
+
+  <div class="ibox green">
+    <label>✅ HIGH-5 실행 스텝 분해</label>
+    <strong>이번 주:</strong> 오태준 창업가 제안 기반으로 "SnapScale-인화공 관계 정의 한 문장" 확정 (김상윤 최종 승인)<br/>
+    <strong>Week 2:</strong> 웹사이트, IR 덱, 영업 자료에 동일 문장 반영<br/>
+    <strong>Week 3:</strong> Advisory Board 멤버들에게 "이 언어를 외부에서 사용해도 됩니다" 승인 받기<br/>
+    <strong>내부 분리 기준:</strong> 인화공 멤버쉽 = SnapScale 고객 아님 / 인화공 Q&amp;A 활용 = 라이선스 기반 / CELab 수익 = 인화공과 별개
+  </div>
+
+  <div class="transition">다음 세션으로 — 실행 과제들을 움직이는 핵심 인물인 <strong>박규호 부장의 리더십 포지셔닝</strong>을 논의합니다. 과제 실행력의 80%는 신뢰 구조에서 나옵니다.</div>
+
+</div><!-- /session-body -->
+
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- SESSION 2: 박규호 공동창업자 포지셔닝 & 리더십 전략 NEW -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="session-header">
+  <span class="session-num">세션 2</span>
+  <span class="session-title">박규호 부장 — 공동창업자 포지셔닝 & 선배 리더십 방법론 <span style="background:var(--gold);color:#333;padding:2px 8px;border-radius:8px;font-size:12px;margin-left:8px;">신규</span></span>
+  <span class="session-time">약 45분</span>
+</div>
+<div class="session-body">
+
+  <div class="ibox gold">
+    <label>🆕 세션 신설 배경</label>
+    자문단·Advisory Board를 실제로 움직이는 것은 "조직 차트"가 아니라 <strong>관계 신뢰와 개인 역량 인정</strong>에서 나옵니다. 박규호 부장이 김상윤 대표와 명실상부한 공동창업자로 인정받고, 업계 선배들로부터 리더로 인식되기 위한 구체적 방법론을 이 세션에서 설계합니다.
+  </div>
+
+  <div class="speech mod">
+    <div class="badge" style="background:#1e3c72;">김상윤</div>
+    <div class="bubble">
+      <div class="speaker-name">김상윤 대표 (모더레이터)</div>
+      <p>오늘 회의에서 제가 제일 중요하게 생각하는 세션입니다. 박규호 부장이 선배님들을 직접 움직이는 구조가 되어야, 저는 제품과 사업 방향에 집중할 수 있습니다. 지금까지는 저 혼자 모든 관계를 만들어야 했는데, <strong>박규호가 독자적인 신뢰 자본을 갖는 것이 회사 전체의 확장성 문제</strong>입니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#BF360C;">오태준</div>
+    <div class="bubble">
+      <div class="speaker-name">오태준 (창업가)</div>
+      <p>제 경험에서 공동창업자가 외부에서 인정받는 방법은 딱 두 가지입니다. 첫째, <strong>그 사람만이 만들 수 있는 결과물이 외부에 공개된다</strong>. 둘째, <strong>대표가 공식 석상에서 "이 사람이 공동창업자"라고 명시적으로 소개한다</strong>. 암묵적으로는 절대 인정받지 못합니다. 특히 업계 선배들은 위계 문화에 익숙해서 타이틀과 소개 방식을 매우 민감하게 봅니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#E65100;">장영기</div>
+    <div class="bubble">
+      <div class="speaker-name">장영기 (아람코 전문가)</div>
+      <p>저 같은 업계 시니어 입장에서 솔직하게 말씀드리겠습니다. 제가 처음 박규호 부장을 만났을 때, "이 분이 김상윤 대표와 같은 급의 파트너인가, 아니면 실무 담당자인가"를 구분하려고 했습니다. 그 기준이 뭔지 아세요? <strong>첫 번째 미팅에서 "저는 이 프로젝트에서 이런 결정권을 갖고 있습니다"라고 스스로 선언하느냐</strong>입니다. 선배들은 상대방이 먼저 포지셔닝해주길 기다리지 않습니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#1565C0;">이종현</div>
+    <div class="bubble">
+      <div class="speaker-name">이종현 (UOP 출신)</div>
+      <p>엔지니어링 업계에서 신뢰를 쌓는 방법은 <strong>도메인 지식의 깊이를 보여주는 것</strong>입니다. 저는 누군가와 대화할 때 "이 사람이 실제 현장을 아는가, 아니면 공부만 한 사람인가"를 5분 안에 파악합니다. 박규호 부장이 EPC 워크플로우를 얼마나 깊이 이해하고 있느냐가 첫 번째 관문입니다. 이건 책으로는 안 되고, <strong>현장 경험자와 1:1 케이스 스터디 방식의 인터뷰를 반복해야</strong> 쌓입니다.</p>
+    </div>
+  </div>
+
+  <div class="ibox orange">
+    <label>⚡ 핵심 쟁점 — 업계 선배들이 박규호를 "리더"로 인식하는 조건</label>
+    ① 결정권을 공개적으로 선언할 것 (김상윤 대표와 사전 합의 필요) ② 도메인 지식 깊이 — 현장 경험자 수준의 언어 구사 ③ AI+자동화 역량 — 선배들이 "나는 못 하는 것을 이 사람은 한다"는 인식 형성 ④ 커뮤니티 기여 흔적 — 인화공 또는 공개 채널에 박규호 이름으로 된 콘텐츠 존재
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#6A1B9A;">스테파노</div>
+    <div class="bubble">
+      <div class="speaker-name">스테파노 (인화공 이탈리아 석학)</div>
+      <p>커뮤니티 관점에서 제가 경험한 것은 이렇습니다. 학술·업계 커뮤니티에서 인정받는 가장 빠른 방법은 <strong>"내가 이 커뮤니티에 기여하는 사람"이라는 인식</strong>을 만드는 것입니다. 인화공에 박규호 이름으로 된 양질의 Q&amp;A 해설, 케이스 스터디, AI 도구 활용 가이드 같은 콘텐츠가 쌓이면, 6개월 후에는 커뮤니티 멤버들이 먼저 박규호를 찾아오게 됩니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#8e44ad;">POSTECH 교수</div>
+    <div class="bubble">
+      <div class="speaker-name">POSTECH 교수</div>
+      <p>학계에서 보면 신뢰는 "논문 한 편"보다 "지속적인 학습과 질문"에서 만들어집니다. 박규호 부장이 Advisory Board 미팅에서 단순히 메모하고 정리하는 역할이 아니라, <strong>스스로 가설을 세우고 패널들에게 검증을 요청하는 포지션</strong>을 취해야 합니다. "저는 이렇게 생각하는데 맞나요?"가 아니라 "제가 이런 가설을 가지고 있고, 이런 근거가 있습니다. 반론이 있으시면 말씀해 주세요."가 되어야 합니다.</p>
+    </div>
+  </div>
+
+  <!-- 5가지 역량 프레임 -->
+  <div style="font-size:15px; font-weight:800; color:var(--navy); margin:24px 0 12px; border-left:4px solid var(--gold); padding-left:12px;">
+    박규호 공동창업자 인정을 위한 5대 역량 개발 로드맵
+  </div>
+
+  <div class="comp-grid">
+    <div class="comp-card">
+      <h4>① 업계 워크플로우 이해</h4>
+      <p>FEED → 상세설계 → 시공 사이클, LD/LSTK 구조, EPC 클레임 패턴을 현장 경험자 수준으로 구사. 이종현·장영기 박사님과 <strong>월 2회 케이스 스터디 세션</strong> 진행.</p>
+      <div class="level">목표: 6개월 후 "현장 언어" 유창성 달성</div>
+    </div>
+    <div class="comp-card">
+      <h4>② AI 활용 지식 생산성</h4>
+      <p>Claude를 활용한 리서치·문서 자동화·회의록 구조화. 본 회의록처럼 <strong>"박규호가 만든 AI 산출물"을 주 1회 이상 외부 공유</strong>. 인화공에 AI 활용 가이드 시리즈 게재.</p>
+      <div class="level">목표: 월 4개 이상 공개 콘텐츠 생성</div>
+    </div>
+    <div class="comp-card">
+      <h4>③ 자동화 역량</h4>
+      <p>슬랙봇·캘린더 자동화처럼 <strong>팀 운영 효율을 높이는 자동화 도구</strong>를 직접 만들고 공유. Advisory Board 운영에 자동화 인프라 적용(일정·문서·커뮤니케이션).</p>
+      <div class="level">목표: 팀 내 자동화 기여 3건/월</div>
+    </div>
+    <div class="comp-card">
+      <h4>④ 커뮤니티 기획·운영력</h4>
+      <p>인화공 Q&amp;A 커레이션, Advisory Board 운영 의제 설계, 시니어 멤버 온보딩 프로세스 설계. <strong>"박규호가 설계한 커뮤니티 구조"가 돌아가는 것</strong>이 증거.</p>
+      <div class="level">목표: Advisory Board 첫 공식 미팅 단독 진행</div>
+    </div>
+    <div class="comp-card">
+      <h4>⑤ 실행력 (증거 축적)</h4>
+      <p>매주 <strong>"이번 주 나는 무엇을 완성했는가"</strong>를 김상윤 대표에게 보고. 약속한 것을 100% 실행하는 트랙 레코드를 6개월간 쌓으면, 선배들이 먼저 "박 부장한테 부탁하면 된다"고 인식.</p>
+      <div class="level">목표: 주간 실행 보고서 6개월 연속</div>
+    </div>
+  </div>
+
+  <div class="ibox navy">
+    <label>🔑 공동창업자 인정을 위한 구체적 선언 행동 3가지</label>
+    <strong>1) 명함/LinkedIn:</strong> 지금 당장 타이틀을 "부장"에서 <strong>"Co-Founder &amp; Community Lead"</strong> 또는 <strong>"Co-Founder &amp; Knowledge Strategy"</strong>로 변경. 김상윤 대표가 LinkedIn에서 태그하며 소개 포스팅.<br/><br/>
+    <strong>2) Advisory Board 공식 소개:</strong> 다음 Advisory Board 미팅에서 김상윤 대표가 오프닝에 <strong>"박규호 공동창업자가 이 모임을 운영합니다"</strong>라고 명시적 소개. 이후 박규호가 의제 진행.<br/><br/>
+    <strong>3) 외부 콘텐츠:</strong> 인화공 또는 LinkedIn에 <strong>"SnapScale 공동창업자 박규호"</strong> 이름으로 기술·커뮤니티 관련 글 월 2회 이상 게재. 스테파노 교수님께 공유 부탁.
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#1B5E20;">한승민 VC</div>
+    <div class="bubble">
+      <div class="speaker-name">한승민 VC</div>
+      <p>VC 관점에서 투자사들의 패턴을 보면, 공동창업자 구조가 명확한 팀이 <strong>단독 창업자 팀보다 Series A 성공률이 1.7배</strong> 높습니다. 특히 기술 창업자(김상윤) + 도메인+커뮤니티 창업자(박규호) 조합은 Industrial SaaS에서 가장 이상적인 구조입니다. 투자자에게 이 조합의 스토리를 지금부터 만들어 가십시오.</p>
+    </div>
+  </div>
+
+  <div class="speech mod">
+    <div class="badge" style="background:#1e3c72;">김상윤</div>
+    <div class="bubble">
+      <div class="speaker-name">김상윤 대표</div>
+      <p>동의합니다. 명함 타이틀 변경은 오늘 결정합니다. Advisory Board 다음 미팅에서 박규호를 공동창업자로 공식 소개하겠습니다. 그리고 박규호가 이 5대 역량에서 <strong>분기별 검증 포인트</strong>를 만들어서 저에게 보고해 주세요. 저는 판단·피드백 역할만 하겠습니다.</p>
+    </div>
+  </div>
+
+  <div class="ibox green">
+    <label>✅ 세션 2 합의 — 박규호 공동창업자 포지셔닝 즉시 실행 사항</label>
+    ① 명함/LinkedIn 타이틀 <strong>"Co-Founder"</strong> 변경 → 이번 주<br/>
+    ② Advisory Board 다음 미팅에서 김상윤 대표가 공식 소개<br/>
+    ③ 이종현·장영기 박사님과 <strong>월 2회 케이스 스터디 세션</strong> 스케줄 확정<br/>
+    ④ 인화공/LinkedIn 콘텐츠 <strong>월 2건 이상</strong> 게재 (AI 활용 가이드 시리즈)<br/>
+    ⑤ 주간 실행 보고서 6개월 연속 → 실행력 트랙 레코드 구축
+  </div>
+
+  <div class="transition">세션 3으로 이동 — 온톨로지 스프린트 구체적 실행 계획 및 커뮤니티 운영 구조 심화 설계</div>
+
+</div><!-- /session-body -->
+
+
+<!-- ════════════════════════════════════════ -->
+<!-- SESSION 3: 온톨로지 스프린트 & 커뮤니티 운영 -->
+<!-- ════════════════════════════════════════ -->
+<div class="session-header">
+  <span class="session-num">세션 3</span>
+  <span class="session-title">온톨로지 스프린트 실행 계획 & 시니어 커뮤니티 운영 구조 심화</span>
+  <span class="session-time">약 35분</span>
+</div>
+<div class="session-body">
+
+  <div class="speech">
+    <div class="badge" style="background:#8e44ad;">POSTECH 교수</div>
+    <div class="bubble">
+      <div class="speaker-name">POSTECH 교수</div>
+      <p>온톨로지 스프린트를 설계하기 전에 범위를 명확히 해야 합니다. <strong>인화공 5,000건 Q&amp;A를 모두 커레이션하는 것은 목표가 아닙니다.</strong> SnapScale이 AutoFlow에 처음 투입할 씨드 데이터로 의미 있는 것은 "반복되는 설계 문제"에 관한 Q&amp;A입니다. 공정별(정제, 석유화학, 가스처리), 장치별(열교환기, 컬럼, 펌프), 문제 유형별(설계 변경, 재작업 원인, LD 관련)로 나누면 실제 유용한 케이스는 500~700건 정도입니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#1565C0;">이종현</div>
+    <div class="bubble">
+      <div class="speaker-name">이종현 (UOP 출신)</div>
+      <p>UOP 경험 기준으로 말씀드리면, 공정 엔지니어링에서 반복되는 문제의 <strong>80%는 열교환기 설계, 분리공정 최적화, 펌프-압축기 선정 3가지</strong>에서 나옵니다. 인화공 Q&amp;A에서 이 3가지 카테고리만 먼저 500건 커레이션하면 AutoFlow의 첫 번째 핵심 도메인이 완성됩니다. 나머지는 나중에 확장해도 됩니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#32B489;">박규호</div>
+    <div class="bubble">
+      <div class="speaker-name">박규호 부장</div>
+      <p>이종현 박사님 말씀이 맞습니다. 스프린트 1차는 이 3개 카테고리로 집중하겠습니다. Claude를 활용하면 인화공 Q&amp;A 텍스트를 가져와서 카테고리 태깅을 반자동화할 수 있습니다. 완전 자동은 어렵지만 <strong>"AI가 1차 분류 → 전문가가 20% 검수"</strong> 구조면 주 50건 처리가 가능합니다. 10주 스프린트면 500건 완성입니다.</p>
+    </div>
+  </div>
+
+  <div class="ibox blue">
+    <label>📊 온톨로지 스프린트 10주 계획 (1차: 열교환기·분리공정·펌프-압축기)</label>
+    <strong>Week 1:</strong> 스키마 확정 + AI 분류 파이프라인 구축 (박규호 + POSTECH 교수)<br/>
+    <strong>Week 2~3:</strong> 인화공 Q&amp;A 스크래핑·분류 파이럿 100건 → 정확도 검증<br/>
+    <strong>Week 4~6:</strong> 열교환기 카테고리 200건 완성 (이종현 박사님 리뷰 20건)<br/>
+    <strong>Week 7~8:</strong> 분리공정 카테고리 150건 완성 (스테파노 교수님 리뷰 15건)<br/>
+    <strong>Week 9~10:</strong> 펌프-압축기 카테고리 150건 완성 (장영기 박사님 리뷰 15건)<br/>
+    <strong>최종 산출:</strong> 500건 구조화 Q&amp;A + 품질 검증 완료 보고서
+  </div>
+
+  <!-- 커뮤니티 운영 구조 -->
+  <div style="font-size:15px; font-weight:800; color:var(--navy); margin:24px 0 12px; border-left:4px solid var(--purple); padding-left:12px;">
+    시니어 커뮤니티(Advisory Board) 운영 구조 심화 설계
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#6A1B9A;">스테파노</div>
+    <div class="bubble">
+      <div class="speaker-name">스테파노 (인화공 이탈리아 석학)</div>
+      <p>시니어 커뮤니티 운영에서 제가 20년간 배운 것이 있습니다. <strong>시니어들은 "관리받기"를 싫어합니다.</strong> 월례 회의에 출석하라는 식의 운영은 3개월 후 참여율이 50% 이하로 떨어집니다. 대신 <strong>시니어가 "나는 이 프로젝트에서 판단을 내리는 사람"이라는 느낌</strong>을 받아야 합니다. 매달 "이 기술적 판단에 대해 여러분의 의견이 필요합니다"라는 구체적 질문을 던져야 합니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#E65100;">장영기</div>
+    <div class="bubble">
+      <div class="speaker-name">장영기 (아람코 전문가)</div>
+      <p>저도 동의합니다. 실제로 제가 효과적으로 참여하는 Advisory Board는 <strong>"내 의견이 제품에 반영됐다"는 피드백이 오는 곳</strong>입니다. "이번 분기에 장영기 박사님 의견으로 이 기능이 바뀌었습니다"라는 한 줄이 다음 참여를 보장합니다. 이것이 없으면 Advisory Board는 이름뿐인 조직이 됩니다.</p>
+    </div>
+  </div>
+
+  <div class="ibox teal">
+    <label>📋 Advisory Board 운영 표준 프로세스 (박규호 설계)</label>
+    <strong>월 1회 공식 미팅 (90분):</strong> 오프닝(박규호, 10분) → 기술/비즈니스 이슈 발표(15분) → 패널 판단 요청 세션(40분) → 결정 사항 요약(박규호, 15분) → 다음 달 질문 사전 예고(10분)<br/><br/>
+    <strong>월간 업데이트 뉴스레터 (박규호 작성):</strong> "지난 달 여러분의 의견으로 바뀐 것 3가지" + "이번 달 판단이 필요한 것 2가지" → 2페이지 이내<br/><br/>
+    <strong>개별 1:1 (분기 1회):</strong> 각 멤버와 30분 1:1 → 불만·기대·참여 의향 재확인<br/><br/>
+    <strong>기여 인정:</strong> SnapScale 웹사이트 "Advisors" 페이지에 프로필+기여 사례 공개 / 외부 발표 시 "Advisory Board of SnapScale" 타이틀 사용 허가
+  </div>
+
+  <div class="transition">마지막 세션 — 씨드 1억원 예산 배분 설계. 위 세션들의 실행 계획이 예산과 연결됩니다.</div>
+
+</div><!-- /session-body -->
+
+
+<!-- ════════════════════════════ -->
+<!-- SESSION 4: 씨드 1억원 예산 배분 -->
+<!-- ════════════════════════════ -->
+<div class="session-header">
+  <span class="session-num">세션 4</span>
+  <span class="session-title">씨드 투자비 1억원 배분 설계 — 실행 예산 연동</span>
+  <span class="session-time">약 30분</span>
+</div>
+<div class="session-body">
+
+  <div class="ibox orange">
+    <label>💰 예산 설계 전제 조건</label>
+    씨드 투자 연간 배분 가능액: <strong>약 1억원 (100,000,000원)</strong><br/>
+    기간: 12개월 (2026년 5월 ~ 2027년 4월)<br/>
+    원칙: ① 고정비 최소화 ② 레버리지 높은 곳 집중 ③ 결과물이 측정 가능한 항목 우선
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#0D47A1;">정재원 CFO</div>
+    <div class="bubble">
+      <div class="speaker-name">정재원 CFO</div>
+      <p>CFO 관점에서 솔직히 말씀드립니다. 1억원은 스타트업 1년 예산치고는 매우 타이트합니다. Target Margin 공식으로 역산하면 원가 40%+SG&A 20%+영업이익 20%인데, <strong>1억원은 인건비 1~2인을 1년 쓰는 금액입니다.</strong> 인건비에 대부분을 쓰면 나머지 실행 예산이 없어지므로, 인건비는 최대 40%로 제한하고 실행 비용을 반드시 확보해야 합니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#1B5E20;">한승민 VC</div>
+    <div class="bubble">
+      <div class="speaker-name">한승민 VC</div>
+      <p>VC 관점에서 씨드 1억으로 최대 레버리지를 만드는 방법은 <strong>외부 전문가 활용을 극대화</strong>하는 것입니다. Advisory Board는 현금 보상보다 스톡옵션 + 네임밸류로 움직이므로, 실제 현금 비용은 낮습니다. 온톨로지 커레이션도 전업 인력보다 <strong>슈퍼기여자에게 소액 보상</strong>(건당 1~2만원) 구조가 훨씬 효율적입니다.</p>
+    </div>
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#BF360C;">오태준</div>
+    <div class="bubble">
+      <div class="speaker-name">오태준 (창업가)</div>
+      <p>제 두 번째 회사 초기에 씨드로 1억 2천만원을 썼는데, 가장 아까웠던 것은 <strong>실패가 뻔한 영업에 쓴 비용</strong>이었습니다. 반면 가장 ROI가 높았던 것은 법무·특허 비용이었습니다. IP가 정리되지 않아서 나중에 M&A 딜이 6개월 지연된 적이 있거든요. <strong>법무 비용은 아끼지 마십시오.</strong></p>
+    </div>
+  </div>
+
+  <!-- 예산 테이블 -->
+  <div style="font-size:15px; font-weight:800; color:var(--navy); margin:24px 0 12px; border-left:4px solid var(--gold); padding-left:12px;">
+    씨드 1억원 배분 테이블 [ILLUSTRATIVE ONLY — 최종 확정 전 CFO 검토 필요]
+  </div>
+
+  <table class="budget-table">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>분류</th>
+        <th>월 예산</th>
+        <th>12개월 합계</th>
+        <th>비중</th>
+        <th>산출 근거</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>박규호 인건비</strong></td>
+        <td>고정</td>
+        <td>250만원</td>
+        <td><strong>3,000만원</strong></td>
+        <td>30%</td>
+        <td>공동창업자 최소 생활비 수준 (스톡옵션 병행)</td>
+      </tr>
+      <tr>
+        <td>Advisory Board 리테이너</td>
+        <td>준고정</td>
+        <td>약 42만원×3인</td>
+        <td><strong>150만원×12=1,800만원</strong></td>
+        <td>18%</td>
+        <td>3인 × 월 50만원 (스톡옵션 별도, 현금 최소화)</td>
+      </tr>
+      <tr>
+        <td>온톨로지 커레이션 보상</td>
+        <td>변동</td>
+        <td>약 40만원</td>
+        <td><strong>480만원</strong></td>
+        <td>4.8%</td>
+        <td>500건 × 건당 약 1만원 (슈퍼기여자 소액 보상)</td>
+      </tr>
+      <tr>
+        <td>법무 비용 (IP·계약)</td>
+        <td>일회성</td>
+        <td>—</td>
+        <td><strong>500만원</strong></td>
+        <td>5%</td>
+        <td>법무 의견서 2건 + MOA 계약서 초안 검토</td>
+      </tr>
+      <tr>
+        <td>기술 인프라 (AI API·서버)</td>
+        <td>변동</td>
+        <td>약 30만원</td>
+        <td><strong>360만원</strong></td>
+        <td>3.6%</td>
+        <td>Claude API + Cloudflare Workers + 기타 SaaS</td>
+      </tr>
+      <tr>
+        <td>Advisory Board 미팅 운영</td>
+        <td>변동</td>
+        <td>약 20만원</td>
+        <td><strong>240만원</strong></td>
+        <td>2.4%</td>
+        <td>월 미팅 장소·식사·자료 인쇄 등</td>
+      </tr>
+      <tr>
+        <td>콘텐츠·마케팅 (LinkedIn·영문 자료)</td>
+        <td>변동</td>
+        <td>약 20만원</td>
+        <td><strong>240만원</strong></td>
+        <td>2.4%</td>
+        <td>디자인 외주, 영문 번역 (기술 백서 등)</td>
+      </tr>
+      <tr>
+        <td>국내 EPC 영업 활동</td>
+        <td>변동</td>
+        <td>약 50만원</td>
+        <td><strong>600만원</strong></td>
+        <td>6%</td>
+        <td>방문 출장, 데모 자료 제작, 미팅 준비</td>
+      </tr>
+      <tr>
+        <td>중동·글로벌 탐색 (장영기 채널)</td>
+        <td>변동</td>
+        <td>—</td>
+        <td><strong>500만원</strong></td>
+        <td>5%</td>
+        <td>H2 집중 사용: 아람코 기술 백서 영문 제작·전달</td>
+      </tr>
+      <tr>
+        <td>예비비 (리스크 버퍼)</td>
+        <td>비상</td>
+        <td>—</td>
+        <td><strong>1,080만원</strong></td>
+        <td>10.8%</td>
+        <td>10% 예비 확보 — 의도치 않은 기회·위기 대응</td>
+      </tr>
+      <tr>
+        <td>이월 잔여 (미집행·다음 씨드 연계)</td>
+        <td>이월</td>
+        <td>—</td>
+        <td><strong>800만원</strong></td>
+        <td>8%</td>
+        <td>연말 실제 실행률에 따라 조정</td>
+      </tr>
+      <tr class="budget-sum">
+        <td colspan="3"><strong>합계</strong></td>
+        <td><strong>1억원 (100,000,000원)</strong></td>
+        <td><strong>100%</strong></td>
+        <td>CFO 월별 리뷰 필수</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="ibox orange">
+    <label>⚠️ 예산 집행 원칙 (정재원 CFO 제안)</label>
+    ① <strong>월별 실행 보고서:</strong> 박규호가 매월 초 예산 집행 현황 1페이지 보고 (김상윤 승인)<br/>
+    ② <strong>항목 간 전용 한도:</strong> 단일 항목 20% 이상 초과 시 사전 승인<br/>
+    ③ <strong>Advisory Board 리테이너:</strong> 기여도에 따라 분기별 조정 가능 (실적 없으면 중단)<br/>
+    ④ <strong>영업 비용 ROI 트래킹:</strong> EPC 영업 비용은 파이프라인 진척도와 연계해 분기별 재검토
+  </div>
+
+  <div class="speech">
+    <div class="badge" style="background:#0D47A1;">정재원 CFO</div>
+    <div class="bubble">
+      <div class="speaker-name">정재원 CFO</div>
+      <p>한 가지 더 강조하겠습니다. 박규호 인건비 3,000만원은 <strong>스타트업 공동창업자치고 매우 낮은 금액</strong>입니다. 이것은 창업 초기의 희생이지, 영구적 구조가 되어서는 안 됩니다. <strong>ARR ₩30억 달성 시점에 박규호 보상 구조를 재설계</strong>하는 마일스톤을 지금 문서에 명시해 두어야 합니다. 나중에 "왜 나는 이 돈밖에 못 받냐"는 분쟁의 씨앗을 지금 제거하는 것입니다.</p>
+    </div>
+  </div>
+
+  <div class="ibox green">
+    <label>✅ 세션 4 합의 — 예산 집행 즉시 결정 사항</label>
+    ① 박규호 월 250만원 인건비 + Co-Founder 스톡옵션 계약 이번 달 체결<br/>
+    ② Advisory Board 3인 월 50만원 리테이너 계약 (분기별 기여도 리뷰 조건)<br/>
+    ③ 법무 의견서 발주 즉시 (IP + MOA) — 예산 500만원 선집행<br/>
+    ④ ARR ₩30억 달성 시 박규호 보상 재설계 조항 지금 문서화<br/>
+    ⑤ 월별 예산 집행 보고서 체계 → 이번 달부터 시작
+  </div>
+
+</div><!-- /session-body -->
+
+
+<!-- ═══════════════════ -->
+<!-- FINAL VERDICT -->
+<!-- ═══════════════════ -->
+<div class="verdict">
+  <h3>⚖️ 패널 합의 — 오늘 회의 최종 결정 6가지</h3>
+  <ul>
+    <li><strong>1.</strong> HIGH 과제 5개를 주 단위 실행 스텝으로 분해 완료 — <strong>법무 의견서 발주가 모든 실행의 선결 조건</strong></li>
+    <li><strong>2.</strong> 박규호 부장 타이틀을 <strong>"Co-Founder"</strong>로 즉시 변경 — 명함·LinkedIn·Advisory Board 공식 소개</li>
+    <li><strong>3.</strong> Advisory Board 3인(이종현·장영기·스테파노) 공식 합류 — 의향서 이번 주 배포</li>
+    <li><strong>4.</strong> 온톨로지 스프린트 1차: <strong>열교환기·분리공정·펌프-압축기 3개 카테고리 500건, 10주</strong></li>
+    <li><strong>5.</strong> 씨드 1억원 배분: 인건비 30% / Advisory Board 18% / 법무 5% / 영업·글로벌 11% / 예비 11%</li>
+    <li><strong>6.</strong> ARR ₩30억 달성 시 <strong>박규호 보상 재설계 마일스톤</strong> 지금 계약서에 명시</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════ -->
+<!-- 3-1-1 SUMMARY -->
+<!-- ═══════════════════ -->
+<div class="summary311">
+  <div class="s-label">3-1-1 요약 (모더레이터 → 팀 전달용)</div>
+  <div class="s-con">인화공 커뮤니티 지식 자산 확보 + 박규호 Co-Founder 인정 + 예산 실행 체계가 지금 이번 달에 동시에 시작된다.</div>
+  <div class="s-reason">① 법무 의견서 없이는 MOA도, Advisory Board 계약도, IP 정리도 모두 막힌다 — 이번 주 발주가 모든 것의 선결</div>
+  <div class="s-reason">② 박규호 Co-Founder 포지셔닝은 선배들이 먼저 인정해 주는 것이 아니라 스스로 선언하고 결과물로 증명하는 것</div>
+  <div class="s-reason">③ 씨드 1억원은 인건비에 매몰되지 않고 레버리지 항목(법무·Advisory Board·글로벌 탐색)에 집중해야 투자 가치가 있다</div>
+  <div class="s-action">🎯 다음 액션: <strong>이번 주 금요일까지</strong> — ① 법무법인에 IP 의견서 발주 ② 박규호 명함/LinkedIn 타이틀 변경 ③ Advisory Board 의향서 초안 완성 → 3인 개별 발송</div>
+</div>
+
+
+<!-- ═══════════════════ -->
+<!-- ACTION TABLE -->
+<!-- ═══════════════════ -->
+<div class="action-section">
+  <h2>⚡ 즉시 실행 테이블 — 전체 과제 통합</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:30%">과제</th>
+        <th>담당</th>
+        <th>기한</th>
+        <th>예산</th>
+        <th>우선순위</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>법무 의견서 발주 (IP + MOA)</strong></td>
+        <td>박규호</td>
+        <td>이번 주 금요일</td>
+        <td>500만원</td>
+        <td><span class="tag-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td><strong>박규호 Co-Founder 타이틀 변경</strong> (명함·LinkedIn)</td>
+        <td>박규호 + 김상윤</td>
+        <td>이번 주</td>
+        <td>0</td>
+        <td><span class="tag-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td><strong>Advisory Board 의향서 초안 작성</strong> + 3인 발송</td>
+        <td>박규호</td>
+        <td>이번 주 금요일</td>
+        <td>0</td>
+        <td><span class="tag-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td><strong>인화공 슈퍼기여자 3~5명 식별</strong></td>
+        <td>박규호</td>
+        <td>2주 내</td>
+        <td>0</td>
+        <td><span class="tag-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td><strong>온톨로지 스키마 v0.1 확정</strong> (POSTECH 교수와 2시간 워킹 세션)</td>
+        <td>박규호 + POSTECH 교수</td>
+        <td>2주 내</td>
+        <td>0</td>
+        <td><span class="tag-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td>박규호 인건비 계약 + Co-Founder 스톡옵션 설계</td>
+        <td>김상윤 + 박규호</td>
+        <td>이번 달</td>
+        <td>법무비 포함</td>
+        <td><span class="tag-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td>SnapScale-인화공 관계 정의 한 문장 확정 + 자료 반영</td>
+        <td>김상윤 최종 승인</td>
+        <td>이번 주</td>
+        <td>0</td>
+        <td><span class="tag-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td>이종현·장영기 박사님 월 2회 케이스 스터디 세션 스케줄 확정</td>
+        <td>박규호</td>
+        <td>2주 내</td>
+        <td>Advisory Board 예산 포함</td>
+        <td><span class="tag-med">MED</span></td>
+      </tr>
+      <tr>
+        <td>온톨로지 커레이션 파일럿 100건 실행</td>
+        <td>박규호 + AI 보조</td>
+        <td>Month 1</td>
+        <td>10만원 (기여자 보상)</td>
+        <td><span class="tag-med">MED</span></td>
+      </tr>
+      <tr>
+        <td>기술 백서 초안 영문 5페이지 완성 → 이종현·장영기 검토</td>
+        <td>박규호 + 김상윤</td>
+        <td>Month 2</td>
+        <td>번역 50만원</td>
+        <td><span class="tag-med">MED</span></td>
+      </tr>
+      <tr>
+        <td>LinkedIn / 인화공 AI 활용 가이드 시리즈 첫 게재</td>
+        <td>박규호</td>
+        <td>Month 1</td>
+        <td>0</td>
+        <td><span class="tag-med">MED</span></td>
+      </tr>
+      <tr>
+        <td>Advisory Board 첫 공식 미팅 개최 (박규호 단독 진행)</td>
+        <td>박규호</td>
+        <td>Month 2</td>
+        <td>20만원 (장소·식사)</td>
+        <td><span class="tag-med">MED</span></td>
+      </tr>
+      <tr>
+        <td>인화공 운영진 미팅 요청 (파일럿 결과물 기반)</td>
+        <td>박규호 + 스테파노</td>
+        <td>Month 3</td>
+        <td>0</td>
+        <td><span class="tag-low">LOW</span></td>
+      </tr>
+      <tr>
+        <td>아람코 기술 백서 내부 채널 소개 (장영기 박사님 주도)</td>
+        <td>장영기 + 박규호</td>
+        <td>H2 2026</td>
+        <td>500만원 (글로벌 예산)</td>
+        <td><span class="tag-low">LOW</span></td>
+      </tr>
+      <tr>
+        <td>ARR ₩30억 달성 시 박규호 보상 재설계 조항 계약서 반영</td>
+        <td>김상윤 + 법무</td>
+        <td>법무 의견서 완료 후</td>
+        <td>법무비 포함</td>
+        <td><span class="tag-new">NEW</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════════════════ -->
+<!-- BUDGET SUMMARY VISUAL -->
+<!-- ═══════════════════════ -->
+<div style="background:white; border-radius:12px; border:1px solid var(--border); padding:24px 28px; margin-top:24px;">
+  <div style="font-size:16px; font-weight:800; color:var(--navy); margin-bottom:16px;">💰 씨드 1억원 배분 시각화</div>
+  <table style="margin:0;">
+    <tr>
+      <td style="width:30%; font-size:13px; font-weight:700; color:#333; padding:8px 0;">박규호 인건비 (30%)</td>
+      <td style="padding:8px 0 8px 10px;"><div class="budget-bar" style="width:30%; background:#0D47A1;"></div></td>
+      <td style="text-align:right; font-size:13px; font-weight:700; color:#0D47A1; white-space:nowrap;">3,000만원</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px; font-weight:700; color:#333; padding:8px 0;">Advisory Board (18%)</td>
+      <td style="padding:8px 0 8px 10px;"><div class="budget-bar" style="width:18%; background:#1B5E20;"></div></td>
+      <td style="text-align:right; font-size:13px; font-weight:700; color:#1B5E20; white-space:nowrap;">1,800만원</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px; font-weight:700; color:#333; padding:8px 0;">영업·글로벌·마케팅 (14%)</td>
+      <td style="padding:8px 0 8px 10px;"><div class="budget-bar" style="width:14%; background:#E65100;"></div></td>
+      <td style="text-align:right; font-size:13px; font-weight:700; color:#E65100; white-space:nowrap;">1,340만원</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px; font-weight:700; color:#333; padding:8px 0;">예비비 (10.8%)</td>
+      <td style="padding:8px 0 8px 10px;"><div class="budget-bar" style="width:10.8%; background:var(--orange);"></div></td>
+      <td style="text-align:right; font-size:13px; font-weight:700; color:var(--orange); white-space:nowrap;">1,080만원</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px; font-weight:700; color:#333; padding:8px 0;">이월 잔여 (8%)</td>
+      <td style="padding:8px 0 8px 10px;"><div class="budget-bar" style="width:8%; background:#888;"></div></td>
+      <td style="text-align:right; font-size:13px; font-weight:700; color:#888; white-space:nowrap;">800만원</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px; font-weight:700; color:#333; padding:8px 0;">법무 (5%)</td>
+      <td style="padding:8px 0 8px 10px;"><div class="budget-bar" style="width:5%; background:#BF360C;"></div></td>
+      <td style="text-align:right; font-size:13px; font-weight:700; color:#BF360C; white-space:nowrap;">500만원</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px; font-weight:700; color:#333; padding:8px 0;">기술 인프라 (3.6%)</td>
+      <td style="padding:8px 0 8px 10px;"><div class="budget-bar" style="width:3.6%; background:var(--teal);"></div></td>
+      <td style="text-align:right; font-size:13px; font-weight:700; color:var(--teal); white-space:nowrap;">360만원</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px; font-weight:700; color:#333; padding:8px 0;">온톨로지 커레이션 (4.8%)</td>
+      <td style="padding:8px 0 8px 10px;"><div class="budget-bar" style="width:4.8%; background:var(--purple);"></div></td>
+      <td style="text-align:right; font-size:13px; font-weight:700; color:var(--purple); white-space:nowrap;">480만원</td>
+    </tr>
+    <tr>
+      <td style="font-size:13px; font-weight:700; color:#333; padding:8px 0;">Advisory Board 미팅·콘텐츠 (4.8%)</td>
+      <td style="padding:8px 0 8px 10px;"><div class="budget-bar" style="width:4.8%; background:var(--navy2);"></div></td>
+      <td style="text-align:right; font-size:13px; font-weight:700; color:var(--navy2); white-space:nowrap;">480만원</td>
+    </tr>
+  </table>
+  <div style="font-size:11px; color:#999; margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">[ILLUSTRATIVE ONLY] 최종 확정 전 CFO 검토 및 공동창업자 합의 필요 · 월별 실행률에 따라 조정</div>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  <strong>Confidential &amp; Proprietary | SnapScale Internal Use Only</strong><br/>
+  근거 자료: 3번 문서 (2026-05-06_c-2026-05-07.html) · SKILL.md 패널 캐릭터 · Forbes Outcome-based Pricing 2026.01 · ACCE 실측 데이터 · OPEC WOO 2025<br/>
+  참고 자료 경로: /Users/visionschool/Documents/02 CELab/00. 창업 40s/00. 문건 파일 관리/02. BM &amp; Pricing<br/>
+  <br/>
+  패널: 정재원(CFO) · 한승민(VC) · 오태준(창업가) · 이종현(UOP) · 장영기(아람코) · 스테파노(인화공) · POSTECH 교수 · 박규호(신규팀) · 김상윤(모더레이터)
+  <div class="ver">Version 2.0 · 2026.05.09 · 후속 전략회의: 실행 심화 + 박규호 Co-Founder 포지셔닝 + 씨드 1억 예산 설계</div>
+</footer>
+
+</body>
+</html>
