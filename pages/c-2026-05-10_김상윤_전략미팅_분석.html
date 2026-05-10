@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SnapScale 전략 회의록 — 김상윤 대표 방향성 통합 분석 | 2026.05.10</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#1e3c72;--navy2:#2a5298;--green:#32B489;
+  --orange:#f39c12;--red:#e74c3c;--purple:#8e44ad;
+  --teal:#00796B;--gold:#F9A825;--light:#f4f6fa;--border:#dde3ef;
+  --indigo:#283593;--steel:#1565C0;--cyan:#0097A7;
+  --cfo:#0D47A1;--vc:#1B5E20;--fd:#BF360C;
+}
+body{font-family:'Noto Sans KR','Apple SD Gothic Neo',sans-serif;background:#f0f2f8;color:#222;font-size:14px;line-height:1.7;}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2),var(--green));color:white;padding:32px 40px 24px;position:relative;}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.hbadge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:20px;padding:3px 12px;font-size:12px;font-weight:600;}
+.hbadge.new{background:var(--green);}
+.hbadge.hot{background:var(--red);}
+.hbadge.gold{background:var(--gold);color:#333;font-weight:800;}
+h1{font-size:22px;font-weight:800;line-height:1.35;margin-bottom:8px;}
+.subtitle{font-size:13px;opacity:.82;}
+.hmeta{margin-top:14px;display:flex;gap:18px;flex-wrap:wrap;font-size:12px;border-top:1px solid rgba(255,255,255,.2);padding-top:12px;}
+.hmeta strong{color:#a8f0d0;}
+.warn{background:#fff8e1;border-left:4px solid var(--orange);color:#5c4000;padding:12px 20px;font-size:13px;}
+.container{max-width:980px;margin:0 auto;padding:28px 20px 60px;}
+
+/* SECTION */
+.section-hd{background:linear-gradient(90deg,var(--navy),var(--navy2));color:white;border-radius:12px 12px 0 0;padding:14px 22px;margin-top:32px;display:flex;align-items:center;gap:12px;}
+.sec-num{background:var(--green);color:white;font-weight:800;font-size:12px;border-radius:50px;padding:3px 10px;}
+.sec-num.hot{background:var(--red);}
+.sec-num.gold{background:var(--gold);color:#333;}
+.sec-title{font-size:16px;font-weight:700;}
+.section-body{background:white;border-radius:0 0 12px 12px;border:1px solid var(--border);border-top:none;padding:24px 26px;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+
+/* SPEECH BUBBLE */
+.speech{display:flex;gap:14px;margin:16px 0;align-items:flex-start;}
+.badge{min-width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:white;text-align:center;line-height:1.2;flex-shrink:0;}
+.b-mod{background:var(--navy);}
+.b-vc{background:var(--vc);}
+.b-fd{background:var(--fd);}
+.b-ext{background:var(--teal);}
+.b-epc{background:#E65100;}
+.b-old{background:var(--vc);}
+.b-new{background:var(--cfo);}
+.bubble{background:#f8fafc;border:1px solid var(--border);border-radius:0 12px 12px 12px;padding:13px 16px;flex:1;font-size:13px;}
+.bubble strong{color:var(--navy);font-weight:800;display:block;margin-bottom:6px;font-size:12px;}
+.bubble.green-b{background:#e8f8f2;border-color:var(--green);}
+.bubble.gold-b{background:#fffde7;border-color:var(--gold);}
+.bubble.orange-b{background:#fff8e1;border-color:var(--orange);}
+.bubble.red-b{background:#fdecea;border-color:var(--red);}
+
+/* IBOX */
+.ibox{border-radius:9px;padding:13px 16px;margin:13px 0;font-size:13px;border-left:4px solid;}
+.ibox.green{background:#e8f8f2;border-color:var(--green);color:#0a4a30;}
+.ibox.orange{background:#fff8e1;border-color:var(--orange);color:#5c4000;}
+.ibox.blue{background:#e3f2fd;border-color:#1976d2;color:#0d3b6e;}
+.ibox.gold{background:#fffde7;border-color:var(--gold);color:#5c4000;}
+.ibox.teal{background:#e0f2f1;border-color:var(--teal);color:#003d35;}
+.ibox.purple{background:#f3e5f5;border-color:var(--purple);color:#4a1060;}
+.ibox.navy{background:#e8eaf6;border-color:var(--navy);color:#1a237e;}
+.ibox.red{background:#fdecea;border-color:var(--red);color:#7b1c1c;}
+.ibox label{font-weight:800;display:block;margin-bottom:6px;font-size:11px;letter-spacing:.5px;text-transform:uppercase;}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0;}
+.stat-box{background:linear-gradient(135deg,var(--navy),var(--navy2));color:white;border-radius:10px;padding:14px 16px;text-align:center;}
+.stat-val{font-size:22px;font-weight:900;color:var(--green);}
+.stat-label{font-size:11px;opacity:.82;margin-top:4px;}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;}
+th{background:var(--navy);color:white;padding:9px 13px;text-align:left;font-size:12px;}
+td{padding:9px 13px;border-bottom:1px solid var(--border);vertical-align:top;}
+tr:nth-child(even) td{background:#f8fafc;}
+td.hi{color:var(--green);font-weight:700;}
+td.warn-cell{color:var(--orange);font-weight:700;}
+
+/* NODE CLASS */
+.node-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+.node-card{border-radius:10px;padding:14px 16px;border-left:4px solid;}
+.nc1{background:#e3f2fd;border-color:#1976d2;}
+.nc2{background:#e8f5e9;border-color:#2e7d32;}
+.nc3{background:#fff3e0;border-color:#e65100;}
+.nc4{background:#f3e5f5;border-color:#7b1fa2;}
+.nc5{background:#e0f7fa;border-color:#00796b;}
+.nc6{background:#fce4ec;border-color:#c62828;}
+.nc-title{font-size:13px;font-weight:800;margin-bottom:6px;}
+.nc-count{font-size:20px;font-weight:900;}
+.nc-pct{font-size:11px;color:#666;}
+.nc-desc{font-size:12px;color:#555;margin-top:6px;}
+
+/* VERDICT */
+.verdict{background:linear-gradient(135deg,var(--navy),#0d47a1);color:white;border-radius:14px;padding:24px 28px;margin:24px 0;}
+.verdict h3{font-size:16px;font-weight:800;color:var(--green);margin-bottom:12px;}
+.v-row{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:13px;}
+.v-num{background:var(--green);color:white;font-weight:800;font-size:11px;padding:2px 8px;border-radius:10px;}
+.v-text em{color:var(--gold);font-style:normal;font-weight:700;}
+
+/* ACTION TABLE */
+.action-table th{background:var(--indigo);}
+.action-table .tag-high{background:#c62828;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;}
+.action-table .tag-med{background:var(--orange);color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;}
+.action-table .tag-low{background:#546e7a;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;}
+
+/* FLYWHEEL */
+.fw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0;}
+.fw-card{border-radius:10px;padding:16px;border:1px solid var(--border);background:white;}
+.fw-step{font-size:20px;font-weight:900;color:var(--green);margin-bottom:6px;}
+.fw-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:6px;}
+.fw-desc{font-size:12px;color:#555;}
+.fw-arrow{text-align:center;font-size:24px;color:var(--green);margin:2px 0;}
+
+/* SUMMARY BOX */
+.summary-311{background:linear-gradient(135deg,#0d47a1,#1565c0);color:white;border-radius:12px;padding:22px 26px;margin:20px 0;}
+.summary-311 h3{font-size:14px;font-weight:800;color:var(--gold);margin-bottom:14px;letter-spacing:.5px;}
+.s-conclusion{font-size:15px;font-weight:800;margin-bottom:14px;border-left:3px solid var(--green);padding-left:12px;line-height:1.6;}
+.s-ground{margin-bottom:12px;}
+.s-ground-title{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.s-ground-item{display:flex;gap:8px;margin:5px 0;font-size:13px;}
+.s-num{background:var(--green);color:white;font-weight:800;font-size:10px;padding:2px 7px;border-radius:8px;flex-shrink:0;}
+.s-action{background:rgba(249,168,37,.18);border:1px solid var(--gold);border-radius:8px;padding:12px 16px;font-size:13px;}
+.s-action-label{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+
+footer{background:var(--navy);color:rgba(255,255,255,.6);padding:20px 40px;font-size:11px;text-align:center;margin-top:40px;}
+footer strong{color:rgba(255,255,255,.9);}
+.ver{margin-top:8px;font-size:10px;color:rgba(255,255,255,.4);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge-row">
+    <span class="hbadge">MTG-CUSTOM</span>
+    <span class="hbadge">2026.05.10</span>
+    <span class="hbadge new">김상윤 대표 방향성</span>
+    <span class="hbadge hot">4대 전략</span>
+    <span class="hbadge gold">v1.0</span>
+  </div>
+  <h1>SnapScale 전략 회의록<br>김상윤 대표 전략 방향성 통합 분석</h1>
+  <div class="subtitle">AutoFlow 838 온톨로지 선별 · 99% 정확도 해커톤 모델 · PAWG 글로벌 네트워크 · 오픈소스 LinkedIn 플라이휠</div>
+  <div class="hmeta">
+    <span><strong>일시</strong> 2026.05.10</span>
+    <span><strong>패널</strong> 한승민(VC) · 오태준(창업가) · 김민석(가격정책) · GS현업 · 모더레이터 김상윤</span>
+    <span><strong>근거자료</strong> 인화공 Q&A 7,415스레드 · ACCE 실측 · OPEC WOO 2025</span>
+    <span><strong>보안등급</strong> CONFIDENTIAL — Internal Use Only</span>
+  </div>
+</header>
+
+<div class="warn">⚠️ 안내사항: 본 회의록은 AI 기술을 활용하여 녹취록 및 공유 문서를 기반으로 작성되었으며, 일부 정확도가 떨어질 수 있습니다.</div>
+
+<div class="container">
+
+  <!-- KPI STRIP -->
+  <div class="stat-grid" style="margin-top:20px;">
+    <div class="stat-box">
+      <div class="stat-val">838</div>
+      <div class="stat-label">AutoFlow 온톨로지 후보<br>(7,415 스레드 중)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">99%</div>
+      <div class="stat-label">목표 정확도<br>(해커톤 스프린트 모델)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">6</div>
+      <div class="stat-label">온톨로지 노드 클래스<br>(신규 분류 체계)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val">3</div>
+      <div class="stat-label">PAWG 글로벌 거점<br>(한국·중동·북미)</div>
+    </div>
+  </div>
+
+  <!-- SESSION 1: AutoFlow 838 -->
+  <div class="section-hd">
+    <span class="sec-num">SESSION 1</span>
+    <span class="sec-title">AutoFlow 838 온톨로지 선별 근거 — 왜 전체의 11.3%인가?</span>
+  </div>
+  <div class="section-body">
+
+    <div class="speech">
+      <div class="badge b-new">박<br>규호</div>
+      <div class="bubble">
+        <strong>신규팀 (박규호)</strong>
+        인화공 Q&A 7,415개 스레드에서 838개를 AutoFlow 온톨로지 후보로 선별했습니다. 선별 기준을 먼저 공유합니다. 1차 필터는 도메인입니다. Equipment·Process·Piping 3개 도메인이 대상이고 Units·Properties·General 카테고리는 제외했습니다. 2차는 문제 유형입니다. Design Standard와 Calculation Logic 중심으로 선별했고, FAQ는 비중을 낮췄습니다. 3차는 FEED/Basic Engineering 스테이지입니다. 이 스테이지가 전체 선별의 +30%p 오버레프리젠티드로 나타납니다.
+      </div>
+    </div>
+
+    <div class="node-grid">
+      <div class="node-card nc1">
+        <div class="nc-title">Design Rule</div>
+        <div class="nc-count">214<span class="nc-pct"> / 25.5%</span></div>
+        <div class="nc-desc">설계 규칙·기준 명문화. 오류 재발 방지 핵심 노드</div>
+      </div>
+      <div class="node-card nc2">
+        <div class="nc-title">Calculation Logic</div>
+        <div class="nc-count">189<span class="nc-pct"> / 22.6%</span></div>
+        <div class="nc-desc">계산식·수치 근거. AutoFlow 자동화 직결</div>
+      </div>
+      <div class="node-card nc3">
+        <div class="nc-title">Troubleshooting Rule</div>
+        <div class="nc-count">156<span class="nc-pct"> / 18.6%</span></div>
+        <div class="nc-desc">현장 트러블슈팅 패턴. 시니어 암묵지 집약</div>
+      </div>
+      <div class="node-card nc4">
+        <div class="nc-title">Tacit Knowledge</div>
+        <div class="nc-count">134<span class="nc-pct"> / 16.0%</span></div>
+        <div class="nc-desc">명문화 불가 경험칙. 전문가 검수 필수</div>
+      </div>
+      <div class="node-card nc5">
+        <div class="nc-title">Spec Decision</div>
+        <div class="nc-count">98<span class="nc-pct"> / 11.7%</span></div>
+        <div class="nc-desc">사양 선택 근거. 발주처 NDA 협의 필요</div>
+      </div>
+      <div class="node-card nc6">
+        <div class="nc-title">Cross-Domain</div>
+        <div class="nc-count">47<span class="nc-pct"> / 5.6%</span></div>
+        <div class="nc-desc">공정×배관×장치 교차 규칙. 고난도 자동화 대상</div>
+      </div>
+    </div>
+
+    <div class="ibox blue">
+      <label>선별 로직 요약</label>
+      Domain filter (Equipment+Process+Piping) → Stage filter (FEED+Basic Eng. +30%p) → Problem Type (Design Standard +14%p vs FAQ) → Score Model: <strong>Domain × Stage × Problem Type</strong> 3-way 분류. 단순 cutoff가 아닌 복합 스코어 모델.
+    </div>
+
+    <div class="speech">
+      <div class="badge b-epc">현업<br>패널</div>
+      <div class="bubble orange-b">
+        <strong>GS현업 패널 (공정·배관·장치)</strong>
+        838개 중 Tacit Knowledge(16%)와 Cross-Domain(5.6%)은 AI 단독 자동화가 불가능합니다. 반드시 도메인 전문가가 검수해야 합니다. 특히 Cross-Domain은 P&ID 해석과 연결되는데, 라이센서 NDA 이슈가 걸릴 수 있습니다. PoC 단계에서는 EPC 자체 문서만 활용하고, 2단계 이후 별도 동의를 받는 구조가 현실적입니다.
+      </div>
+    </div>
+
+    <div class="ibox orange">
+      <label>⚠️ 데드락 주의</label>
+      838 후보 중 약 21.6% (Tacit + Cross-Domain)는 현장 전문가 검수 없이 99% 정확도 달성 불가. PAWG 도메인 전문가 매칭이 병목 해소의 핵심.
+    </div>
+  </div>
+
+  <!-- SESSION 2: 99% 해커톤 모델 -->
+  <div class="section-hd">
+    <span class="sec-num hot">SESSION 2</span>
+    <span class="sec-title">99% 정확도 달성 전략 — AI 개발자 × 도메인 전문가 스프린트 해커톤</span>
+  </div>
+  <div class="section-body">
+
+    <div class="speech">
+      <div class="badge b-mod">김<br>상윤</div>
+      <div class="bubble green-b">
+        <strong>김상윤 (모더레이터 / 대표)</strong>
+        70~80% AI 베이스라인에 만족하지 않겠습니다. 목표는 99% 정확도입니다. 방법은 단기 스프린트 해커톤 모델입니다. AI 개발자가 특정 노드 클래스를 가져가고, 해당 분야 도메인 전문가와 1주 스프린트로 집중 검수합니다. 1회 스프린트에 30~50개 노드를 완성도 높게 처리합니다.
+      </div>
+    </div>
+
+    <div class="speech">
+      <div class="badge b-vc">한<br>승민</div>
+      <div class="bubble">
+        <strong>한승민 (VC)</strong>
+        VC 관점에서 투자사들의 패턴을 보면, 99% 정확도 클레임은 제품이 아닌 프로세스로 증명해야 합니다. 해커톤 모델이 좋은 이유는 스프린트별 검증 기록이 남는다는 겁니다. 이게 나중에 Series A에서 "우리가 어떻게 고정밀도에 도달했는지"를 설명하는 내러티브가 됩니다. 노드 클래스별 정확도 트래킹 보드를 만들어두시길 권장합니다.
+      </div>
+    </div>
+
+    <div class="speech">
+      <div class="badge b-fd">오<br>태준</div>
+      <div class="bubble">
+        <strong>오태준 (연쇄창업가)</strong>
+        제 두 번째 회사 Exit할 때 경험한 것이 있는데, 해커톤 스프린트 모델의 핵심은 "전문가를 어떻게 끌어들이느냐"입니다. 금전 보상만으로는 약합니다. 인화공 커뮤니티에서 이미 활동하는 시니어들에게 "당신의 지식이 온톨로지로 영구 보존된다"는 의미 부여가 훨씬 강력한 동기입니다. 장영기 선생님 같은 Chief Ontology Advisor 역할을 만드는 것도 이 맥락입니다.
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th>스프린트 구조</th>
+        <th>AI 개발자 역할</th>
+        <th>도메인 전문가 역할</th>
+        <th>목표 산출물</th>
+      </tr>
+      <tr>
+        <td><strong>1주 집중 스프린트</strong></td>
+        <td>노드 초안 생성<br>스코어 계산</td>
+        <td>정확도 검수<br>반례 추가</td>
+        <td class="hi">30~50 노드 완성</td>
+      </tr>
+      <tr>
+        <td><strong>검수 기준</strong></td>
+        <td>자동화 점수 ≥ 0.7</td>
+        <td>현장 적용 가능성 확인</td>
+        <td class="hi">정확도 기록 문서</td>
+      </tr>
+      <tr>
+        <td><strong>전체 838 노드</strong></td>
+        <td colspan="2">약 17~28회 스프린트 필요</td>
+        <td class="hi">4~6개월 완성 가능</td>
+      </tr>
+    </table>
+
+    <div class="ibox green">
+      <label>합의 포인트 [kp]</label>
+      99% 정확도는 AI 단독이 아닌 <strong>AI 초안 + 전문가 검수 스프린트</strong>의 조합으로 달성. 스프린트 기록 자체가 IR 내러티브 자산이 됨.
+    </div>
+  </div>
+
+  <!-- SESSION 3: PAWG -->
+  <div class="section-hd">
+    <span class="sec-num">SESSION 3</span>
+    <span class="sec-title">PAWG 글로벌 네트워크 — PKU(휴스턴) 북미 앵커 + 중동 거점</span>
+  </div>
+  <div class="section-body">
+
+    <div class="speech">
+      <div class="badge b-mod">김<br>상윤</div>
+      <div class="bubble green-b">
+        <strong>김상윤 (모더레이터 / 대표)</strong>
+        PAWG(Plant AI Working Group)을 내부 자문 기구로 공식화합니다. 핵심은 3개 글로벌 거점입니다. 한국 거점은 장영기 선생님(Chief Ontology Advisor). 북미 거점은 PKU — 휴스턴 소재 PE 엔지니어링 펌으로 북미 EPC 레퍼런스 확보 통로. 중동 거점은 스테파노 네트워크를 통한 Saudi Aramco/ADNOC 라인.
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <th>PAWG 거점</th>
+        <th>핵심 파트너</th>
+        <th>역할</th>
+        <th>단기 과제</th>
+      </tr>
+      <tr>
+        <td><strong>한국</strong></td>
+        <td>장영기 선생님</td>
+        <td>Chief Ontology Advisor<br>온톨로지 검수 총괄</td>
+        <td class="warn-cell">2026.05.12 미팅<br>역할 제안</td>
+      </tr>
+      <tr>
+        <td><strong>북미 (휴스턴)</strong></td>
+        <td>PKU Engineering</td>
+        <td>북미 EPC 레퍼런스<br>PAWG 공동 창설</td>
+        <td class="hi">MOU 초안 작성</td>
+      </tr>
+      <tr>
+        <td><strong>중동</strong></td>
+        <td>스테파노</td>
+        <td>Saudi Aramco 콘플릭트 체크<br>중동 EPC 네트워크</td>
+        <td class="warn-cell">2026.05.12 미팅<br>콘플릭트 확인</td>
+      </tr>
+    </table>
+
+    <div class="speech">
+      <div class="badge b-vc">한<br>승민</div>
+      <div class="bubble">
+        <strong>한승민 (VC)</strong>
+        VC 관점에서 PAWG 구조의 강점은 "글로벌 레퍼런스 2개 확보" 프레임입니다. 북미(PKU)와 중동(스테파노 라인)이 동시에 진행되면, Series A 피칭에서 "이미 두 대륙에 Advisory 네트워크"로 발표할 수 있습니다. 단, PKU와의 관계가 어드바이저 수준인지 공동개발 파트너인지 명확히 해야 합니다. 계약 언어가 다릅니다.
+      </div>
+    </div>
+
+    <div class="ibox teal">
+      <label>전략 포인트</label>
+      PAWG는 어드바이저리 기구이지 공동 R&D 계약 주체가 아님. 계약 언어 분리 필수: <strong>Advisory Agreement (낮은 구속력)</strong> vs Development Partnership (높은 구속력). 첫 단계는 Advisory로 시작.
+    </div>
+  </div>
+
+  <!-- SESSION 4: 오픈소스 + LinkedIn 플라이휠 -->
+  <div class="section-hd">
+    <span class="sec-num gold">SESSION 4</span>
+    <span class="sec-title">오픈소스 × LinkedIn 플라이휠 — 글로벌 암묵지 수집 엔진</span>
+  </div>
+  <div class="section-body">
+
+    <div class="speech">
+      <div class="badge b-mod">김<br>상윤</div>
+      <div class="bubble gold-b">
+        <strong>김상윤 (모더레이터 / 대표)</strong>
+        오픈소스 전략은 두 개 레이어입니다. P&ID Symbol Library와 Ontology Schema를 GitHub에 공개합니다. 이를 통해 전 세계 플랜트 엔지니어들이 기여하게 하고, LinkedIn 콘텐츠로 확산시켜 글로벌 암묵지를 SnapScale 온톨로지로 수렴시킵니다. 이것이 경쟁자가 복제할 수 없는 데이터 모트입니다.
+      </div>
+    </div>
+
+    <div class="fw-grid">
+      <div class="fw-card">
+        <div class="fw-step">① SEED</div>
+        <div class="fw-title">오픈소스 공개</div>
+        <div class="fw-desc">P&ID Symbol Library + Ontology Schema를 GitHub에 공개. 진입 장벽 없이 기여 가능한 구조</div>
+      </div>
+      <div class="fw-card">
+        <div class="fw-step">② ATTRACT</div>
+        <div class="fw-title">LinkedIn 플라이휠</div>
+        <div class="fw-desc">글로벌 플랜트 엔지니어 대상 LinkedIn 콘텐츠. "당신의 경험이 온톨로지가 됩니다" 메시지</div>
+      </div>
+      <div class="fw-card">
+        <div class="fw-step">③ CONVERT</div>
+        <div class="fw-title">전문가 기여 유입</div>
+        <div class="fw-desc">기여자 → PAWG Advisory 멤버 → 유료 검수 전문가로 전환. 커뮤니티가 공급망이 됨</div>
+      </div>
+    </div>
+
+    <div class="speech">
+      <div class="badge b-ext">김<br>민석</div>
+      <div class="bubble">
+        <strong>김민석 (Enterprise AI 가격정책)</strong>
+        Forbes 아티클의 핵심은 "데이터 모트가 있는 AI 플랫폼은 플랫폼 피 정당화가 쉽다"입니다. 오픈소스로 온톨로지를 키우되, 실제 AutoFlow 엔진은 proprietary로 유지하는 구조가 맞습니다. 오픈소스는 "기여 생태계"이고 유료 제품은 "실행 엔진"입니다. 이 분리가 무너지면 수익 모델이 흔들립니다.
+      </div>
+    </div>
+
+    <div class="speech">
+      <div class="badge b-fd">오<br>태준</div>
+      <div class="bubble">
+        <strong>오태준 (연쇄창업가)</strong>
+        제 두 번째 회사에서 오픈소스 커뮤니티를 세일즈 채널로 활용했습니다. LinkedIn 팔로워 1,000명 이상의 시니어 엔지니어 5~10명을 "글로벌 앰배서더"로 임명하고, 그들이 콘텐츠를 만들게 하는 게 직접 포스팅보다 10배 빠릅니다. PKU 파트너가 북미 앰배서더 1호가 될 수 있습니다.
+      </div>
+    </div>
+
+    <div class="ibox purple">
+      <label>경쟁 우위 포인트</label>
+      오픈소스 Schema + 커뮤니티 기여 → <strong>지속 성장하는 온톨로지 데이터셋</strong>. AVEVA·Hexagon이 복제하려면 동일한 커뮤니티 에너지가 필요 — 기존 기업 문화로는 불가능.
+    </div>
+
+    <table>
+      <tr>
+        <th>오픈소스 공개 대상</th>
+        <th>공개 방식</th>
+        <th>기대 효과</th>
+        <th>리스크</th>
+      </tr>
+      <tr>
+        <td><strong>P&ID Symbol Library</strong></td>
+        <td>GitHub MIT License</td>
+        <td class="hi">SEO + 커뮤니티 기여</td>
+        <td>경쟁사 무임승차</td>
+      </tr>
+      <tr>
+        <td><strong>Ontology Schema</strong></td>
+        <td>GitHub Apache 2.0</td>
+        <td class="hi">글로벌 전문가 기여</td>
+        <td>노드 품질 관리 필요</td>
+      </tr>
+      <tr>
+        <td><strong>AutoFlow 엔진</strong></td>
+        <td>Proprietary (비공개)</td>
+        <td class="hi">수익 모델 보호</td>
+        <td>—</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- VERDICT -->
+  <div class="verdict">
+    <h3>패널 합의 사항 (VERDICT)</h3>
+    <div class="v-row"><span class="v-num">1</span><span class="v-text">AutoFlow 838 선별은 <em>Domain × Stage × Problem Type 3-way 스코어 모델</em>로 정당화. 단순 cutoff 아님.</span></div>
+    <div class="v-row"><span class="v-num">2</span><span class="v-text">99% 정확도는 <em>AI 초안 + 전문가 검수 스프린트(1주/30~50노드)</em> 해커톤 모델로 달성. 스프린트 기록 = IR 자산.</span></div>
+    <div class="v-row"><span class="v-num">3</span><span class="v-text">PAWG 3거점(한국·북미·중동) — 첫 계약은 <em>Advisory Agreement</em>로 시작. Development Partnership은 2단계.</span></div>
+    <div class="v-row"><span class="v-num">4</span><span class="v-text">오픈소스(Schema+Library) = 커뮤니티 생태계 / AutoFlow 엔진 = Proprietary. 이 분리가 수익 모델 보호의 핵심.</span></div>
+    <div class="v-row"><span class="v-num">5</span><span class="v-text">LinkedIn 글로벌 앰배서더 전략: <em>PKU 파트너를 북미 1호 앰배서더</em>로 임명. 직접 포스팅 대비 10배 확산 효과.</span></div>
+    <div class="v-row"><span class="v-num">6</span><span class="v-text">05.12 미팅 2건이 전략 실행의 게이트: 장영기(Chief Ontology Advisor 제안) + 스테파노(Saudi Aramco 콘플릭트 확인).</span></div>
+  </div>
+
+  <!-- 3-1-1 SUMMARY -->
+  <div class="summary-311">
+    <h3>3-1-1 요약 — 박규호 → 김상윤 대표 전달용</h3>
+    <div class="s-conclusion">
+      결론: SnapScale은 온톨로지 데이터 모트(838 노드)+ 해커톤 검수 프로세스(99% 정확도) + 글로벌 PAWG 네트워크(3거점)의 조합으로 경쟁자가 복제 불가능한 구조를 만들고 있습니다.
+    </div>
+    <div class="s-ground">
+      <div class="s-ground-title">근거 3가지</div>
+      <div class="s-ground-item"><span class="s-num">①</span>838 노드는 7,415 인화공 스레드에서 Domain×Stage×ProblemType 3-way 스코어로 선별된 고밀도 온톨로지 씨드 — 경쟁사가 즉시 복제할 수 없는 기초 자산</div>
+      <div class="s-ground-item"><span class="s-num">②</span>99% 정확도 해커톤 모델은 AI 초안 + 전문가 검수의 구조적 결합 — 스프린트 기록 자체가 Series A IR 내러티브 자산</div>
+      <div class="s-ground-item"><span class="s-num">③</span>PAWG(장영기+PKU+스테파노) + 오픈소스 LinkedIn 플라이휠 = 지속 성장하는 글로벌 데이터 수집 엔진 — 단일 B2B SaaS가 아닌 플랫폼 비즈니스로의 전환 가속</div>
+    </div>
+    <div class="s-action">
+      <div class="s-action-label">다음 액션 1개</div>
+      <strong>2026.05.12까지</strong> — 장영기 미팅에서 Chief Ontology Advisor 역할 제안 + 스테파노 미팅에서 Saudi Aramco 콘플릭트 체크 완료. 두 미팅 결과가 PAWG 공식화 및 북미 PKU MOU 초안 착수의 선결 조건.
+    </div>
+  </div>
+
+  <!-- ACTION TABLE -->
+  <div class="section-hd">
+    <span class="sec-num">ACTION</span>
+    <span class="sec-title">즉시 실행 액션 테이블</span>
+  </div>
+  <div class="section-body">
+    <table class="action-table">
+      <tr>
+        <th>과제</th>
+        <th>담당</th>
+        <th>기한</th>
+        <th>우선순위</th>
+      </tr>
+      <tr>
+        <td>장영기 선생님 Chief Ontology Advisor 역할 제안 + 수락 여부 확인</td>
+        <td>김상윤 / 박규호</td>
+        <td>2026.05.12</td>
+        <td><span class="tag-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td>스테파노 Saudi Aramco 콘플릭트 체크 — PAWG 참여 가능 여부 확인</td>
+        <td>김상윤</td>
+        <td>2026.05.12</td>
+        <td><span class="tag-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td>PKU(휴스턴) Advisory Agreement 초안 작성</td>
+        <td>박규호</td>
+        <td>2026.05.19</td>
+        <td><span class="tag-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td>AutoFlow 838 노드 스프린트 계획 수립 (1차 스프린트: 노드 클래스 선정)</td>
+        <td>신규팀(박규호)</td>
+        <td>2026.05.16</td>
+        <td><span class="tag-high">HIGH</span></td>
+      </tr>
+      <tr>
+        <td>GitHub 오픈소스 레포 준비 (P&ID Symbol Library + Ontology Schema)</td>
+        <td>개발팀</td>
+        <td>2026.05.23</td>
+        <td><span class="tag-med">MED</span></td>
+      </tr>
+      <tr>
+        <td>LinkedIn 글로벌 앰배서더 후보 5명 리스트업 (인화공+북미 엔지니어링 커뮤니티)</td>
+        <td>박규호</td>
+        <td>2026.05.19</td>
+        <td><span class="tag-med">MED</span></td>
+      </tr>
+      <tr>
+        <td>노드 클래스별 정확도 트래킹 보드 설계 (VC 제안 — Series A 내러티브용)</td>
+        <td>개발팀 + 박규호</td>
+        <td>2026.05.23</td>
+        <td><span class="tag-med">MED</span></td>
+      </tr>
+      <tr>
+        <td>스테파노 Q&A 5,000개 JSON 2차 처리 — 중동 특화 노드 추출</td>
+        <td>신규팀</td>
+        <td>2026.05.30</td>
+        <td><span class="tag-low">LOW</span></td>
+      </tr>
+    </table>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  <strong>Confidential &amp; Proprietary | SnapScale Internal Use Only</strong><br/>
+  근거 자료: 인화공 Q&A 7,415스레드(스테파노 원본) · ACCE 실측 데이터 · OPEC WOO 2025 · Forbes Outcome-based Pricing 2026.01 · Monetizely PoC Pricing<br/>
+  참고 자료 경로: /Users/visionschool/Documents/02 CELab/00. 창업 40s/00. 문건 파일 관리/02. BM & Pricing
+  <div class="ver">Version 1.0 · 2026.05.10 · 김상윤 대표 방향성 통합 분석 (4대 전략: 838 온톨로지 / 99% 해커톤 / PAWG / 오픈소스 플라이휠)</div>
+</footer>
+</body>
+</html>
