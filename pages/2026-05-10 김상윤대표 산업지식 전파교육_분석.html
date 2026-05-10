@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SnapScale 화공플랜트 AI 설계 자동화 세미나 분석</title>
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy2: #1a2d45;
+  --gold: #c9a84c;
+  --gold2: #e8c96a;
+  --text: #e8edf2;
+  --muted: #8a9bb0;
+  --card-bg: #162030;
+  --card-border: #243450;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  line-height: 1.7;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,27,42,0.97);
+  border-bottom: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+  padding: 0 1.5rem;
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0.75rem 0;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-logo {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gold);
+  white-space: nowrap;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+nav a:hover {
+  background: var(--card-bg);
+  color: var(--gold2);
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a2d45 40%, #162030 70%, #0d1b2a 100%);
+  padding: 5rem 1.5rem 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 20%, rgba(201,168,76,0.07) 0%, transparent 50%);
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold2);
+  font-size: 0.75rem;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.1em;
+}
+.hero h1 {
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  position: relative;
+  line-height: 1.3;
+}
+.hero h1 span { color: var(--gold2); }
+.hero-sub {
+  color: var(--muted);
+  font-size: 1rem;
+  margin-bottom: 3rem;
+  position: relative;
+}
+.kpi-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  position: relative;
+}
+.kpi-card {
+  background: rgba(22,32,48,0.8);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  min-width: 160px;
+  backdrop-filter: blur(10px);
+}
+.kpi-card .kpi-num {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--gold2);
+  display: block;
+  line-height: 1;
+}
+.kpi-card .kpi-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+  display: block;
+}
+
+/* LAYOUT */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+section { padding: 4rem 0; }
+section + section { border-top: 1px solid var(--card-border); }
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.section-desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+/* PROFILE */
+.profile-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  max-width: 700px;
+}
+.profile-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--navy2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+.profile-name { font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+.profile-org { font-size: 0.85rem; color: var(--gold2); margin-bottom: 0.6rem; }
+.profile-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag {
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.25);
+  color: var(--gold2);
+  font-size: 0.72rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+}
+
+.profiles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 1.5rem; }
+
+/* SESSION CARDS */
+.session-timeline { position: relative; padding-left: 2rem; }
+.session-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+.session-item { position: relative; margin-bottom: 2rem; }
+.session-dot {
+  position: absolute;
+  left: -1.65rem;
+  top: 0.5rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--navy);
+}
+.session-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+.session-card:hover { border-color: rgba(201,168,76,0.4); }
+.session-num {
+  font-size: 0.7rem;
+  color: var(--gold2);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.4rem;
+}
+.session-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.75rem; }
+.session-card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.8rem; }
+.detail-list { list-style: none; padding: 0; }
+.detail-list li {
+  font-size: 0.82rem;
+  color: var(--text);
+  padding: 0.3rem 0;
+  padding-left: 1rem;
+  position: relative;
+  border-bottom: 1px solid rgba(36,52,80,0.5);
+}
+.detail-list li:last-child { border-bottom: none; }
+.detail-list li::before { content: '▸'; color: var(--gold); position: absolute; left: 0; }
+
+/* INSIGHT CARDS */
+.insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.2rem; }
+.insight-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.insight-card:hover { transform: translateY(-3px); border-color: rgba(201,168,76,0.4); }
+.insight-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold2));
+}
+.insight-emoji { font-size: 1.8rem; margin-bottom: 0.75rem; display: block; }
+.insight-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--gold2); margin-bottom: 0.5rem; }
+.insight-card p { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+.insight-stat {
+  margin-top: 0.8rem;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.78rem;
+  color: var(--gold2);
+  font-weight: 600;
+}
+
+/* 3 COLUMN */
+.three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; }
+@media(max-width:768px) { .three-col { grid-template-columns: 1fr; } }
+.perspective-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+.perspective-card .p-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+.p-investor .p-label { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
+.p-vc .p-label { background: rgba(139,92,246,0.15); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.3); }
+.p-founder .p-label { background: rgba(34,197,94,0.15); color: #86efac; border: 1px solid rgba(34,197,94,0.3); }
+.perspective-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.75rem; }
+.perspective-list { list-style: none; padding: 0; }
+.perspective-list li {
+  font-size: 0.82rem;
+  color: var(--muted);
+  padding: 0.4rem 0;
+  padding-left: 1rem;
+  position: relative;
+  border-bottom: 1px solid rgba(36,52,80,0.4);
+}
+.perspective-list li:last-child { border-bottom: none; }
+.perspective-list li::before { content: '→'; position: absolute; left: 0; }
+.p-investor .perspective-list li::before { color: #93c5fd; }
+.p-vc .perspective-list li::before { color: #c4b5fd; }
+.p-founder .perspective-list li::before { color: #86efac; }
+
+/* TABLE */
+.term-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.term-table th {
+  background: var(--navy2);
+  color: var(--gold2);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 2px solid var(--gold);
+}
+.term-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--card-border);
+  vertical-align: top;
+}
+.term-table tr:hover td { background: rgba(22,32,48,0.8); }
+.term-table td:first-child { font-weight: 700; color: var(--gold2); white-space: nowrap; }
+.term-table td:nth-child(2) { color: var(--text); }
+.term-table td:last-child { color: var(--muted); }
+.table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--card-border); }
+
+/* ACCORDION */
+.accordion-item {
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: var(--card-bg);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  transition: background 0.2s;
+}
+.accordion-header:hover { background: rgba(26,45,69,0.8); }
+.accordion-arrow { color: var(--gold); font-size: 1rem; transition: transform 0.3s; }
+.accordion-body {
+  display: none;
+  padding: 1rem 1.25rem;
+  background: rgba(13,27,42,0.5);
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.accordion-item.open .accordion-body { display: block; }
+.accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+
+/* HIGHLIGHT BOX */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.04));
+  border: 1px solid rgba(201,168,76,0.3);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.highlight-box .h-title { font-weight: 700; color: var(--gold2); font-size: 0.9rem; margin-bottom: 0.4rem; }
+.highlight-box p { font-size: 0.85rem; color: var(--text); }
+
+/* CHECKLIST */
+.checklist { list-style: none; padding: 0; }
+.checklist-section { margin-bottom: 2rem; }
+.checklist-section-title { font-size: 0.9rem; font-weight: 700; color: var(--gold2); margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 3px solid var(--gold); }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  transition: border-color 0.2s;
+}
+.checklist li:hover { border-color: rgba(201,168,76,0.3); }
+.check-icon {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--gold);
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  color: var(--gold);
+}
+
+/* PROCESS FLOW */
+.process-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0; }
+.process-step {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+}
+.process-arrow { color: var(--gold); font-size: 1.2rem; }
+
+/* TECH STACK */
+.tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; }
+.tech-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+}
+.tech-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+.tech-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--gold2); margin-bottom: 0.3rem; }
+.tech-card p { font-size: 0.78rem; color: var(--muted); }
+
+/* FLOW DIAGRAM */
+.flow-row { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.flow-node {
+  flex: 1;
+  min-width: 140px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+}
+.flow-node.active { border-color: var(--gold); color: var(--gold2); }
+
+/* FOOTER */
+footer {
+  background: var(--navy2);
+  border-top: 1px solid var(--card-border);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+@media(max-width:768px) {
+  .profile-card { flex-direction: column; }
+  .kpi-card { min-width: 130px; padding: 1.2rem 1.5rem; }
+  .kpi-card .kpi-num { font-size: 1.8rem; }
+  section { padding: 2.5rem 0; }
+}
+</style>
+</head>
+<body>
+<div id="celab-home-btn" style="position:fixed;top:14px;right:14px;z-index:10000;">
+  <a href="https://celab-kor.github.io/celab-knowledge-base/" target="_blank" style="display:flex;align-items:center;gap:7px;
+            background:rgba(13,27,42,0.88);color:#c9a84c;
+            padding:7px 13px;border-radius:22px;
+            font-size:13px;font-weight:700;text-decoration:none;
+            box-shadow:0 2px 10px rgba(0,0,0,0.35);
+            border:1px solid rgba(201,168,76,0.35);
+            backdrop-filter:blur(6px);
+            transition:background 0.2s;" onmouseover="this.style.background='rgba(13,27,42,1)'" onmouseout="this.style.background='rgba(13,27,42,0.88)'" title="CELab 지식창고 홈으로">
+    <svg width="15" height="15" viewBox="0 0 20 20" fill="#c9a84c" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z"></path>
+    </svg>
+    CELab 지식창고
+  </a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">🏭 SnapScale 세미나</span>
+    <a href="#speakers">강사</a>
+    <a href="#sessions">세션</a>
+    <a href="#epc-flow">EPC 프로세스</a>
+    <a href="#deliverables">성과품</a>
+    <a href="#insights">인사이트</a>
+    <a href="#perspectives">전문가 관점</a>
+    <a href="#terms">용어</a>
+    <a href="#tech">핵심 기술</a>
+    <a href="#checklist">체크리스트</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🎙️ 세미나 심층 분석 리포트</div>
+  <h1>화공플랜트 EPC 산업 이해와<br><span>AI 설계 자동화 전략</span></h1>
+  <p class="hero-sub">SnapScale 투자자 대상 기술 세미나 | EPC 업무 프로세스 × AI 온톨로지 자동화</p>
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <span class="kpi-num">28</span>
+      <span class="kpi-label">핵심 개념 수</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-num">4</span>
+      <span class="kpi-label">주요 세션 수</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-num">12</span>
+      <span class="kpi-label">핵심 인사이트</span>
+    </div>
+  </div>
+</div>
+
+<!-- SPEAKERS -->
+<section id="speakers">
+  <div class="container">
+    <div class="section-title">👤 강사 프로필</div>
+    <p class="section-desc">본 세미나의 발표자 및 전문 패널 구성 — 강의 진행: 김상윤 대표 / 질의응답 진행: 박규호 부장(아스펜테크) / 추가 질의: 참석자 3인</p>
+    <div class="profiles-grid">
+      <div class="profile-card">
+        <div class="profile-avatar">🧑‍💼</div>
+        <div>
+          <div class="profile-name">김상윤 대표</div>
+          <div class="profile-org">SnapScale (스냅스케일)</div>
+          <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.8rem;">강의 진행 담당. 화공플랜트 EPC 업무 프로세스, AI 자동화 전략, 제품 철학 전반 발표</div>
+          <div class="profile-tags">
+            <span class="tag">강의 진행</span>
+            <span class="tag">AI 자동화</span>
+            <span class="tag">온톨로지</span>
+            <span class="tag">EPC 설계</span>
+            <span class="tag">프로덕트 전략</span>
+          </div>
+        </div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-avatar">⚙️</div>
+        <div>
+          <div class="profile-name">박규호 부장</div>
+          <div class="profile-org">AspenTech (아스펜테크)</div>
+          <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.8rem;">질의응답 진행 담당. 공정 시뮬레이션, 설계 소프트웨어 산업 구조, 기존 솔루션 한계 분석</div>
+          <div class="profile-tags">
+            <span class="tag">질의응답 진행</span>
+            <span class="tag">공정설계 S/W</span>
+            <span class="tag">AspenTech</span>
+            <span class="tag">공정 시뮬레이션</span>
+          </div>
+        </div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-avatar">🙋</div>
+        <div>
+          <div class="profile-name">참석자 질의진 (3인)</div>
+          <div class="profile-org">세미나 참석 투자자 및 전문가</div>
+          <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.8rem;">세미나 중 추가 질의를 통해 EPC 비즈니스 모델, 기술 검증, 시장 가능성 등 심층 논의에 참여</div>
+          <div class="profile-tags">
+            <span class="tag">추가 질의</span>
+            <span class="tag">투자자</span>
+            <span class="tag">시장 검증</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SESSIONS -->
+<section id="sessions">
+  <div class="container">
+    <div class="section-title">📚 세션별 핵심 내용</div>
+    <p class="section-desc">세미나 진행 순서에 따른 주제별 심층 분석</p>
+    <div class="session-timeline">
+
+      <div class="session-item">
+        <div class="session-dot"></div>
+        <div class="session-card">
+          <div class="session-num">SESSION 01</div>
+          <h3>EPC 산업 구조와 KPI 이해</h3>
+          <p>화공플랜트 EPC(Engineering, Procurement, Construction) 사업의 기본 구조와 사업자가 최우선으로 추구하는 KPI(핵심 성과지표)를 설명한 세션.</p>
+          <ul class="detail-list">
+            <li>EPC사는 발주처로부터 제한된 예산과 기간을 부여받아 경쟁 입찰(Competitive Bidding)로 수주 → 구조적으로 시간·비용 항상 부족</li>
+            <li>EPC의 제1 KPI = 내부 맨아워(Man-Hour) 절감 — 설계부터 시공까지 전 단계에 걸쳐 적용</li>
+            <li>발주처 → EPC → 벤더(장비/배관 제조) → 시공업체 순의 수직적 외주 체계</li>
+            <li>SnapScale이 공략하는 핵심 페인 포인트: 설계 단계에서의 맨아워 낭비 (전체 프로젝트 비용의 5~8%)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-dot"></div>
+        <div class="session-card">
+          <div class="session-num">SESSION 02</div>
+          <h3>EPC 수주 프로세스 상세 해부</h3>
+          <p>발주처의 ITB 발행부터 최종 계약 체결까지, 실무 수주 단계의 흐름과 각 단계별 리스크를 Q&amp;A 형식으로 심층 논의한 세션.</p>
+          <ul class="detail-list">
+            <li>ITB(Invitation to Bidding) 수신 → 1주일 내 프로포절(견적) 제출 → 우선협상대상자 선정 → 최종 계약</li>
+            <li>초기 견적 기준: 라이선서가 제공하는 FEED(기본 설계)의 30~50% 마진 내 금액에서 각 EPC사가 최대한 타이트하게 경쟁</li>
+            <li>영업이익률 3~5% 구조에서 한 건의 설계 오류가 전체 마진을 날릴 수 있는 구조</li>
+            <li>우선협상대상자 이후에도 계약 취소 사례 다수 — 요구사항 미반영, 금액 협상 결렬 등</li>
+            <li>리스크 관리: PME 각 부서별 안전마진 → 임원 안전마진 → 컨틴전시(Contingency) 이중·삼중 구조</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-dot"></div>
+        <div class="session-card">
+          <div class="session-num">SESSION 03</div>
+          <h3>설계 딜리버러블(성과품) 체계와 화공 장비 구성</h3>
+          <p>EPC 설계 업무의 핵심 산출물인 딜리버러블들의 종류와 역할, 그리고 화공플랜트를 구성하는 주요 공정 장비들을 체계적으로 설명한 세션.</p>
+          <ul class="detail-list">
+            <li>BED(기본 설계 근거) → BFD(블록 플로우 다이어그램) → PFD(공정 흐름도) + HMB(열/물질 수지) → P&amp;ID(배관계장도) → 아이소메트릭 → 3D 모델링 순서로 설계 전개</li>
+            <li>P&amp;ID가 모든 부서의 설계 기준점 — 공정·배관·장비·계장·전기 전 팀이 P&amp;ID를 중심으로 작업</li>
+            <li>리스트(Line List, Equipment List, Instrument List) 작성이 가장 반복적 수작업 — P&amp;ID 100장당 배관 1,000개 이상 수동 작성</li>
+            <li>주요 장비: 펌프(압력 유지), 밸브(흐름 차단), 열교환기(온도 조절), 리액터(화학반응), 베셀/타워(유체 처리), 컴프레서(가스 압축)</li>
+            <li>HAZOP 리포트: 폭발·화재 시나리오별 산업 표준 기반 위험성 평가 문서</li>
+            <li>심볼 레전드: 프로젝트마다 커스텀 팔레트 사용 — AI 인식의 핵심 난관</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="session-item">
+        <div class="session-dot"></div>
+        <div class="session-card">
+          <div class="session-num">SESSION 04</div>
+          <h3>SnapScale 핵심 기술 아키텍처와 제품 철학</h3>
+          <p>SnapScale이 개발 중인 AI 자동화 툴의 기술 스택, 동작 원리, 그리고 엔지니어 맨아워 절감을 핵심 KPI로 설정한 제품 철학을 공개한 세션.</p>
+          <ul class="detail-list">
+            <li>DexPI 온톨로지 개량 버전: 고정된 어트리뷰트를 동적으로 변환, 프로젝트별 커스터마이징 대응</li>
+            <li>벡터 기반 P&amp;ID 인식 → 최종 픽셀/딥러닝 비전 모델 보조 방식으로 발전 예정</li>
+            <li>Google ADK 활용: LLM에 함수 툴셋 제공 → 결정론적 동작 + 동작 추적 가능성 확보</li>
+            <li>Self-Feedback Loop + Human-in-the-Loop: AI 자동화 정확도의 하방 보장 + 엔지니어 최소 개입으로 정확도 업사이드 확보</li>
+            <li>최우선 KPI = 맨아워 절감 (정확도는 세컨더리 지표) — "100시간을 50시간으로"가 핵심</li>
+            <li>설계 비용에서 라이선스 피로 4%까지 수익화 가능성 제시</li>
+            <li>고객 이해(도메인 지식)의 지속적 업데이트를 팀 핵심 역량으로 설정</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EPC FLOW -->
+<section id="epc-flow">
+  <div class="container">
+    <div class="section-title">🔄 EPC 전체 프로세스 흐름</div>
+    <p class="section-desc">발주처 의뢰부터 공장 운영까지 전체 밸류체인</p>
+    
+    <div class="highlight-box">
+      <div class="h-title">💡 EPC = Engineering + Procurement + Construction</div>
+      <p>라이선서(기술 원천) → 발주처(오너) → EPC사(설계·조달·시공 통합관리) → 벤더(장비/자재) → 시공업체(현장 시공) 순의 계층 구조. EPC사는 직접 제작·시공 않고 전체를 관리(Management Contractor) 역할.</p>
+    </div>
+
+    <div class="process-flow">
+      <div class="process-step">🏢 라이선서<br>기본설계 제공</div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">📋 ITB 발행<br>(입찰 초청)</div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">📝 프로포절<br>1주 내 제출</div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">🏆 우선협상<br>대상자 선정</div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">✍️ 최종 계약<br>체결</div>
+    </div>
+    <div class="process-flow">
+      <div class="process-step">📐 상세 설계<br>(E)</div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">🔧 기자재 조달<br>(P)</div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">🏗️ 시공<br>(C)</div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">🧪 시운전<br>(선택 옵션)</div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">🏭 턴키 인도<br>→ O&amp;M</div>
+    </div>
+
+    <div style="margin-top:2rem;">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>📊 프로포절 산출 구조 — 마진의 마진 안전마진 체계</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          각 부서(설계팀, 조달팀, 시공팀) → 부사장 레벨 안전마진 추가 → 임원 레벨 컨틴전시 추가 → 최종 제출 금액. 이 중층 구조로 리스크를 흡수하나, 경쟁 입찰 특성상 너무 높은 금액은 수주 실패로 연결. 결국 <strong>엔지니어링 능력(설계 불확실성 조기 파악)</strong>이 마진의 핵심 결정 요인.
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>📁 딜리버러블(성과품) 검수 사이클</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          설계 전 기간에 걸쳐 약 3~4번의 대형 검수 사이클 진행. 각 사이클에서 발주처·라이선서·EPC 전 부서가 참여해 코멘트 발행 → 각 팀 반영 → 다음 사이클 검수. 이 과정에서 부서 간 핑퐁 수정이 반복되며 맨아워가 누적 소모.
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <span>⚠️ 펀치리스트(Punch List) — 이익을 갉아먹는 숨은 위험</span>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          현장 시공 중 발견되는 개별 오류 아이템. 설계·조달·시공·시운전·O&amp;M 전 단계가 연결되어 있어 하나의 펀치리스트가 연쇄적 영향을 미침. 영업이익 3~5%짜리 프로젝트에서 펀치리스트 누적이 전체 마진 소멸의 직접 원인이 됨.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section id="deliverables">
+  <div class="container">
+    <div class="section-title">📄 핵심 성과품(Deliverables) 체계</div>
+    <p class="section-desc">설계 단계에서 생성되는 주요 문서 및 도면의 역할 구조</p>
+    
+    <div class="insight-grid" style="margin-bottom:2rem;">
+      <div class="insight-card">
+        <span class="insight-emoji">📘</span>
+        <h3>BED (Basic Engineering Design Basis)</h3>
+        <p>전체 공장의 건설 전제조건 총망라. 건설 지역·기후, 원자재 사양, 목표 생산량, 라이선서·소프트웨어 스펙까지 초기 조건 전체를 정의.</p>
+        <div class="insight-stat">설계 시작점 기준 문서</div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-emoji">🔷</span>
+        <h3>BFD → PFD + HMB</h3>
+        <p>블록 수준에서 시작해 실제 공정 유닛 조합으로 상세화. HMB(열·물질 수지)가 PFD와 쌍을 이루어 각 스트림의 조성·온도·압력을 수치로 고정.</p>
+        <div class="insight-stat">물질/에너지 밸런스의 핵심</div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-emoji">⚡</span>
+        <h3>P&amp;ID (Piping &amp; Instrumentation Diagram)</h3>
+        <p>모든 설계의 중심 문서. 배관·계장·밸브·장비의 상세 연결을 표시. 전 부서(공정·배관·장비·계장·전기)가 이 도면을 기준으로 설계 진행.</p>
+        <div class="insight-stat">설계 업무의 표준 기준점</div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-emoji">📊</span>
+        <h3>각종 리스트 (Line/Equipment/Instrument)</h3>
+        <p>P&amp;ID에서 추출하는 배관·장비·계장 목록 엑셀. 현재까지도 수작업으로 작성. P&amp;ID 100장 기준 배관 1,000개+ 수동 입력 → 휴먼에러의 온상.</p>
+        <div class="insight-stat">SnapScale 1차 자동화 타깃</div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-emoji">📐</span>
+        <h3>아이소메트릭 + 하이드롤릭 시트</h3>
+        <p>2.5D 배관 도면으로 꺾임 횟수·길이를 산출해 압력 강하를 계산. 엑셀 매크로 기반 계산이나 값 입력 오류·매크로 오류 위험 상존.</p>
+        <div class="insight-stat">압력 계산 핵심 도구</div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-emoji">🛡️</span>
+        <h3>HAZOP 리포트 &amp; 데이터 시트</h3>
+        <p>폭발·화재 위험 시나리오를 산업 표준(한국/미국)에 따라 분석. 데이터 시트는 개별 장비의 두께·반지름·최대 온도압력 등 상세 스펙 문서.</p>
+        <div class="insight-stat">안전 검증의 핵심 근거</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section id="insights">
+  <div class="container">
+    <div class="section-title">💡 주요 개념 인사이트</div>
+    <p class="section-desc">세미나에서 도출된 핵심 비즈니스·기술 인사이트</p>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <span class="insight-emoji">⏱️</span>
+        <h3>설계 비용의 절반이 낭비</h3>
+        <p>전체 프로젝트 비용 중 설계가 차지하는 비중은 5~8%. 이 중 50% 이상이 수작업 반복·휴먼에러·핑퐁 수정으로 낭비. SnapScale의 직접 공략 타깃.</p>
+        <div class="insight-stat">설계 비용 절감 잠재 = 2~4% of 전체 프로젝트</div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-emoji">🎯</span>
+        <h3>KPI는 맨아워, 정확도는 세컨더리</h3>
+        <p>100시간 작업을 200시간으로 만드는 AI는 실패. 50시간으로 줄이는 게 목표. 정확도는 Human-in-the-Loop으로 지속 보강하는 구조로 접근.</p>
+        <div class="insight-stat">Primary KPI = Man-Hour 절감</div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-emoji">🔗</span>
+        <h3>온톨로지가 변경 전파의 핵심</h3>
+        <p>도면 100장의 정보를 단일 지식 체계로 묶으면, 하나 수정 시 연결된 모든 도면에 변경이 전파 가능. Git의 의존성 관리와 유사한 개념.</p>
+        <div class="insight-stat">동시성·의존성 문제 해결</div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-emoji">🛡️</span>
+        <h3>보험 성격의 제품 가치</h3>
+        <p>설계 오류 하나가 전체 마진을 날리는 구조에서, SnapScale은 단순 비용 절감을 넘어 컨틴전시 항목 자체를 줄여주는 보험 역할 수행 가능.</p>
+        <div class="insight-stat">리스크 헤징 + 비용 절감 이중 가치</div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-emoji">🧠</span>
+        <h3>도메인 지식 격차 = 최대 리스크</h3>
+        <p>20년 경험의 엔지니어가 보유한 암묵지를 AI 팀이 몇 개월 공부로 따라잡는 건 불가능. 고객(엔지니어)과의 지속적 협력이 제품의 실질적 경쟁력.</p>
+        <div class="insight-stat">고객 이해 지속 업데이트 필수</div>
+      </div>
+      <div class="insight-card">
+        <span class="insight-emoji">📊</span>
+        <h3>결정론적 AI 동작의 설계</h3>
+        <p>LLM에 제한된 툴셋만 제공(ADK) → 동작 완전 추적 가능. Self-Feedback으로 정확도 하방 고정 → Human-in-the-Loop으로 상방 확장. AI 신뢰성 아키텍처의 핵심.</p>
+        <div class="insight-stat">확률적 AI → 결정론적 동작으로</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSPECTIVES -->
+<section id="perspectives">
+  <div class="container">
+    <div class="section-title">🔍 전문가 관점 분석</div>
+    <p class="section-desc">투자자·VC·창업가 시각에서 본 SnapScale과 EPC AI 시장</p>
+    <div class="three-col">
+      <div class="perspective-card p-investor">
+        <span class="p-label">💼 투자자 시각</span>
+        <h3>시장 규모·수익 구조 분석</h3>
+        <ul class="perspective-list">
+          <li>글로벌 EPC 시장은 수조 원 단위 단건 프로젝트 — 설계 비용 절감의 절대값이 매우 큼</li>
+          <li>설계 비용(5~8%) × 낭비율(50%) = 프로젝트당 2.5~4% 절감 잠재로 ROI 명확</li>
+          <li>라이선스 피 4% 수익화 모델 제시 — SaaS 구독보다 프로젝트 단위 계약이 현실적</li>
+          <li>현재 실증 사례 부재가 최대 리스크 — 파일럿 계약의 성공 여부가 밸류에이션 결정</li>
+          <li>개런티 모델 불가 — 인과 관계 입증의 어려움, 수익화 구조 고도화 필요</li>
+          <li>영업이익률 3~5% 산업에서 AI 도입 효과의 정량화 방법론 개발 필수</li>
+        </ul>
+      </div>
+      <div class="perspective-card p-vc">
+        <span class="p-label">🚀 VC 시각</span>
+        <h3>성장성·경쟁 해자 분석</h3>
+        <ul class="perspective-list">
+          <li>AspenTech 등 기존 소프트웨어는 툴 제공만 — 컨설팅·개런티 영역 공백이 SnapScale 기회</li>
+          <li>도메인 지식 + AI 기술의 결합이 진입장벽 — 복제하기 어려운 지식 자산</li>
+          <li>온톨로지 기반 지식 체계가 누적될수록 네트워크 효과 발생 — 데이터 해자</li>
+          <li>설계 → 조달 → 시공 순차적 확장 가능한 플랫폼 구조 잠재</li>
+          <li>실증 사례 확보 후 글로벌 EPC 메이저(현대건설, 삼성엔지니어링 등) 공략 시나리오 유효</li>
+          <li>Human-in-the-Loop 구조가 오히려 신뢰성 있는 엔터프라이즈 도입 명분 제공</li>
+        </ul>
+      </div>
+      <div class="perspective-card p-founder">
+        <span class="p-label">🛠️ 창업가 시각</span>
+        <h3>실행 과제·제품 전략</h3>
+        <ul class="perspective-list">
+          <li>1차 타깃: 설계 리스트 자동화(Line List, Equipment List) — 즉시 현금화 가능한 페인 포인트</li>
+          <li>파일럿 계약사와 실증 → 정량적 맨아워 절감 데이터 확보가 다음 영업의 핵심 자산</li>
+          <li>AI 작업 과정의 시각화(사고 과정 표시, 변경 하이라이팅)가 엔드유저 신뢰 확보의 핵심</li>
+          <li>성능·동시성 이슈 사전 설계 필수 — 실제 계약 후 O&amp;M 단계에서 다수 이슈 발생 예상</li>
+          <li>고객 엔지니어를 파트너로 만드는 태도 — "모르면 물어보는" 스탠스가 도메인 진입 전략</li>
+          <li>DexPI 온톨로지 개량판 + Google ADK + 벡터 P&amp;ID 인식 기술 스택의 조기 안정화 필요</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TERMS -->
+<section id="terms">
+  <div class="container">
+    <div class="section-title">📖 핵심 용어 정리</div>
+    <p class="section-desc">세미나에서 언급된 주요 전문 용어와 약어 해설</p>
+    <div class="table-wrap">
+      <table class="term-table">
+        <thead>
+          <tr>
+            <th>약어/용어</th>
+            <th>풀네임 / 정의</th>
+            <th>맥락 설명</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>EPC</td>
+            <td>Engineering, Procurement, Construction</td>
+            <td>설계·조달·시공을 통합 수행하는 플랜트 건설 사업자</td>
+          </tr>
+          <tr>
+            <td>ITB</td>
+            <td>Invitation to Bidding</td>
+            <td>발주처가 EPC사에게 입찰 참여를 초청하는 문서. 기본 설계 포함</td>
+          </tr>
+          <tr>
+            <td>FEED</td>
+            <td>Front-End Engineering Design</td>
+            <td>라이선서가 제공하는 기본 설계 단계. 30~50% 마진의 초기 견적 기준</td>
+          </tr>
+          <tr>
+            <td>P&amp;ID</td>
+            <td>Piping and Instrumentation Diagram</td>
+            <td>배관·계장 전체를 표시한 설계의 중심 문서. 모든 부서의 기준점</td>
+          </tr>
+          <tr>
+            <td>PFD</td>
+            <td>Process Flow Diagram</td>
+            <td>공정 흐름도. HMB(열/물질 수지)와 항상 쌍을 이룸</td>
+          </tr>
+          <tr>
+            <td>HMB</td>
+            <td>Heat and Mass Balance</td>
+            <td>각 스트림별 온도·압력·성분 조성의 수지(입출력 균형) 테이블</td>
+          </tr>
+          <tr>
+            <td>BFD</td>
+            <td>Block Flow Diagram</td>
+            <td>공정을 블록으로 단순화한 최상위 다이어그램. 설계 시작점</td>
+          </tr>
+          <tr>
+            <td>BED</td>
+            <td>Basic Engineering Design Basis</td>
+            <td>프로젝트 전체 전제 조건 총망라 문서 (지역·기후·생산목표 등)</td>
+          </tr>
+          <tr>
+            <td>딜리버러블</td>
+            <td>Deliverables (성과품)</td>
+            <td>ITB에 명시된 제출 의무 문서·도면 목록 전체</td>
+          </tr>
+          <tr>
+            <td>펀치리스트</td>
+            <td>Punch List</td>
+            <td>현장 검수에서 발견된 개별 오류·보완 항목. 마진 침식의 직접 원인</td>
+          </tr>
+          <tr>
+            <td>컨틴전시</td>
+            <td>Contingency</td>
+            <td>예비 비용. 설계 오류·리스크 흡수용으로 각 단계에서 마진 추가</td>
+          </tr>
+          <tr>
+            <td>HAZOP</td>
+            <td>Hazard and Operability Study</td>
+            <td>폭발·화재 등 위험 시나리오 분석 리포트. 산업 표준 기반</td>
+          </tr>
+          <tr>
+            <td>DexPI</td>
+            <td>Data Exchange in Process Industry</td>
+            <td>화공 플랜트용 온톨로지 표준. SnapScale이 개량하여 동적 구조로 활용</td>
+          </tr>
+          <tr>
+            <td>ADK</td>
+            <td>Agent Development Kit (Google)</td>
+            <td>LLM에 함수 툴셋을 제공해 에이전틱 동작을 구현하는 구글 프레임워크</td>
+          </tr>
+          <tr>
+            <td>SHACL/SPARQL</td>
+            <td>Shape Constraint Language / SPARQL Protocol</td>
+            <td>온톨로지 검증·쿼리 언어. SQL에 대응하는 지식그래프용 도구</td>
+          </tr>
+          <tr>
+            <td>맨아워</td>
+            <td>Man-Hour</td>
+            <td>1명의 엔지니어가 1시간 투입하는 작업량 단위. SnapScale의 1차 KPI</td>
+          </tr>
+          <tr>
+            <td>아이소메트릭</td>
+            <td>Isometric Drawing</td>
+            <td>배관 꺾임을 2.5D로 표현한 도면. 압력 강하 계산의 기반</td>
+          </tr>
+          <tr>
+            <td>Human-in-the-Loop</td>
+            <td>—</td>
+            <td>AI가 불확실한 구간에 엔지니어가 직접 개입해 결과를 보정하는 구조</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="tech">
+  <div class="container">
+    <div class="section-title">⚙️ SnapScale 핵심 기술 스택</div>
+    <p class="section-desc">화공플랜트 설계 자동화를 위한 기술 아키텍처</p>
+    <div class="tech-grid" style="margin-bottom:2rem;">
+      <div class="tech-card">
+        <span class="tech-icon">🧬</span>
+        <h4>DexPI 온톨로지 (개량판)</h4>
+        <p>프로젝트별 동적 어트리뷰트 지원. 고정된 표준 구조의 한계를 극복한 커스텀 지식 체계</p>
+      </div>
+      <div class="tech-card">
+        <span class="tech-icon">👁️</span>
+        <h4>벡터 기반 P&amp;ID 인식</h4>
+        <p>PDF/CAD의 직선·원·곡선 조합을 분석해 심볼 자동 인식. 최종 딥러닝 비전 모델로 고도화 예정</p>
+      </div>
+      <div class="tech-card">
+        <span class="tech-icon">🤖</span>
+        <h4>Google ADK (에이전트)</h4>
+        <p>함수 툴셋 제공 → LLM의 결정론적 동작 구현. 시퀀스·루프·조건식 기반 에이전트 설계 가능</p>
+      </div>
+      <div class="tech-card">
+        <span class="tech-icon">🔄</span>
+        <h4>Self-Feedback Loop</h4>
+        <p>인식 오류 자동 감지 → 재인식 반복. 정확도 하방을 고정하고 예외 케이스 자율 처리</p>
+      </div>
+      <div class="tech-card">
+        <span class="tech-icon">👤</span>
+        <h4>Human-in-the-Loop UX</h4>
+        <p>AI 수정 사항 하이라이팅 + 수락/거절 버튼. 엔지니어 인지 부하 최소화로 개입 효율 극대화</p>
+      </div>
+      <div class="tech-card">
+        <span class="tech-icon">🔍</span>
+        <h4>SHACL + SPARQL</h4>
+        <p>온톨로지 인스턴스 검증·쿼리. 자연어 조건을 그래프 수준 검증 규칙으로 자동 변환</p>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="h-title">🖥️ 실제 데모 구조 (투자자 시연 버전)</div>
+      <p>로그인 → 공유 폴더 연동 → P&amp;ID 도면 업로드 → 심볼 레전드 팔레트 매핑 → 온톨로지 자동 구조화 → Line/Equipment/Instrument List 자동 생성(CSV) → 미인식 심볼 그레이 박스 하이라이팅 → 아이솔레이션 필로소피 대조 검증 → 오류 보라색 표시. VSCode 유사 3분할 UI(파일트리 | 도면 뷰어 | AI 채팅).</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist">
+  <div class="container">
+    <div class="section-title">✅ 실행 체크리스트</div>
+    <p class="section-desc">세미나 내용을 기반으로 한 SnapScale 팀 및 투자자별 실행 과제</p>
+
+    <div class="checklist-section">
+      <div class="checklist-section-title">🏗️ SnapScale 제품팀 — 단기 실행 과제</div>
+      <ul class="checklist">
+        <li><span class="check-icon">✓</span>P&amp;ID 심볼 인식 정확도 측정 지표(매트릭) 수립 및 현재 수준 측정</li>
+        <li><span class="check-icon">✓</span>미인식 심볼 그레이 박스 하이라이팅 기능 완성 및 UX 검증</li>
+        <li><span class="check-icon">✓</span>Line List·Equipment List·Instrument List 자동 생성 속도 vs 수작업 시간 비교 실증 데이터 확보</li>
+        <li><span class="check-icon">✓</span>Human-in-the-Loop UI에서 엔지니어 수락/거절 인터랙션 시간 측정 및 최적화</li>
+        <li><span class="check-icon">✓</span>Google ADK 기반 에이전트 동작 추적 로그 UI 구현 (신뢰성 시각화)</li>
+        <li><span class="check-icon">✓</span>DexPI 온톨로지 동적 어트리뷰트 구조 파일럿 프로젝트 적용 및 검증</li>
+      </ul>
+    </div>
+
+    <div class="checklist-section">
+      <div class="checklist-section-title">📈 SnapScale 비즈니스팀 — 영업·파트너십 과제</div>
+      <ul class="checklist">
+        <li><span class="check-icon">✓</span>파일럿 계약사와 공동으로 맨아워 절감 정량 데이터 수집 프로토콜 수립</li>
+        <li><span class="check-icon">✓</span>설계 오류 → 컨틴전시 소진 → 마진 손실 연결 고리를 케이스 스터디로 문서화</li>
+        <li><span class="check-icon">✓</span>AspenTech 등 기존 소프트웨어와의 차별점 1페이지 비교표 작성</li>
+        <li><span class="check-icon">✓</span>라이선스 피 4% 수익화 모델의 계약 구조(Milestone, Usage-based 등) 옵션 설계</li>
+        <li><span class="check-icon">✓</span>외부 시니어 자문단과의 정기 도메인 지식 업데이트 세션 일정화</li>
+      </ul>
+    </div>
+
+    <div class="checklist-section">
+      <div class="checklist-section-title">💡 투자자 — Due Diligence 체크포인트</div>
+      <ul class="checklist">
+        <li><span class="check-icon">✓</span>파일럿 계약사의 실제 맨아워 절감률 데이터 독립 검증</li>
+        <li><span class="check-icon">✓</span>DexPI 온톨로지 기반 의존성 관리 기능의 기술적 완성도 확인</li>
+        <li><span class="check-icon">✓</span>Self-Feedback Loop의 정확도 하방 수치 및 측정 방법론 검토</li>
+        <li><span class="check-icon">✓</span>EPC 업계 전문가(박규호 부장급) 자문단 구성의 지속 가능성 평가</li>
+        <li><span class="check-icon">✓</span>글로벌 EPC 메이저사 진출 시 예상되는 데이터 보안·IP 이슈 검토</li>
+        <li><span class="check-icon">✓</span>성능·동시성 이슈 대응 인프라 아키텍처 검토 (클라우드 vs 온프레미스)</li>
+      </ul>
+    </div>
+
+    <div class="checklist-section">
+      <div class="checklist-section-title">🎓 도메인 학습 — 팀 전체 공통 과제</div>
+      <ul class="checklist">
+        <li><span class="check-icon">✓</span>P&amp;ID 심볼 레전드 5개 이상 실제 프로젝트 팔레트 분석 및 차이점 정리</li>
+        <li><span class="check-icon">✓</span>HAZOP 리포트 실제 사례 1건 이상 분석 — 조건별 위험 시나리오 파악</li>
+        <li><span class="check-icon">✓</span>아이소메트릭 드로잉에서 압력 강하 계산 공식 및 엑셀 매크로 구조 이해</li>
+        <li><span class="check-icon">✓</span>HMB 테이블에서 물질·에너지 수지 검증 방법 학습</li>
+        <li><span class="check-icon">✓</span>고객 EPC사 엔지니어와의 미팅 시 "모르면 바로 묻기" 팀 문화 정착</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p style="font-weight:700;color:var(--gold2);margin-bottom:0.5rem;">🏭 SnapScale × EPC AI 자동화 세미나 분석 리포트</p>
+    <p>본 리포트는 세미나 강의 내용을 AI가 분석·구조화하여 생성한 심층 분석 문서입니다.</p>
+    <p style="margin-top:0.5rem;">화공플랜트 EPC 설계 자동화 | P&amp;ID 인식 | 온톨로지 기반 지식 관리 | 맨아워 절감</p>
+  </div>
+</footer>
+
+<script>
+// Accordion toggle
+document.querySelectorAll('.accordion-header').forEach(header => {
+  header.addEventListener('click', () => {
+    header.parentElement.classList.toggle('open');
+  });
+});
+</script>
+
+<script type="application/json" id="celab-metadata">
+{"title":"SnapScale 화공플랜트 EPC AI 설계 자동화 세미나 분석","description":"화공플랜트 EPC 업무 프로세스(ITB→설계→조달→시공)와 P&ID 기반 설계 딜리버러블 체계를 해부하고, SnapScale의 온톨로지·Google ADK 기반 맨아워 절감 AI 자동화 전략을 투자자 시각에서 심층 분석한 세미나 리포트.","category":"투자","tags":["EPC","화공플랜트","AI자동화","온톨로지","P&ID","맨아워절감","SnapScale","설계자동화"],"emoji":"🏭"}
+</script>
+
+<div id="celab-logo-badge" style="position:fixed;bottom:18px;right:18px;z-index:9999;
+  width:52px;height:52px;border-radius:50%;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,0.35);cursor:pointer;" title="CELab · Chemical Engineering Lab" onclick="window.open('https://celab-kor.github.io/celab-knowledge-base/','_blank')">
+  <img src="data:image/jpeg;base64,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" style="width:100%;height:100%;object-fit:cover;display:block;">
+</div>
+
+<div id="celab-fab-trigger" style="position: fixed; bottom: 28px; left: 28px; z-index: 100001; width: 40px; height: 40px; border-radius: 50%; background: rgb(201, 168, 76); color: rgb(13, 27, 42); font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 12px; user-select: none; transition: background 0.2s, transform 0.2s, opacity 0.2s; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; opacity: 1; transform: rotate(45deg) scale(1.05);">✏️</div><div id="celab-fab-panel" style="position: fixed; bottom: 78px; left: 28px; z-index: 100000; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; transition: opacity 0.25s, transform 0.25s; opacity: 1; transform: translateY(0px); pointer-events: auto;"><div id="celab-fab-layout" style="background: rgb(44, 122, 123); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">🔄 레이아웃</div><div id="celab-fab-edit" style="background: rgb(201, 168, 76); color: rgb(13, 27, 42); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">✏️ AI 편집</div><div id="celab-fab-direct" style="background: rgb(224, 123, 57); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">✍️ 직접 편집</div><div id="celab-fab-save" style="background: rgb(39, 103, 73); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">💾 저장</div></div></body></html>
