@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스냅스케일 전략 회의록 — 플랜트 AI 워킹그룹 & 자문단 구성</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy2: #1a2d45;
+  --gold: #c9a84c;
+  --gold2: #e8c96a;
+  --text: #e8edf2;
+  --muted: #8a9bb0;
+  --card-bg: #162030;
+  --card-border: #243450;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ───── NAV ───── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,27,42,0.97);
+  border-bottom: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+  padding: 0 24px;
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  height: 52px;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-inner a {
+  white-space: nowrap;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: all .2s;
+}
+.nav-inner a:hover {
+  color: var(--gold);
+  background: rgba(201,168,76,.1);
+}
+
+/* ───── HERO ───── */
+.hero {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a2d45 50%, #0d2035 100%);
+  border-bottom: 1px solid var(--card-border);
+  padding: 60px 24px 50px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(201,168,76,.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 20%, rgba(201,168,76,.04) 0%, transparent 50%);
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(201,168,76,.15);
+  border: 1px solid rgba(201,168,76,.3);
+  color: var(--gold);
+  font-size: 12px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  letter-spacing: .05em;
+}
+.hero h1 {
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  position: relative;
+}
+.hero-sub {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.hero-meta {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+}
+.kpi-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 22px 16px;
+}
+.kpi-num {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1;
+}
+.kpi-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* ───── LAYOUT ───── */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* ───── SECTION ───── */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 48px 0 20px;
+}
+.section-num {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: var(--navy);
+  font-weight: 800;
+  font-size: 13px;
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.section-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ───── CARD ───── */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+/* ───── ACCORDION ───── */
+details {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+summary {
+  padding: 18px 22px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  transition: background .2s;
+}
+summary:hover { background: rgba(201,168,76,.05); }
+summary::after {
+  content: '＋';
+  margin-left: auto;
+  color: var(--gold);
+  font-size: 18px;
+  transition: transform .25s;
+}
+details[open] summary::after {
+  content: '－';
+}
+.detail-body {
+  padding: 0 22px 22px;
+  border-top: 1px solid var(--card-border);
+  padding-top: 18px;
+}
+
+/* ───── TAGS ───── */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin: 2px;
+}
+.tag-blue { background: rgba(59,130,246,.15); color: #93c5fd; border: 1px solid rgba(59,130,246,.25); }
+.tag-green { background: rgba(34,197,94,.12); color: #86efac; border: 1px solid rgba(34,197,94,.2); }
+.tag-gold { background: rgba(201,168,76,.15); color: var(--gold); border: 1px solid rgba(201,168,76,.3); }
+.tag-red { background: rgba(239,68,68,.12); color: #fca5a5; border: 1px solid rgba(239,68,68,.2); }
+
+/* ───── HIGHLIGHT ───── */
+.highlight-box {
+  border-left: 3px solid var(--gold);
+  background: rgba(201,168,76,.07);
+  border-radius: 0 12px 12px 0;
+  padding: 16px 20px;
+  margin: 12px 0;
+}
+.highlight-box.blue {
+  border-left-color: #3b82f6;
+  background: rgba(59,130,246,.07);
+}
+.highlight-box.green {
+  border-left-color: #22c55e;
+  background: rgba(34,197,94,.07);
+}
+.highlight-box.red {
+  border-left-color: #ef4444;
+  background: rgba(239,68,68,.07);
+}
+
+/* ───── ACTION ITEMS ───── */
+.action-grid {
+  display: grid;
+  gap: 12px;
+}
+.action-item {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.action-check {
+  width: 22px; height: 22px;
+  border: 2px solid var(--card-border);
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.action-content { flex: 1; }
+.action-title { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+.action-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: var(--muted); }
+.action-meta span { display: flex; align-items: center; gap: 4px; }
+.priority-high { color: #fca5a5; }
+.priority-med { color: var(--gold); }
+.priority-low { color: #86efac; }
+
+/* ───── DECISION BOX ───── */
+.decision-box {
+  background: linear-gradient(135deg, rgba(201,168,76,.1), rgba(201,168,76,.05));
+  border: 1px solid rgba(201,168,76,.35);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+}
+.decision-num {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+/* ───── INSIGHT LIST ───── */
+.insight-list {
+  list-style: none;
+  margin-top: 12px;
+}
+.insight-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.insight-list li:last-child { border-bottom: none; }
+.insight-icon { color: var(--gold); font-size: 16px; flex-shrink: 0; line-height: 1.7; }
+
+/* ───── PERSON CARD ───── */
+.person-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+.person-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 20px;
+}
+.person-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy2), var(--card-border));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+.person-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+.person-role { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+
+/* ───── DATA TABLE ───── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.data-table th {
+  background: var(--navy2);
+  color: var(--muted);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  border-bottom: 1px solid var(--card-border);
+}
+.data-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(36,52,80,.5);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: rgba(201,168,76,.03); }
+
+/* ───── MERMAID ───── */
+.diagram-wrap {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 28px 16px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+}
+.diagram-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 18px;
+  text-align: center;
+  letter-spacing: .03em;
+}
+.mermaid { display: flex; justify-content: center; }
+
+/* ───── NEXT STEPS ───── */
+.next-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.next-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 20px;
+}
+.next-step-num {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: .08em;
+}
+.next-title { font-weight: 600; margin-bottom: 8px; }
+.next-desc { font-size: 13px; color: var(--muted); }
+
+/* ───── FOOTER ───── */
+footer {
+  border-top: 1px solid var(--card-border);
+  text-align: center;
+  padding: 28px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ───── RESPONSIVE ───── */
+@media (max-width: 640px) {
+  .kpi-grid { grid-template-columns: repeat(3,1fr); gap: 10px; }
+  .kpi-num { font-size: 24px; }
+  .person-grid { grid-template-columns: 1fr; }
+  .next-grid { grid-template-columns: 1fr; }
+  .container { padding: 24px 16px 60px; }
+  .hero { padding: 40px 16px 36px; }
+}
+</style>
+</head>
+<body>
+<div id="celab-home-btn" style="position:fixed;top:14px;right:14px;z-index:10000;">
+  <a href="https://celab-kor.github.io/celab-knowledge-base/" target="_blank"
+     style="display:flex;align-items:center;gap:7px;
+            background:rgba(13,27,42,0.88);color:#c9a84c;
+            padding:7px 13px;border-radius:22px;
+            font-size:13px;font-weight:700;text-decoration:none;
+            box-shadow:0 2px 10px rgba(0,0,0,0.35);
+            border:1px solid rgba(201,168,76,0.35);
+            backdrop-filter:blur(6px);
+            transition:background 0.2s;"
+     onmouseover="this.style.background='rgba(13,27,42,1)'"
+     onmouseout="this.style.background='rgba(13,27,42,0.88)'"
+     title="CELab 지식창고 홈으로">
+    <svg width="15" height="15" viewBox="0 0 20 20" fill="#c9a84c" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z"/>
+    </svg>
+    CELab 지식창고
+  </a>
+</div>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#overview">📋 개요</a>
+    <a href="#agenda1">🏗️ 안건1 데이터</a>
+    <a href="#agenda2">👥 안건2 투트랙</a>
+    <a href="#agenda3">🤝 안건3 자문단</a>
+    <a href="#agenda4">📄 안건4 계약</a>
+    <a href="#decisions">✅ 결정사항</a>
+    <a href="#actions">🎯 액션아이템</a>
+    <a href="#diagrams">📊 다이어그램</a>
+    <a href="#next">🚀 다음단계</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-badge">📋 회의록 — 스냅스케일 내부 전략 회의</div>
+  <h1>플랜트 AI 워킹그룹(PAWG) 구성 전략<br>& 자문단 협력 방안 논의</h1>
+  <div class="hero-sub">인화공 데이터 활용 · 투트랙 생태계 설계 · 이유룡 교수님 계약 업데이트</div>
+  <div class="hero-meta">
+    <span>📅 2024년 (추정)</span>
+    <span>⏱️ 약 2시간</span>
+    <span>📍 스냅스케일 사무실</span>
+  </div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-num">2</div>
+      <div class="kpi-label">주요 안건 수</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">7,415</div>
+      <div class="kpi-label">인화공 분석 스레드</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">12</div>
+      <div class="kpi-label">파일럿 플랜 주수</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MAIN ─── -->
+<div class="container">
+
+  <!-- ─── OVERVIEW ─── -->
+  <section id="overview">
+    <div class="section-header">
+      <div class="section-num">0</div>
+      <h2>회의 개요</h2>
+    </div>
+
+    <div class="card">
+      <table class="data-table">
+        <tr><th>구분</th><th>내용</th></tr>
+        <tr><td>참석자</td><td>대표 (상윤님), 부대표 (이종현 부장님 언급), 회의 진행자 (기록자)</td></tr>
+        <tr><td>핵심 안건 ①</td><td>AI 엔지니어 ↔ 도메인 전문가 간 지식 소통 구조 설계</td></tr>
+        <tr><td>핵심 안건 ②</td><td>이유룡 교수님 계약 구조 업데이트 (스톡옵션·자문료)</td></tr>
+        <tr><td>연관 일정</td><td>익일 스테파노님·장현기(정혁)선생님 미팅 / 월요일 베이스벤처스 미팅 / 퓨처플레이 저녁</td></tr>
+        <tr><td>주요 데이터</td><td>인화공 DB 7,415건, 스테파노님 직접 답변 6,474건, 온톨로지 후보 838건</td></tr>
+      </table>
+    </div>
+
+    <div class="highlight-box">
+      <strong>🎯 회의 핵심 목적</strong><br>
+      스냅스케일이 플랜트 특화 AI(AutoFlow) 온톨로지의 완성도를 체계적으로 높이기 위해 ①내부 워킹그룹(PAWG) 구성, ②공식 생태계(인화공) 협력이라는 <strong>투트랙 전략</strong>을 구체화하고, 각 자문단 영입 방안을 사전 정렬하는 것.
+    </div>
+  </section>
+
+  <!-- ─── AGENDA 1 ─── -->
+  <section id="agenda1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>안건 1 — 인화공 DB 분석 및 온톨로지 활용 방안</h2>
+    </div>
+
+    <details open>
+      <summary>📊 인화공 데이터 분석 현황</summary>
+      <div class="detail-body">
+        <div class="card" style="margin-bottom:14px">
+          <table class="data-table">
+            <tr><th>지표</th><th>수치</th><th>비고</th></tr>
+            <tr><td>인화공 전체 스레드</td><td><strong style="color:var(--gold)">7,415건</strong></td><td>인터넷 화학공학회 DB</td></tr>
+            <tr><td>스테파노님 직접 답변</td><td><strong style="color:var(--gold)">6,474건</strong></td><td>20~30년 누적 실무 응답</td></tr>
+            <tr><td>온톨로지 후보</td><td><strong style="color:var(--gold)">838건</strong></td><td>AutoFlow 구축 의미 있는 스레드</td></tr>
+            <tr><td>FAQ / Calculation 비율</td><td><strong>67.6%</strong></td><td>단순 계산 기준 답변</td></tr>
+            <tr><td>1차 파일럿 선별 목표</td><td><strong>100건 → 500건</strong></td><td>전문가 리뷰 후 점진 확대</td></tr>
+          </table>
+        </div>
+
+        <div class="highlight-box green">
+          <strong>💡 데이터 가치 판단</strong><br>
+          "Rule &amp; Regulation + 안목지" 기준의 고퀄리티 응답이 온톨로지 전체 그릇의 80~90%를 채울 수 있을 것으로 추정. 단, 맹목적 AI 학습 주입이 아닌 <strong>도메인 카테고리 분류 → 전문가 1차 검수 → JSON 스키마 정제</strong> 절차 필요.
+        </div>
+
+        <p style="margin-top:14px; color:var(--muted); font-size:13px">분류 카테고리(예시): 이퀴프먼트·프로세스·파이핑·세이프티·Calculation / 설계 기준 / 트러블슈팅 / 운전 경험 / 레슨런드</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>💡 안건 1 인사이트</summary>
+      <div class="detail-body">
+        <ul class="insight-list">
+          <li><span class="insight-icon">◆</span><div><strong>단순 학습이 아닌 온톨로지 구조화가 핵심.</strong> 7천여 건의 QA를 "AI에 때려넣는" 방식이 아닌, 노드·엣지·관계로 구조화해야만 99% 정확도 달성 가능. 스키마 설계 단계부터 도메인 전문가 참여 필수.</div></li>
+          <li><span class="insight-icon">◆</span><div><strong>Calculation 67%는 LLM 환각 방지의 핵심 자산.</strong> 업계 Rule &amp; Regulation을 명확히 학습시키면 계산 기반 질의에서 경쟁사 대비 차별화 가능.</div></li>
+          <li><span class="insight-icon">◆</span><div><strong>838건이 '완성'이 아니라 '큰 그릇'을 그리는 베이스라인.</strong> 해외 커뮤니티 DB 등 추가 소스와 병합 시 온톨로지 커버리지 확장 여지 충분.</div></li>
+          <li><span class="insight-icon">◆</span><div><strong>데이터 활용 법적 리스크 선제 검토 필요.</strong> 질의자 개인정보, 스테파노님 동의 서류화, 회사 종료 시 삭제 조항 등 법무 의견서 확보 선행.</div></li>
+          <li><span class="insight-icon">◆</span><div><strong>마일스톤 기반 정확도 로드맵 수립이 투자자·고객 신뢰 형성 핵심.</strong> 26년 말 90%, 27년 99% 목표 설정 시 전체 온톨로지 "그릇 크기"를 먼저 정의해야 계획 유효.</div></li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ─── AGENDA 2 ─── -->
+  <section id="agenda2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>안건 2 — 투트랙 전략: PAWG(내부) vs. 인화공 생태계(외부)</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px">
+      <div class="card">
+        <div style="color:var(--gold); font-weight:700; margin-bottom:10px">🔒 트랙 1 — PAWG (내부)</div>
+        <div style="font-size:13px; color:var(--muted); margin-bottom:10px">Plant AI Working Group · 비공개 자문단</div>
+        <ul style="font-size:13px; padding-left:16px; color:var(--text)">
+          <li>온톨로지 구조 설계 · 검증</li>
+          <li>POC 프로젝트 실시간 자문</li>
+          <li>AI 개발자 ↔ 도메인 전문가 중간 통역</li>
+          <li>NDA 체결, 내부 기밀 공유 가능</li>
+          <li>정기 회의로 마일스톤 관리</li>
+        </ul>
+        <div style="margin-top:12px">
+          <span class="tag tag-blue">이종현 부장님 리딩</span>
+          <span class="tag tag-blue">스테파노님</span>
+          <span class="tag tag-blue">장현기 선생님</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="color:#3b82f6; font-weight:700; margin-bottom:10px">🌐 트랙 2 — 인화공 생태계 (외부)</div>
+        <div style="font-size:13px; color:var(--muted); margin-bottom:10px">Domain Product Council · 공식 생태계</div>
+        <ul style="font-size:13px; padding-left:16px; color:var(--text)">
+          <li>플랜트 AI 지식 네트워킹</li>
+          <li>시니어 엔지니어 포모(FOMO) 해소 콘텐츠</li>
+          <li>아티클·매거진 발행 (이유룡 교수님 필두)</li>
+          <li>스냅스케일 브랜딩 · 신뢰 구축</li>
+          <li>인화공 DB·회원 데이터 연계 협의</li>
+        </ul>
+        <div style="margin-top:12px">
+          <span class="tag tag-green">인화공 독립 운영</span>
+          <span class="tag tag-green">스냅스케일 기술 파트너</span>
+        </div>
+      </div>
+    </div>
+
+    <details>
+      <summary>🔄 트랙 간 연계 및 논의 쟁점</summary>
+      <div class="detail-body">
+        <div class="highlight-box red">
+          <strong>⚠️ 대표님 우려 사항</strong><br>
+          현재 KPI는 "POC 정확도 향상 + 대기업 수주 확대"에 집중 필요. 트랙 2(교육 플랫폼, 커뮤니티 운영 등)가 지금 당장 이를 가속하는지 불분명. 리소스 분산 리스크.
+        </div>
+        <div class="highlight-box">
+          <strong>📌 진행자 입장</strong><br>
+          트랙 2는 현재 직접 투입 X. 그러나 인화공 생태계에서 생산되는 QA·데이터·네트워크가 트랙 1 온톨로지 완성도를 높이는 간접 파이프라인. 셀럽화공연구소(주니어 교육 파이프라인)는 당장 불필요 → <strong>현재 제외, 추후 재검토</strong>.
+        </div>
+        <div class="highlight-box blue">
+          <strong>✅ 합의된 방향</strong><br>
+          트랙 1(PAWG) 구성은 즉시 진행. 트랙 2(인화공 공식 파트너십)는 스테파노님·장현기 선생님 미팅 결과를 보고 인화공 DB 사용 승인 여부 우선 확인 후 범위 결정.
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>💡 안건 2 인사이트</summary>
+      <div class="detail-body">
+        <ul class="insight-list">
+          <li><span class="insight-icon">◆</span><div><strong>자문단 영입 인센티브 설계가 선순환의 열쇠.</strong> 단순 자문료보다 레퓨테이션(아티클·크레딧), 매출 수수료 연동, 스톡옵션이 기여 촉진 구조를 형성함. 정량적 모델링 필요.</div></li>
+          <li><span class="insight-icon">◆</span><div><strong>외부 글로벌 인플루언서는 "지금은 아니고, 오픈 시점"에 활용.</strong> 제품 오픈 전 광고성 협업은 비용 대비 효과 낮음. 레퍼런스용 1회 소개 수준이 적정.</div></li>
+          <li><span class="insight-icon">◆</span><div><strong>배관·기계·전장 분야 전문가 추가 영입 시급.</strong> 현 자문단이 공정 중심 → 견적/멀티 디서플린 수주를 위해 세이프티 로직, 전장 분야 보완 필요.</div></li>
+          <li><span class="insight-icon">◆</span><div><strong>아스펜 유니버시티 모델(자격증·생태계 선점)이 중장기 레퍼런스.</strong> 현재는 아니지만, 교육 콘텐츠 누적 → 인증 체계 → 글로벌 생태계 표준화 방향성 유효.</div></li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ─── AGENDA 3 ─── -->
+  <section id="agenda3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>안건 3 — 자문단(PAWG 4트랙) 구성 및 영입 전략</h2>
+    </div>
+
+    <div class="person-grid" style="margin-bottom:16px">
+      <div class="person-card">
+        <div class="person-avatar">🧑‍💼</div>
+        <div class="person-name">스테파노님</div>
+        <div class="person-role">IP 지식원 · 인화공 운영자</div>
+        <div style="font-size:12px; color:var(--text); margin-bottom:8px">20년 EPC 실무 QA 6,474건 보유. 커뮤니티 독립성 민감.</div>
+        <div>
+          <span class="tag tag-gold">온톨로지 라이선스</span>
+          <span class="tag tag-gold">공식 지식 기여자 크레딧</span>
+        </div>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">👨‍💻</div>
+        <div class="person-name">장현기(정혁) 선생님</div>
+        <div class="person-role">온톨로지 아키텍처 · 사우디아람코</div>
+        <div style="font-size:12px; color:var(--text); margin-bottom:8px">바이브코딩·개인 계산기 개발 중. 오픈소스·매출수수료 인센티브 선호.</div>
+        <div>
+          <span class="tag tag-blue">스톡옵션</span>
+          <span class="tag tag-blue">모듈 매출 수수료</span>
+        </div>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">🏗️</div>
+        <div class="person-name">이종현 부장님</div>
+        <div class="person-role">AI-도메인 중간 통역자 · 내부 리딩</div>
+        <div style="font-size:12px; color:var(--text); margin-bottom:8px">AI·도메인 소통 오해 직접 체감. PAWG 트랙 리딩 역할.</div>
+        <div>
+          <span class="tag tag-green">PAWG 트랙 리딩</span>
+          <span class="tag tag-green">내부 자문 중추</span>
+        </div>
+      </div>
+      <div class="person-card">
+        <div class="person-avatar">🎓</div>
+        <div class="person-name">이유룡 교수님 (포스텍)</div>
+        <div class="person-role">학계 권위 · IP·연구 협력</div>
+        <div style="font-size:12px; color:var(--text); margin-bottom:8px">AI·엔지니어링·계약 다방면 지원 가능. 학술 논문·IP 공동 출원 협의 중.</div>
+        <div>
+          <span class="tag tag-red">IP 공동 출원</span>
+          <span class="tag tag-red">산학 매거진 발행</span>
+        </div>
+      </div>
+    </div>
+
+    <details>
+      <summary>🤝 내일 미팅 — 스테파노님 협력 제안 3가지 시나리오</summary>
+      <div class="detail-body">
+        <div class="decision-box">
+          <div class="decision-num">시나리오 A — 온톨로지 라이선스 협약</div>
+          <p>스테파노님 QA DB를 플랜트 온톨로지 핵심 데이터로 활용. 개인정보 제거 후 공식 지식 기여자로 명기. 누적 기여에 대한 리테이너 보상 + 레퓨테이션 크레딧 제공.</p>
+        </div>
+        <div class="decision-box">
+          <div class="decision-num">시나리오 B — PAWG 비공식 자문 그룹 합류</div>
+          <p>분기 1회 전체 회의 참석 + 월 1~2회 온라인 세션. 제품 반영 결과 월간 보고. Domain Product Council 공식 타이틀 부여. 리테이너(컨설팅 자문료) 지급.</p>
+        </div>
+        <div class="decision-box">
+          <div class="decision-num">시나리오 C — 인화공 독립 파트너십</div>
+          <p>인화공 독립성 완전 보장 + 스냅스케일이 기술 파트너로 플랫폼 고도화 지원(AI 검색, 커뮤니티 도구). 회원 DB 마케팅 활용 협의. 공식 기술 협력 파트너 인증.</p>
+        </div>
+        <div class="highlight-box">
+          핵심 메시지: "<strong>20년 동안 혼자 싸우신 지식이 AI 시대 플랜트의 심장이 됩니다. 합류가 아닌, 20년 역사가 다음 세대를 가르치는 기반이 되는 것입니다.</strong>"
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>🔧 내일 미팅 — 장현기 선생님 협력 제안 전략</summary>
+      <div class="detail-body">
+        <div class="highlight-box blue">
+          <strong>접근 방식: 설득보다 역할 부여</strong><br>
+          "저희는 이렇게 하겠습니다. 도움 주세요"보다 "선생님이라면 이 구조를 어떻게 설계하시겠습니까?" → 고민하게 만드는 방식
+        </div>
+        <ul class="insight-list">
+          <li><span class="insight-icon">🎯</span><div>인화공 데이터 분석 현황 공유 → 온톨로지 도메인 분포(공정/배관/장치/제어) 피드백 요청</div></li>
+          <li><span class="insight-icon">🎯</span><div>PAWG 온톨로지 아키텍처 자문단 공식 참여 요청 (월 1~2회 온라인 리뷰)</div></li>
+          <li><span class="insight-icon">🎯</span><div>인센티브: 스톡옵션 + 개발 모듈 매출 수수료 연동 제안 (기여도 % → 수수료 % 비례 구조)</div></li>
+          <li><span class="insight-icon">🎯</span><div>장기 비전: 사우디 근무 이후 한국에서의 플랜트 AI 커리어 연계 가능성 제시</div></li>
+          <li><span class="insight-icon">🎯</span><div>파일럿 100건 온톨로지 리뷰 참여 타진 → 12주 로드맵으로 연결</div></li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>💡 안건 3 인사이트</summary>
+      <div class="detail-body">
+        <ul class="insight-list">
+          <li><span class="insight-icon">◆</span><div><strong>각 자문단의 동기부여 구조는 완전히 다르다.</strong> 스테파노님 → 레퓨테이션·역사적 기여. 장현기 선생님 → 매출 수수료·기술 크레딧. 이유룡 교수님 → IP·논문·계약. 획일적 인센티브 설계는 실패.</div></li>
+          <li><span class="insight-icon">◆</span><div><strong>워스트 케이스(아무도 안 옴) 전제 하에 플랜 B 필요.</strong> 관계 기반으로 쌓아온 신뢰가 있으나, 도메인 전문가가 스타트업을 위해 자발적으로 깊이 기여할 유인은 제한적. 명확한 인센티브가 없으면 형식적 참여에 그칠 위험.</div></li>
+          <li><span class="insight-icon">◆</span><div><strong>아스펜 테크 레거시 전략(학술 논문 → 업계 표준화)이 이유룡 교수님 협력의 핵심 이유.</strong> 연구 논문과 AI 제품이 연동되면 글로벌 생태계 표준 선점 가능.</div></li>
+          <li><span class="insight-icon">◆</span><div><strong>스테파노님 상업화 경계가 최대 변수.</strong> 인화공 DB가 상업적으로 활용된다는 인식이 생기면 협력 전체가 무너질 수 있음. 독립성 보장 조항을 계약서에 선명히 명시 필요.</div></li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ─── AGENDA 4 ─── -->
+  <section id="agenda4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>안건 4 — 이유룡 교수님 계약 구조 업데이트</h2>
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <table class="data-table">
+        <tr><th>항목</th><th>교수님 요청</th><th>협의 결과</th></tr>
+        <tr><td>스톡옵션 희석</td><td>다이류션(희석) 없이 유지 요청</td><td><span class="tag tag-gold">희석 없이 유지 방향 동의</span></td></tr>
+        <tr><td>자문료 수준</td><td>20%(초안) → 50% 요청</td><td><span class="tag tag-gold">박교부장님 연봉 50% 수준 협의</span></td></tr>
+        <tr><td>자문료 연동</td><td>시리즈 A 연봉 인상 시 자동 연동</td><td>절대 최대금액(방어선) 별도 설정 요구</td></tr>
+        <tr><td>지급 주기</td><td>월 지급 → 연 2~3회</td><td><span class="tag tag-blue">연 2~3회 지급 (보험 비적용)</span></td></tr>
+        <tr><td>특허 공동 출원</td><td>스냅스케일과 공동 출원 제안</td><td>내부 검토 필요 (85:15 분할 제시)</td></tr>
+        <tr><td>계약 초안</td><td>—</td><td>회사 법인 쪽 초안 요청, 금요일 미팅</td></tr>
+      </table>
+    </div>
+
+    <div class="highlight-box red">
+      <strong>⚠️ 추가 검토 사항</strong><br>
+      특허 공동 출원 및 특허 과제 협력(스냅스케일 + 교수님 연구실) → 대표 최종 의사결정 필요. 계약 초안에 종료 시 데이터 삭제 조항, 교수님 겸업 금지 충돌 여부 법무 검토 병행.
+    </div>
+  </section>
+
+  <!-- ─── DECISIONS ─── -->
+  <section id="decisions">
+    <div class="section-header">
+      <div class="section-num">✓</div>
+      <h2>핵심 결정사항</h2>
+    </div>
+
+    <div class="decision-box">
+      <div class="decision-num">결정 01</div>
+      <p><strong>투트랙 전략 기본 방향 유지.</strong> PAWG(내부 자문) + 인화공 생태계(공식 파트너십)의 이중 구조로 진행. 셀럽화공연구소 주니어 교육 파이프라인은 현 단계 제외.</p>
+    </div>
+    <div class="decision-box">
+      <div class="decision-num">결정 02</div>
+      <p><strong>스테파노님·장현기 선생님 미팅(익일)에서 인화공 DB 사용 동의 선확보 후 본격 활용 결정.</strong> 온라인 세션 빈도·자문료 등 세부 조건은 미팅 결과 기반으로 재협의.</p>
+    </div>
+    <div class="decision-box">
+      <div class="decision-num">결정 03</div>
+      <p><strong>이유룡 교수님 계약: 스톡옵션 희석 없음 + 자문료 50% + 연 2~3회 지급 방향 합의.</strong> 절대 최대금액 방어선 조항 삽입. 특허 공동 출원은 별도 검토.</p>
+    </div>
+    <div class="decision-box">
+      <div class="decision-num">결정 04</div>
+      <p><strong>온톨로지 파일럿 1차: 인화공 838건 중 100건 선별 → 전문가 리뷰 → 12주 스프린트 로드맵 수립.</strong> 진행자가 분류표 및 점수표 완성 후 PAWG 의제로 상정.</p>
+    </div>
+    <div class="decision-box">
+      <div class="decision-num">결정 05</div>
+      <p><strong>자문단 인센티브는 정량적 선순환 모델링으로 설계.</strong> 기여량 연동 보상(레퓨테이션 크레딧·매출 수수료 %) 구조를 재무 플랜에 반영하여 KPI와 연결.</p>
+    </div>
+  </section>
+
+  <!-- ─── ACTION ITEMS ─── -->
+  <section id="actions">
+    <div class="section-header">
+      <div class="section-num">🎯</div>
+      <h2>액션 아이템</h2>
+    </div>
+    <div class="action-grid">
+
+      <div class="action-item">
+        <div class="action-check"></div>
+        <div class="action-content">
+          <div class="action-title">스테파노님·장현기 선생님 미팅 준비 및 진행</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:8px">인화공 DB 분석 자료 시각화, 3가지 협력 시나리오 발표 자료 완성. 미팅 후 결과 요약 공유.</div>
+          <div class="action-meta">
+            <span>👤 진행자(상윤님)</span>
+            <span>📅 내일(D+1)</span>
+            <span class="priority-high">🔴 High</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-check"></div>
+        <div class="action-content">
+          <div class="action-title">인화공 DB 838건 중 파일럿 100건 선별 및 점수표 완성</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:8px">온톨로지 유의미도 점수화, JSON 스키마 초안 설계, 카테고리 분류표 작성.</div>
+          <div class="action-meta">
+            <span>👤 진행자(상윤님)</span>
+            <span>📅 스테파노님 미팅 전</span>
+            <span class="priority-high">🔴 High</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-check"></div>
+        <div class="action-content">
+          <div class="action-title">이유룡 교수님 계약서 초안 수령 및 검토</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:8px">회사 법인 측 계약서 초안 요청. 스톡옵션·자문료·특허 공동출원 조항 법무 검토. 겸업금지 충돌 여부 확인.</div>
+          <div class="action-meta">
+            <span>👤 대표 + 진행자</span>
+            <span>📅 금요일 미팅 전</span>
+            <span class="priority-high">🔴 High</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-check"></div>
+        <div class="action-content">
+          <div class="action-title">법무 의견서 확보 — 인화공 QA 데이터 사용 적법성</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:8px">개인정보 제거 기준, 스테파노님 서면 동의 방식, 회사 종료 시 데이터 삭제 조항 법무 검토 의뢰.</div>
+          <div class="action-meta">
+            <span>👤 대표 + 법무 담당</span>
+            <span>📅 이번 주 내</span>
+            <span class="priority-high">🔴 High</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-check"></div>
+        <div class="action-content">
+          <div class="action-title">PAWG 12주 파일럿 로드맵 초안 작성</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:8px">스프린트 일정, 마일스톤(26년 말 90% / 27년 99%), 전체 온톨로지 그릇 크기 정의, 자문단 역할별 주기 설정 포함.</div>
+          <div class="action-meta">
+            <span>👤 진행자(상윤님)</span>
+            <span>📅 스테파노님 미팅 후 1주 내</span>
+            <span class="priority-med">🟡 Medium</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-check"></div>
+        <div class="action-content">
+          <div class="action-title">자문단 인센티브 정량 모델링 및 재무 플랜 반영</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:8px">기여량 연동 보상 구조(레퓨테이션 단계·매출수수료 %) 설계. 연간 집행 예산에 자문료 포함 재무 플랜 업데이트.</div>
+          <div class="action-meta">
+            <span>👤 대표 + 진행자</span>
+            <span>📅 미팅 결과 확정 후</span>
+            <span class="priority-med">🟡 Medium</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-check"></div>
+        <div class="action-content">
+          <div class="action-title">배관·기계·전장(세이프티) 분야 추가 자문단 후보 발굴</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:8px">이종현 부장님·스테파노님에게 추천 요청. 현 자문단이 커버하지 못하는 멀티 디서플린 영역(배관, 전개장, 세이프티 로직) 전문가 확보.</div>
+          <div class="action-meta">
+            <span>👤 이종현 부장님 + 진행자</span>
+            <span>📅 PAWG 구성 후</span>
+            <span class="priority-med">🟡 Medium</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-item">
+        <div class="action-check"></div>
+        <div class="action-content">
+          <div class="action-title">베이스벤처스 월요일 미팅 준비</div>
+          <div style="font-size:13px; color:var(--muted); margin-bottom:8px">9시 30분 스냅스케일 사무실 집결. 주차 등록 사전 처리(주말 불가 → 평일 전 완료). 퓨처플레이 저녁 일정 확인.</div>
+          <div class="action-meta">
+            <span>👤 대표 + 진행자</span>
+            <span>📅 월요일 09:30</span>
+            <span class="priority-low">🟢 Low</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── DIAGRAMS ─── -->
+  <section id="diagrams">
+    <div class="section-header">
+      <div class="section-num">📊</div>
+      <h2>시각화 다이어그램</h2>
+    </div>
+
+    <!-- 다이어그램 1: 워크플로우 -->
+    <div class="diagram-wrap">
+      <div class="diagram-title">① 온톨로지 구축 워크플로우 (인화공 DB → AutoFlow 완성)</div>
+      <div class="mermaid">
+graph TD
+    A["🗄️ 인화공 DB\n7,415건"] --> B["분류·점수화\n838건 선별"]
+    B --> C["파일럿 100건\n1차 선별"]
+    C --> D["도메인 전문가\n1차 검수\n(스테파노·장현기)"]
+    D --> E{"품질 기준\n통과?"}
+    E -->|"Yes"| F["JSON 스키마\n정제"]
+    E -->|"No"| G["재분류 or\n추가 Q&A 수집"]
+    G --> D
+    F --> H["PAWG 전체 회의\n온톨로지 반영"]
+    H --> I["AI 개발팀\n학습 반영"]
+    I --> J["POC 정확도\n측정"]
+    J --> K{"목표 달성?\n90% → 99%"}
+    K -->|"Yes"| L["🎯 AutoFlow 완성\n대기업 수주"]
+    K -->|"No"| M["갭 분석\n추가 자문 의제"]
+    M --> D
+
+    style A fill:#162030,stroke:#243450,color:#e8edf2
+    style L fill:#c9a84c,stroke:#c9a84c,color:#0d1b2a
+    style D fill:#1a2d45,stroke:#c9a84c,color:#e8edf2
+    style H fill:#1a2d45,stroke:#243450,color:#e8edf2
+      </div>
+    </div>
+
+    <!-- 다이어그램 2: 관계도 -->
+    <div class="diagram-wrap">
+      <div class="diagram-title">② 자문단 관계도 — PAWG 4트랙 & 인화공 생태계 연계</div>
+      <div class="mermaid">
+graph LR
+    SN["🧑‍💼 스냅스케일\n(대표·진행자)"]
+
+    subgraph PAWG["🔒 PAWG 내부 자문단"]
+        direction TB
+        IJ["이종현 부장님\n트랙 리딩·중간통역"]
+        ST["스테파노님\nIP 지식·온톨로지"]
+        JH["장현기 선생님\n아키텍처 설계"]
+        YR["이유룡 교수님\nIP·학술 연구"]
+    end
+
+    subgraph ECO["🌐 인화공 생태계 (외부)"]
+        direction TB
+        IHG["인화공 커뮤니티\nQ&A DB 7415건"]
+        ART["아티클·매거진\n발행"]
+        NET["시니어 엔지니어\n네트워크"]
+    end
+
+    subgraph DEV["👨‍💻 AI 개발팀"]
+        direction TB
+        ONT["온톨로지 구축"]
+        POC["POC 개발"]
+    end
+
+    SN <-->|"전략·자원 배분"| PAWG
+    SN <-->|"기술 파트너십"| ECO
+    PAWG -->|"전문 지식 제공"| DEV
+    DEV -->|"제품 반영 결과\n월간 보고"| PAWG
+    ECO -->|"DB·네트워크\n활용"| SN
+    IHG --> ST
+    ART --> YR
+    NET --> IJ
+
+    style PAWG fill:#162030,stroke:#c9a84c
+    style ECO fill:#162030,stroke:#3b82f6
+    style DEV fill:#162030,stroke:#22c55e
+    style SN fill:#c9a84c,stroke:#c9a84c,color:#0d1b2a
+      </div>
+    </div>
+
+    <!-- 다이어그램 3: 타임라인 -->
+    <div class="diagram-wrap">
+      <div class="diagram-title">③ 주요 마일스톤 타임라인 (2024~2027)</div>
+      <div class="mermaid">
+gantt
+    title 스냅스케일 플랜트 AI 온톨로지 로드맵
+    dateFormat  YYYY-MM
+    axisFormat  %Y-%m
+
+    section 자문단 구성
+    스테파노·장현기 미팅       :done,    a1, 2024-11, 2024-11
+    이유룡 교수님 계약 체결     :active,  a2, 2024-11, 2024-12
+    PAWG 공식 출범             :         a3, 2024-12, 2025-01
+    추가 자문단 영입            :         a4, 2025-01, 2025-03
+
+    section 온톨로지 구축
+    파일럿 100건 선별·리뷰     :active,  b1, 2024-11, 2024-12
+    12주 스프린트 1차          :         b2, 2025-01, 2025-04
+    500건 전문가 리뷰          :         b3, 2025-04, 2025-07
+    온톨로지 v1.0 완성         :         b4, 2025-07, 2025-09
+
+    section 제품·수주
+    대기업 POC 수주            :         c1, 2025-01, 2025-06
+    AutoFlow 정확도 90%        :         c2, 2026-01, 2026-06
+    글로벌 확장 레퍼런스        :         c3, 2026-06, 2027-01
+    정확도 99% 달성            :         c4, 2027-01, 2027-06
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── NEXT STEPS ─── -->
+  <section id="next">
+    <div class="section-header">
+      <div class="section-num">🚀</div>
+      <h2>다음 단계 및 후속 과제</h2>
+    </div>
+
+    <div class="next-grid">
+      <div class="next-card">
+        <div class="next-step-num">STEP 01 · D+1</div>
+        <div class="next-title">스테파노님·장현기 선생님 미팅 진행</div>
+        <div class="next-desc">인화공 DB 분석 공유 → 3가지 협력 시나리오 제안 → 의향 청취. 결과에 따라 인화공 DB 활용 범위 확정.</div>
+      </div>
+      <div class="next-card">
+        <div class="next-step-num">STEP 02 · 이번 주</div>
+        <div class="next-title">법무 검토 및 계약 초안 수령</div>
+        <div class="next-desc">이유룡 교수님 계약서 초안 법무 검토. 인화공 QA 사용 적법성 의견서 확보.</div>
+      </div>
+      <div class="next-card">
+        <div class="next-step-num">STEP 03 · 월요일</div>
+        <div class="next-title">베이스벤처스 투자 미팅 & 퓨처플레이 저녁</div>
+        <div class="next-desc">9:30 사무실 집결 → 베이스벤처스(10:00). 점심 스테파노님 식사. 퓨처플레이 저녁 미팅.</div>
+      </div>
+      <div class="next-card">
+        <div class="next-step-num">STEP 04 · 미팅 후 1주</div>
+        <div class="next-title">PAWG 12주 파일럿 로드맵 확정</div>
+        <div class="next-desc">자문단 역할·주기·의제 설계. 온톨로지 파일럿 100건 선별 완료. 재무 플랜 업데이트.</div>
+      </div>
+      <div class="next-card">
+        <div class="next-step-num">STEP 05 · 내달</div>
+        <div class="next-title">PAWG 공식 출범 및 1차 전체 회의</div>
+        <div class="next-desc">이유룡 교수님·이종현 부장님·스테파노님·장현기 선생님 포함 킥오프 미팅. NDA 체결.</div>
+      </div>
+      <div class="next-card">
+        <div class="next-step-num">STEP 06 · 중장기</div>
+        <div class="next-title">대기업 POC 수주 가속 & 글로벌 레퍼런스 확보</div>
+        <div class="next-desc">케미컬 엔지니어링가이 등 글로벌 인플루언서 협업(제품 오픈 시점). 사우디·글로벌 진출 레퍼런스 구축.</div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:24px">
+      <strong>📌 핵심 원칙 재확인</strong><br>
+      모든 자문단 활동의 최종 판단 기준: <strong>① 스냅스케일 KPI(POC 정확도·대기업 수주)를 올리는가? ② 효율적으로 리소스를 배분하는가? ③ 자문단에게 선순환 인센티브를 만드는가?</strong> 이 세 가지를 항상 체크하며 진행.
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<footer>
+  <p>스냅스케일 내부 회의록 · 비공개 문서 · 자동 생성 HTML 보고서</p>
+  <p style="margin-top:6px; color:#4a6080">이 문서는 회의 녹취를 기반으로 AI가 구조화한 요약본입니다. 최종 결정은 팀 컨펌 후 적용하십시오.</p>
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#162030',
+      primaryTextColor: '#e8edf2',
+      primaryBorderColor: '#243450',
+      lineColor: '#c9a84c',
+      secondaryColor: '#1a2d45',
+      tertiaryColor: '#0d1b2a',
+      background: '#0d1b2a',
+      mainBkg: '#162030',
+      nodeBorder: '#243450',
+      clusterBkg: '#162030',
+      titleColor: '#e8edf2',
+      edgeLabelBackground: '#162030',
+      fontFamily: "'Apple SD Gothic Neo','Noto Sans KR',sans-serif"
+    },
+    flowchart: { htmlLabels: true, curve: 'basis' },
+    gantt: { fontSize: 12 }
+  });
+</script>
+
+<script type="application/json" id="celab-metadata">
+{"title":"스냅스케일 전략 회의록 — 플랜트 AI 워킹그룹(PAWG) & 자문단 구성","description":"인화공 DB 7,415건 분석을 기반으로 플랜트 AI 온톨로지 구축을 위한 투트랙 전략(내부 PAWG + 인화공 생태계 파트너십)과 자문단 영입 방안, 이유룡 교수님 계약 구조를 논의한 스냅스케일 내부 전략 회의 요약 보고서.","category":"전략","tags":["플랜트AI","온톨로지","자문단영입","투트랙전략","스냅스케일"],"emoji":"🏭"}
+</script>
+<div id="celab-logo-badge" style="position:fixed;bottom:18px;right:18px;z-index:9999;
+  width:52px;height:52px;border-radius:50%;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,0.35);cursor:pointer;"
+  title="CELab · Chemical Engineering Lab"
+  onclick="window.open('https://celab-kor.github.io/celab-knowledge-base/','_blank')">
+  <img src="data:image/jpeg;base64,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" style="width:100%;height:100%;object-fit:cover;display:block;">
+</div>
+<script id="celab-inline-editor">
+(function(){
+  if(window.location.protocol!=='file:') return;
+  var GOLD='#c9a84c',NAVY='#0d1b2a',TEAL='#2c7a7b';
+  var FF='Apple SD Gothic Neo,Noto Sans KR,sans-serif';
+
+  function mkBtn(id,text,color,bottom){
+    var b=document.createElement('div');
+    b.id=id; b.textContent=text;
+    Object.assign(b.style,{position:'fixed',bottom:bottom,right:'28px',zIndex:'99999',
+      background:color,color:color===GOLD?NAVY:'#fff',padding:'10px 20px',borderRadius:'24px',
+      fontWeight:'700',fontSize:'14px',cursor:'pointer',boxShadow:'0 4px 20px rgba(0,0,0,0.5)',
+      fontFamily:FF,userSelect:'none',transition:'all .2s'});
+    document.body.appendChild(b); return b;
+  }
+  var fabEdit=mkBtn('celab-fab-edit','✏️ 편집',GOLD,'28px');
+  var fabLayout=mkBtn('celab-fab-layout','🔄 레이아웃',TEAL,'76px');
+
+  function toast(msg,ok){
+    var t=document.createElement('div'); t.textContent=msg;
+    Object.assign(t.style,{position:'fixed',bottom:'132px',right:'28px',zIndex:'100000',
+      background:ok?'#2f855a':'#c53030',color:'#fff',padding:'10px 18px',borderRadius:'12px',
+      fontSize:'13px',fontFamily:FF,boxShadow:'0 4px 16px rgba(0,0,0,0.4)',transition:'opacity .4s'});
+    document.body.appendChild(t);
+    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},4000);
+  }
+
+  function getFilePath(){
+    return decodeURIComponent(window.location.pathname);
+  }
+
+  // ── 편집 다이얼로그 ────────────────────────────────────────
+  fabEdit.addEventListener('click',function(){
+    var existing=document.getElementById('celab-edit-dlg');
+    if(existing){ existing.remove(); return; }
+
+    var overlay=document.createElement('div');
+    overlay.id='celab-edit-dlg';
+    Object.assign(overlay.style,{
+      position:'fixed',bottom:'90px',right:'28px',width:'380px',
+      background:'#fff',borderRadius:'18px',padding:'22px 20px 18px',
+      boxShadow:'0 8px 40px rgba(0,0,0,0.35)',zIndex:'99998',
+      fontFamily:FF,boxSizing:'border-box'
+    });
+
+    overlay.innerHTML=
+      '<div style="font-weight:800;font-size:15px;color:#0d1b2a;margin-bottom:4px;">✏️ AI 편집 요청</div>'+
+      '<div style="font-size:12px;color:#888;margin-bottom:12px;">수정하고 싶은 내용을 자유롭게 적어주세요</div>'+
+      '<textarea id="celab-edit-ta" placeholder="예시)\n• \'6월 목표\' → \'7월 목표\'로 변경\n• 투자금 항목 삭제\n• LLM 전문가 채용 일정 추가\n• 장기 목표에 해외 진출 항목 추가" '+
+        'style="width:100%;height:150px;padding:11px 12px;border:1.5px solid #ddd;border-radius:10px;'+
+        'font-size:13px;font-family:'+FF+';resize:vertical;box-sizing:border-box;line-height:1.6;outline:none;"></textarea>'+
+      '<div style="display:flex;gap:8px;margin-top:12px;">'+
+        '<button id="celab-edit-ok" style="flex:1;padding:11px;background:#c9a84c;color:#0d1b2a;border:none;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;font-family:'+FF+';">🚀 AI 편집 적용</button>'+
+        '<button id="celab-edit-x" style="padding:11px 16px;background:#f0f0f0;color:#555;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;font-family:'+FF+';">✕</button>'+
+      '</div>';
+
+    document.body.appendChild(overlay);
+    document.getElementById('celab-edit-ta').focus();
+
+    document.getElementById('celab-edit-x').onclick=function(){ overlay.remove(); };
+
+    document.getElementById('celab-edit-ok').onclick=function(){
+      var instructions=document.getElementById('celab-edit-ta').value.trim();
+      if(!instructions){ document.getElementById('celab-edit-ta').focus(); return; }
+      if(!(window.electronAPI&&window.electronAPI.updateHtmlLayout)){
+        toast('❌ Electron 앱에서만 사용 가능합니다',false); return;
+      }
+      var btn=document.getElementById('celab-edit-ok');
+      btn.textContent='⏳ AI 편집 중...'; btn.disabled=true; btn.style.opacity='0.7';
+      var fp=getFilePath();
+      window.electronAPI.updateHtmlLayout({filePath:fp,instructions:instructions})
+        .then(function(r){
+          if(r.success){
+            toast('✅ 편집 완료 — 페이지를 새로고침합니다',true);
+            overlay.remove();
+          } else {
+            toast('❌ 편집 실패: '+r.error,false);
+            btn.textContent='🚀 AI 편집 적용'; btn.disabled=false; btn.style.opacity='1';
+          }
+        }).catch(function(e){
+          toast('❌ 오류: '+e.message,false);
+          btn.textContent='🚀 AI 편집 적용'; btn.disabled=false; btn.style.opacity='1';
+        });
+    };
+
+    // Enter+Ctrl/Cmd 단축키로 전송
+    document.getElementById('celab-edit-ta').addEventListener('keydown',function(e){
+      if((e.ctrlKey||e.metaKey)&&e.key==='Enter') document.getElementById('celab-edit-ok').click();
+    });
+  });
+
+  // ── 레이아웃 재생성 버튼 ──────────────────────────────────
+  fabLayout.addEventListener('click',function(){
+    if(!(window.electronAPI&&window.electronAPI.updateHtmlLayout)){
+      toast('❌ Electron 앱에서만 사용 가능합니다',false); return;
+    }
+    var meta={};
+    var metaEl=document.getElementById('celab-metadata');
+    if(metaEl){try{meta=JSON.parse(metaEl.textContent);}catch(e){}}
+    var lines=[];
+    document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td').forEach(function(el){
+      if(el.closest('nav,script,style,#celab-fab-edit,#celab-fab-layout,#celab-edit-dlg')) return;
+      var t=el.textContent.trim();
+      if(t.length<2) return;
+      var tag=el.tagName.toLowerCase();
+      var pfx=tag==='h1'?'# ':tag==='h2'?'## ':tag==='h3'?'### ':tag==='h4'?'#### ':tag==='li'?'- ':'';
+      lines.push(pfx+t);
+    });
+    var fp=getFilePath();
+    fabLayout.textContent='⏳ 재생성 중...'; fabLayout.style.opacity='0.7'; fabLayout.style.cursor='default';
+    window.electronAPI.updateHtmlLayout({filePath:fp,textContent:lines.join('\n'),metadata:meta})
+      .then(function(r){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        if(r.success) toast('✅ 레이아웃 재생성 완료 — 새로고침 중...',true);
+        else toast('❌ 재생성 실패: '+r.error,false);
+      }).catch(function(e){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        toast('❌ 오류: '+e.message,false);
+      });
+  });
+})();
+</script>
+</body>
+</html>
