@@ -184,6 +184,19 @@
     .hero, .section { padding: 40px 24px; }
     .comparison { grid-template-columns: 1fr; }
   }
+
+  /* ── Home Button (fixed) ── */
+  #home-btn {
+    position: fixed; top: 14px; right: 16px; z-index: 9999;
+    background: #c9a84c; color: #0d1b2a;
+    padding: 8px 16px; border-radius: 8px;
+    font-weight: 700; font-size: 0.8rem;
+    text-decoration: none; letter-spacing: 0.02em;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    transition: background 0.15s, transform 0.1s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  #home-btn:hover { background: #e8c96a; transform: translateY(-1px); }
 </style>
 </head>
 <body>
