@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스냅스케일 IR 회의록 | 포스텍홀딩스</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy2: #1a2d45;
+    --gold: #c9a84c;
+    --gold2: #e8c96a;
+    --text: #e8edf2;
+    --muted: #8a9bb0;
+    --card-bg: #162030;
+    --card-border: #243450;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,27,42,0.97);
+    border-bottom: 1px solid var(--card-border);
+    backdrop-filter: blur(8px);
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    height: 52px;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-logo {
+    font-weight: 700;
+    color: var(--gold);
+    white-space: nowrap;
+    margin-right: 1rem;
+    font-size: 0.9rem;
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  nav a:hover { color: var(--gold2); background: rgba(201,168,76,0.1); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1a2d45 40%, #0d2337 70%, #162030 100%);
+    padding: 4rem 1.5rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold);
+    font-size: 0.75rem;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+  .hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+  .hero h1 span { color: var(--gold2); }
+  .hero-sub {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+  }
+  .hero-meta {
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-bottom: 2.5rem;
+  }
+  .hero-meta span { color: var(--text); }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .kpi-card {
+    background: rgba(22,32,48,0.8);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.2rem 0.8rem;
+  }
+  .kpi-num {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--gold2);
+    display: block;
+    line-height: 1;
+  }
+  .kpi-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--gold2);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--card-border);
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* ── ATTENDEES ── */
+  .attendee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .attendee-chip {
+    background: var(--navy2);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+  }
+  .attendee-chip .name { font-weight: 600; font-size: 0.9rem; }
+  .attendee-chip .role { color: var(--muted); font-size: 0.75rem; margin-top: 0.15rem; }
+  .attendee-chip.presenter { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.06); }
+  .attendee-chip.presenter .name { color: var(--gold2); }
+
+  /* ── DETAILS/SUMMARY ── */
+  details {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  summary {
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { background: rgba(201,168,76,0.05); }
+  summary::after {
+    content: '▼';
+    font-size: 0.7rem;
+    color: var(--gold);
+    transition: transform 0.3s;
+  }
+  details[open] summary::after { transform: rotate(180deg); }
+  details[open] summary { border-bottom: 1px solid var(--card-border); }
+  .details-body { padding: 1.5rem; }
+
+  /* ── AGENDA TAG ── */
+  .agenda-tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+    font-size: 0.72rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    margin-right: 0.5rem;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.04));
+    border-left: 3px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+  }
+  .highlight-box p { font-size: 0.9rem; }
+
+  /* ── INSIGHT LIST ── */
+  .insight-list { list-style: none; }
+  .insight-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(36,52,80,0.6);
+    font-size: 0.88rem;
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+  }
+  .insight-list li:last-child { border-bottom: none; }
+  .insight-icon { color: var(--gold); flex-shrink: 0; margin-top: 0.1rem; }
+
+  /* ── DECISION BOX ── */
+  .decision-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  .decision-header {
+    background: linear-gradient(90deg, rgba(201,168,76,0.18), rgba(201,168,76,0.05));
+    padding: 0.8rem 1.2rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--gold2);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .decision-body { padding: 1rem 1.2rem; }
+  .decision-body p { font-size: 0.87rem; margin-bottom: 0.4rem; }
+  .decision-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .decision-meta span {
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: var(--navy2);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+  }
+
+  /* ── ACTION ITEMS ── */
+  .action-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .action-table th {
+    background: var(--navy2);
+    color: var(--muted);
+    font-weight: 600;
+    padding: 0.7rem 0.8rem;
+    text-align: left;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .action-table td {
+    padding: 0.8rem;
+    border-bottom: 1px solid rgba(36,52,80,0.5);
+    vertical-align: top;
+  }
+  .action-table tr:last-child td { border-bottom: none; }
+  .priority-high {
+    background: rgba(239,68,68,0.15);
+    color: #f87171;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+  .priority-mid {
+    background: rgba(234,179,8,0.15);
+    color: #fbbf24;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+  .priority-low {
+    background: rgba(34,197,94,0.15);
+    color: #4ade80;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+
+  /* ── MERMAID ── */
+  .mermaid-wrap {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1.2rem;
+    overflow-x: auto;
+  }
+  .mermaid-wrap h3 {
+    font-size: 0.9rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  .mermaid { text-align: center; }
+
+  /* ── INFO PILLS ── */
+  .info-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+  .pill {
+    font-size: 0.78rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    background: var(--navy2);
+    border: 1px solid var(--card-border);
+    color: var(--muted);
+  }
+  .pill.gold { border-color: rgba(201,168,76,0.4); color: var(--gold2); background: rgba(201,168,76,0.08); }
+
+  /* ── TWO COLS ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── RISK / OPPO ── */
+  .risk-box {
+    background: rgba(239,68,68,0.07);
+    border: 1px solid rgba(239,68,68,0.25);
+    border-radius: 12px;
+    padding: 1.1rem;
+  }
+  .oppo-box {
+    background: rgba(34,197,94,0.07);
+    border: 1px solid rgba(34,197,94,0.25);
+    border-radius: 12px;
+    padding: 1.1rem;
+  }
+  .risk-box .box-title { color: #f87171; font-weight: 700; margin-bottom: 0.6rem; font-size: 0.9rem; }
+  .oppo-box .box-title { color: #4ade80; font-weight: 700; margin-bottom: 0.6rem; font-size: 0.9rem; }
+  .risk-box li, .oppo-box li { font-size: 0.83rem; margin-bottom: 0.4rem; color: var(--text); }
+  ul.plain { list-style: disc; padding-left: 1.2rem; }
+
+  /* ── SECTION SPACER ── */
+  .section { padding: 2rem 0 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy2);
+    border-top: 1px solid var(--card-border);
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 3rem;
+  }
+
+  /* ── QUOTE ── */
+  .quote {
+    border-left: 2px solid var(--gold);
+    padding: 0.5rem 1rem;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.87rem;
+    margin: 0.6rem 0;
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+  .dot-green { background: #4ade80; }
+  .dot-yellow { background: #fbbf24; }
+  .dot-red { background: #f87171; }
+</style>
+</head>
+<body>
+<div id="celab-home-btn" style="position:fixed;top:14px;right:14px;z-index:10000;">
+  <a href="https://celab-kor.github.io/celab-knowledge-base/" target="_blank" style="display: flex; align-items: center; gap: 7px; background: rgba(13, 27, 42, 0.88); color: rgb(201, 168, 76); padding: 7px 13px; border-radius: 22px; font-size: 13px; font-weight: 700; text-decoration: none; box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px; border: 1px solid rgba(201, 168, 76, 0.35); backdrop-filter: blur(6px); transition: background 0.2s;" onmouseover="this.style.background='rgba(13,27,42,1)'" onmouseout="this.style.background='rgba(13,27,42,0.88)'" title="CELab 지식창고 홈으로">
+    <svg width="15" height="15" viewBox="0 0 20 20" fill="#c9a84c" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z"></path>
+    </svg>
+    CELab 지식창고
+  </a>
+</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">📋 스냅스케일 IR</span>
+    <a href="#overview">개요</a>
+    <a href="#agenda1">사업소개</a>
+    <a href="#agenda2">기술구조</a>
+    <a href="#agenda3">경쟁우위</a>
+    <a href="#agenda4">고객전략</a>
+    <a href="#agenda5">QnA</a>
+    <a href="#decisions">결정사항</a>
+    <a href="#actions">액션아이템</a>
+    <a href="#diagrams">다이어그램</a>
+    <a href="#next">다음단계</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">🏢 포스텍홀딩스 IR 회의록</div>
+  <h1 style="">스냅스케일 <span>SnapScale</span><br>최종 IR 발표</h1>
+  <p class="hero-sub" style="">플랜트 특화 온톨로지 기반 AI 설계 자동화 솔루션</p>
+  <p class="hero-meta" style="">
+    발표자: <span>김상윤 대표</span> &nbsp;|&nbsp;
+    주최: <span>포스텍홀딩스</span> &nbsp;|&nbsp;
+    구분: <span>최종 IR 발표 및 질의응답</span>
+  </p>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <span class="kpi-num">7</span>
+      <div class="kpi-label">총 참석자 수</div>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-num">5</span>
+      <div class="kpi-label">주요 논의 안건</div>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-num">8</span>
+      <div class="kpi-label">핵심 액션아이템</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="container">
+
+  <!-- ── 개요 ── -->
+  <div class="section" id="overview">
+    <div class="section-title">📌 회의 개요 및 참석자</div>
+
+    <div class="card">
+      <div class="card-title">🎯 발표 기업 정보</div>
+      <div class="info-pills">
+        <span class="pill gold">스냅스케일 (SnapScale)</span>
+        <span class="pill">포스텍 출신 창업</span>
+        <span class="pill">플랜트 AI 자동화</span>
+        <span class="pill">온톨로지 기반 LLM</span>
+        <span class="pill">화공플랜트 공정설계</span>
+      </div>
+      <div style="margin-top:1rem; font-size:0.87rem; color:var(--muted);">
+        캐치프레이즈: <strong style="color:var(--text);">"모명을 가속화한다" — 오토플로우(AutoFlow)</strong>
+      </div>
+    </div>
+
+    <div class="attendee-grid">
+      <div class="attendee-chip presenter">
+        <div class="name">김상윤</div>
+        <div class="role">스냅스케일 대표 (발표자)</div>
+      </div>
+      <div class="attendee-chip">
+        <div class="name">고병철</div>
+        <div class="role">포스텍홀딩스 CEO / 겸직교수</div>
+      </div>
+      <div class="attendee-chip">
+        <div class="name">홍대웅</div>
+        <div class="role">포스텍홀딩스 본부장</div>
+      </div>
+      <div class="attendee-chip">
+        <div class="name">김한울</div>
+        <div class="role">포스텍홀딩스 책임</div>
+      </div>
+      <div class="attendee-chip">
+        <div class="name">조재윤</div>
+        <div class="role">포스텍홀딩스 선임</div>
+      </div>
+      <div class="attendee-chip">
+        <div class="name">박표순</div>
+        <div class="role">포스텍홀딩스 본부장</div>
+      </div>
+      <div class="attendee-chip">
+        <div class="name">박규호</div>
+        <div class="role">스냅스케일 자문 (해상/플랜트 12년+)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 안건1: 사업소개 ── -->
+  <div class="section" id="agenda1">
+    <div class="section-title">📋 안건 1 — 사업 영역 및 문제 정의</div>
+
+    <details open="">
+      <summary>
+        <span><span class="agenda-tag">안건 1</span>화공플랜트 EPC 시장의 Pain Point</span>
+      </summary>
+      <div class="details-body">
+        <p style="font-size: 0.9rem; margin-bottom: 1rem;">EPC(Engineering · Procurement · Construction) 기업이 중동 발주처로부터 정유공장 건설 수주 시 발생하는 구조적 낭비 문제를 분석하고, 스냅스케일의 AI 자동화 솔루션으로 해결 방안을 제시.</p>
+
+        <div class="highlight-box">
+          <p style=""><strong>🔑 핵심 문제:</strong> 단 하나의 설계 오류가 연쇄적인 리워크·크로스체크를 유발하며, 5개 이상의 부서가 수천 번의 크로스체크를 수행. 이로 인해 1조 규모 프로젝트 기준 설계 오류 1건당 3~5일 손실, 전체 설계 소요 시간 60% 이상 지연 발생.</p>
+        </div>
+
+        <div class="two-col" style="margin-top:1rem;">
+          <div class="card" style="margin-bottom:0;">
+            <div class="card-title">⚠️ 현재 낭비 규모 (1조 프로젝트 기준)</div>
+            <ul class="plain" style="font-size:0.86rem;">
+              <li style="">설계 오류 1건당 3~5일 시간 낭비</li>
+              <li style="">설계 전체 소요 중 60%+ 지연</li>
+              <li style="">인건비 낭비: <strong style="color:var(--gold2);">약 800억 원</strong></li>
+              <li style="">공사 기간 초과: <strong style="color:var(--gold2);">6~18개월</strong></li>
+              <li style="">위약금(LD) 손실: <strong style="color:var(--gold2);">약 500억 원</strong></li>
+              <li style="">총 낭비 추산: <strong style="color:var(--gold2);">1,000억 원 이상</strong></li>
+            </ul>
+          </div>
+          <div class="card" style="margin-bottom:0;">
+            <div class="card-title">✅ AI 솔루션 절감 효과</div>
+            <ul class="plain" style="font-size:0.86rem;">
+              <li style="">오류 처리: 3~5일 → <strong style="color:#4ade80;">1시간 이내</strong></li>
+              <li style="">설계 기간 2개월 이상 단축</li>
+              <li style="">비용 절감: <strong style="color:#4ade80;">500억 원 이상</strong></li>
+              <li style="">공사기간 단축: <strong style="color:#4ade80;">2개월 이상</strong></li>
+              <li style="">위약금 절감: <strong style="color:#4ade80;">약 300억 원</strong></li>
+              <li style="">전체 라이선스 수취: 프로젝트의 4~5%</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top:1.2rem;">
+          <div class="card-title" style="margin-bottom:0.6rem;">💡 안건 1 핵심 인사이트</div>
+          <ul class="insight-list">
+            <li style=""><span class="insight-icon">▶</span><span><strong>시장 사이즈가 명확하다:</strong> 1조 규모 단일 프로젝트에서 1,000억 원 이상의 낭비가 발생. 이를 AI로 절감하는 구조이므로 가격 정당성(Price Justification)이 매우 강하다.</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>EPC 구조상 수집 계열화:</strong> 대기업이 중견·중소기업에게 업무를 서브컨트랙트. 탑다운·바텀업 영업 전략 병행 가능.</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>수주 기반 산업 특성:</strong> 입찰 경쟁이 치열하여 공사기간 단축이 수주 경쟁력 자체와 직결. 고객의 Pain Point가 즉각적이고 금액화가 쉬움.</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>기존 솔루션의 실패 사례 확인:</strong> Hexagon(SmartPlant P&amp;ID) 등 대형 소프트웨어도 실무에서 외면 받는 이유가 '느리고 에러 많음'. 실용적 접근이 핵심 차별화 포인트.</span></li>
+          </ul>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── 안건2: 기술구조 ── -->
+  <div class="section" id="agenda2">
+    <div class="section-title">🔬 안건 2 — 온톨로지 기반 AI 기술 아키텍처</div>
+
+    <details open="">
+      <summary>
+        <span><span class="agenda-tag">안건 2</span>결정론적 AI 동작을 위한 온톨로지 프레임워크</span>
+      </summary>
+      <div class="details-body">
+        <p style="font-size: 0.9rem; margin-bottom: 1rem;">엔지니어가 도면을 구조적 마인드맵으로 이해하는 방식을 모사하여, 비정형 데이터를 일관된 지식 체계(온톨로지)로 변환하고 그 위에서 에이전틱 LLM을 동작시키는 아키텍처.</p>
+
+        <div class="highlight-box">
+          <p style=""><strong>🔑 핵심 원리:</strong> 엔지니어가 보유한 '암묵지(Tacit Knowledge)'를 온톨로지로 형식화 → LLM이 결정론적(Deterministic)으로 동작 → 설계 오류 추론 및 자동 수정</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">⚙️ 기술 아키텍처 3계층</div>
+          <div style="font-size:0.86rem;">
+            <div style="border-left:3px solid var(--gold); padding:0.5rem 1rem; margin-bottom:0.7rem;">
+              <strong style="color:var(--gold2);">1단계 — 데이터 수집 &amp; 변환</strong><br>
+              각 부서별 소프트웨어(AutoCAD, Aspen, AVEVA, Excel, PDF 등)에서 생성된 비정형 딜리버러블 → 에이전틱 LLM이 온톨로지 인스턴스로 매핑
+            </div>
+            <div style="border-left:3px solid var(--gold); padding:0.5rem 1rem; margin-bottom:0.7rem;">
+              <strong style="color:var(--gold2);">2단계 — 온톨로지 기반 추론</strong><br>
+              산업표준 PDF(자연어 규칙)를 쿼리 언어로 변환 → 도면 인스턴스와 교차 검증 → 압력/온도 조건 위반, 설계 오류 자동 탐지 및 경고
+            </div>
+            <div style="border-left:3px solid var(--gold); padding:0.5rem 1rem;">
+              <strong style="color:var(--gold2);">3단계 — 에이전트 피드백 루프</strong><br>
+              셀프 피드백 루프(Self-Feedback Loop) 방식으로 에러를 재입력하여 인식 정확도 향상 → 수정 결과를 소프트웨어에 자동 반영 (코딩 에이전트와 동일 로직)
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card" style="margin-bottom:0;">
+            <div class="card-title">✅ 결정론적 AI의 장점</div>
+            <ul class="plain" style="font-size:0.85rem;">
+              <li style="">AI 동작 과정 투명하게 추적 가능</li>
+              <li style="">엔지니어가 오류 부분만 선택적 검수</li>
+              <li style="">확률론적 오답 방지 (ChatGPT 한계 극복)</li>
+              <li style="">감사(Audit) 추적성 확보 → 법적 책임 명확화</li>
+            </ul>
+          </div>
+          <div class="card" style="margin-bottom:0;">
+            <div class="card-title">⚠️ 기술 구현 핵심 요건</div>
+            <ul class="plain" style="font-size:0.85rem;">
+              <li style="">온톨로지 스키마 설계 역량 (DEXP 등 표준 기반)</li>
+              <li style="">비정형 도면 인식 에이전트 프레임워크</li>
+              <li style="">룰베이스 로직 + LLM 함수 시퀀싱 결합</li>
+              <li style="">온프레미스 GPU 서버 (고객사 보안 필수)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top:1.2rem;">
+          <div class="card-title" style="margin-bottom:0.6rem;">💡 안건 2 핵심 인사이트</div>
+          <ul class="insight-list">
+            <li style=""><span class="insight-icon">▶</span><span><strong>일반 LLM으로는 불가:</strong> GPT, Gemini 등 범용 LLM은 비정형 도면 데이터를 결정론적으로 처리할 수 없음. 온톨로지라는 중간 계층이 핵심 차별화 요소.</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>데이터 양이 아닌 노하우 경쟁:</strong> 도면 데이터 자체가 부족하고 비정형성이 높아 데이터 축적으로는 해자 형성 불가. 온톨로지 구축 노하우와 엣지케이스 처리 역량이 핵심.</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>휴먼-인-더-루프 필수:</strong> 설계 오류 1건당 수억 원의 손실이 발생하므로, AI 자동화에도 반드시 사람의 최종 검수가 필요. 책임 소재 명확화가 상용화 관건.</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>라인 리스트 자동화가 킬러 유즈케이스:</strong> 도면 100장 × 파이프 열몇 개 = 1,000개 이상의 수작업 라인 리스트가 현재도 엑셀로 진행 중. 이 지점의 자동화가 가장 즉각적인 ROI 제공 가능.</span></li>
+          </ul>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── 안건3: 경쟁우위 ── -->
+  <div class="section" id="agenda3">
+    <div class="section-title">🏆 안건 3 — 팀 역량 및 경쟁 우위</div>
+
+    <details open="">
+      <summary>
+        <span><span class="agenda-tag">안건 3</span>한국 엔지니어 암묵지 + AI 역량의 시너지</span>
+      </summary>
+      <div class="details-body">
+        <div class="card">
+          <div class="card-title">👥 핵심 팀 구성</div>
+          <div style="font-size:0.86rem;">
+            <table style="width:100%; border-collapse:collapse;">
+              <tbody><tr style="border-bottom:1px solid var(--card-border);">
+                <td style="padding: 0.6rem; width: 30%;"><strong style="color:var(--gold2);">김상윤 (대표)</strong></td>
+                <td style="padding: 0.6rem; color: var(--muted);">포스텍 ML 연구실 (물리기반 AI), 1인 게임 개발 (수천만 원 매출), 정정창학교 대상</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--card-border);">
+                <td style="padding: 0.6rem;"><strong style="color:var(--gold2);">박규호 (자문)</strong></td>
+                <td style="padding: 0.6rem; color: var(--muted);">해상/육상 플랜트 12~13년 전경력, 현 Asme테크 기술 컨설턴트 (공정시뮬레이션)</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--card-border);">
+                <td style="padding: 0.6rem;"><strong style="color:var(--gold2);">이재윤 (AI 엔지니어)</strong></td>
+                <td style="padding: 0.6rem; color: var(--muted);">공장 디지털 트윈 납품 경험, 양장화광 연구실 반도체 시뮬레이션 Nature 논문</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.6rem;"><strong style="color:var(--gold2);">시니어 자문단</strong></td>
+                <td style="padding: 0.6rem; color: var(--muted);">이종현 (Samsung→DuPont→Honeywell), 사우디아람코 임원급, 삼성중공업/현대중공업/SKE&amp;C 등 20년+ 시니어</td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🎓 포스텍 교수진 네트워크</div>
+          <div style="font-size:0.86rem; color:var(--muted);">
+            <strong style="color:var(--text);">이일봉 교수</strong> — 플랜트 AI 전문, 매출 100억+ 플랜트 과제 수행, 서울대/카이스트/버클리/현대 엔지니어링 40년+ 경력 → 계약·국가과제·고객 연결 전방위 지원<br><br>
+            <strong style="color:var(--text);">김동우 교수</strong> — 포스텍 머신러닝 연구실 (기하학적 딥러닝, 신뢰가능한 AI) → 고급 AI 인력 유치 및 공동연구
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <p style=""><strong>vs 경쟁사 Alcali (YC 펀딩):</strong> 미국 팀, 총 경력 약 4년 vs 스냅스케일 팀, 세계 최고 제조업 강국 한국 엔지니어, 합산 경력 30년+. 한국어로 소통하며 한국 엔지니어 암묵지를 가장 빠르게 온톨로지화 가능.</p>
+        </div>
+
+        <div style="margin-top:1.2rem;">
+          <div class="card-title" style="margin-bottom:0.6rem;">💡 안건 3 핵심 인사이트</div>
+          <ul class="insight-list">
+            <li style=""><span class="insight-icon">▶</span><span><strong>시니어 자문단 구조의 전략적 선택:</strong> 풀타임 채용 시 수십억 연봉 부담 → 인센티브 기반 자문단으로 구성하여 비용 효율화. 초기 스타트업에 적합한 인적 자원 전략.</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>플랜트 AI 포지션 독점 전략:</strong> "엔지니어링에서 신뢰가능한 AI"라는 포지션은 도메인 전문성과 AI 역량을 동시에 요구. 진입 장벽이 높아 일반 AI 스타트업의 모사가 어려움.</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>컨설팅 강점 = CLG 촉진:</strong> 제조업체가 AI 도입 시 실무 적용 방법을 모름. 스냅스케일의 AI 엔지니어가 컨설팅으로 진입하여 CLG(Customer Lead Generation)를 앞당기는 구조.</span></li>
+          </ul>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── 안건4: 고객전략 + BM ── -->
+  <div class="section" id="agenda4">
+    <div class="section-title">📈 안건 4 — 고객 확보 전략 · 비즈니스 모델 · 로드맵</div>
+
+    <details>
+      <summary>
+        <span><span class="agenda-tag">안건 4</span>트랙션, BM, 시장 확장 전략</span>
+      </summary>
+      <div class="details-body">
+
+        <div class="card">
+          <div class="card-title">🎯 현재 파이프라인 현황</div>
+          <div style="font-size:0.86rem;">
+            <div style="display:flex; align-items:flex-start; gap:0.5rem; padding:0.7rem 0; border-bottom:1px solid var(--card-border);">
+              <span class="status-dot dot-green"></span>
+              <div><strong>대형 EPC 기업 (H사)</strong> — 라이브 데모 완료 (20명+ 참석), AI팀·실무팀·IT팀 복수 접촉. 유상 POC 논의 진행 중. "AI로 실적 내야 한다"는 내부 압박 존재.</div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:0.5rem; padding:0.7rem 0; border-bottom:1px solid var(--card-border);">
+              <span class="status-dot dot-green"></span>
+              <div><strong>중견 EPC 기업</strong> — <strong style="color:var(--gold2);">계약 완료, 계약금 2억 원 수령</strong>. 설계 전주기 자동화 + 견적 자동화. 총 2년 프로젝트, 연 2억 구조.</div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:0.5rem; padding:0.7rem 0; border-bottom:1px solid var(--card-border);">
+              <span class="status-dot dot-yellow"></span>
+              <div><strong>공공기관</strong> — RFP 공동 작성 완료, 5월 중 계약 예정, 약 8,000만 원 규모.</div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:0.5rem; padding:0.7rem 0; border-bottom:1px solid var(--card-border);">
+              <span class="status-dot dot-yellow"></span>
+              <div><strong>중소 EPC 기업 A</strong> — 정부지원사업 공동 신청 (3,000만 원 규모), 결과 대기 중.</div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:0.5rem; padding:0.7rem 0;">
+              <span class="status-dot dot-red"></span>
+              <div><strong>중견 토목기업</strong> — 2억 원 상당 협상 완료. 계약 여부 긴가민가 단계.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card" style="margin-bottom:0;">
+            <div class="card-title">💰 비즈니스 모델</div>
+            <ul class="plain" style="font-size:0.85rem;">
+              <li style=""><strong>스위트 패키지 구독 모델</strong> (모듈별 과금)</li>
+              <li style="">라이선스 수취: 프로젝트 금액의 4~5%</li>
+              <li style="">3가지 수익 루트: 설계 시간 단축 + 예비비 절감 + LD(위약금) 절감</li>
+              <li style="">사용량 기반 조정 (수주 기반 업계 특성 반영)</li>
+              <li style="">초기: POC 매출 → 2~3년 후 구독 매출 전환</li>
+              <li style="">영업이익률 목표: <strong style="color:var(--gold2);">60~80%+</strong></li>
+            </ul>
+          </div>
+          <div class="card" style="margin-bottom:0;">
+            <div class="card-title">🗺️ 시장 확장 로드맵</div>
+            <ul class="plain" style="font-size:0.85rem;">
+              <li style=""><strong>1단계:</strong> 한국 화공플랜트 공정설계</li>
+              <li style=""><strong>2단계:</strong> 배관설계 → 조달 → 시공 확장</li>
+              <li style=""><strong>3단계:</strong> 미국·중동·일본 글로벌 EPC</li>
+              <li style=""><strong>4단계:</strong> 데이터센터·원자력·바이오·반도체</li>
+              <li style="">FEED(기본설계) 및 OEM까지 확장</li>
+              <li style="">TAM: <strong style="color:var(--gold2);">400조+ 글로벌 엔지니어링 시장</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top:1.2rem;">
+          <div class="card-title" style="margin-bottom:0.6rem;">💡 안건 4 핵심 인사이트</div>
+          <ul class="insight-list">
+            <li style=""><span class="insight-icon">▶</span><span><strong>락인(Lock-in) 전략이 핵심:</strong> 온톨로지 레이어까지 침투한 솔루션은 교체 비용이 극히 높음. 초기 공격적 POC로 고객사를 선점하는 땅따먹기 전략 필요.</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>탑다운 + 바텀업 동시 공략:</strong> 대기업 확보 시 수직 계열화로 하위 기업에 솔루션 확산 가능 (탑다운). 중소기업 공략 시 장기적 생존력 강화 (바텀업).</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>수주 기반 산업의 유연한 과금 필요:</strong> 프로젝트 수 연동 사용량 기반 과금으로 고객 이탈 방지. 일감이 없는 시즌에도 관계 유지.</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>하공플랜트 선택의 전략적 타이밍:</strong> 20~30년 수명 주기의 플랜트가 동시에 교체 시점 도달 + 전후 재건 수요 + 개발도상국 인프라 폭발 수요 삼중 호재.</span></li>
+            <li style=""><span class="insight-icon">▶</span><span><strong>중견 EPC 계약 2억이 핵심 레퍼런스:</strong> 유상 계약 체결은 기술 신뢰성 입증의 강력한 증거. 향후 대형사 협상 레버리지로 활용 가능.</span></li>
+          </ul>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ── 안건5: QnA ── -->
+  <div class="section" id="agenda5">
+    <div class="section-title">❓ 안건 5 — 주요 질의응답 (Q&amp;A)</div>
+
+    <details>
+      <summary>
+        <span><span class="agenda-tag">Q&amp;A</span>투자자 핵심 질의 및 대표 답변 요약</span>
+      </summary>
+      <div class="details-body">
+
+        <div class="card">
+          <div class="card-title">Q1. 경쟁사 모방 가능성과 데이터 해자 문제</div>
+          <div class="quote">"따라하는 게 쉽다라고 하셨는데, 고객 데이터를 지속적으로 받을 수 있을지도 의문입니다."</div>
+          <p style="font-size: 0.87rem;"><strong style="color:var(--gold2);">A:</strong> "따라할 수 있지만 시간이 매우 오래 걸린다"가 정확한 표현. 핵심 해자는 데이터가 아닌 <strong>비정형 데이터를 AI가 이해하게 하는 노하우와 온톨로지 구축 역량</strong>. 도면 데이터는 한 대기업이라도 LLM을 충분히 학습시킬 만한 양이 없고, 20~30년이 지나도 불가. 따라서 쌓아야 할 것은 데이터가 아니라 <strong>AI 구축 노하우</strong>.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Q2. 대형 EPC사 의사결정 레벨 및 구매 프로세스</div>
+          <div class="quote">"어느 수준의 책임자와 이야기하고 있나요?"</div>
+          <p style="font-size: 0.87rem;"><strong style="color:var(--gold2);">A:</strong> AI팀 책임 매니저 및 팀장과 협의 중. 라이브 데모 후 사업부 팀장도 참석하여 비용 문의. "전 부서에 AI로 실적을 내야 한다"는 내부 압박이 있어 AI팀+사업팀이 공동으로 위에 보고서 올리는 구조. <strong>현재 내부 보고서 작성을 지원해야 하는 단계.</strong></p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Q3. 사이트별 재개발 필요성 및 글로벌 확장성</div>
+          <div class="quote">"국가마다 도면 기호가 다를 수 있는데 해외 확장 시 어떻게 대응하나요?"</div>
+          <p style="font-size: 0.87rem;"><strong style="color:var(--gold2);">A:</strong> 화공플랜트 내에서는 온톨로지 구조가 동일하게 적용. 타 분야(원자력, 데이터센터 등) 진출 시 온톨로지 커스텀 필요하나, 화공플랜트에서 쌓은 노하우로 타 팀 대비 빠르게 진입 가능. 심볼 차이는 <strong>기업별 세부 변형</strong> 수준이며, 에이전트 프레임워크로 유연하게 대응 예정.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Q4. 보안 전략 (고객 데이터 + 자사 IP)</div>
+          <div class="quote">"온톨로지에 저장된 데이터 보안은 어떻게 관리하나요?"</div>
+          <p style="font-size: 0.87rem;"><strong style="color:var(--gold2);">A:</strong> <strong>온프레미스 GPU 서버</strong>를 고객사 내부에 설치 → LLM이 내부망에서만 동작. 자사도 온프레미스 서버 + GitHub 딜렙(비공개) 방식으로 완전 온프레미스 관리.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Q5. 투자금 배분 계획</div>
+          <div class="quote">"초반 투자금 대부분이 인건비/GPU에 들어갈 것 같은데 배분은?"</div>
+          <p style="font-size: 0.87rem;"><strong style="color:var(--gold2);">A:</strong> 연 기준 — <strong style="color:var(--gold2);">AI 엔지니어 인건비 : GPU : 시니어 자문단 = 6 : 1 : 1</strong> (총 8 단위 기준). 도메인 전문가는 자문단 구조로 비용 효율화.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Q6. 기존 플레이어 대비 포지션 (Macar 등)</div>
+          <div class="quote">"국내 마카나 등 유사 기업과 차별점은?"</div>
+          <p style="font-size: 0.87rem;"><strong style="color:var(--gold2);">A:</strong> 반도체·자동차 쪽 AI 솔루션은 범용 AI 기술 수준. 스냅스케일은 <strong>화공플랜트 전체(P&amp;ID는 모든 공장에 존재)를 타깃</strong>하며 온톨로지 기반 결정론적 AI라는 근본적으로 다른 접근법. PLC 등 인접 분야는 동일 철학으로 확장 가능.</p>
+        </div>
+
+      </div>
+    </details>
+  </div>
+
+  <!-- ── 리스크 & 기회 ── -->
+  <div class="section">
+    <div class="section-title">⚖️ 리스크 &amp; 기회 요소 분석</div>
+    <div class="two-col">
+      <div class="risk-box">
+        <div class="box-title">⚠️ 잠재적 리스크</div>
+        <ul class="plain">
+          <li style="">대형 EPC사의 내부 AI팀 자체 개발 경쟁</li>
+          <li style="">온프레미스 GPU 설치 영업 사이클 지연</li>
+          <li style="">도면 인식 엣지케이스 누적 → 정확도 관리 어려움</li>
+          <li style="">수주 기반 산업의 계절성 → 매출 불안정</li>
+          <li style="">글로벌 확장 시 심볼/규정 차이 커스텀 비용</li>
+          <li style="">유상 POC → 구독 전환율 불확실성</li>
+          <li style="">설계 오류 발생 시 법적 책임 소재 문제</li>
+        </ul>
+      </div>
+      <div class="oppo-box">
+        <div class="box-title">🚀 기회 요소</div>
+        <ul class="plain">
+          <li style="">플랜트 교체 수요 사이클 도래 (20~30년 주기)</li>
+          <li style="">전후 재건 + 개발도상국 인프라 폭발 수요</li>
+          <li style="">EPC 기업 내 AI 실적 압박 → 빠른 의사결정</li>
+          <li style="">중견 EPC 계약 2억 → 레퍼런스 레버리지</li>
+          <li style="">이일봉 교수 네트워크 → 국가과제 + 고객 연결</li>
+          <li style="">중동 오일머니 정유공장 발주 지속</li>
+          <li style="">P&amp;ID는 반도체/원자력/데이터센터 공통 적용</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 결정사항 ── -->
+  <div class="section" id="decisions">
+    <div class="section-title">✅ 핵심 결정사항</div>
+
+    <div class="decision-box">
+      <div class="decision-header">🏆 결정 1 — 중견 EPC 기업과 유상 계약 체결 확정</div>
+      <div class="decision-body">
+        <p style="">설계 전주기 자동화 + 견적 자동화를 포함한 2년 프로젝트. 계약금 2억 원 수령 완료.</p>
+        <p style="color: var(--muted); font-size: 0.83rem;">근거: 기술 신뢰도 검증 완료. 연 2억 × 2년 구조로 안정적 매출 확보.</p>
+        <div class="decision-meta">
+          <span>담당: 김상윤 대표</span>
+          <span>기한: 진행 중 (2년 계약)</span>
+          <span>상태: ✅ 완료</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="decision-box">
+      <div class="decision-header">🏆 결정 2 — 대형 EPC H사 유상 POC 추진 방향 합의</div>
+      <div class="decision-body">
+        <p style="">라이브 데모 후 AI팀·사업부팀이 공동으로 내부 보고서 작성 중. 스냅스케일은 보고서 작성 지원 및 유상 POC 범위 협의 진행.</p>
+        <p style="color: var(--muted); font-size: 0.83rem;">근거: 사업부 의사결정자가 비용 검토를 지시. 전사 AI 실적 압박이 유리한 환경 조성.</p>
+        <div class="decision-meta">
+          <span>담당: 김상윤 대표</span>
+          <span>기한: 협의 중</span>
+          <span>상태: 🔄 진행 중</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="decision-box">
+      <div class="decision-header">🏆 결정 3 — 내부 GPU 서버 구축 (온프레미스 전략)</div>
+      <div class="decision-body">
+        <p style="">반도체 대란으로 외부 조달 한 달 소요 → 내부 SNES필 GPU 서버 직접 구축. 자사 POC 및 보안 강화에 활용.</p>
+        <div class="decision-meta">
+          <span>담당: 기술팀</span>
+          <span>상태: 🔄 진행 중</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="decision-box">
+      <div class="decision-header">🏆 결정 4 — 공공기관 RFP 5월 중 계약 추진</div>
+      <div class="decision-body">
+        <p style="">공공기관과 RFP 공동 작성 완료. 8,000만 원 규모. 5월 중 계약 진행 예정.</p>
+        <div class="decision-meta">
+          <span>담당: 김상윤 대표</span>
+          <span>기한: 2025년 5월</span>
+          <span>상태: 🟡 예정</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 액션아이템 ── -->
+  <div class="section" id="actions">
+    <div class="section-title">📋 액션아이템 체크리스트</div>
+    <div class="card" style="overflow-x:auto;">
+      <table class="action-table">
+        <thead>
+          <tr>
+            <th style="">No.</th>
+            <th style="">실행 과제</th>
+            <th style="">담당자</th>
+            <th style="">기한</th>
+            <th style="">우선순위</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="">1</td>
+            <td style="">대형 EPC H사 내부 보고서 작성 지원 및 유상 POC 범위·금액 협상</td>
+            <td style="">김상윤 대표</td>
+            <td style="">즉시</td>
+            <td style=""><span class="priority-high">HIGH</span></td>
+          </tr>
+          <tr>
+            <td style="">2</td>
+            <td style="">중견 EPC 계약사 2년 프로젝트 착수 — 설계 전주기 자동화 개발 착수</td>
+            <td style="">김상윤 + 기술팀</td>
+            <td style="">진행 중</td>
+            <td style=""><span class="priority-high">HIGH</span></td>
+          </tr>
+          <tr>
+            <td style="">3</td>
+            <td style="">공공기관 5월 계약 체결 완료 및 RFP 이행 준비</td>
+            <td style="">김상윤 대표</td>
+            <td style="">2025년 5월</td>
+            <td style=""><span class="priority-high">HIGH</span></td>
+          </tr>
+          <tr>
+            <td style="">4</td>
+            <td style="">내부 GPU 서버 구축 완료 (반도체 수급 포함)</td>
+            <td style="">기술팀</td>
+            <td style="">단기</td>
+            <td style=""><span class="priority-high">HIGH</span></td>
+          </tr>
+          <tr>
+            <td style="">5</td>
+            <td style="">시니어 전문가 자문단 운영 체계 공식화 (인센티브 구조 확정)</td>
+            <td style="">김상윤 대표</td>
+            <td style="">단기</td>
+            <td style=""><span class="priority-mid">MID</span></td>
+          </tr>
+          <tr>
+            <td style="">6</td>
+            <td style="">중소 EPC 정부지원사업 결과 모니터링 및 대응 전략 수립</td>
+            <td style="">김상윤 대표</td>
+            <td style="">결과 발표 후</td>
+            <td style=""><span class="priority-mid">MID</span></td>
+          </tr>
+          <tr>
+            <td style="">7</td>
+            <td style="">중견 토목기업 계약 협상 재개 (긴가민가 상태 해소)</td>
+            <td style="">김상윤 대표</td>
+            <td style="">단기</td>
+            <td style=""><span class="priority-mid">MID</span></td>
+          </tr>
+          <tr>
+            <td style="">8</td>
+            <td style="">글로벌 EPC 확장 로드맵 구체화 (미국·중동·일본 파트너십 검토)</td>
+            <td style="">김상윤 + 이일봉 교수</td>
+            <td style="">중기 (6개월)</td>
+            <td style=""><span class="priority-low">LOW</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── 다이어그램 ── -->
+  <div class="section" id="diagrams">
+    <div class="section-title">📊 시각화 다이어그램</div>
+
+    <!-- Diagram 1: 워크플로우 -->
+    <div class="mermaid-wrap">
+      <h3 style="">① 스냅스케일 AI 솔루션 워크플로우 (온톨로지 기반 자동화 프로세스)</h3>
+      <div class="mermaid" data-processed="true"><svg id="mermaid-1778643653507" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 478.5390625px;" viewBox="0 0 478.5390625 1080.7890625" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mermaid-1778643653507{font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-size:16px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-1778643653507 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-1778643653507 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-1778643653507 .error-icon{fill:#a44141;}#mermaid-1778643653507 .error-text{fill:#ddd;stroke:#ddd;}#mermaid-1778643653507 .edge-thickness-normal{stroke-width:1px;}#mermaid-1778643653507 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1778643653507 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1778643653507 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1778643653507 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1778643653507 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1778643653507 .marker{fill:#c9a84c;stroke:#c9a84c;}#mermaid-1778643653507 .marker.cross{stroke:#c9a84c;}#mermaid-1778643653507 svg{font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-size:16px;}#mermaid-1778643653507 p{margin:0;}#mermaid-1778643653507 .label{font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;color:#e8edf2;}#mermaid-1778643653507 .cluster-label text{fill:#e8c96a;}#mermaid-1778643653507 .cluster-label span{color:#e8c96a;}#mermaid-1778643653507 .cluster-label span p{background-color:transparent;}#mermaid-1778643653507 .label text,#mermaid-1778643653507 span{fill:#e8edf2;color:#e8edf2;}#mermaid-1778643653507 .node rect,#mermaid-1778643653507 .node circle,#mermaid-1778643653507 .node ellipse,#mermaid-1778643653507 .node polygon,#mermaid-1778643653507 .node path{fill:#1f2020;stroke:#ccc;stroke-width:1px;}#mermaid-1778643653507 .rough-node .label text,#mermaid-1778643653507 .node .label text,#mermaid-1778643653507 .image-shape .label,#mermaid-1778643653507 .icon-shape .label{text-anchor:middle;}#mermaid-1778643653507 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-1778643653507 .rough-node .label,#mermaid-1778643653507 .node .label,#mermaid-1778643653507 .image-shape .label,#mermaid-1778643653507 .icon-shape .label{text-align:center;}#mermaid-1778643653507 .node.clickable{cursor:pointer;}#mermaid-1778643653507 .root .anchor path{fill:#c9a84c!important;stroke-width:0;stroke:#c9a84c;}#mermaid-1778643653507 .arrowheadPath{fill:lightgrey;}#mermaid-1778643653507 .edgePath .path{stroke:#c9a84c;stroke-width:1px;}#mermaid-1778643653507 .flowchart-link{stroke:#c9a84c;fill:none;}#mermaid-1778643653507 .edgeLabel{background-color:#162030;text-align:center;}#mermaid-1778643653507 .edgeLabel p{background-color:#162030;}#mermaid-1778643653507 .edgeLabel rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1778643653507 .labelBkg{background-color:rgba(22, 32, 48, 0.5);}#mermaid-1778643653507 .cluster rect{fill:#0d1b2a;stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#mermaid-1778643653507 .cluster text{fill:#e8c96a;}#mermaid-1778643653507 .cluster span{color:#e8c96a;}#mermaid-1778643653507 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-size:12px;background:#162030;border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1778643653507 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#mermaid-1778643653507 rect.text{fill:none;stroke-width:0;}#mermaid-1778643653507 .icon-shape,#mermaid-1778643653507 .image-shape{background-color:#162030;text-align:center;}#mermaid-1778643653507 .icon-shape p,#mermaid-1778643653507 .image-shape p{background-color:#162030;padding:2px;}#mermaid-1778643653507 .icon-shape .label rect,#mermaid-1778643653507 .image-shape .label rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1778643653507 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-1778643653507 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-1778643653507 .node .neo-node{stroke:#ccc;}#mermaid-1778643653507 [data-look="neo"].node rect,#mermaid-1778643653507 [data-look="neo"].cluster rect,#mermaid-1778643653507 [data-look="neo"].node polygon{stroke:url(#mermaid-1778643653507-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653507 [data-look="neo"].node path{stroke:url(#mermaid-1778643653507-gradient);stroke-width:1px;}#mermaid-1778643653507 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653507 [data-look="neo"].node .neo-line path{stroke:#ccc;filter:none;}#mermaid-1778643653507 [data-look="neo"].node circle{stroke:url(#mermaid-1778643653507-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653507 [data-look="neo"].node circle .state-start{fill:#000000;}#mermaid-1778643653507 [data-look="neo"].icon-shape .icon{fill:url(#mermaid-1778643653507-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653507 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mermaid-1778643653507-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653507 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="mermaid-1778643653507_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1778643653507_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1778643653507_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1778643653507_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mermaid-1778643653507_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1778643653507_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1778643653507_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1778643653507_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1778643653507_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1778643653507_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1778643653507_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mermaid-1778643653507_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M353.563,110L353.563,114.167C353.563,118.333,353.563,126.667,353.563,134.333C353.563,142,353.563,149,353.563,152.5L353.563,156" id="mermaid-1778643653507-L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MzUzLjU2MjUsInkiOjExMH0seyJ4IjozNTMuNTYyNSwieSI6MTM1fSx7IngiOjM1My41NjI1LCJ5IjoxNjB9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653507_flowchart-v2-pointEnd)"></path><path d="M353.563,238L353.563,242.167C353.563,246.333,353.563,254.667,353.563,262.333C353.563,270,353.563,277,353.563,280.5L353.563,284" id="mermaid-1778643653507-L_B_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6MzUzLjU2MjUsInkiOjIzOH0seyJ4IjozNTMuNTYyNSwieSI6MjYzfSx7IngiOjM1My41NjI1LCJ5IjoyODh9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653507_flowchart-v2-pointEnd)"></path><path d="M104.215,238L104.215,242.167C104.215,246.333,104.215,254.667,104.215,262.333C104.215,270,104.215,277,104.215,280.5L104.215,284" id="mermaid-1778643653507-L_D_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_E_0" data-points="W3sieCI6MTA0LjIxNDg0Mzc1LCJ5IjoyMzh9LHsieCI6MTA0LjIxNDg0Mzc1LCJ5IjoyNjN9LHsieCI6MTA0LjIxNDg0Mzc1LCJ5IjoyODh9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653507_flowchart-v2-pointEnd)"></path><path d="M353.563,366L353.563,370.167C353.563,374.333,353.563,382.667,345.998,390.716C338.434,398.766,323.306,406.532,315.742,410.415L308.178,414.298" id="mermaid-1778643653507-L_C_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_F_0" data-points="W3sieCI6MzUzLjU2MjUsInkiOjM2Nn0seyJ4IjozNTMuNTYyNSwieSI6MzkxfSx7IngiOjMwNC42MTkxNDA2MjUsInkiOjQxNi4xMjQ1NTkzOTcxNzd9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653507_flowchart-v2-pointEnd)"></path><path d="M104.215,366L104.215,370.167C104.215,374.333,104.215,382.667,111.779,390.716C119.343,398.766,134.471,406.532,142.036,410.415L149.6,414.298" id="mermaid-1778643653507-L_E_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_F_0" data-points="W3sieCI6MTA0LjIxNDg0Mzc1LCJ5IjozNjZ9LHsieCI6MTA0LjIxNDg0Mzc1LCJ5IjozOTF9LHsieCI6MTUzLjE1ODIwMzEyNSwieSI6NDE2LjEyNDU1OTM5NzE3N31d" data-look="classic" marker-end="url(#mermaid-1778643653507_flowchart-v2-pointEnd)"></path><path d="M288.208,494L294.545,498.167C300.882,502.333,313.557,510.667,319.895,518.333C326.232,526,326.232,533,326.232,536.5L326.232,540" id="mermaid-1778643653507-L_F_G_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_G_0" data-points="W3sieCI6Mjg4LjIwNzUxOTUzMTI1LCJ5Ijo0OTR9LHsieCI6MzI2LjIzMjQyMTg3NSwieSI6NTE5fSx7IngiOjMyNi4yMzI0MjE4NzUsInkiOjU0NH1d" data-look="classic" marker-end="url(#mermaid-1778643653507_flowchart-v2-pointEnd)"></path><path d="M291.919,630.476L276.282,642.361C260.645,654.247,229.372,678.018,206.362,695.66C183.352,713.302,168.606,724.815,161.233,730.571L153.859,736.327" id="mermaid-1778643653507-L_G_H_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_G_H_0" data-points="W3sieCI6MjkxLjkxOTE4OTc4NTA3MDUsInkiOjYzMC40NzU4MzA0MTAwNzA0fSx7IngiOjE5OC4wOTc2NTYyNSwieSI6NzAxLjc4OTA2MjV9LHsieCI6MTUwLjcwNjYyMDA2NTc4OTQ4LCJ5Ijo3MzguNzg5MDYyNX1d" data-look="classic" marker-end="url(#mermaid-1778643653507_flowchart-v2-pointEnd)"></path><path d="M90.01,738.789L88.311,732.622C86.612,726.456,83.214,714.122,81.515,691.723C79.816,669.324,79.816,636.859,79.816,606.395C79.816,575.93,79.816,547.465,91.427,528.248C103.038,509.03,126.261,499.061,137.872,494.076L149.483,489.091" id="mermaid-1778643653507-L_H_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_H_F_0" data-points="W3sieCI6OTAuMDA5NjYyODI4OTQ3MzcsInkiOjczOC43ODkwNjI1fSx7IngiOjc5LjgxNjQwNjI1LCJ5Ijo3MDEuNzg5MDYyNX0seyJ4Ijo3OS44MTY0MDYyNSwieSI6NjA0LjM5NDUzMTI1fSx7IngiOjc5LjgxNjQwNjI1LCJ5Ijo1MTl9LHsieCI6MTUzLjE1ODIwMzEyNSwieSI6NDg3LjUxMjc1NDY2NzU0MDF9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653507_flowchart-v2-pointEnd)"></path><path d="M340.74,650.282L343.454,658.866C346.168,667.451,351.595,684.62,354.309,698.705C357.023,712.789,357.023,723.789,357.023,729.289L357.023,734.789" id="mermaid-1778643653507-L_G_I_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_G_I_0" data-points="W3sieCI6MzQwLjczOTU4NzQ2OTg1OTksInkiOjY1MC4yODE4OTY5MDUxNDAxfSx7IngiOjM1Ny4wMjM0Mzc1LCJ5Ijo3MDEuNzg5MDYyNX0seyJ4IjozNTcuMDIzNDM3NSwieSI6NzM4Ljc4OTA2MjV9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653507_flowchart-v2-pointEnd)"></path><path d="M357.023,816.789L357.023,820.956C357.023,825.122,357.023,833.456,357.023,841.122C357.023,848.789,357.023,855.789,357.023,859.289L357.023,862.789" id="mermaid-1778643653507-L_I_J_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_I_J_0" data-points="W3sieCI6MzU3LjAyMzQzNzUsInkiOjgxNi43ODkwNjI1fSx7IngiOjM1Ny4wMjM0Mzc1LCJ5Ijo4NDEuNzg5MDYyNX0seyJ4IjozNTcuMDIzNDM3NSwieSI6ODY2Ljc4OTA2MjV9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653507_flowchart-v2-pointEnd)"></path><path d="M357.023,944.789L357.023,948.956C357.023,953.122,357.023,961.456,357.023,969.122C357.023,976.789,357.023,983.789,357.023,987.289L357.023,990.789" id="mermaid-1778643653507-L_J_K_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_J_K_0" data-points="W3sieCI6MzU3LjAyMzQzNzUsInkiOjk0NC43ODkwNjI1fSx7IngiOjM1Ny4wMjM0Mzc1LCJ5Ijo5NjkuNzg5MDYyNX0seyJ4IjozNTcuMDIzNDM3NSwieSI6OTk0Ljc4OTA2MjV9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653507_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_C_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_E_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_F_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_E_F_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_G_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(221.07524, 684.32393)"><g class="label" data-id="L_G_H_0" transform="translate(-21.875, -12)"><foreignObject width="43.75" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">Yes ❌</p></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_H_F_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(357.0234375, 701.7890625)"><g class="label" data-id="L_G_I_0" transform="translate(-19.70703125, -12)"><foreignObject width="39.4140625" height="24"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"><p style="">No ✅</p></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_I_J_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_J_K_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="mermaid-1778643653507-flowchart-A-0" data-look="classic" transform="translate(353.5625, 59)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#243450 !important" x="-110.14453125" y="-51" width="220.2890625" height="102"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-80.14453125, -36)"><rect></rect><foreignObject width="160.2890625" height="72"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">📄 비정형 입력 데이터<br>도면 PDF / 산업표준 PDF<br>Excel / AutoCAD 파일</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653507-flowchart-B-1" data-look="classic" transform="translate(353.5625, 199)"><rect class="basic label-container" style="fill:#1a2d45 !important;stroke:#c9a84c !important" x="-91.67578125" y="-39" width="183.3515625" height="78"></rect><g class="label" style="color:#e8c96a !important" transform="translate(-61.67578125, -24)"><rect></rect><foreignObject width="123.3515625" height="48"><div style="color: rgb(232, 201, 106) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8c96a !important" class="nodeLabel"><p style="">🤖 에이전틱 LLM<br>데이터 파싱 및 분류</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653507-flowchart-C-3" data-look="classic" transform="translate(353.5625, 327)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#243450 !important" x="-113.515625" y="-39" width="227.03125" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-83.515625, -24)"><rect></rect><foreignObject width="167.03125" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">🗂️ 온톨로지 인스턴스 생성<br>구조화된 지식 체계</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653507-flowchart-D-4" data-look="classic" transform="translate(104.21484375, 199)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#243450 !important" x="-92.3125" y="-39" width="184.625" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-62.3125, -24)"><rect></rect><foreignObject width="124.625" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">📋 산업표준 규칙<br>온도·압력·배관 조건</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653507-flowchart-E-5" data-look="classic" transform="translate(104.21484375, 327)"><rect class="basic label-container" style="fill:#1a2d45 !important;stroke:#243450 !important" x="-85.83203125" y="-39" width="171.6640625" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-55.83203125, -24)"><rect></rect><foreignObject width="111.6640625" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">🔍 쿼리 언어 변환<br>검증 로직 생성</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653507-flowchart-F-7" data-look="classic" transform="translate(228.888671875, 455)"><rect class="basic label-container" style="fill:#1a2d45 !important;stroke:#c9a84c !important" x="-75.73046875" y="-39" width="151.4609375" height="78"></rect><g class="label" style="color:#e8c96a !important" transform="translate(-45.73046875, -24)"><rect></rect><foreignObject width="91.4609375" height="48"><div style="color: rgb(232, 201, 106) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8c96a !important" class="nodeLabel"><p style="">⚡ 교차 검증<br>설계 오류 탐지</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653507-flowchart-G-11" data-look="classic" transform="translate(326.232421875, 604.39453125)"><polygon points="60.39453125,0 120.7890625,-60.39453125 60.39453125,-120.7890625 0,-60.39453125" class="label-container" transform="translate(-59.89453125, 60.39453125)" style="fill:#0d2337 !important;stroke:#c9a84c !important"></polygon><g class="label" style="color:#e8c96a !important" transform="translate(-33.39453125, -12)"><rect></rect><foreignObject width="66.7890625" height="24"><div style="color: rgb(232, 201, 106) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8c96a !important" class="nodeLabel"><p style="">오류 발견?</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653507-flowchart-H-13" data-look="classic" transform="translate(100.75390625, 777.7890625)"><rect class="basic label-container" style="fill:#1a2d45 !important;stroke:#f87171 !important" x="-92.75390625" y="-39" width="185.5078125" height="78"></rect><g class="label" style="color:#f87171 !important" transform="translate(-62.75390625, -24)"><rect></rect><foreignObject width="125.5078125" height="48"><div style="color: rgb(248, 113, 113) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#f87171 !important" class="nodeLabel"><p style="">🔄 셀프 피드백 루프<br>에러 재입력 &amp; 수정</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653507-flowchart-I-17" data-look="classic" transform="translate(357.0234375, 777.7890625)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#243450 !important" x="-113.515625" y="-39" width="227.03125" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-83.515625, -24)"><rect></rect><foreignObject width="167.03125" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">📝 수정된 딜리버러블 생성<br>라인리스트 / 도면</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653507-flowchart-J-19" data-look="classic" transform="translate(357.0234375, 905.7890625)"><rect class="basic label-container" style="fill:#1a2d45 !important;stroke:#4ade80 !important" x="-99.67578125" y="-39" width="199.3515625" height="78"></rect><g class="label" style="color:#4ade80 !important" transform="translate(-69.67578125, -24)"><rect></rect><foreignObject width="139.3515625" height="48"><div style="color: rgb(74, 222, 128) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#4ade80 !important" class="nodeLabel"><p style="">👷 엔지니어 최종 검수<br>Human-in-the-Loop</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653507-flowchart-K-21" data-look="classic" transform="translate(357.0234375, 1033.7890625)"><rect class="basic label-container" style="fill:#0d2337 !important;stroke:#4ade80 !important" x="-99.67578125" y="-39" width="199.3515625" height="78"></rect><g class="label" style="color:#4ade80 !important" transform="translate(-69.67578125, -24)"><rect></rect><foreignObject width="139.3515625" height="48"><div style="color: rgb(74, 222, 128) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#4ade80 !important" class="nodeLabel"><p style="">✅ 완성된 설계 산출물<br>시간 50%+ 절감</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mermaid-1778643653507-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><defs><filter id="mermaid-1778643653507-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><linearGradient id="mermaid-1778643653507-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"></stop></linearGradient></svg></div>
+    </div>
+
+    <!-- Diagram 2: 관계도 -->
+    <div class="mermaid-wrap">
+      <h3 style="">② 안건 간 연관성 및 비즈니스 구조 관계도</h3>
+      <div class="mermaid" data-processed="true"><svg id="mermaid-1778643653560" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="flowchart" style="max-width: 1668.4609375px;" viewBox="0 0 1668.4609375 430" role="graphics-document document" aria-roledescription="flowchart-v2"><style>#mermaid-1778643653560{font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-size:16px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-1778643653560 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-1778643653560 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-1778643653560 .error-icon{fill:#a44141;}#mermaid-1778643653560 .error-text{fill:#ddd;stroke:#ddd;}#mermaid-1778643653560 .edge-thickness-normal{stroke-width:1px;}#mermaid-1778643653560 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1778643653560 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1778643653560 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1778643653560 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1778643653560 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1778643653560 .marker{fill:#c9a84c;stroke:#c9a84c;}#mermaid-1778643653560 .marker.cross{stroke:#c9a84c;}#mermaid-1778643653560 svg{font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-size:16px;}#mermaid-1778643653560 p{margin:0;}#mermaid-1778643653560 .label{font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;color:#e8edf2;}#mermaid-1778643653560 .cluster-label text{fill:#e8c96a;}#mermaid-1778643653560 .cluster-label span{color:#e8c96a;}#mermaid-1778643653560 .cluster-label span p{background-color:transparent;}#mermaid-1778643653560 .label text,#mermaid-1778643653560 span{fill:#e8edf2;color:#e8edf2;}#mermaid-1778643653560 .node rect,#mermaid-1778643653560 .node circle,#mermaid-1778643653560 .node ellipse,#mermaid-1778643653560 .node polygon,#mermaid-1778643653560 .node path{fill:#1f2020;stroke:#ccc;stroke-width:1px;}#mermaid-1778643653560 .rough-node .label text,#mermaid-1778643653560 .node .label text,#mermaid-1778643653560 .image-shape .label,#mermaid-1778643653560 .icon-shape .label{text-anchor:middle;}#mermaid-1778643653560 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-1778643653560 .rough-node .label,#mermaid-1778643653560 .node .label,#mermaid-1778643653560 .image-shape .label,#mermaid-1778643653560 .icon-shape .label{text-align:center;}#mermaid-1778643653560 .node.clickable{cursor:pointer;}#mermaid-1778643653560 .root .anchor path{fill:#c9a84c!important;stroke-width:0;stroke:#c9a84c;}#mermaid-1778643653560 .arrowheadPath{fill:lightgrey;}#mermaid-1778643653560 .edgePath .path{stroke:#c9a84c;stroke-width:1px;}#mermaid-1778643653560 .flowchart-link{stroke:#c9a84c;fill:none;}#mermaid-1778643653560 .edgeLabel{background-color:#162030;text-align:center;}#mermaid-1778643653560 .edgeLabel p{background-color:#162030;}#mermaid-1778643653560 .edgeLabel rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1778643653560 .labelBkg{background-color:rgba(22, 32, 48, 0.5);}#mermaid-1778643653560 .cluster rect{fill:#0d1b2a;stroke:rgba(255, 255, 255, 0.25);stroke-width:1px;}#mermaid-1778643653560 .cluster text{fill:#e8c96a;}#mermaid-1778643653560 .cluster span{color:#e8c96a;}#mermaid-1778643653560 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-size:12px;background:#162030;border:1px solid rgba(255, 255, 255, 0.25);border-radius:2px;pointer-events:none;z-index:100;}#mermaid-1778643653560 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#ccc;}#mermaid-1778643653560 rect.text{fill:none;stroke-width:0;}#mermaid-1778643653560 .icon-shape,#mermaid-1778643653560 .image-shape{background-color:#162030;text-align:center;}#mermaid-1778643653560 .icon-shape p,#mermaid-1778643653560 .image-shape p{background-color:#162030;padding:2px;}#mermaid-1778643653560 .icon-shape .label rect,#mermaid-1778643653560 .image-shape .label rect{opacity:0.5;background-color:#162030;fill:#162030;}#mermaid-1778643653560 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-1778643653560 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-1778643653560 .node .neo-node{stroke:#ccc;}#mermaid-1778643653560 [data-look="neo"].node rect,#mermaid-1778643653560 [data-look="neo"].cluster rect,#mermaid-1778643653560 [data-look="neo"].node polygon{stroke:url(#mermaid-1778643653560-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653560 [data-look="neo"].node path{stroke:url(#mermaid-1778643653560-gradient);stroke-width:1px;}#mermaid-1778643653560 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653560 [data-look="neo"].node .neo-line path{stroke:#ccc;filter:none;}#mermaid-1778643653560 [data-look="neo"].node circle{stroke:url(#mermaid-1778643653560-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653560 [data-look="neo"].node circle .state-start{fill:#000000;}#mermaid-1778643653560 [data-look="neo"].icon-shape .icon{fill:url(#mermaid-1778643653560-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653560 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mermaid-1778643653560-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653560 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g><marker id="mermaid-1778643653560_flowchart-v2-pointEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1778643653560_flowchart-v2-pointStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="4.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1778643653560_flowchart-v2-pointEnd-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="11.5" refY="7" markerUnits="userSpaceOnUse" markerWidth="10.5" markerHeight="14" orient="auto"><path d="M 0 0 L 11.5 7 L 0 14 z" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1778643653560_flowchart-v2-pointStart-margin" class="marker flowchart-v2" viewBox="0 0 11.5 14" refX="1" refY="7" markerUnits="userSpaceOnUse" markerWidth="11.5" markerHeight="14" orient="auto"><polygon points="0,7 11.5,14 11.5,0" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></polygon></marker><marker id="mermaid-1778643653560_flowchart-v2-circleEnd" class="marker flowchart-v2" viewBox="0 0 10 10" refX="11" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1778643653560_flowchart-v2-circleStart" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-1" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1778643653560_flowchart-v2-circleEnd-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refY="5" refX="12.25" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1778643653560_flowchart-v2-circleStart-margin" class="marker flowchart-v2" viewBox="0 0 10 10" refX="-2" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 0; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1778643653560_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="12" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1778643653560_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewBox="0 0 11 11" refX="-1" refY="5.2" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1778643653560_flowchart-v2-crossEnd-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="17.7" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5;"></path></marker><marker id="mermaid-1778643653560_flowchart-v2-crossStart-margin" class="marker cross flowchart-v2" viewBox="0 0 15 15" refX="-3.5" refY="7.5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 1,1 L 14,14 M 1,14 L 14,1" class="arrowMarkerPath" style="stroke-width: 2.5; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"><g class="cluster" id="mermaid-1778643653560-VALUE" data-look="classic"><rect style="" x="850.3359375" y="8" width="366.34375" height="296"></rect><g class="cluster-label" transform="translate(993.6171875, 8)"><foreignObject width="79.78125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5;"><span class="nodeLabel"><p style="">💰 가치 제안</p></span></div></foreignObject></g></g><g class="cluster" id="mermaid-1778643653560-MARKET" data-look="classic"><rect style="" x="1266.6796875" y="8" width="393.78125" height="296"></rect><g class="cluster-label" transform="translate(1423.6796875, 8)"><foreignObject width="79.78125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5;"><span class="nodeLabel"><p style="">🎯 시장 공략</p></span></div></foreignObject></g></g><g class="cluster" id="mermaid-1778643653560-TEAM" data-look="classic"><rect style="" x="8" y="18" width="210.1484375" height="404"></rect><g class="cluster-label" transform="translate(80.10546875, 18)"><foreignObject width="65.9375" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5;"><span class="nodeLabel"><p style="">👥 팀 구성</p></span></div></foreignObject></g></g><g class="cluster" id="mermaid-1778643653560-TECH" data-look="classic"><rect style="" x="268.1484375" y="35" width="532.1875" height="333"></rect><g class="cluster-label" transform="translate(494.3515625, 35)"><foreignObject width="79.78125" height="24"><div xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5;"><span class="nodeLabel"><p style="">🔬 기술 역량</p></span></div></foreignObject></g></g></g><g class="edgePaths"><path d="M426.563,193.086L430.729,191.405C434.896,189.724,443.229,186.362,452.687,180.902C462.144,175.442,472.726,167.883,478.017,164.104L483.308,160.325" id="mermaid-1778643653560-L_T1_T2_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_T1_T2_0" data-points="W3sieCI6NDI2LjU2MjUsInkiOjE5My4wODY0Njc2MDY1OTM3fSx7IngiOjQ1MS41NjI1LCJ5IjoxODN9LHsieCI6NDg2LjU2MzExMDM1MTU2MjUsInkiOjE1OH1d" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M605.766,119L609.932,119C614.099,119,622.432,119,630.099,119C637.766,119,644.766,119,648.266,119L651.766,119" id="mermaid-1778643653560-L_T2_T3_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_T2_T3_0" data-points="W3sieCI6NjA1Ljc2NTYyNSwieSI6MTE5fSx7IngiOjYzMC43NjU2MjUsInkiOjExOX0seyJ4Ijo2NTUuNzY1NjI1LCJ5IjoxMTl9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M775.336,119L779.503,119C783.669,119,792.003,119,800.336,119C808.669,119,817.003,119,825.336,119C833.669,119,842.003,119,849.669,119C857.336,119,864.336,119,867.836,119L871.336,119" id="mermaid-1778643653560-L_T3_V1_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_T3_V1_0" data-points="W3sieCI6Nzc1LjMzNTkzNzUsInkiOjExOX0seyJ4Ijo4MDAuMzM1OTM3NSwieSI6MTE5fSx7IngiOjgyNS4zMzU5Mzc1LCJ5IjoxMTl9LHsieCI6ODUwLjMzNTkzNzUsInkiOjExOX0seyJ4Ijo4NzUuMzM1OTM3NSwieSI6MTE5fV0=" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M426.563,227.274L430.729,227.728C434.896,228.183,443.229,229.091,462.329,229.546C481.43,230,511.297,230,541.164,230C571.031,230,600.898,230,629.963,230C659.027,230,687.289,230,715.551,230C743.813,230,772.074,230,790.372,230C808.669,230,817.003,230,825.336,230C833.669,230,842.003,230,861.326,230C880.648,230,910.961,230,941.273,230C971.586,230,1001.898,230,1020.555,230C1039.211,230,1046.211,230,1049.711,230L1053.211,230" id="mermaid-1778643653560-L_T1_V2_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_T1_V2_0" data-points="W3sieCI6NDI2LjU2MjUsInkiOjIyNy4yNzM5Mjc2NzM4OTM2fSx7IngiOjQ1MS41NjI1LCJ5IjoyMzB9LHsieCI6NTQxLjE2NDA2MjUsInkiOjIzMH0seyJ4Ijo2MzAuNzY1NjI1LCJ5IjoyMzB9LHsieCI6NzE1LjU1MDc4MTI1LCJ5IjoyMzB9LHsieCI6ODAwLjMzNTkzNzUsInkiOjIzMH0seyJ4Ijo4MjUuMzM1OTM3NSwieSI6MjMwfSx7IngiOjg1MC4zMzU5Mzc1LCJ5IjoyMzB9LHsieCI6OTQxLjI3MzQzNzUsInkiOjIzMH0seyJ4IjoxMDMyLjIxMDkzNzUsInkiOjIzMH0seyJ4IjoxMDU3LjIxMDkzNzUsInkiOjIzMH1d" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M1007.211,92.172L1011.378,90.477C1015.544,88.781,1023.878,85.391,1031.594,83.695C1039.31,82,1046.409,82,1049.958,82L1053.508,82" id="mermaid-1778643653560-L_V1_V3_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_V1_V3_0" data-points="W3sieCI6MTAwNy4yMTA5Mzc1LCJ5Ijo5Mi4xNzE4MjEzMDU4NDE5Mn0seyJ4IjoxMDMyLjIxMDkzNzUsInkiOjgyfSx7IngiOjEwNTcuNTA3ODEyNSwieSI6ODJ9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M187.02,92L192.208,92C197.396,92,207.772,92,217.127,92C226.482,92,234.815,92,243.148,92C251.482,92,259.815,92,279.266,92C298.717,92,329.286,92,359.855,92C390.424,92,420.993,92,439.806,93.063C458.619,94.126,465.676,96.253,469.204,97.316L472.733,98.379" id="mermaid-1778643653560-L_P1_T2_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_P1_T2_0" data-points="W3sieCI6MTg3LjAxOTUzMTI1LCJ5Ijo5Mn0seyJ4IjoyMTguMTQ4NDM3NSwieSI6OTJ9LHsieCI6MjQzLjE0ODQzNzUsInkiOjkyfSx7IngiOjI2OC4xNDg0Mzc1LCJ5Ijo5Mn0seyJ4IjozNTkuODU1NDY4NzUsInkiOjkyfSx7IngiOjQ1MS41NjI1LCJ5Ijo5Mn0seyJ4Ijo0NzYuNTYyNSwieSI6OTkuNTMzMzUwNzcxNjQ1M31d" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M193.148,220L197.315,220C201.482,220,209.815,220,218.148,220C226.482,220,234.815,220,243.148,220C251.482,220,259.815,220,267.482,220C275.148,220,282.148,220,285.648,220L289.148,220" id="mermaid-1778643653560-L_P2_T1_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_P2_T1_0" data-points="W3sieCI6MTkzLjE0ODQzNzUsInkiOjIyMH0seyJ4IjoyMTguMTQ4NDM3NSwieSI6MjIwfSx7IngiOjI0My4xNDg0Mzc1LCJ5IjoyMjB9LHsieCI6MjY4LjE0ODQzNzUsInkiOjIyMH0seyJ4IjoyOTMuMTQ4NDM3NSwieSI6MjIwfV0=" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M187.02,348L192.208,348C197.396,348,207.772,348,217.127,348C226.482,348,234.815,348,243.148,348C251.482,348,259.815,348,279.266,348C298.717,348,329.286,348,359.855,348C390.424,348,420.993,348,451.212,348C481.43,348,511.297,348,541.164,348C571.031,348,600.898,348,627.325,316.959C653.751,285.917,676.737,223.834,688.23,192.793L699.723,161.751" id="mermaid-1778643653560-L_P3_T3_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_P3_T3_0" data-points="W3sieCI6MTg3LjAxOTUzMTI1LCJ5IjozNDh9LHsieCI6MjE4LjE0ODQzNzUsInkiOjM0OH0seyJ4IjoyNDMuMTQ4NDM3NSwieSI6MzQ4fSx7IngiOjI2OC4xNDg0Mzc1LCJ5IjozNDh9LHsieCI6MzU5Ljg1NTQ2ODc1LCJ5IjozNDh9LHsieCI6NDUxLjU2MjUsInkiOjM0OH0seyJ4Ijo1NDEuMTY0MDYyNSwieSI6MzQ4fSx7IngiOjYzMC43NjU2MjUsInkiOjM0OH0seyJ4Ijo3MDEuMTExMzg3ODI3NTExLCJ5IjoxNTh9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M1007.211,145.828L1011.378,147.523C1015.544,149.219,1023.878,152.609,1043.417,154.305C1062.956,156,1093.701,156,1124.445,156C1155.19,156,1185.935,156,1205.474,156C1225.013,156,1233.346,156,1241.68,156C1250.013,156,1258.346,156,1278.859,156C1299.371,156,1332.063,156,1364.754,156C1397.445,156,1430.137,156,1449.982,156C1469.828,156,1476.828,156,1480.328,156L1483.828,156" id="mermaid-1778643653560-L_V1_M1_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_V1_M1_0" data-points="W3sieCI6MTAwNy4yMTA5Mzc1LCJ5IjoxNDUuODI4MTc4Njk0MTU4MDh9LHsieCI6MTAzMi4yMTA5Mzc1LCJ5IjoxNTZ9LHsieCI6MTEyNC40NDUzMTI1LCJ5IjoxNTZ9LHsieCI6MTIxNi42Nzk2ODc1LCJ5IjoxNTZ9LHsieCI6MTI0MS42Nzk2ODc1LCJ5IjoxNTZ9LHsieCI6MTI2Ni42Nzk2ODc1LCJ5IjoxNTZ9LHsieCI6MTM2NC43NTM5MDYyNSwieSI6MTU2fSx7IngiOjE0NjIuODI4MTI1LCJ5IjoxNTZ9LHsieCI6MTQ4Ny44MjgxMjUsInkiOjE1Nn1d" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M1191.68,230L1195.846,230C1200.013,230,1208.346,230,1216.68,230C1225.013,230,1233.346,230,1241.68,230C1250.013,230,1258.346,230,1266.013,230C1273.68,230,1280.68,230,1284.18,230L1287.68,230" id="mermaid-1778643653560-L_V2_M2_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_V2_M2_0" data-points="W3sieCI6MTE5MS42Nzk2ODc1LCJ5IjoyMzB9LHsieCI6MTIxNi42Nzk2ODc1LCJ5IjoyMzB9LHsieCI6MTI0MS42Nzk2ODc1LCJ5IjoyMzB9LHsieCI6MTI2Ni42Nzk2ODc1LCJ5IjoyMzB9LHsieCI6MTI5MS42Nzk2ODc1LCJ5IjoyMzB9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M1191.383,82L1195.599,82C1199.815,82,1208.247,82,1216.63,82C1225.013,82,1233.346,82,1241.68,82C1250.013,82,1258.346,82,1266.059,82C1273.771,82,1280.862,82,1284.408,82L1287.953,82" id="mermaid-1778643653560-L_V3_M3_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_V3_M3_0" data-points="W3sieCI6MTE5MS4zODI4MTI1LCJ5Ijo4Mn0seyJ4IjoxMjE2LjY3OTY4NzUsInkiOjgyfSx7IngiOjEyNDEuNjc5Njg3NSwieSI6ODJ9LHsieCI6MTI2Ni42Nzk2ODc1LCJ5Ijo4Mn0seyJ4IjoxMjkxLjk1MzEyNSwieSI6ODJ9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M1437.828,230L1441.995,230C1446.161,230,1454.495,230,1465.917,224.566C1477.34,219.133,1491.852,208.265,1499.108,202.831L1506.364,197.398" id="mermaid-1778643653560-L_M2_M1_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_M2_M1_0" data-points="W3sieCI6MTQzNy44MjgxMjUsInkiOjIzMH0seyJ4IjoxNDYyLjgyODEyNSwieSI6MjMwfSx7IngiOjE1MDkuNTY1NjE0NDQyNTY3NSwieSI6MTk1fV0=" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path><path d="M1437.555,82L1441.767,82C1445.979,82,1454.404,82,1465.872,87.434C1477.34,92.867,1491.852,103.735,1499.108,109.169L1506.364,114.602" id="mermaid-1778643653560-L_M3_M1_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_M3_M1_0" data-points="W3sieCI6MTQzNy41NTQ2ODc1LCJ5Ijo4Mn0seyJ4IjoxNDYyLjgyODEyNSwieSI6ODJ9LHsieCI6MTUwOS41NjU2MTQ0NDI1Njc1LCJ5IjoxMTd9XQ==" data-look="classic" marker-end="url(#mermaid-1778643653560_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_T1_T2_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_T2_T3_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_T3_V1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_T1_V2_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_V1_V3_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_P1_T2_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_P2_T1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_P3_T3_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_V1_M1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_V2_M2_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_V3_M3_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_M2_M1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g class="label" data-id="L_M3_M1_0" transform="translate(0, 0)"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" class="labelBkg" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" id="mermaid-1778643653560-flowchart-T1-0" data-look="classic" transform="translate(359.85546875, 220)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#c9a84c !important" x="-66.70703125" y="-39" width="133.4140625" height="78"></rect><g class="label" style="color:#e8c96a !important" transform="translate(-36.70703125, -24)"><rect></rect><foreignObject width="73.4140625" height="48"><div style="color: rgb(232, 201, 106) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8c96a !important" class="nodeLabel"><p style="">온톨로지<br>스키마 설계</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653560-flowchart-T2-1" data-look="classic" transform="translate(541.1640625, 119)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#c9a84c !important" x="-64.6015625" y="-39" width="129.203125" height="78"></rect><g class="label" style="color:#e8c96a !important" transform="translate(-34.6015625, -24)"><rect></rect><foreignObject width="69.203125" height="48"><div style="color: rgb(232, 201, 106) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8c96a !important" class="nodeLabel"><p style="">에이전트<br>프레임워크</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653560-flowchart-T3-2" data-look="classic" transform="translate(715.55078125, 119)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#c9a84c !important" x="-59.78515625" y="-39" width="119.5703125" height="78"></rect><g class="label" style="color:#e8c96a !important" transform="translate(-29.78515625, -24)"><rect></rect><foreignObject width="59.5703125" height="48"><div style="color: rgb(232, 201, 106) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8c96a !important" class="nodeLabel"><p style="">도면 인식<br>AI 모델</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653560-flowchart-P1-3" data-look="classic" transform="translate(113.07421875, 92)"><rect class="basic label-container" style="fill:#1a2d45 !important;stroke:#243450 !important" x="-73.9453125" y="-39" width="147.890625" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-43.9453125, -24)"><rect></rect><foreignObject width="87.890625" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">AI 엔지니어<br>김상윤·이재윤</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653560-flowchart-P2-4" data-look="classic" transform="translate(113.07421875, 220)"><rect class="basic label-container" style="fill:#1a2d45 !important;stroke:#243450 !important" x="-80.07421875" y="-39" width="160.1484375" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-50.07421875, -24)"><rect></rect><foreignObject width="100.1484375" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">플랜트 전문가<br>박규호 + 자문단</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653560-flowchart-P3-5" data-look="classic" transform="translate(113.07421875, 348)"><rect class="basic label-container" style="fill:#1a2d45 !important;stroke:#243450 !important" x="-73.9453125" y="-39" width="147.890625" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-43.9453125, -24)"><rect></rect><foreignObject width="87.890625" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">포스텍 교수진<br>이일봉·김동우</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653560-flowchart-M1-6" data-look="classic" transform="translate(1561.64453125, 156)"><rect class="basic label-container" style="fill:#0d2337 !important;stroke:#4ade80 !important" x="-73.81640625" y="-39" width="147.6328125" height="78"></rect><g class="label" style="color:#4ade80 !important" transform="translate(-43.81640625, -24)"><rect></rect><foreignObject width="87.6328125" height="48"><div style="color: rgb(74, 222, 128) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#4ade80 !important" class="nodeLabel"><p style="">대형 EPC H사<br>POC 진행 중</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653560-flowchart-M2-7" data-look="classic" transform="translate(1364.75390625, 230)"><rect class="basic label-container" style="fill:#0d2337 !important;stroke:#4ade80 !important" x="-73.07421875" y="-39" width="146.1484375" height="78"></rect><g class="label" style="color:#4ade80 !important" transform="translate(-43.07421875, -24)"><rect></rect><foreignObject width="86.1484375" height="48"><div style="color: rgb(74, 222, 128) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#4ade80 !important" class="nodeLabel"><p style="">중견 EPC<br>2억 계약 완료</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653560-flowchart-M3-8" data-look="classic" transform="translate(1364.75390625, 82)"><rect class="basic label-container" style="fill:#0d2337 !important;stroke:#fbbf24 !important" x="-72.80078125" y="-39" width="145.6015625" height="78"></rect><g class="label" style="color:#fbbf24 !important" transform="translate(-42.80078125, -24)"><rect></rect><foreignObject width="85.6015625" height="48"><div style="color: rgb(251, 191, 36) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#fbbf24 !important" class="nodeLabel"><p style="">공공기관<br>5월 계약 예정</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653560-flowchart-V1-9" data-look="classic" transform="translate(941.2734375, 119)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#243450 !important" x="-65.9375" y="-39" width="131.875" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-35.9375, -24)"><rect></rect><foreignObject width="71.875" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">설계 시간<br>50%+ 단축</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653560-flowchart-V2-10" data-look="classic" transform="translate(1124.4453125, 230)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#243450 !important" x="-67.234375" y="-39" width="134.46875" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-37.234375, -24)"><rect></rect><foreignObject width="74.46875" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">위약금<br>300억 절감</p></span></div></foreignObject></g></g><g class="node default" id="mermaid-1778643653560-flowchart-V3-11" data-look="classic" transform="translate(1124.4453125, 82)"><rect class="basic label-container" style="fill:#162030 !important;stroke:#243450 !important" x="-66.9375" y="-39" width="133.875" height="78"></rect><g class="label" style="color:#e8edf2 !important" transform="translate(-36.9375, -24)"><rect></rect><foreignObject width="73.875" height="48"><div style="color: rgb(232, 237, 242) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" xmlns="http://www.w3.org/1999/xhtml"><span style="color:#e8edf2 !important" class="nodeLabel"><p style="">인건비<br>500억 절감</p></span></div></foreignObject></g></g></g></g></g><defs><filter id="mermaid-1778643653560-drop-shadow" height="130%" width="130%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><defs><filter id="mermaid-1778643653560-drop-shadow-small" height="150%" width="150%"><feDropShadow dx="2" dy="2" stdDeviation="0" flood-opacity="0.06" flood-color="#FFFFFF"></feDropShadow></filter></defs><linearGradient id="mermaid-1778643653560-gradient" gradientUnits="objectBoundingBox" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#cccccc" stop-opacity="1"></stop><stop offset="100%" stop-color="hsl(180, 0%, 18.3529411765%)" stop-opacity="1"></stop></linearGradient></svg></div>
+    </div>
+
+    <!-- Diagram 3: 타임라인 -->
+    <div class="mermaid-wrap">
+      <h3 style="">③ 사업 로드맵 타임라인 (마일스톤)</h3>
+      <div class="mermaid" data-processed="true"><svg id="mermaid-1778643653590" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1002 460" style="max-width: 1002px;" role="graphics-document document" aria-roledescription="gantt"><style>#mermaid-1778643653590{font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-size:16px;fill:#ccc;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-1778643653590 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-1778643653590 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-1778643653590 .error-icon{fill:#a44141;}#mermaid-1778643653590 .error-text{fill:#ddd;stroke:#ddd;}#mermaid-1778643653590 .edge-thickness-normal{stroke-width:1px;}#mermaid-1778643653590 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-1778643653590 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-1778643653590 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-1778643653590 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-1778643653590 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-1778643653590 .marker{fill:#c9a84c;stroke:#c9a84c;}#mermaid-1778643653590 .marker.cross{stroke:#c9a84c;}#mermaid-1778643653590 svg{font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;font-size:16px;}#mermaid-1778643653590 p{margin:0;}#mermaid-1778643653590 .mermaid-main-font{font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;}#mermaid-1778643653590 .exclude-range{fill:hsl(52.9411764706, 28.813559322%, 48.431372549%);}#mermaid-1778643653590 .section{stroke:none;opacity:0.2;}#mermaid-1778643653590 .section0{fill:hsl(52.9411764706, 28.813559322%, 58.431372549%);}#mermaid-1778643653590 .section2{fill:#EAE8D9;}#mermaid-1778643653590 .section1,#mermaid-1778643653590 .section3{fill:#162030;opacity:0.2;}#mermaid-1778643653590 .sectionTitle0{fill:#e8c96a;}#mermaid-1778643653590 .sectionTitle1{fill:#e8c96a;}#mermaid-1778643653590 .sectionTitle2{fill:#e8c96a;}#mermaid-1778643653590 .sectionTitle3{fill:#e8c96a;}#mermaid-1778643653590 .sectionTitle{text-anchor:start;font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;}#mermaid-1778643653590 .grid .tick{stroke:lightgrey;opacity:0.8;shape-rendering:crispEdges;}#mermaid-1778643653590 .grid .tick text{font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;fill:#ccc;}#mermaid-1778643653590 .grid path{stroke-width:0;}#mermaid-1778643653590 .today{fill:none;stroke:#DB5757;stroke-width:2px;}#mermaid-1778643653590 .task{stroke-width:2;}#mermaid-1778643653590 .taskText{text-anchor:middle;font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;}#mermaid-1778643653590 .taskTextOutsideRight{fill:#2c2c2c;text-anchor:start;font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;}#mermaid-1778643653590 .taskTextOutsideLeft{fill:#2c2c2c;text-anchor:end;}#mermaid-1778643653590 .task.clickable{cursor:pointer;}#mermaid-1778643653590 .taskText.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#mermaid-1778643653590 .taskTextOutsideLeft.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#mermaid-1778643653590 .taskTextOutsideRight.clickable{cursor:pointer;fill:#003163!important;font-weight:bold;}#mermaid-1778643653590 .taskText0,#mermaid-1778643653590 .taskText1,#mermaid-1778643653590 .taskText2,#mermaid-1778643653590 .taskText3{fill:hsl(28.5714285714, 17.3553719008%, 86.2745098039%);}#mermaid-1778643653590 .task0,#mermaid-1778643653590 .task1,#mermaid-1778643653590 .task2,#mermaid-1778643653590 .task3{fill:hsl(180, 1.5873015873%, 35.3529411765%);stroke:#ffffff;}#mermaid-1778643653590 .taskTextOutside0,#mermaid-1778643653590 .taskTextOutside2{fill:lightgrey;}#mermaid-1778643653590 .taskTextOutside1,#mermaid-1778643653590 .taskTextOutside3{fill:lightgrey;}#mermaid-1778643653590 .active0,#mermaid-1778643653590 .active1,#mermaid-1778643653590 .active2,#mermaid-1778643653590 .active3{fill:#81B1DB;stroke:#ffffff;}#mermaid-1778643653590 .activeText0,#mermaid-1778643653590 .activeText1,#mermaid-1778643653590 .activeText2,#mermaid-1778643653590 .activeText3{fill:#2c2c2c!important;}#mermaid-1778643653590 .done0,#mermaid-1778643653590 .done1,#mermaid-1778643653590 .done2,#mermaid-1778643653590 .done3{stroke:grey;fill:lightgrey;stroke-width:2;}#mermaid-1778643653590 .doneText0,#mermaid-1778643653590 .doneText1,#mermaid-1778643653590 .doneText2,#mermaid-1778643653590 .doneText3{fill:#2c2c2c!important;}#mermaid-1778643653590 .doneText0.taskTextOutsideLeft,#mermaid-1778643653590 .doneText0.taskTextOutsideRight,#mermaid-1778643653590 .doneText1.taskTextOutsideLeft,#mermaid-1778643653590 .doneText1.taskTextOutsideRight,#mermaid-1778643653590 .doneText2.taskTextOutsideLeft,#mermaid-1778643653590 .doneText2.taskTextOutsideRight,#mermaid-1778643653590 .doneText3.taskTextOutsideLeft,#mermaid-1778643653590 .doneText3.taskTextOutsideRight{fill:lightgrey!important;}#mermaid-1778643653590 .crit0,#mermaid-1778643653590 .crit1,#mermaid-1778643653590 .crit2,#mermaid-1778643653590 .crit3{stroke:#E83737;fill:#E83737;stroke-width:2;}#mermaid-1778643653590 .activeCrit0,#mermaid-1778643653590 .activeCrit1,#mermaid-1778643653590 .activeCrit2,#mermaid-1778643653590 .activeCrit3{stroke:#E83737;fill:#81B1DB;stroke-width:2;}#mermaid-1778643653590 .doneCrit0,#mermaid-1778643653590 .doneCrit1,#mermaid-1778643653590 .doneCrit2,#mermaid-1778643653590 .doneCrit3{stroke:#E83737;fill:lightgrey;stroke-width:2;cursor:pointer;shape-rendering:crispEdges;}#mermaid-1778643653590 .milestone{transform:rotate(45deg) scale(0.8,0.8);}#mermaid-1778643653590 .milestoneText{font-style:italic;}#mermaid-1778643653590 .doneCritText0,#mermaid-1778643653590 .doneCritText1,#mermaid-1778643653590 .doneCritText2,#mermaid-1778643653590 .doneCritText3{fill:#2c2c2c!important;}#mermaid-1778643653590 .doneCritText0.taskTextOutsideLeft,#mermaid-1778643653590 .doneCritText0.taskTextOutsideRight,#mermaid-1778643653590 .doneCritText1.taskTextOutsideLeft,#mermaid-1778643653590 .doneCritText1.taskTextOutsideRight,#mermaid-1778643653590 .doneCritText2.taskTextOutsideLeft,#mermaid-1778643653590 .doneCritText2.taskTextOutsideRight,#mermaid-1778643653590 .doneCritText3.taskTextOutsideLeft,#mermaid-1778643653590 .doneCritText3.taskTextOutsideRight{fill:lightgrey!important;}#mermaid-1778643653590 .vert{stroke:#00BFFF;}#mermaid-1778643653590 .vertText{font-size:15px;text-anchor:middle;fill:#00BFFF!important;}#mermaid-1778643653590 .activeCritText0,#mermaid-1778643653590 .activeCritText1,#mermaid-1778643653590 .activeCritText2,#mermaid-1778643653590 .activeCritText3{fill:#2c2c2c!important;}#mermaid-1778643653590 .titleText{text-anchor:middle;font-size:18px;fill:#e8c96a;font-family:Apple SD Gothic Neo,Noto Sans KR,sans-serif;}#mermaid-1778643653590 .node .neo-node{stroke:#ccc;}#mermaid-1778643653590 [data-look="neo"].node rect,#mermaid-1778643653590 [data-look="neo"].cluster rect,#mermaid-1778643653590 [data-look="neo"].node polygon{stroke:url(#mermaid-1778643653590-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653590 [data-look="neo"].node path{stroke:url(#mermaid-1778643653590-gradient);stroke-width:1px;}#mermaid-1778643653590 [data-look="neo"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653590 [data-look="neo"].node .neo-line path{stroke:#ccc;filter:none;}#mermaid-1778643653590 [data-look="neo"].node circle{stroke:url(#mermaid-1778643653590-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653590 [data-look="neo"].node circle .state-start{fill:#000000;}#mermaid-1778643653590 [data-look="neo"].icon-shape .icon{fill:url(#mermaid-1778643653590-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653590 [data-look="neo"].icon-shape .icon-neo path{stroke:url(#mermaid-1778643653590-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-1778643653590 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g></g><g class="grid" transform="translate(75, 410)" fill="none" font-size="10" font-family="sans-serif" text-anchor="middle"><path class="domain" stroke="currentColor" d="M0,-375V0H852V-375"></path><g class="tick" opacity="1" transform="translate(0,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2025-04</text></g><g class="tick" opacity="1" transform="translate(57,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2025-07</text></g><g class="tick" opacity="1" transform="translate(114,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2025-10</text></g><g class="tick" opacity="1" transform="translate(171,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2026-01</text></g><g class="tick" opacity="1" transform="translate(227,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2026-04</text></g><g class="tick" opacity="1" transform="translate(283,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2026-07</text></g><g class="tick" opacity="1" transform="translate(341,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2026-10</text></g><g class="tick" opacity="1" transform="translate(398,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2027-01</text></g><g class="tick" opacity="1" transform="translate(454,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2027-04</text></g><g class="tick" opacity="1" transform="translate(510,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2027-07</text></g><g class="tick" opacity="1" transform="translate(567,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2027-10</text></g><g class="tick" opacity="1" transform="translate(625,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2028-01</text></g><g class="tick" opacity="1" transform="translate(681,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2028-04</text></g><g class="tick" opacity="1" transform="translate(738,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2028-07</text></g><g class="tick" opacity="1" transform="translate(795,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2028-10</text></g><g class="tick" opacity="1" transform="translate(852,0)"><line stroke="currentColor" y2="-375"></line><text fill="#000" y="3" dy="1em" stroke="none" font-size="10" style="text-anchor: middle;"> 2029-01</text></g></g><g><rect x="0" y="48" width="964.5" height="24" class="section section0"></rect><rect x="0" y="144" width="964.5" height="24" class="section section1"></rect><rect x="0" y="336" width="964.5" height="24" class="section section3"></rect><rect x="0" y="72" width="964.5" height="24" class="section section0"></rect><rect x="0" y="96" width="964.5" height="24" class="section section0"></rect><rect x="0" y="168" width="964.5" height="24" class="section section1"></rect><rect x="0" y="120" width="964.5" height="24" class="section section0"></rect><rect x="0" y="240" width="964.5" height="24" class="section section2"></rect><rect x="0" y="192" width="964.5" height="24" class="section section1"></rect><rect x="0" y="216" width="964.5" height="24" class="section section1"></rect><rect x="0" y="264" width="964.5" height="24" class="section section2"></rect><rect x="0" y="360" width="964.5" height="24" class="section section3"></rect><rect x="0" y="288" width="964.5" height="24" class="section section2"></rect><rect x="0" y="312" width="964.5" height="24" class="section section2"></rect><rect x="0" y="384" width="964.5" height="24" class="section section3"></rect></g><g><rect id="mermaid-1778643653590-task1" rx="3" ry="3" x="75" y="50" width="19" height="20" transform-origin="84.5px 60px" class="task done0"></rect><rect id="mermaid-1778643653590-task5" rx="3" ry="3" x="75" y="146" width="38" height="20" transform-origin="94px 156px" class="task done1"></rect><rect id="mermaid-1778643653590-task13" rx="3" ry="3" x="75" y="338" width="341" height="20" transform-origin="245.5px 348px" class="task task3"></rect><rect id="mermaid-1778643653590-task2" rx="3" ry="3" x="94" y="74" width="19" height="20" transform-origin="103.5px 84px" class="task active0"></rect><rect id="mermaid-1778643653590-task3" rx="3" ry="3" x="94" y="98" width="57" height="20" transform-origin="122.5px 108px" class="task active0"></rect><rect id="mermaid-1778643653590-task6" rx="3" ry="3" x="94" y="170" width="57" height="20" transform-origin="122.5px 180px" class="task active1"></rect><rect id="mermaid-1778643653590-task4" rx="3" ry="3" x="113" y="122" width="19" height="20" transform-origin="122.5px 132px" class="task task0"></rect><rect id="mermaid-1778643653590-task9" rx="3" ry="3" x="113" y="242" width="114" height="20" transform-origin="170px 252px" class="task task2"></rect><rect id="mermaid-1778643653590-task7" rx="3" ry="3" x="132" y="194" width="76" height="20" transform-origin="170px 204px" class="task task1"></rect><rect id="mermaid-1778643653590-task8" rx="3" ry="3" x="246" y="218" width="112" height="20" transform-origin="302px 228px" class="task task1"></rect><rect id="mermaid-1778643653590-task10" rx="3" ry="3" x="340" y="266" width="113" height="20" transform-origin="396.5px 276px" class="task task2"></rect><rect id="mermaid-1778643653590-task14" rx="3" ry="3" x="416" y="362" width="340" height="20" transform-origin="586px 372px" class="task task3"></rect><rect id="mermaid-1778643653590-task11" rx="3" ry="3" x="473" y="290" width="227" height="20" transform-origin="586.5px 300px" class="task task2"></rect><rect id="mermaid-1778643653590-task12" rx="3" ry="3" x="567" y="314" width="227" height="20" transform-origin="680.5px 324px" class="task task2"></rect><rect id="mermaid-1778643653590-task15" rx="3" ry="3" x="700" y="386" width="227" height="20" transform-origin="813.5px 396px" class="task task3"></rect><text id="mermaid-1778643653590-task1-text" font-size="12" x="99" y="64" class="taskTextOutsideRight taskTextOutside0  doneText0 width-119.546875">중견 EPC 계약 완료 (2억)     </text><text id="mermaid-1778643653590-task5-text" font-size="12" x="118" y="160" class="taskTextOutsideRight taskTextOutside1  doneText1 width-93.8203125">내부 GPU 서버 구축             </text><text id="mermaid-1778643653590-task13-text" font-size="12" x="245.5" y="352" class="taskText taskText3  width-93.4375">POC 매출 주도 구간              </text><text id="mermaid-1778643653590-task2-text" font-size="12" x="118" y="88" class="taskTextOutsideRight taskTextOutside0 activeText0 width-89.359375">공공기관 계약 체결             </text><text id="mermaid-1778643653590-task3-text" font-size="12" x="156" y="112" class="taskTextOutsideRight taskTextOutside0 activeText0 width-138.3984375">대형 EPC H사 유상 POC 착수     </text><text id="mermaid-1778643653590-task6-text" font-size="12" x="156" y="184" class="taskTextOutsideRight taskTextOutside1 activeText1 width-112.7421875">라인리스트 자동화 MVP           </text><text id="mermaid-1778643653590-task4-text" font-size="12" x="137" y="136" class="taskTextOutsideRight taskTextOutside0  width-110.1171875">중소기업 정부과제 결과          </text><text id="mermaid-1778643653590-task9-text" font-size="12" x="232" y="256" class="taskTextOutsideRight taskTextOutside2  width-148.4921875">화공플랜트 국내 POC 다수 확보    </text><text id="mermaid-1778643653590-task7-text" font-size="12" x="213" y="208" class="taskTextOutsideRight taskTextOutside1  width-113.2734375">도면 검수 자동화 고도화          </text><text id="mermaid-1778643653590-task8-text" font-size="12" x="363" y="232" class="taskTextOutsideRight taskTextOutside1  width-113.2734375">전주기 설계 자동화 완성          </text><text id="mermaid-1778643653590-task10-text" font-size="12" x="396.5" y="280" class="taskText taskText2  width-92.515625">구독 매출 전환 시작              </text><text id="mermaid-1778643653590-task14-text" font-size="12" x="586" y="376" class="taskText taskText3  width-92.515625">구독 매출 전환 우세              </text><text id="mermaid-1778643653590-task11-text" font-size="12" x="586.5" y="304" class="taskText taskText2  width-144.7734375">글로벌 EPC 파일럿 (미국·중동)    </text><text id="mermaid-1778643653590-task12-text" font-size="12" x="680.5" y="328" class="taskText taskText2  width-110.59375">데이터센터·원자력 확장           </text><text id="mermaid-1778643653590-task15-text" font-size="12" x="813.5" y="400" class="taskText taskText3  width-147.8203125">영업이익률 60~80% 달성 목표      </text></g><g><text dy="0em" x="10" y="98" font-size="11" class="sectionTitle sectionTitle0"><tspan alignment-baseline="central" x="10">계약·트랙션</tspan></text><text dy="0em" x="10" y="194" font-size="11" class="sectionTitle sectionTitle1"><tspan alignment-baseline="central" x="10">기술 개발</tspan></text><text dy="0em" x="10" y="290" font-size="11" class="sectionTitle sectionTitle2"><tspan alignment-baseline="central" x="10">시장 확장</tspan></text><text dy="0em" x="10" y="374" font-size="11" class="sectionTitle sectionTitle3"><tspan alignment-baseline="central" x="10">재무 목표</tspan></text></g><g class="today"><line x1="328" x2="328" y1="25" y2="435" class="today"></line></g><text x="501" y="25" class="titleText">스냅스케일 사업 로드맵</text></svg></div>
+    </div>
+  </div>
+
+  <!-- ── 다음 단계 ── -->
+  <div class="section" id="next">
+    <div class="section-title">🚀 다음 단계 및 후속 과제</div>
+
+    <div class="card">
+      <div class="card-title">📌 즉시 실행 과제 (1~4주)</div>
+      <ul class="insight-list">
+        <li style=""><span class="insight-icon">①</span><span><strong>대형 EPC H사 내부 보고서 지원:</strong> AI팀·사업팀의 경영진 보고용 자료 작성을 측면 지원하여 의사결정을 앞당긴다. 유상 POC 범위 및 금액 제안서 제출.</span></li>
+        <li style=""><span class="insight-icon">②</span><span><strong>중견 EPC 계약 착수:</strong> 설계 전주기 자동화 범위 정의서(SOW) 작성 및 기술 개발 스프린트 계획 수립. 라인리스트 자동화를 1차 딜리버러블로 설정.</span></li>
+        <li style=""><span class="insight-icon">③</span><span><strong>GPU 서버 발주 완료:</strong> 반도체 수급 리드타임 1개월을 감안하여 즉시 발주. POC 데모 환경 구축 선행.</span></li>
+        <li style=""><span class="insight-icon">④</span><span><strong>공공기관 계약 문서 준비:</strong> 5월 계약을 위한 법적 계약서 검토 및 납품 일정 확정.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📌 단기 과제 (1~3개월)</div>
+      <ul class="insight-list">
+        <li style=""><span class="insight-icon">①</span><span><strong>시니어 자문단 공식 운영 체계 확립:</strong> 지식 이전 세션 주기, 인센티브(스톡옵션 or 컨설팅비) 구조 명문화. 핵심 도메인 규칙을 온톨로지에 반영하는 워크숍 진행.</span></li>
+        <li style=""><span class="insight-icon">②</span><span><strong>P&amp;ID 도면 인식 정확도 기준치 달성:</strong> 셀프 피드백 루프 구현 및 엣지케이스 처리 로직 강화. 실무 허용 오류율 기준 수립.</span></li>
+        <li style=""><span class="insight-icon">③</span><span><strong>중견 토목기업 계약 협상 재개:</strong> 2억 상당 검토가 완료된 상태. 추가 레퍼런스(중견 EPC 계약 2억)를 활용하여 결정 촉진.</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📌 포스텍홀딩스 후속 검토 사항</div>
+      <div class="highlight-box" style="margin-top:0;">
+        <ul class="plain" style="font-size:0.87rem;">
+          <li style="">스냅스케일 투자 검토 시 온톨로지 기술 성숙도(TRL) 실사 필요</li>
+          <li style="">대형 EPC H사 POC 진행 여부가 핵심 마일스톤 — 3개월 내 결과 모니터링</li>
+          <li style="">이을범 교수 네트워크를 통한 국가과제·정부 R&amp;D 연계 가능성 확인</li>
+          <li style="">경쟁사(Alcali 등) 글로벌 동향 및 특허 전략 분석 요청</li>
+          <li style="">구독 전환 KPI(POC to Subscription 전환율) 별도 추적 체계 수립 권고</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div>📋 스냅스케일 IR 회의록 | 포스텍홀딩스</div>
+  <div style="margin-top:0.3rem;">발표: 김상윤 대표 (스냅스케일) | 주최: 포스텍홀딩스 | 7명 참석</div>
+  <div style="margin-top:0.3rem; color:#4a5568;">본 회의록은 AI 분석을 기반으로 자동 생성되었습니다.</div>
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      darkMode: true,
+      background: '#162030',
+      primaryColor: '#1a2d45',
+      primaryTextColor: '#e8edf2',
+      primaryBorderColor: '#243450',
+      lineColor: '#c9a84c',
+      secondaryColor: '#0d1b2a',
+      tertiaryColor: '#162030',
+      edgeLabelBackground: '#162030',
+      clusterBkg: '#0d1b2a',
+      titleColor: '#e8c96a',
+      nodeTextColor: '#e8edf2',
+      fontFamily: 'Apple SD Gothic Neo, Noto Sans KR, sans-serif'
+    },
+    flowchart: { htmlLabels: true, curve: 'basis' },
+    gantt: { fontSize: 12, barHeight: 20, barGap: 4 }
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+<script type="application/json" id="celab-metadata">
+{"title":"스냅스케일 IR 회의록 | 포스텍홀딩스","description":"포스텍홀딩스 주최 스냅스케일(SnapScale) 최종 IR 발표 회의록. 화공플랜트 특화 온톨로지 기반 AI 설계 자동화 솔루션 사업 소개, 기술 아키텍처, 트랙션(중견 EPC 2억 계약 완료), Q&A 및 액션아이템 정리.","category":"IR","tags":["스냅스케일","포스텍홀딩스","화공플랜트","온톨로지AI","EPC자동화","IR회의록","설계자동화"],"emoji":"🏭"}
+</script>
+<div id="celab-logo-badge" style="position:fixed;bottom:18px;right:18px;z-index:9999;
+  width:52px;height:52px;border-radius:50%;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,0.35);cursor:pointer;" title="CELab · Chemical Engineering Lab" onclick="window.open('https://celab-kor.github.io/celab-knowledge-base/','_blank')">
+  <img src="data:image/jpeg;base64,/9j/4QD4RXhpZgAATU0AKgAAAAgACAESAAMAAAABAAEAAAEaAAUAAAABAAAAbgEbAAUAAAABAAAAdgEoAAMAAAABAAIAAAExAAIAAAALAAAAfgE7AAIAAAAKAAAAigITAAMAAAABAAEAAIdpAAQAAAABAAAAlAAAAAAAAABgAAAAAQAAAGAAAAABUGhvdG9TY2FwZQAASmFkZSBQYXJrAAAHkAAABwAAAAQwMjIxkQEABwAAAAQBAgMAoAAABwAAAAQwMTAwoAEAAwAAAAEAAQAAoAIABAAAAAEAAAC+oAMABAAAAAEAAAC+pAYAAwAAAAEAAAAAAAAAAAAA/+ECxmh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8APHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNi4wLjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyI+CiAgICAgICAgIDxkYzpjcmVhdG9yPgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaT5KYWRlIFBhcms8L3JkZjpsaT4KICAgICAgICAgICAgPC9yZGY6U2VxPgogICAgICAgICA8L2RjOmNyZWF0b3I+CiAgICAgICAgIDxkYzp0aXRsZT4KICAgICAgICAgICAgPHJkZjpBbHQ+CiAgICAgICAgICAgICAgIDxyZGY6bGkgeG1sOmxhbmc9IngtZGVmYXVsdCI+d2VsY29tZSBsaXR0bGUgb25lISAtIDc8L3JkZjpsaT4KICAgICAgICAgICAgPC9yZGY6QWx0PgogICAgICAgICA8L2RjOnRpdGxlPgogICAgICAgICA8eG1wOkNyZWF0b3JUb29sPlBob3RvU2NhcGU8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+Cv/tAHJQaG90b3Nob3AgMy4wADhCSU0EBAAAAAAAORwBWgADGyVHHAIAAAIAAhwCUAAJSmFkZSBQYXJrHAIFABd3ZWxjb21lIGxpdHRsZSBvbmUhIC0gNwA4QklNBCUAAAAAABC53P7QmpLeTWG/6V28FFxV/9sAhAABAQEBAQECAQECAwICAgMEAwMDAwQFBAQEBAQFBgUFBQUFBQYGBgYGBgYGBwcHBwcHCAgICAgJCQkJCQkJCQkJAQEBAQICAgQCAgQJBgUGCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQn/3QAEAAz/wAARCAC+AL4DASIAAhEBAxEB/8QBogAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoLEAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+foBAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKCxEAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD+L+iims6RoZGICqMknoAK/pg/Nx1FU7LULLUYvOsXWRAduV9RVyohNSV47FOLjowoooqyQrG1nXdN0KES3r4P8KD7x+gqh4l8T2vh627PO4+SP+p9BXnOheHtQ8W3Z1jWiRAT9N3svoK+dzPOJRmsNhVzT/BI9LC4NOPtaukf62NV/igm7EVmdvu//wBavTdPu1vrKG9VSgkQNtPbIqva6LpNogjgto1A/wBkVpgBQFUYArry3DYuDbxE0/JK1jLE1KLVqcbC0UUV65xBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH/9D+L+obiBLq3ktpPuOpQ/QjFTUV/S04JqzPzmMrHjXgG4k0vX7jQrg8tkD/AH4/T8M/lXsteMeNLa40TxHD4htF+Ryre25eCPxFdKnxJ0IxgypIpx0Cjj9a+NyXMaeD58JXduV6enQ9nG4aVblq01fQ9Crj/FHi610CLyYsSXJHyp2X3b/CuO1L4i3V5/oegwFSeA2Mt+AFWPDfgeWaX+1PEeSSdwjPJJ9W/wAK2xOeTxD9hgPm+iIpYGNJe0r6eRn+HfDF34kuv7c18kxMcgHgv/gteyxxpCgjjAVVGAB0Ap4AUBVGAOgpa9nK8phho2Wre7OLF4yVV67dEFFFFeqcgUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAf/0f4v6KKK/pg/NyGe3guYjBcIHRuoI4rmz4I8Mk5+zj8zXVUVzV8FRqfxIp/I2p15w+F2Myw0bS9MH+gwIh9QOfzrToorWlRhTXLBWRE5t6sKKKK0ICiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9L+L+iiiv6YPzcKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//0/4v697/AGfP2Wv2jv2rfFh8C/s3+CdY8Z6ogDSxaVayTrApOA88oHlwrnjdI6j3rV/ZA/Zo8afti/tOeCf2Y/ABEep+MdUhsEnKl1t4jlp7hlG3KwQK8xHopr/X8/ZA/Y7+A37DXwL0j4Bfs+6LFpOj6ZGvmyhV+0XtxtAku7uQAGWeQjLMenCqAiqo/beJeJVgkqcVeTPi8ty91nzPRI/zc/CX/BsX/wAFg/E2npf3ngLTdF8wZWO/1zThIB7rDNNj6HmuF+LH/BuP/wAFevhJo8uv3XwtPiC0gUl/7C1Gxv5sD0t0m+0OfZIzX9an7bX/AAdTfsi/ssfGbV/gn8KfCGp/E298PXD2WoahaXcNhpouITtljgmZJ3m8tgVLCIRkg7GYcn7G/wCCXv8AwXw/ZL/4KbeL5fg/4dsb/wAD+PY7d7qLRdVaKRbyGIZkNlcxHEzRL8zoyRybQWCFVYj5x8RZvCn7eVNcnoeisBhpPki9T/K/8V+EvFfgPxHeeD/HGmXejatp8hhurK+ge3uIJF6pLFKAyMPQgGqugaHqnifXLLw1okXnXuozx20EZIXdLMwjjXLEAZYgZJAr/U4/4Lnf8Ek/hd/wUG/Zh13x34Y0a3tvi94R0+W+0LVYI1W4vFtlMjabcMADLFMoKxbv9VKVZcKXVv8AMH+BII+OPg0EYI13TuP+3mOvrMl4ghi6LqJWa3R5WLwDozS6M/Yf/iGl/wCCzv8A0SSH/wAKDQf/AJPpf+IaP/gs+Rx8JIf/AAoNB/8Ak+v9VRfu8Cv5Zf2w/wDg6P8AgZ+x5+054z/Zi8R/CzXdYvvBWpPps17bXtrHFOyBTvRWXIHzdDXxWD4tzKvLkoxi2v67ns1Mqw0Fdu39eh/KJ/xDS/8ABZ4f80kh/wDCg0H/AOT6+Pf2yv8Agkx+3v8AsAeA9L+Jn7WPglPDGi6xfjTLS4TU9NvjJdGKSYR+XZXM7L8kbHcQBxjOSBX9dn/EZJ+zh0/4Uz4k/wDBhZ//ABNfh7/wW5/4LveEv+Cqnwn8IfBn4e+ALzwlp3h3V21q4utQu47iWab7PJbRRxxxRqqqFlcli5JO0YGDn6DLMdm8q0Y16aUev9XPPr0MKoPkd3/XkflH+xZ/wTY/bO/4KFnxIv7InhBfFR8IizOq5v7Cx+z/AG/zvs//AB+3EG/f9nl/1ecbecZGfZf2o/8Agiv/AMFJf2MPg7ffHz9o/wCHi+HvCemzW8FzejVtKu9klzKsMI8q1uppTl2AyEIHU4Ff0if8GYX+u/aO+nhH+es1+yP/AAdBZ/4c9eOs9P7V0H/05QVji+JsRTzFYVJct0jShl9N4f2vU/y3KKKK+9PCCiir2lald6LqtrrGnlRPaSpNHuAYB0YMMg8EZHQ8GsMXKUaT5NznxXP7N+z3PuL4af8ABPr4zfGr9l25/ae+DssGvW2kXV1a6ppEYKX9ubZFlLxKci4XyXVyEIYcgKcZr5X1X4W+K4tDu/GnhqxvtU8M2QgWbVls5orSOaRUzEzsNgZJGMXJ+YjI61+m/wALv+Cq3xf+HvxP1Pxh8F/h/pGlaLqwtZrvQdNikW1+3WwIN3F5KgRPMjGORQmxosA5Yb6+bvj9+3H8bfit8GfC37OusaVaeG/Dfhl0uhZW0DRC5uYwyrLMrcYG5jtAwWZmO4kY/nTh7OuPP7SnDF0Yexb913Xuq2qsu1rI+Mw39s8754rlureS7P06HwiVeN/LkG1l4I6HNfa/7GP/AATs/a9/4KC6vrug/sleFB4quPDMMFxqSG+srHyY7lnSI5vZ4A+TG3CZIxzjIr5i+JvxE8RfFvx/q/xL8WiAanrVw11cfZolhiMj9Ssa8Lnr9cnvX9jH/Bmlx8Xvjt/2B9D/APR93X7jmGY16GA+sSilJJadFtoff5TQlU5YVdGfgP8AtM/8ESf+Cl/7HvwY1b9oL9ob4dLoHhHRGt1vL4avpN15RuZ0t4v3NrdyStmSRF4Q4zk4AJr8pa/1Uf8Ag5az/wAOafir/wBdtB/9PVlX+WVYeGPEmqWrX2mafc3ECHDSRQu6D6kDArLhrO54ug6layd7aHoY/AqnPlh2MOinFWUlWGCDjHpTa+lTPLsf/9T44/4NMPhhYeN/+CoN/wCMtQiDHwd4N1TUrdiM7Z557WwGPfyrmT9a/vo/4KL/ABl1T9nn9g74vfGnw/KYNS8PeEtVurGVeCl2LZ1t2B9VlKH8K/iJ/wCDO6e3T9uD4nQPjzT4GLKO+1dSswf1K1/XV/wXNt7u7/4JJfHWKyGXHhqR+P7iSxM//joNfbcSe/mig9vdR4mXWjhm0f5FjM8jGSQ7mPJJ5OfWve/2Wf2jPHn7I/7RHg/9pX4YeU2ueDNRiv7WO43+TMUyHhm8tkYxTRlkcAglGIzXgVFfr06EJU/ZPZny0ajTuj+tt/8Ag8J/byeMxN8N/AZHT/Van/8AJ1fzPfDnxF/wlv7T+g+LPssNj/anim1u/s1uCIYfOvVfy49xJ2puwuSTgDmvBa9W+A//ACW/wZ/2HNO/9KY68ujk2Hw0J+wja50TxU5tczuf7bw+WPiv8jr/AILZeFfE93/wVd+OdzaabdSxP4nnKskLspGxOQQOa/1xB0H+7X5o/Fn/AIK6f8Eyfgj8SdX+E/xc+LOgaJ4l0Gc2uoWNz5vmwTAAlHxERnkdCa/H+HMyqYas504c2nQ+rx+GjUgoydj/ACH/APhC/GH/AECbv/wHf/Cs6+0PWtIVX1W0mtQ+QvmxsmcdcZAzX+teP+C5H/BIHP8AyW7w1/5G/wDjNfyaf8HQ3/BRL9jT9szw78JPAf7K3jC08ZXHh271a91KawilWCBLiO2jhQySIiszlHOEzgLzjIz+jZZxNXr1lSlRaT69vwPn8Rl9OnDmU7n05/wZg/8AHx+0b9PCP/uYr9kf+DoP/lD346H/AFFdB/8ATlBX43f8GYP/AB8ftG/Twj/7mK/ZH/g6D/5Q9+Ov+wroP/pygr5HN/8AkdL1j+h6uG/3L5H+W1RRRX7AfJhX9zH/AAbp/wDBCb9n34s/AbSv28v2xtEh8Wt4immbwx4evhu0+K1tpmhN5dQ9Lh5pY38qKTMQiAYqxcbP4Z6/YD9jb9uv/gs34vi0H9lb9iPxp4w1OPSbYW+m6HoMSzLa2yHqcRERQoW5eQhB3IrweJMLWqYfkpTUe78juy2UIT1Vz/SR/ag/bi/4J2f8EudA0LR/jrrWkfD2DV1ddL03TtNkklkjhwGMdpp0EjLEhYDcUCZ4zmvWdBt/2Kf+Cj37P2nfECz0zw98UfAHiaFzazXtjHcwyBHaJxsuI98UkcilSCqPGy9iK/ih8Vf8G9v/AAXG/wCChGraT8Tf24/iBolpqVhZizth4h1F769t7cu0nlhNOt5IANzk/wCuznrX9b//AASC/YF8a/8ABNj9jOx/Zg8eeI7XxRe2mqX1+LuyikihVLx1YRqsp3fKQST3Jr8pzHDUKFKLp1bz622PqcNOcpWlG0T+CL/g4c/4JW/D3/gmr+0voOrfAcSQeAPiLa3N5p1hM7Stp11Zui3Nokrku8IEsTxFyWAYqSdm4/qJ/wAGaP8AyV346r/1B9D/APR93Xqv/B5wNumfs/D/AKaeJP5abXlP/Bmef+Lu/HX/ALA+h/8Ao67r6+tiZ1cjcpu7t+TPJhSUcbZbf8A/t3+O3wb+Cvx3+F978PP2hNHsdd8ImS3vb2z1PH2N/sEyXUbTgkI0SSRK5V/kIGGBXIr4l+A3/BUP/glV47+JNr+yt+z58TfCb6yH+xWGkaaPs9pM6DAgs5BGlpMcDCJC7bv4Aa+dP+Dj3xv4n8Cf8EfPiteeE7ySxnv/AOydPlliJVjbXWp20U8eR2kiLRuO6MR3r/K28N+Itb8I+ILDxX4ZuZLLUtLuIru0uIiVkinhcPHIhHIZGUFT2IrwOHeG/rmFlUc7W0SO/H5h7Kaikf6x3/BTP/gi9+yP/wAFE/hhqlpqXhzT/DHxBWB30jxVp9skF1FcgZjW7MQX7Vbk8OkuSASYyrc1/lI/Ev4c+MPhB8SNf+E/j6z+xa54Z1C50rULZusV1ZytDMnvtdSM96/2n/gP48l+KXwP8G/E25AEniLQ9O1NwvQNeW0cxx7Zev8ALn/4ONPh3pnw+/4LB/Fiz0eJYYNWfTNW2AYXzbzTbaSZvq8m5j7k17HAOYT9vLDVNUlp5WOTOsNFxU0f/9X4E/4NWfjHpvwu/wCCrNh4S1SUQr478M6roMRY4BmTydSRfqfsRA9SQK/0Xv2v/gj/AMNKfsq/Eb9n5WVJPGXhvU9Hhd+FSW7tpIonPsrsp/Cv8ar4K/F7x18APi14a+N/wwuvsHiHwnqNvqmnzgZCz20gddw/iUkYdTwQSD1r/WJ/4Jj/APBXL9lz/gpX8KtO1nwJrFpo/jmO3X+2fCl1OiX9pOoHmNDGxDXFsTyk0YIwQG2vlR+jcbZbUhiI4umtPyaPncmrxcHRkf5Jfi7wn4l8B+KtS8D+M7GbTNX0e6msr2zuEKS29xA5jkidTyGRlII9RX2R/wAE0f2R9Q/bj/bi+HX7N0FnNeaZrerQya15G5TFpFswmv5C4/1f7hGVW/56FQOSBX+md+2H/wAENf8Agmz+3D8RJ/i98aPApg8VXm37Xquj3k+nTXO0YDTpC3kyvgAeY8ZkIAG7AxXvP7E3/BMf9iP/AIJ36bfJ+y54Mg0O+1KMR32q3Est5qE8YO7Y9zcM7rHkA+VHsjyAduea663HVN4flhF87XyRlDI2qmr0PzQuP+DXP/gkHaQNPN4W1tI4wSzHXbwAADJJ+av856xi+H8H7akMHwmRovCqeNVXRkZ2lZdPXUQLUF25c+Ts+Y8nrX95n/BfD/gvJ8E/gR8D/En7I/7J/iO28S/EvxNby6Vf32lyrNa6FaTAx3Ba4jJQ3roTHFEhJiJLyFSqq/8Ani/DjxHbeDviHoPi28UvDpWo2t46r1K28yuQPfC108KUsVKjOrXbd9rmeZSpKahTS03P9v8AAwufav8AIb/4Lff8pZvjt/2NE/8A6BHX+s98Lfin8P8A41fD/SPij8LNXtdc8P63bR3dle2cqyRSxSKGUhlJ5weR1B4OCK/Pn46f8EXP+CYX7R/xT1b41fGj4T6frPifXXE2oX32q/tzPIFC72jt7mOPcQoyQmTjJyea+J4czaOBrylVi9raHsY/CutBKDP8hiiv9ZH/AIh6f+COH/RE7Af9xLVv/k2v5sP+DmL/AIJrf8E/v2F/2YPAHif9lrwNZeD/ABLrvig2szw3l5PLPYx2U7ygR3NxKNqSeTlgAQSozzg/oWX8ZUMRVjSjB3foeFWyucYNtrQ9R/4MwP8AXftHf7vhH/3M1+yH/B0EMf8ABHvx1/2FdB/9OUFfgj/wZ1/G34ceC/jH8Zfgp4m1S3sde8YWOh3mk288ixtcjSnvluI4dxG91F3G2xcnaCcYU4/uJ/aJ/Z0+CX7V/wAKdS+Bf7QegweJ/Cmq+U11p9w0iK7QSLNEQ8LJIjI6qylGB4r4ziCt7LNvaNaKz+5I9fAx58LyI/xQaK/1iv8AiHc/4I0/9EWs/wDwa6v/APJtJ/xDuf8ABGrH/JFrP/wa6v8A/JtfUrxAw38r/A8v+xankf5O1f66/wDwR1/4J/8Aws/YD/Yo8I+DvCmmwL4o8Qabaar4n1PYPtF7qFzEJWRn6+Tb7/KhToqLnG5mJ/y5/wDgoH4D+Gfwt/bl+Lnwz+DVtFZ+FPD/AIt1fTtJt4JXmjitLa7kiijWV2dnCBcZLknHJNf6in/BHT9v74Wft7fsTeDfFfhbVoJvFWgaVZ6X4n0sOv2qz1C2iELu8XUQ3BQywvjaVOM7lYDn42qVZ4anOHwvf9LmmSxiqji9z8c/+Cz/APwcleMf2Ff2htV/ZE/ZX8JabrHibw7HbnWNZ1wyyWkE1zAlwlvb20DwmRkjkQvI0wUMdmw4Jr9Wf+CGH7b3xv8A+Cg37CVt+0R+0E1gfEFxrmo2B/s23+zQCC2aMRgRlmOfmOSSc18xft3f8G2n7IX7eX7WGrftW+OfFniXw7qHiJbU6rYaU1p5M8tpClussbTwSmIvFEgccgkFhgk1+n/7AfwN/Y3/AGTPhJefsnfscalaXNh4Iv3j1i1j1JdRvLbUblVkk+3HeximkXDeXtjUAYRABivjsZPB/U4woR9/S7sezRjV9o+Z6dD+Wb/g84/5Bv7P3/XXxJ/6DpteUf8ABmh/yV746/8AYI0P/wBH3derf8Hm+P7N/Z+x/wA9fEn/AKDpteT/APBmkdvxe+Ov/YJ0P/0dd19RCP8Awgv+up5T/wB9P36/4OW9Jv8AVf8Agjl8T/7OhaX7NPoc0gQE7Y01e0DMcdhkZPav8r2ztLrULuKwsY2lmnZY40QEszE4CgDqSTjFf7T37Qvjb9mW10Ky+Cv7S+qaJBp3xKafQrXS9bliji1VnhZpbVFlIDkx54652gfMVB/KD4Gf8G3n/BLf4AfHzT/2hPCPhrVb++0a8W/0zTNT1F7vTbSeNt0TrCyiSXymwUE8koBAJBIzXlcOcRRweGlTqReu35HTmGXe1mpRZ+wX7OXga++F/wCz54E+GuqDbc+HvDumaZKPR7S0ihYfmlf5iH/ByX4u0/xh/wAFifiiNOk8xNKi0bTmK8gSQaXa7x9VZiD9K/0ev28v29/2ev8Agnr8CdS+Nnx31iC18mF/7M0tZFF9ql0F+S2tISdzknG9sbI1+ZyFBNf5A3x/+M3jH9pH43eLPjz8QpBJrfjDVrvV7wrnasl1K0hRM9ETdtQdlAHavR4Cwc/rEsS1paxlnVeMYKCP/9b+L+rmn6hqGk30Wp6VPJa3MDB4pYmKOjDoysMEH3FU6K/pdo/Nz7i8If8ABTP/AIKKeA9PTSfCPxx8dWNrGMJEuvX5RR6KGmIA9hXG/FH9vD9tr426XJoPxd+LnjDxJp8y7ZLS/wBavZ7dx/tQtMYz+Ir5Pornjl+HTvyq/obfWZ25bjN67ttdbYeCfFWqRiTT7J5gem3af61yJiQ0nkpRH2idtDlqRk/gZ774W0T9o3wpA1r4MOs6ZFJyyWVxJApPqRG4zXZLP+2W33NT8UH6X1z/APHK+UPJSvV/hivwpjtvEH/Cx1ka4OmuNI4kMAvN68y+SyyZ2bvK6rv2+YCma4Me3Si58l9tEvRDowxD91TS+Wh7EkP7az/cv/FJ/wC325/+OVyXiL4WftM+NZ47zxdp+tatLENqPePJOyr6AuxIHtX2rv8A+CQNxryW/wBm8W2+iyatdLNKC0l/Fpz2d2tu8C7hAzpdG2crJglF255c15z4kT/gmrqV3q0Hgxdd0y3ur+3+yyXyTXElrpr6xqBn8oRSIJL2LS208J537litx0kKGopVuV6U/wAAeHxP86+4+Vbf4AfHaynS5tPDmoRSxkMjIu1lI6EEHg16ylt+3TCohiv/ABYoUYAF9dAAf9/K1fiFafsIf8LV8N6t8LZtaPg2bX5ZNWsdQjdb6HR5JoZYowyM6NJDC0kBMb5ZkD/xCvZNCl/4JTS6Zoo1y38UW+o/Yb+PVSqvPafa99qbWW3UTQykeQbtURnA89YWkYxO6rhPGydXkdLpvbT0/AuOFxChzc69LHgpX9ukDH9o+Lh/2/3X/wAcqvOv7cMkTRXOoeLGRwQwa+uiCD1BHmV9DeGZv+CUY8PWH9u2fib+2Y5ZftHmGQ2UkT6beiL/AFLLKjJqAsy+MhombG3Yd+Tqs/8AwS/bwXFDp1lry62G0lmdDP5RjXTkXUlO9z+9N+zMgACeUOGXGx9lP/p1+AvZYn/n6vuPi+b4FfGJWLT+HrzJ5yU5/nXbfDGD9qr4GeK4vHfweuNe8Ja1ACsd9pFzLZXAU4yvmwujbTxkZwe9fSvxMf8A4JdXHhLxMfhLD4ottWfR4DpA1BDMq6ktzfecuY5kHlvF9hKNICEiMw2tMqlvGPB1h+xVEWn8cXmsyNKnh94orWI7Iygi/t1J2LBiZMS/ZjGGAyucVw5rnTo09aPN5JeiNsNl9ecv4kV+H9bH0J45/wCChP8AwVx8ceHH8K+Nfi549n0+VDHJD/a1zEJEIwVcxOhcEcHcTnNfEPhLxZ8evhHqF3rHgLWtY8NXd6u24m069ms5JlznDtC6FxnnBzzXF/EuHwCfiDrX/CsfP/4Rw3kx00XIImFrvPlB8knKrgZPJ6nHSuI8lK9LBUVKipwpqN0na1vlbyM5uvGdpTTt2X5HpvxD+Mfxd+KbW1v8VvFWseJDYb/s41W+uL3yTJjd5fnO+zO1c4xnaM9K5/wz428Z+CpJpvBur3ukvcALK1lcSQFwucBjGwzjJ61yYiUdKkr0aVL3eVpD5mdd4k8feO/GYgHjDW7/AFb7NuMP2y5ln8snGSu9jtzgZx6Cvq/wd/wUt/4KG/D/AMLw+CfBfxv8cabpNugjhtYNdvljiQDAWMed8igfdAwBXxFRRVwVKStKKY4VpLZndfEL4n/Er4ueI5PGHxV8Q6l4n1aQYe91W7mvbhh6GWdnYj8a4Wiirp0lBWRJ/9f+L+iiiv6YPzcKKKKACiiigAooooAKKKKACiiigAooooAKKKKVgCiiimAUUUUAFFFFABRRRQB//9D+L+iiiv6YPzcKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//0f4v6KKK/pg/NwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP//S/i/ooor+mD83CiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//9k=" style="width:100%;height:100%;object-fit:cover;display:block;">
+</div>
+
+<div class="mermaidTooltip" style="opacity: 0; position: absolute; text-align: center; max-width: 200px; padding: 2px; font-size: 12px; background: rgb(255, 255, 222); border: 1px solid rgb(51, 51, 51); border-radius: 2px; pointer-events: none; z-index: 100;"></div><div id="celab-fab-trigger" style="position: fixed; bottom: 28px; left: 28px; z-index: 100001; width: 40px; height: 40px; border-radius: 50%; background: rgb(201, 168, 76); color: rgb(13, 27, 42); font-size: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 12px; user-select: none; transition: background 0.2s, transform 0.2s, opacity 0.2s; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; opacity: 1; transform: rotate(45deg) scale(1.05);">✏️</div><div id="celab-fab-panel" style="position: fixed; bottom: 78px; left: 28px; z-index: 100000; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; transition: opacity 0.25s, transform 0.25s; opacity: 1; transform: translateY(0px); pointer-events: auto;"><div id="celab-fab-layout" style="background: rgb(44, 122, 123); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">🔄 레이아웃</div><div id="celab-fab-edit" style="background: rgb(201, 168, 76); color: rgb(13, 27, 42); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">✏️ AI 편집</div><div id="celab-fab-direct" style="background: rgb(224, 123, 57); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgb(255, 255, 255) 0px 0px 0px 2.5px, rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">✅ 편집 중</div><div id="celab-fab-save" style="background: rgb(39, 103, 73); color: rgb(255, 255, 255); padding: 10px 18px; border-radius: 24px; font-weight: 700; font-size: 13px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.45) 0px 4px 20px; font-family: &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, sans-serif; user-select: none; transition: 0.2s; white-space: nowrap;">💾 저장</div></div></body></html>
