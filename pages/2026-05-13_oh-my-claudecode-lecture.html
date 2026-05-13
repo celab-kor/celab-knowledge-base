@@ -211,22 +211,22 @@
 
   <div class="nav-section">
     <div class="nav-section-title">📖 강의 목차</div>
-    <a class="nav-item active" onclick="scrollTo('intro')">1. OMC란 무엇인가</a>
-    <a class="nav-item" onclick="scrollTo('install')">2. 설치 흐름 (ralph까지)</a>
-    <a class="nav-item" onclick="scrollTo('skills')">3. 주요 스킬 총람</a>
-    <a class="nav-item" onclick="scrollTo('agents')">4. 전문 에이전트 팀</a>
-    <a class="nav-item" onclick="scrollTo('usecase')">5. 실전 사용 예시</a>
-    <a class="nav-item" onclick="scrollTo('effect')">6. 최대 기대 효과</a>
-    <a class="nav-item" onclick="scrollTo('strategy')">7. 팀 활용 전략</a>
+    <a class="nav-item active" onclick="navTo('intro')">1. OMC란 무엇인가</a>
+    <a class="nav-item" onclick="navTo('install')">2. 설치 흐름 (ralph까지)</a>
+    <a class="nav-item" onclick="navTo('skills')">3. 주요 스킬 총람</a>
+    <a class="nav-item" onclick="navTo('agents')">4. 전문 에이전트 팀</a>
+    <a class="nav-item" onclick="navTo('usecase')">5. 실전 사용 예시</a>
+    <a class="nav-item" onclick="navTo('effect')">6. 최대 기대 효과</a>
+    <a class="nav-item" onclick="navTo('strategy')">7. 팀 활용 전략</a>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-title">🔗 핵심 스킬 바로가기</div>
-    <a class="nav-item" onclick="scrollTo('skill-autopilot')">/autopilot <span class="badge-sm">자율실행</span></a>
-    <a class="nav-item" onclick="scrollTo('skill-ralph')">/ralph <span class="badge-sm">검증루프</span></a>
-    <a class="nav-item" onclick="scrollTo('skill-team')">/team <span class="badge-sm">병렬팀</span></a>
-    <a class="nav-item" onclick="scrollTo('skill-ultrawork')">/ultrawork <span class="badge-sm">고속처리</span></a>
-    <a class="nav-item" onclick="scrollTo('skill-ralplan')">/ralplan <span class="badge-sm">합의계획</span></a>
+    <a class="nav-item" onclick="navTo('skill-autopilot')">/autopilot <span class="badge-sm">자율실행</span></a>
+    <a class="nav-item" onclick="navTo('skill-ralph')">/ralph <span class="badge-sm">검증루프</span></a>
+    <a class="nav-item" onclick="navTo('skill-team')">/team <span class="badge-sm">병렬팀</span></a>
+    <a class="nav-item" onclick="navTo('skill-ultrawork')">/ultrawork <span class="badge-sm">고속처리</span></a>
+    <a class="nav-item" onclick="navTo('skill-ralplan')">/ralplan <span class="badge-sm">합의계획</span></a>
   </div>
 
   <div class="nav-section">
@@ -239,13 +239,15 @@
 </nav>
 
 <script>
-function scrollTo(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+function navTo(id, el) {
+  const section = document.getElementById(id);
+  if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-  event.target.classList.add('active');
+  if (el) el.classList.add('active');
 }
 </script>
+
+<a href="../index.html" id="home-btn">🏠 지식창고</a>
 
 <!-- ══════════════ MAIN ══════════════ -->
 <main class="main">
