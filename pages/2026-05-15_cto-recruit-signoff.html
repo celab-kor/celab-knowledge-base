@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>이종현 CTO 영입 1-Page Sign-off | CEO 사전 승인 요청</title>
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --navy2: #1a2d45;
+    --gold: #c9a84c;
+    --gold2: #e8c96a;
+    --text: #e8edf2;
+    --muted: #8a9bb0;
+    --card-bg: #162030;
+    --card-border: #243450;
+    --green: #34d399;
+    --red: #f87171;
+    --blue: #63b3ed;
+    --orange: #f6ad55;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+
+  /* HOME BUTTON */
+  #home-btn {
+    position: fixed; top: 14px; right: 16px; z-index: 9999;
+    background: #c9a84c; color: #0d1b2a;
+    padding: 8px 16px; border-radius: 8px;
+    font-weight: 700; font-size: 0.8rem;
+    text-decoration: none;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    transition: background 0.15s, transform 0.1s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  #home-btn:hover { background: #e8c96a; transform: translateY(-1px); }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--navy2) 0%, #0a1628 100%);
+    border-bottom: 1px solid var(--card-border);
+    padding: 56px 24px 40px;
+    text-align: center;
+  }
+  header .badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    border: 1px solid var(--gold);
+    padding: 4px 14px;
+    border-radius: 20px;
+  }
+  header h1 {
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff 0%, var(--gold2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  header .subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+  header .meta {
+    display: flex; justify-content: center; gap: 28px; flex-wrap: wrap;
+    margin-top: 18px; font-size: 13px;
+  }
+  header .meta span { color: var(--muted); }
+  header .meta strong { color: var(--gold); }
+  header .deadline {
+    margin-top: 18px;
+    display: inline-block;
+    background: rgba(248,113,113,0.15);
+    border: 1px solid var(--red);
+    color: var(--red);
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 24px 0;
+  }
+
+  /* SECTION */
+  section {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 28px 28px 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+  }
+  section h2 {
+    font-size: 18px;
+    color: var(--gold);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  section h2 .num {
+    display: inline-flex;
+    width: 28px; height: 28px;
+    background: var(--gold);
+    color: var(--navy);
+    border-radius: 50%;
+    align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 13px;
+  }
+  section h3 {
+    font-size: 15px;
+    color: var(--gold2);
+    margin: 18px 0 10px;
+  }
+  section p { font-size: 14px; color: var(--text); margin-bottom: 10px; }
+  section ul, section ol { margin: 8px 0 12px 20px; }
+  section li { font-size: 14px; color: var(--text); margin-bottom: 6px; }
+
+  .key-conclusion {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--gold);
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin: 8px 0;
+  }
+  .key-conclusion strong { color: var(--gold); }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--card-border);
+    vertical-align: top;
+  }
+  th {
+    background: rgba(13,27,42,0.5);
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  td.num { color: var(--gold); font-weight: 700; text-align: right; }
+  td.pos { color: var(--green); font-weight: 600; }
+  td.neg { color: var(--red); }
+
+  /* CHECKBOX LINE */
+  .approve-row {
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(99,179,237,0.08);
+    border-left: 3px solid var(--blue);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: 600;
+  }
+  .approve-row .checkbox {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2px solid var(--blue);
+    border-radius: 4px;
+    margin: 0 6px -3px 0;
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight-warn {
+    background: rgba(246,173,85,0.1);
+    border-left: 4px solid var(--orange);
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .highlight-warn strong { color: var(--orange); }
+  .highlight-info {
+    background: rgba(99,179,237,0.08);
+    border-left: 4px solid var(--blue);
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .highlight-info strong { color: var(--blue); }
+  .highlight-success {
+    background: rgba(52,211,153,0.08);
+    border-left: 4px solid var(--green);
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .highlight-success strong { color: var(--green); }
+
+  /* REPLY BOX */
+  .reply-box {
+    background: rgba(52,211,153,0.1);
+    border: 2px solid var(--green);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-top: 24px;
+    text-align: center;
+  }
+  .reply-box h3 {
+    color: var(--green);
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .reply-box .sample {
+    font-family: 'Menlo', 'Consolas', monospace;
+    background: rgba(13,27,42,0.6);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 10px;
+    color: var(--gold2);
+    font-size: 13px;
+    display: inline-block;
+  }
+
+  /* SIGNATURE */
+  .signature {
+    text-align: right;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--card-border);
+  }
+  .signature strong { color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  @media (max-width: 640px) {
+    section { padding: 22px 18px 18px; }
+    table { font-size: 12px; }
+    th, td { padding: 8px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<a href="../index.html" id="home-btn">🏠 지식창고</a>
+
+<header>
+  <div class="badge">CEO Sign-off · Internal</div>
+  <h1>이종현 CTO 영입 조건 — 1-Page Sign-off</h1>
+  <div class="subtitle">5/16(토) 저녁 풀타임 합류 제안 미팅 전, CEO 사전 승인 요청</div>
+  <div class="meta">
+    <span>From <strong>박규호 (CBDO)</strong></span>
+    <span>To <strong>김상윤 (CEO)</strong></span>
+    <span>Date <strong>2026-05-15</strong></span>
+  </div>
+  <div class="deadline">⏰ DEADLINE 오늘 22:00 회신 부탁드립니다</div>
+</header>
+
+<main>
+
+<!-- 0. CONTEXT -->
+<section>
+  <h2><span class="num">0</span>요약 · 한 줄 결론</h2>
+  <div class="key-conclusion">
+    <strong>Co-Founder는 우리 2인(상윤·규호) 유지.</strong>
+    이종현 부장은 <strong>"CTO 영입 인재"</strong> 트랙으로 합류 — <strong>신주 발행 스톡옵션 + UOP 연봉 100% 유지</strong>.
+  </div>
+  <p style="margin-top:12px; color:var(--muted); font-size:13px;">
+    경위: 5/10 PAWG 자문 합의 → 5/13 김상윤 대표 풀타임 검토 권유 → 5/16 박규호의 격상 제안 미팅
+  </p>
+</section>
+
+<!-- 1. POSITION -->
+<section>
+  <h2><span class="num">1</span>승인 요청 A · 직책 &amp; 신분</h2>
+  <ul>
+    <li><strong>Chief Technology Officer (CTO)</strong> — 임원 등기 (대표이사 아님)</li>
+    <li><strong>Co-Founder 명시 안 함</strong> ← 우리 2인 명분 유지</li>
+    <li>합류일: <strong>2026-07-01</strong> (5/31 UOP 통지 → 1개월 인수인계)</li>
+    <li>대안 직책: 본인이 CTO 부담스러우면 <strong>Chief Domain Officer (CDO)</strong> 카드 보유</li>
+  </ul>
+  <div class="approve-row">
+    <span class="checkbox"></span>OK &nbsp;&nbsp;
+    <span class="checkbox"></span>수정 필요 → (내용 기재)
+  </div>
+</section>
+
+<!-- 2. COMPENSATION -->
+<section>
+  <h2><span class="num">2</span>승인 요청 B · 보상 패키지</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>제안</th>
+        <th>근거</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>현금 연봉</strong></td>
+        <td><strong style="color:var(--gold);">UOP 현 연봉 100% 동일 유지</strong><br><span style="color:var(--muted);font-size:12px;">(추정 ₩170M / 실 수령액 기준)</span></td>
+        <td>"연봉 손실 0"이 합류 결정 임계점. 미팅에서 직접 확인 후 일치</td>
+      </tr>
+      <tr>
+        <td>연봉 인상 조항</td>
+        <td>Y1 ARR ₩25억 달성 시 <strong style="color:var(--green);">+5%</strong> 자동<br>Y2 ARR ₩40억 달성 시 <strong style="color:var(--green);">+10%</strong></td>
+        <td>매출 연동 — 우리 부담 분산</td>
+      </tr>
+      <tr>
+        <td><strong>스톡옵션</strong></td>
+        <td><strong style="color:var(--gold);">신주 발행 4.0%</strong><br><span style="color:var(--muted);font-size:12px;">4년 베스팅 / 1년 클리프</span></td>
+        <td>Co-Founder 풀 보호. 신주 발행이므로 우리 지분 희석</td>
+      </tr>
+      <tr>
+        <td>매출 수수료</td>
+        <td>이종현 단독 클로징 계약의 <strong>1%</strong> (3년간)</td>
+        <td>5/10 박규호의 "좋은 인센티브 예시" 원칙 적용</td>
+      </tr>
+      <tr>
+        <td>퇴직금·4대보험·복리</td>
+        <td>표준 임원 패키지 (가족 의료보험 포함)</td>
+        <td>표준</td>
+      </tr>
+      <tr>
+        <td><strong>연 총 회사 부담</strong></td>
+        <td><strong style="color:var(--gold);">약 ₩200M</strong><br><span style="color:var(--muted);font-size:12px;">(현금 170 + 4대보험 22 + 옵션 회계 8)</span></td>
+        <td>ROI 5.4× 유지</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="approve-row">
+    <span class="checkbox"></span>OK &nbsp;&nbsp;
+    <span class="checkbox"></span>수정 필요 →
+  </div>
+</section>
+
+<!-- 3. CONTRACT PROTECTION -->
+<section>
+  <h2><span class="num">3</span>승인 요청 C · 계약 보호 조항</h2>
+  <p style="color:var(--muted); font-size:13px; margin-bottom:14px;">
+    이종현 부장이 5/10 PAWG 미팅에서 명시한 합류 조건 — 이 3개 조항이 계약서에 들어가지 않으면 본인이 거절합니다.
+  </p>
+  <ol>
+    <li><strong>NDA 1조</strong> — UOP 관련 정보 일절 차단 (위반 시 회사가 손해배상)</li>
+    <li><strong>저작권 2조</strong> — 이종현 기여 노드·방법론 모두 "이종현 기여물"로 명시. 이탈 시에도 명예 저작권 유지</li>
+    <li><strong>1년 클리프</strong> — 1년 내 양측 합의 이탈 시 옵션 0%, 평판 보호 약속 (역량 부족 사유 금지)</li>
+  </ol>
+  <div class="approve-row">
+    <span class="checkbox"></span>OK &nbsp;&nbsp;
+    <span class="checkbox"></span>수정 필요 →
+  </div>
+</section>
+
+<!-- 4. DILUTION -->
+<section>
+  <h2><span class="num">4</span>우리 지분 변동 시뮬레이션</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>주주</th>
+        <th>현재</th>
+        <th>이종현 4% 신주 후</th>
+        <th>Series A 후 (₩10억/₩80억 밸류, 12.5% 희석)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>김상윤</strong></td>
+        <td class="num">65%</td>
+        <td class="num">62.4%</td>
+        <td class="num">54.6%</td>
+      </tr>
+      <tr>
+        <td><strong>박규호</strong></td>
+        <td class="num">35%</td>
+        <td class="num">33.6%</td>
+        <td class="num">29.4%</td>
+      </tr>
+      <tr>
+        <td>이종현 (옵션 풀)</td>
+        <td class="num">—</td>
+        <td class="num">4.0%</td>
+        <td class="num">3.5%</td>
+      </tr>
+      <tr>
+        <td>신규 투자자</td>
+        <td class="num">—</td>
+        <td class="num">—</td>
+        <td class="num">12.5%</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="highlight-success">
+    <strong>희석 합리적.</strong> 박규호 30%대 사수, 김상윤 50%+ 사수 가능.
+  </div>
+</section>
+
+<!-- 5. ROI -->
+<section>
+  <h2><span class="num">5</span>회사 ROI (보수적 추정)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>시나리오</th>
+        <th>매출 기여 (Y1)</th>
+        <th>비용</th>
+        <th>ROI</th>
+        <th>확률</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Worst (시간의 해자 미실현)</td>
+        <td class="num">₩670M</td>
+        <td class="num">₩200M</td>
+        <td class="pos">3.4×</td>
+        <td>25%</td>
+      </tr>
+      <tr>
+        <td><strong>Base</strong></td>
+        <td class="num">₩1,070M</td>
+        <td class="num">₩200M</td>
+        <td class="pos"><strong>5.4×</strong></td>
+        <td><strong>55%</strong></td>
+      </tr>
+      <tr>
+        <td>Best (Y1 ARR ₩40억 조기 도달)</td>
+        <td class="num">₩1,650M</td>
+        <td class="num">₩200M</td>
+        <td class="pos">8.3×</td>
+        <td>20%</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>핵심 기여 라인 (Base 시나리오)</h3>
+  <ul>
+    <li>필즈 ₩1.9억 도메인 검증 (재작업 4건 회피) → <strong>₩120M</strong></li>
+    <li>PoC 유료화 8건 (Discovery ₩35M × 8) → <strong>₩280M</strong></li>
+    <li>박규호 7월 휴직 90일 공백 클로징 보전 → <strong>₩200M</strong></li>
+    <li>시간의 해자 10개월 가속 (Y2 ARR ₩40억 × 보수 25%) → <strong>₩400M</strong></li>
+    <li>이종현 단독 클로징 신규 EPC Logo 3개 → <strong>₩210M</strong></li>
+  </ul>
+</section>
+
+<!-- 6. RISK -->
+<section>
+  <h2><span class="num">6</span>미승인 시 발생할 위험</h2>
+  <div class="highlight-warn">
+    <strong>22:00 미회신</strong> → 내일 미팅에서 박규호가 임의 협상 → 사후 갈등 위험
+  </div>
+  <div class="highlight-warn">
+    <strong>조건 거절</strong> → 자문 모델로 강등 또는 영입 무산 → 838 노드 정체 / 휴직 공백 미보전 / Y1 ARR ₩25억 미달 위험
+  </div>
+</section>
+
+<!-- 7. EXTRA OPTIONS -->
+<section>
+  <h2><span class="num">7</span>박규호의 협상 여지 카드 (사전 공개)</h2>
+  <p style="color:var(--muted); font-size:13px; margin-bottom:12px;">
+    내일 미팅 현장에서 이종현 부장이 거절 시 발사할 카드. 대표님이 미리 알고 계셔야 합의됩니다.
+  </p>
+  <div class="highlight-info">
+    <strong>카드 1.</strong> 직책 CTO 부담 시 → <strong>Chief Domain Officer (CDO)</strong> 대안
+  </div>
+  <div class="highlight-info">
+    <strong>카드 2.</strong> 옵션 4.0% 거절 시 단계적 → <strong>3.5% → 4.5% → 5.0%</strong> (최대치, CEO 직접 결재)
+  </div>
+  <div class="highlight-info">
+    <strong>카드 3.</strong> 캐시 부담 우려 시 → <strong>현금 ₩150M + Sign-on Bonus ₩20M 1회성</strong> 분리 (대표님 선택)
+  </div>
+</section>
+
+<!-- REPLY -->
+<div class="reply-box">
+  <h3>🟢 회신 양식 (한 줄)</h3>
+  <p>아래 형식으로 22:00 전 회신 부탁드립니다. 회신 즉시 내일 미팅 NDA·계약 초안 인쇄 들어갑니다.</p>
+  <div class="sample">"A/B/C 모두 OK"</div>
+  <div class="sample">또는 "A OK / B는 옵션 3.5%로 / C OK"</div>
+</div>
+
+<div class="signature">
+  — <strong>박규호</strong> (CBDO) 드림<br>
+  <span style="font-size:11px;">2026-05-15</span>
+</div>
+
+</main>
+
+<footer>
+  CELab 지식창고 · CEO Sign-off Document · Internal Confidential
+</footer>
+
+</body>
+</html>
