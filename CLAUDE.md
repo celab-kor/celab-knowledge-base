@@ -100,12 +100,16 @@ onclick: `onclick="navTo('section-id', this)"`
 ## Claude가 새 페이지 만들 때 따라야 할 순서
 
 1. `pages/YYYY-MM-DD_제목.html` 작성 (CLAUDE.md 상단 HTML 작성 규칙 준수)
-2. `index.html`의 `PAGES` 배열 **맨 앞**에 신규 항목 추가
-   - 필드: id (현재 timestamp), title, desc, category, tags, date, emoji, url
+2. PAGES 배열 등재 (택1)
+   - 자동: `python3 scripts/register_page.py pages/YYYY-MM-DD_제목.html` — title 자동 추출, `index.html`과 `pages-data.json` 동시 업데이트
+   - 수동: `index.html`의 `PAGES` 배열 **맨 앞**에 항목 추가 + `pages-data.json`도 같은 entry 추가 (Rev.3 앱이 stale json을 읽고 PAGES를 되돌리지 않도록 양쪽 sync 필수)
 3. `bash sync.sh` 실행 → 자동 commit + push + 슬랙 발송
 4. 결과 확인: `.sync.log`의 마지막 줄에 `[slack] 200` 표시
 
 수동 `git push`로 직접 푸시하면 슬랙 발송이 누락됩니다. **반드시 `sync.sh` 경유**.
+
+### Path B (인박스) 사용 시 주의
+`process_inbox.sh`는 `register_page.py`를 자동 호출해 PAGES 배열·pages-data.json을 함께 갱신합니다. 따라서 데스크탑 `📁 지식창고_발행대기`에 HTML 드래그 → `⚡발행대기처리.command` 더블클릭만 하면 갤러리 카드가 자동 등록됩니다.
 
 ---
 
