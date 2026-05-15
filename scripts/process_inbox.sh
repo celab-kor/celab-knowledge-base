@@ -33,8 +33,18 @@ NEW_RELS=()
 
 for src in "${HTML_FILES[@]}"; do
   base=$(basename "$src")
-  # URL-safe 파일명으로 변환 (공백·한글 → 안전 형식). 단순 안전화: 공백을 _로
-  safe_name=$(echo "$base" | sed -e 's/[[:space:]]\+/_/g' -e 's/[^A-Za-z0-9가-힣._-]/_/g')
+  # URL-safe 파일명 변환. BSD sed가 UTF-8 범위 [가-힣]를 못 다뤄서 한글이 _로 깨지는 이슈가
+  # 있었음. Python으로 처리 — 공백·제어문자만 _로 치환하고 한글·영숫자·._-는 유지.
+  safe_name=$(python3 -c "
+import re, sys, unicodedata
+name = sys.argv[1]
+name = unicodedata.normalize('NFC', name)
+# 공백/제어 문자만 underscore로
+name = re.sub(r'\s+', '_', name)
+# URL/파일시스템에서 위험한 문자만 제거 (한글·영숫자·._-는 보존)
+name = re.sub(r'[\\\\/:*?\"<>|]', '_', name)
+print(name)
+" "$base")
   # 날짜 prefix 없으면 추가
   if ! [[ "$safe_name" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}_ ]]; then
     date_prefix=$(date '+%Y-%m-%d')
