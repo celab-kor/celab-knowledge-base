@@ -6,7 +6,7 @@
 #   KB_LABEL      — 로그/알림용 라벨 (기본: "지식창고")
 #   KB_VISIBILITY — "public" 또는 "private" (기본: "public")
 #   KB_BASE_URL   — 슬랙 메시지 링크 prefix
-#                   public 기본: https://celab-kor.github.io/celab-knowledge-base
+#                   public 기본: https://celab-knowledge-base.pages.dev (Cloudflare Pages)
 #                   private 기본: https://github.com/celab-kor/celab-wiki/blob/main
 
 KB_PATH="${KB_PATH:-$HOME/Documents/celab-knowledge-base}"
@@ -17,7 +17,7 @@ if [ -z "$KB_BASE_URL" ]; then
   if [ "$KB_VISIBILITY" = "private" ]; then
     KB_BASE_URL="https://github.com/celab-kor/celab-wiki/blob/main"
   else
-    KB_BASE_URL="https://celab-kor.github.io/celab-knowledge-base"
+    KB_BASE_URL="https://celab-knowledge-base.pages.dev"
   fi
 fi
 
