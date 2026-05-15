@@ -94,3 +94,24 @@ To https://github.com/celab-kor/celab-knowledge-base.git
 [2026-05-15 14:20:08] ✅ 6 파일 동기화 완료
 [2026-05-15 14:20:08] 💬 Slack 알림: pages/2026-05-15_workflow-sop.html
 [slack] 200 https://celab-kor.github.io/celab-knowledge-base/pages/2026-05-15_workflow-sop.html
+[main 4f0bbba] Auto sync: 4 file(s) updated at 2026-05-15 15:22:42
+ Committer: Vision K <visionschool@Visionui-MacBookPro.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 4 files changed, 788 insertions(+), 1 deletion(-)
+ create mode 100644 pages/2026-05-15_user-manual.html
+To https://github.com/celab-kor/celab-knowledge-base.git
+   2a09970..4f0bbba  main -> main
+[2026-05-15 15:22:42] ✅ 4 파일 동기화 완료
+[2026-05-15 15:22:42] 💬 Slack 알림: pages/2026-05-15_user-manual.html
+[slack] 200 https://celab-kor.github.io/celab-knowledge-base/pages/2026-05-15_user-manual.html
