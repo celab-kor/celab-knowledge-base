@@ -1,12 +1,3 @@
-[main b439f42] Auto sync: 4 file(s) updated at 2026-04-30 23:51:36
- Committer: Vision K <visionschool@Visionui-MacBookPro.local>
-Your name and email address were configured automatically based
-on your username and hostname. Please check that they are accurate.
-You can suppress this message by setting them explicitly. Run the
-following command and follow the instructions in your editor to edit
-your configuration file:
-
-    git config --global --edit
 
 After doing this, you may fix the identity used for this commit with:
 
@@ -206,3 +197,4 @@ To https://github.com/celab-kor/celab-knowledge-base.git
 [2026-05-16 02:46:34] 💬 Slack 알림: pages/2026-05-16_inhwagong_ontology_dashboard.html
 [slack] 200 https://celab-knowledge-base.pages.dev/pages/2026-05-16_inhwagong_ontology_dashboard.html
 [2026-05-16 02:46:34] 💬 Slack 알림: pages/2026-05-16_inhwagong_viz_scoring.html
+[slack] 200 https://celab-knowledge-base.pages.dev/pages/2026-05-16_inhwagong_viz_scoring.html
