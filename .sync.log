@@ -133,3 +133,7 @@ After doing this, you may fix the identity used for this commit with:
 To https://github.com/celab-kor/celab-knowledge-base.git
    4d01a52..a0de1d5  main -> main
 [2026-05-15 22:38:20] ✅ 2 파일 동기화 완료
+[2026-05-16 02:09:35] 📥 inbox→pages: 2026-05-16_cloudflare-access-setup.html
+[2026-05-16 02:09:35] 📥 inbox→pages: 2026-05-16_inhwagong_ontology_dashboard.html
+[2026-05-16 02:09:35] 📥 inbox→pages: 2026-05-16_inhwagong_viz_scoring.html
+[2026-05-16 02:09:35] 📥 inbox→pages: 2026-05-16______________________IR_분석.html
