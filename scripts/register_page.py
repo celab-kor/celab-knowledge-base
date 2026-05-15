@@ -113,6 +113,11 @@ def main(argv: list[str]) -> int:
     if added:
         new_index = index_text.replace(match.group(0), render_pages(pages))
         INDEX_HTML.write_text(new_index, encoding="utf-8")
+        # Mirror to pages-data.json so the Rev.3 app stays in sync
+        # (the app reads pages-data.json and reconstructs the inline PAGES array).
+        PAGES_DATA.write_text(
+            json.dumps(pages, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
 
     for rel in added:
         print(f"[register] + {rel}")
