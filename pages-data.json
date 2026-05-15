@@ -1,5 +1,23 @@
 [
   {
+    "id": 1778857880090,
+    "title": "260513 메쉬업벤처스 IR 미팅",
+    "desc": "투자 IR",
+    "category": "IR",
+    "tags": [
+      "EPC자동화",
+      "온톨로지AI",
+      "화공플랜트",
+      "B2B SaaS",
+      "시드투자",
+      "GTM전략",
+      "AutoFlow"
+    ],
+    "date": "2026-05-15",
+    "emoji": "💬",
+    "url": "pages/2026-05-15_260513.html"
+  },
+  {
     "id": 1778700000001,
     "title": "Oh My ClaudeCode 완전 정복 — 멀티 에이전트 AI 개발 팀 구축 강의",
     "desc": "OMC(Oh My ClaudeCode) 개념·설치(npm→omc setup→ralph 활성화)·35개 스킬 사용법·19개 전문 에이전트 팀·실전 예시·최대 기대 효과까지 체계적으로 정리한 CELab 내부 교육 자료. ralplan·autopilot·ralph·team·ultrawork 핵심 스킬 포함.",
