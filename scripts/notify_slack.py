@@ -17,7 +17,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-KB_BASE_URL = "https://celab-kor.github.io/celab-knowledge-base"
+KB_BASE_URL = "https://celab-knowledge-base.pages.dev"
 KB_PATH = Path(__file__).resolve().parent.parent
 ENV_LOCAL = Path(__file__).resolve().parent / ".env.local"
 
