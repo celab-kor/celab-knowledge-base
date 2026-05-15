@@ -87,21 +87,26 @@ def build_payload(meta: dict, public_url: str) -> dict:
     category = meta.get("category") or "일반"
     date_str = datetime.now().strftime("%Y. %m. %d.")
 
+    visibility_icon = "🔒" if KB_VISIBILITY == "private" else "🌐"
+    visibility_text = "비공개" if KB_VISIBILITY == "private" else "공개"
+
     body_lines = [f"{emoji} *<{public_url}|{title}>*"]
     if desc:
         body_lines.append(desc)
     if tags:
         body_lines.append(tags)
+    if KB_VISIBILITY == "private":
+        body_lines.append("_🔒 비공개 위키 — GitHub 로그인 후 열람 가능_")
     body_text = "\n".join(body_lines)
 
     return {
-        "text": f"{emoji} *새 지식창고 페이지 발행*",
+        "text": f"{emoji} *새 {KB_LABEL} 페이지 발행* {visibility_icon}",
         "blocks": [
             {"type": "section", "text": {"type": "mrkdwn", "text": body_text}},
             {
                 "type": "context",
                 "elements": [
-                    {"type": "mrkdwn", "text": f"📂 {category} · {date_str}"}
+                    {"type": "mrkdwn", "text": f"📂 {category} · {date_str} · {visibility_icon} {visibility_text}"}
                 ],
             },
         ],
