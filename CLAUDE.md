@@ -51,3 +51,74 @@ onclick: `onclick="navTo('section-id', this)"`
 
 `지식창고_자동동기화.command`가 로컬 변경을 자동으로 GitHub에 푸시합니다.
 수동 푸시는 불필요하지만, 즉시 반영이 필요할 때: `bash sync.sh`
+
+---
+
+## 자동 오픈/접근 인프라 (2026-05-15 확정)
+
+박규호 부장(Jade) 작업 환경 기준. 다음 4개 진입점이 동시 작동합니다.
+
+### 1) 부팅 시 자동 진입 (0클릭)
+- macOS Login Items에 **`지식창고열기.app`** 등록됨
+- 위치: `~/Applications/지식창고열기.app` (AppleScript 컴파일)
+- 동작: 부팅 + 잠금 해제 → Chrome 자동 실행 → 갤러리(`https://celab-kor.github.io/celab-knowledge-base/`) 자동 표시
+
+### 2) 즉시 호출 단축키
+- **⌥ ⌘ K** (Option + Command + K) → Raycast Quicklink "지식창고"
+- 어디서든 Chrome으로 갤러리 점프
+- (참고: Raycast 기본 매핑이었던 "Create Quicklink"의 `⌥⌘K`는 제거하거나 비활성화한 상태)
+
+### 3) 백업 진입점
+- 데스크탑 `지식창고.webloc` — 더블클릭 시 기본 브라우저로 갤러리 열림
+- `~/Library/Services/지식창고열기.workflow` — Quick Action, 시스템 설정에서 단축키 추가 가능 (현재 미매핑)
+
+### 4) 발행 자동화 (HTML 만들면 슬랙 알림 자동)
+- 동기화: `sync.sh` — untracked `pages/*.html` 감지 시 git push + 슬랙 발송
+- 슬랙 헬퍼: `scripts/notify_slack.py` (curl 기반, macOS SSL 이슈 회피)
+- Webhook 키: `scripts/.env.local` (gitignored, 평문 키 푸시 차단됨)
+- LaunchAgent: `com.celab.company-schedule-sync.plist` (주기 자동 동기화)
+
+---
+
+## 발행 워크플로 (3가지 경로)
+
+### 경로 A · 회의 영상에서 시작
+영상회의록 추출기 Rev.3 앱 → 영상→TXT→HTML → 앱 안 편집 → "발행하기" 버튼
+→ 앱이 자동으로 pages/ 복사 + index.html 갱신 + git push + 슬랙 발송
+
+### 경로 B · 외부 HTML 발행
+데스크탑 `📁 지식창고_발행대기` 폴더에 HTML 드래그
+→ `⚡발행대기처리.command` 더블클릭
+→ `scripts/process_inbox.sh`가 파일명 안전화 + pages/ 이동 + sync.sh 호출
+
+### 경로 C · Claude에게 요청 (가장 권장)
+"지식창고에 ~ 발행해줘" 한 마디
+→ Claude가 HTML 생성 + index.html PAGES 배열 등재 + git push + 슬랙 발송 일괄 처리
+
+---
+
+## Claude가 새 페이지 만들 때 따라야 할 순서
+
+1. `pages/YYYY-MM-DD_제목.html` 작성 (CLAUDE.md 상단 HTML 작성 규칙 준수)
+2. `index.html`의 `PAGES` 배열 **맨 앞**에 신규 항목 추가
+   - 필드: id (현재 timestamp), title, desc, category, tags, date, emoji, url
+3. `bash sync.sh` 실행 → 자동 commit + push + 슬랙 발송
+4. 결과 확인: `.sync.log`의 마지막 줄에 `[slack] 200` 표시
+
+수동 `git push`로 직접 푸시하면 슬랙 발송이 누락됩니다. **반드시 `sync.sh` 경유**.
+
+---
+
+## 분류 정책 (2026-05-15 결정)
+
+- **물리 폴더로 분류하지 않음**. 11개 카테고리 폴더(`02 CELab/인터뷰/팀 미팅/` 등)는 폐기.
+- `pages/` 폴더는 평평하게 유지 (하위 폴더 생성 금지 — 슬랙·갤러리 동작 안 함).
+- 분류는 `index.html` PAGES 배열의 `category` + `tags` 필드로만 (갤러리 필터에서 가상 분류).
+- 카테고리 목록: 투자 · IR · 분석 · 전략 · 기타 · 교육 (새 카테고리 추가 시 CSS `.cat-{이름}` 스타일도 함께 추가)
+
+---
+
+## 참고 문서
+
+- 사용 매뉴얼 (사용자용): `pages/2026-05-15_user-manual.html` — 머메이드 포함 스텝바이스텝
+- 워크플로 SOP (결정 근거): `pages/2026-05-15_workflow-sop.html` — 5개 후보 점수 비교
