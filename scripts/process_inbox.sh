@@ -7,6 +7,7 @@ INBOX="$HOME/Desktop/지식창고_발행대기"
 KB_PATH="$HOME/Documents/celab-knowledge-base"
 PAGES="$KB_PATH/pages"
 LOG="$KB_PATH/.sync.log"
+REGISTER_HELPER="$KB_PATH/scripts/register_page.py"
 TS=$(date '+%Y-%m-%d %H:%M:%S')
 
 if [ ! -d "$INBOX" ]; then
