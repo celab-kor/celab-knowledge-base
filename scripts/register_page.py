@@ -29,6 +29,7 @@ from pathlib import Path
 
 KB_PATH = Path(__file__).resolve().parent.parent
 INDEX_HTML = KB_PATH / "index.html"
+PAGES_DATA = KB_PATH / "pages-data.json"
 
 PAGES_RE = re.compile(r"const\s+PAGES\s*=\s*(\[[\s\S]*?\n\]);")
 TITLE_RE = re.compile(r"<title>([^<]+)</title>", re.IGNORECASE)
