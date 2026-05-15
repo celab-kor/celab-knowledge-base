@@ -61,7 +61,7 @@ onclick: `onclick="navTo('section-id', this)"`
 ### 1) 부팅 시 자동 진입 (0클릭)
 - macOS Login Items에 **`지식창고열기.app`** 등록됨
 - 위치: `~/Applications/지식창고열기.app` (AppleScript 컴파일)
-- 동작: 부팅 + 잠금 해제 → Chrome 자동 실행 → 갤러리(`https://celab-kor.github.io/celab-knowledge-base/`) 자동 표시
+- 동작: 부팅 + 잠금 해제 → Chrome 자동 실행 → 갤러리(`https://celab-knowledge-base.pages.dev/`) 자동 표시 (Cloudflare Pages, Access OTP 인증 후 7일 자동 통과)
 
 ### 2) 즉시 호출 단축키
 - **⌥ ⌘ K** (Option + Command + K) → Raycast Quicklink "지식창고"
