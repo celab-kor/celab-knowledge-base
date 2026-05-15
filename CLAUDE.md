@@ -86,10 +86,18 @@ onclick: `onclick="navTo('section-id', this)"`
 영상회의록 추출기 Rev.3 앱 → 영상→TXT→HTML → 앱 안 편집 → "발행하기" 버튼
 → 앱이 자동으로 pages/ 복사 + index.html 갱신 + git push + 슬랙 발송
 
-### 경로 B · 외부 HTML 발행
-데스크탑 `📁 지식창고_발행대기` 폴더에 HTML 드래그
-→ `⚡발행대기처리.command` 더블클릭
-→ `scripts/process_inbox.sh`가 파일명 안전화 + pages/ 이동 + sync.sh 호출
+### 경로 B · 외부 HTML 발행 (공개/비공개 2채널)
+
+데스크탑에 발행 인박스 2개가 있으며, 어디로 드래그하느냐로 공개 여부를 결정한다.
+
+| 인박스 | 대상 저장소 | 명령 파일 | 갤러리 자동 등록 |
+|---|---|---|---|
+| 🌐 `🌐_지식창고_발행대기/` | `celab-knowledge-base` (**PUBLIC**) | `⚡공개_지식창고_발행.command` | ON (index.html PAGES) |
+| 🔒 `🔒_위키_발행대기/` | `celab-wiki` (**PRIVATE**) | `⚡비공개_위키_발행.command` | OFF (수동 관리) |
+
+두 .command 파일은 동일한 `celab-knowledge-base/scripts/process_inbox.sh`를 호출하지만, 환경변수(`INBOX`, `KB_PATH`, `KB_VISIBILITY`, `KB_BASE_URL`, `KB_REGISTER_INDEX`)로 동작을 분기한다. **스크립트 본체는 `celab-knowledge-base/scripts/`에만 두고 단일 소스로 유지**(wiki는 .command만 가짐).
+
+슬랙 알림은 두 채널 모두 공통 webhook으로 발송되며, 메시지에 🌐 공개 / 🔒 비공개 라벨이 자동 부착된다. 비공개 발행 시 슬랙 링크는 GitHub 로그인 후 조직 멤버만 열람 가능.
 
 ### 경로 C · Claude에게 요청 (가장 권장)
 "지식창고에 ~ 발행해줘" 한 마디
