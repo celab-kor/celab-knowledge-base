@@ -29,6 +29,7 @@ fi
 
 echo "📦 인박스에서 ${COUNT}개 HTML 파일 발견 — pages/로 이동 시작"
 MOVED=0
+NEW_RELS=()
 
 for src in "${HTML_FILES[@]}"; do
   base=$(basename "$src")
@@ -40,16 +41,11 @@ for src in "${HTML_FILES[@]}"; do
     safe_name="${date_prefix}_${safe_name}"
   fi
   dest="$PAGES/$safe_name"
-  # 중복 시 -1, -2 ... suffix
-  i=1
-  while [ -e "$dest" ]; do
-    name_no_ext="${safe_name%.html}"
-    dest="$PAGES/${name_no_ext}-${i}.html"
-    i=$((i + 1))
-  done
-  if mv "$src" "$dest"; then
+  # 동일 stem 파일이 이미 있으면 덮어쓰기 (사용자가 수정본을 다시 발행하는 케이스)
+  if mv -f "$src" "$dest"; then
     echo "  ✅ $base → pages/$(basename "$dest")"
     MOVED=$((MOVED + 1))
+    NEW_RELS+=("pages/$(basename "$dest")")
     echo "[$TS] 📥 inbox→pages: $(basename "$dest")" >> "$LOG"
   else
     echo "  ❌ 이동 실패: $base"
@@ -59,6 +55,13 @@ done
 if [ "$MOVED" -eq 0 ]; then
   echo "이동된 파일이 없습니다."
   exit 1
+fi
+
+# index.html PAGES 배열에 신규 entry 등록 (이미 있으면 skip)
+if [ -f "$REGISTER_HELPER" ] && [ "${#NEW_RELS[@]}" -gt 0 ]; then
+  echo ""
+  echo "📝 갤러리 인덱스(index.html PAGES) 등록"
+  python3 "$REGISTER_HELPER" "${NEW_RELS[@]}" | tee -a "$LOG"
 fi
 
 echo ""
