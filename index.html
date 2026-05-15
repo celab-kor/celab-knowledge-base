@@ -77,9 +77,30 @@
   .cat-교육 .card-category-badge { background: rgba(52,211,153,0.2); color: #34d399; border: 1px solid rgba(52,211,153,0.4); }
 
   footer { text-align: center; padding: 24px; border-top: 1px solid var(--card-border); color: var(--muted); font-size: 12px; }
+
+  /* MANUAL FAB BUTTON (fixed top-right) */
+  #manual-fab {
+    position: fixed; top: 16px; right: 18px; z-index: 9999;
+    background: var(--gold); color: var(--navy);
+    padding: 10px 18px; border-radius: 24px;
+    font-weight: 700; font-size: 13px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    display: flex; align-items: center; gap: 6px;
+    transition: background 0.15s, transform 0.1s;
+  }
+  #manual-fab:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(201,168,76,0.4); }
+  #manual-fab .icon { font-size: 16px; }
+  @media (max-width: 640px) {
+    #manual-fab { padding: 8px 12px; font-size: 12px; top: 12px; right: 12px; }
+  }
 </style>
 </head>
 <body>
+
+<a href="pages/2026-05-15_user-manual.html" id="manual-fab" title="지식창고 사용 매뉴얼 — 처음 사용하시면 클릭">
+  <span class="icon">📖</span><span>사용 매뉴얼</span>
+</a>
 
 <header>
   <div class="logo">CELab · Knowledge Base</div>
@@ -109,6 +130,23 @@
 // DATA — 새 문서 추가할 때 이 배열에 항목 추가
 // ============================================================
 const PAGES = [
+  {
+    "id": 1778800000003,
+    "title": "📖 지식창고 사용 매뉴얼 v1.0 — 누구나 따라 할 수 있는 발행 가이드",
+    "desc": "회의록·문서 발행 전체 워크플로우 사용자 매뉴얼. 머메이드 다이어그램 포함. 시나리오 3종(영상→앱 발행 / 외부 HTML→인박스 / Claude 요청), 발행 확인 3단계, FAQ 7개, 문제 해결 4종까지 한 페이지. 신규 멤버 온보딩용 단일 진실 문서.",
+    "category": "교육",
+    "tags": [
+      "사용매뉴얼",
+      "온보딩",
+      "워크플로우",
+      "머메이드",
+      "FAQ",
+      "스텝바이스텝"
+    ],
+    "date": "2026-05-15",
+    "emoji": "📖",
+    "url": "pages/2026-05-15_user-manual.html"
+  },
   {
     "id": 1778800000002,
     "title": "지식창고 회의록 발행 워크플로우 SOP v1.0",
