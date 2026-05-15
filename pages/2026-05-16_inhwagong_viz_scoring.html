@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>인화공 온톨로지 — 시각화 방법론 평가 매트릭스</title>
+<style>
+:root {
+  --navy: #1e3c72; --navy2: #2a5298; --green: #32B489;
+  --orange: #f39c12; --gold: #F9A825; --red: #e74c3c;
+  --purple: #8e44ad; --teal: #00796B; --bg: #f0f4f8;
+  --card: #ffffff; --text: #2d3748; --border: #e2e8f0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); }
+header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+  color: white; padding: 40px; text-align: center;
+}
+header h1 { font-size: 2rem; margin-bottom: 8px; }
+header p { opacity: .8; font-size: .95rem; }
+.chips { display: flex; gap: 8px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+.chip { background: rgba(255,255,255,.15); border-radius: 20px; padding: 4px 14px; font-size: .8rem; }
+.warn { background: #fff3cd; border-left: 4px solid var(--gold); padding: 12px 20px; margin: 20px 40px; border-radius: 4px; font-size: .85rem; }
+.container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+h2 { font-size: 1.4rem; color: var(--navy); margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+h3 { font-size: 1.1rem; color: var(--navy2); margin-bottom: 12px; }
+
+/* Criteria cards */
+.criteria-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+.crit-card { background: var(--card); border-radius: 10px; padding: 16px; border-top: 4px solid var(--navy2); box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.crit-num { font-size: 1.6rem; font-weight: 700; color: var(--navy2); }
+.crit-name { font-weight: 600; font-size: .9rem; margin: 4px 0 2px; }
+.crit-desc { font-size: .78rem; color: #666; }
+
+/* Scoring table */
+.score-wrap { overflow-x: auto; margin-bottom: 40px; }
+table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+thead { background: var(--navy); color: white; }
+thead th { padding: 12px 10px; font-size: .82rem; text-align: center; }
+thead th:first-child { text-align: left; padding-left: 16px; }
+tbody tr { border-bottom: 1px solid var(--border); }
+tbody tr:last-child { border: none; }
+tbody td { padding: 12px 10px; font-size: .84rem; text-align: center; vertical-align: middle; }
+tbody td:first-child { text-align: left; padding-left: 16px; font-weight: 600; }
+.winner-row { background: #FFFBF0; border-left: 4px solid var(--gold) !important; }
+.winner-row td:first-child { color: var(--navy); }
+.badge { display: inline-block; border-radius: 4px; padding: 1px 6px; font-size: .7rem; font-weight: 700; margin-left: 6px; }
+.badge-winner { background: var(--gold); color: #333; }
+.badge-cloud { background: #ddd; color: #555; }
+.badge-runner { background: var(--green); color: white; }
+/* Score cell colors */
+.s10{background:#1a7a4a;color:white;border-radius:6px;padding:3px 8px;font-weight:700;}
+.s9{background:#27ae60;color:white;border-radius:6px;padding:3px 8px;font-weight:700;}
+.s8{background:#52c77a;color:white;border-radius:6px;padding:3px 8px;font-weight:700;}
+.s7{background:#a8e6bc;color:#1a5c35;border-radius:6px;padding:3px 8px;}
+.s6{background:#d4edda;color:#155724;border-radius:6px;padding:3px 8px;}
+.s5{background:#fff3cd;color:#856404;border-radius:6px;padding:3px 8px;}
+.s4{background:#ffe0a0;color:#7a4500;border-radius:6px;padding:3px 8px;}
+.s3{background:#f8c4a0;color:#6b2a00;border-radius:6px;padding:3px 8px;}
+.s2{background:#f5978a;color:#5a0000;border-radius:6px;padding:3px 8px;}
+.total-cell { font-size: 1rem; font-weight: 700; }
+.winner-total { color: var(--gold); font-size: 1.1rem; }
+
+/* Bar chart */
+.bar-section { margin-bottom: 40px; }
+.bar-item { display: flex; align-items: center; margin-bottom: 12px; }
+.bar-label { width: 200px; font-size: .85rem; font-weight: 600; flex-shrink: 0; }
+.bar-track { flex: 1; background: #eee; border-radius: 20px; height: 28px; position: relative; }
+.bar-fill { height: 100%; border-radius: 20px; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-size: .8rem; font-weight: 700; color: white; transition: width .6s; }
+.bar-score { width: 50px; text-align: right; font-size: .9rem; font-weight: 700; margin-left: 12px; }
+
+/* Radar SVG */
+.radar-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; align-items: start; }
+.radar-card { background: var(--card); border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.radar-legend { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: .82rem; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+/* Strategy box */
+.strategy { background: linear-gradient(135deg, #FFFBF0, #FFF8E1); border: 2px solid var(--gold); border-radius: 12px; padding: 24px; margin-bottom: 40px; }
+.strategy h3 { color: #7a5c00; margin-bottom: 16px; }
+.strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.strat-box { background: white; border-radius: 8px; padding: 16px; }
+.strat-box h4 { font-size: .9rem; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid; }
+.strat-box.html h4 { color: var(--navy); border-color: var(--gold); }
+.strat-box.obs h4 { color: var(--teal); border-color: var(--green); }
+.strat-box ul { list-style: none; }
+.strat-box li { font-size: .82rem; padding: 3px 0; color: #555; }
+.strat-box li::before { content: "→ "; color: var(--navy2); font-weight: 700; }
+
+/* Disqualified */
+.disq { background: #fef5f5; border: 1px solid #fcc; border-radius: 8px; padding: 16px; margin-bottom: 40px; }
+.disq h4 { color: var(--red); margin-bottom: 8px; }
+.disq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.disq-item { font-size: .8rem; }
+.disq-item strong { display: block; color: #555; }
+
+footer { background: var(--navy); color: rgba(255,255,255,.7); text-align: center; padding: 20px; font-size: .8rem; margin-top: 40px; }
+@media(max-width:768px){.criteria-grid,.strategy-grid,.disq-grid,.radar-wrap{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>시각화 방법론 평가 매트릭스</h1>
+  <p>인화공(인터넷화학공학회) 온톨로지 — 최적 시각화 도구 선정</p>
+  <div class="chips">
+    <span class="chip">🔬 7,415건 Q&A 데이터</span>
+    <span class="chip">🔒 로컬 전용 (외부 유출 금지)</span>
+    <span class="chip">6개 방법론 평가</span>
+    <span class="chip">6개 기준 × 10점 만점</span>
+  </div>
+</header>
+<div class="warn">⚠️ 본 문서는 SnapScale 내부 전용 자료입니다. 외부 유출 금지.</div>
+
+<div class="container">
+
+<!-- 평가 기준 -->
+<h2>평가 기준 6개</h2>
+<div class="criteria-grid">
+  <div class="crit-card"><div class="crit-num">①</div><div class="crit-name">로컬 전용 가능</div><div class="crit-desc">외부 서버·클라우드 없이 완전 오프라인으로 운용 가능한가? 데이터 보안 핵심 항목</div></div>
+  <div class="crit-card"><div class="crit-num">②</div><div class="crit-name">온톨로지 관계 표현력</div><div class="crit-desc">노드 간 연결, OWL 계층 구조, 속성 관계를 시각적으로 표현할 수 있는가?</div></div>
+  <div class="crit-card"><div class="crit-num">③</div><div class="crit-name">검색 / 필터 기능</div><div class="crit-desc">7,000건+ 데이터를 실시간으로 검색·필터링할 수 있는가?</div></div>
+  <div class="crit-card"><div class="crit-num">④</div><div class="crit-name">대용량 데이터 처리</div><div class="crit-desc">7,415개 레코드를 렌더링 없이 처리할 수 있는가?</div></div>
+  <div class="crit-card"><div class="crit-num">⑤</div><div class="crit-name">학습 / 내부화 적합성</div><div class="crit-desc">팀원이 지식 구조를 인지하고 내면화하는 데 도움이 되는가?</div></div>
+  <div class="crit-card"><div class="crit-num">⑥</div><div class="crit-name">구현 난이도 (역점수)</div><div class="crit-desc">구현이 쉬울수록 높은 점수. 즉시 시작 가능 여부</div></div>
+</div>
+
+<!-- 세부 점수 표 -->
+<h2>세부 점수 비교</h2>
+<div class="score-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>방법론</th>
+      <th>① 로컬 전용</th>
+      <th>② OWL 표현</th>
+      <th>③ 검색/필터</th>
+      <th>④ 대용량</th>
+      <th>⑤ 학습적합</th>
+      <th>⑥ 난이도역</th>
+      <th>총점 /60</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>마인드맵 (Miro/Whimsical)<span class="badge badge-cloud">☁ 클라우드</span></td>
+      <td><span class="s2">2</span></td>
+      <td><span class="s6">6</span></td>
+      <td><span class="s3">3</span></td>
+      <td><span class="s4">4</span></td>
+      <td><span class="s8">8</span></td>
+      <td><span class="s9">9</span></td>
+      <td class="total-cell">32</td>
+    </tr>
+    <tr>
+      <td>Notion DB<span class="badge badge-cloud">☁ 클라우드</span></td>
+      <td><span class="s3">3</span></td>
+      <td><span class="s4">4</span></td>
+      <td><span class="s9">9</span></td>
+      <td><span class="s7">7</span></td>
+      <td><span class="s7">7</span></td>
+      <td><span class="s8">8</span></td>
+      <td class="total-cell">38</td>
+    </tr>
+    <tr>
+      <td>Obsidian Vault<span class="badge badge-runner">2위</span></td>
+      <td><span class="s9">9</span></td>
+      <td><span class="s8">8</span></td>
+      <td><span class="s7">7</span></td>
+      <td><span class="s6">6</span></td>
+      <td><span class="s9">9</span></td>
+      <td><span class="s7">7</span></td>
+      <td class="total-cell">46</td>
+    </tr>
+    <tr>
+      <td>Canva 화이트보드<span class="badge badge-cloud">☁ 클라우드</span></td>
+      <td><span class="s2">2</span></td>
+      <td><span class="s7">7</span></td>
+      <td><span class="s3">3</span></td>
+      <td><span class="s3">3</span></td>
+      <td><span class="s8">8</span></td>
+      <td><span class="s9">9</span></td>
+      <td class="total-cell">32</td>
+    </tr>
+    <tr class="winner-row">
+      <td>인터랙티브 HTML (D3/SVG)<span class="badge badge-winner">🥇 1위</span></td>
+      <td><span class="s10">10</span></td>
+      <td><span class="s9">9</span></td>
+      <td><span class="s10">10</span></td>
+      <td><span class="s10">10</span></td>
+      <td><span class="s8">8</span></td>
+      <td><span class="s6">6</span></td>
+      <td class="total-cell winner-total">53</td>
+    </tr>
+    <tr>
+      <td>PPTX (PowerPoint/Keynote)</td>
+      <td><span class="s10">10</span></td>
+      <td><span class="s3">3</span></td>
+      <td><span class="s2">2</span></td>
+      <td><span class="s2">2</span></td>
+      <td><span class="s6">6</span></td>
+      <td><span class="s9">9</span></td>
+      <td class="total-cell">32</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- 총점 막대 차트 -->
+<h2>총점 순위</h2>
+<div class="bar-section">
+  <div class="bar-item">
+    <div class="bar-label">🥇 인터랙티브 HTML</div>
+    <div class="bar-track"><div class="bar-fill" style="width:88.3%;background:linear-gradient(90deg,#F9A825,#f39c12);">53점</div></div>
+    <div class="bar-score" style="color:var(--gold)">53/60</div>
+  </div>
+  <div class="bar-item">
+    <div class="bar-label">🥈 Obsidian Vault</div>
+    <div class="bar-track"><div class="bar-fill" style="width:76.7%;background:var(--teal);">46점</div></div>
+    <div class="bar-score" style="color:var(--teal)">46/60</div>
+  </div>
+  <div class="bar-item">
+    <div class="bar-label">Notion DB</div>
+    <div class="bar-track"><div class="bar-fill" style="width:63.3%;background:#718096;">38점</div></div>
+    <div class="bar-score">38/60</div>
+  </div>
+  <div class="bar-item">
+    <div class="bar-label">마인드맵</div>
+    <div class="bar-track"><div class="bar-fill" style="width:53.3%;background:#aaa;">32점</div></div>
+    <div class="bar-score">32/60</div>
+  </div>
+  <div class="bar-item">
+    <div class="bar-label">Canva 화이트보드</div>
+    <div class="bar-track"><div class="bar-fill" style="width:53.3%;background:#aaa;">32점</div></div>
+    <div class="bar-score">32/60</div>
+  </div>
+  <div class="bar-item">
+    <div class="bar-label">PPTX</div>
+    <div class="bar-track"><div class="bar-fill" style="width:53.3%;background:#aaa;">32점</div></div>
+    <div class="bar-score">32/60</div>
+  </div>
+</div>
+
+<!-- 레이더 차트 -->
+<h2>방법론 프로파일 비교 (레이더)</h2>
+<div class="radar-wrap">
+  <div class="radar-card">
+    <h3>인터랙티브 HTML vs Obsidian</h3>
+    <svg viewBox="0 0 300 280" style="width:100%;max-width:300px;display:block;margin:0 auto;">
+      <defs>
+        <polygon id="grid1" points="150,30 230,80 230,180 150,230 70,180 70,80" fill="none" stroke="#eee" stroke-width="1"/>
+        <polygon id="grid2" points="150,55 210,92.5 210,167.5 150,205 90,167.5 90,92.5" fill="none" stroke="#eee" stroke-width="1"/>
+        <polygon id="grid3" points="150,80 190,105 190,155 150,180 110,155 110,105" fill="none" stroke="#eee" stroke-width="1"/>
+      </defs>
+      <!-- Grid -->
+      <use href="#grid1"/><use href="#grid2"/><use href="#grid3"/>
+      <!-- Axes -->
+      <line x1="150" y1="130" x2="150" y2="30" stroke="#ccc" stroke-width="1"/>
+      <line x1="150" y1="130" x2="230" y2="80" stroke="#ccc" stroke-width="1"/>
+      <line x1="150" y1="130" x2="230" y2="180" stroke="#ccc" stroke-width="1"/>
+      <line x1="150" y1="130" x2="150" y2="230" stroke="#ccc" stroke-width="1"/>
+      <line x1="150" y1="130" x2="70" y2="180" stroke="#ccc" stroke-width="1"/>
+      <line x1="150" y1="130" x2="70" y2="80" stroke="#ccc" stroke-width="1"/>
+      <!-- Labels -->
+      <text x="150" y="22" text-anchor="middle" font-size="10" fill="#555">① 로컬전용</text>
+      <text x="238" y="78" text-anchor="start" font-size="10" fill="#555">② OWL</text>
+      <text x="238" y="185" text-anchor="start" font-size="10" fill="#555">③ 검색</text>
+      <text x="150" y="246" text-anchor="middle" font-size="10" fill="#555">④ 대용량</text>
+      <text x="62" y="185" text-anchor="end" font-size="10" fill="#555">⑤ 학습</text>
+      <text x="62" y="78" text-anchor="end" font-size="10" fill="#555">⑥ 난이도</text>
+      <!-- HTML profile (10,9,10,10,8,6) — scale: 200px = 10 -->
+      <!-- ① top: 150, 30+(10-10)*20=30 → y=30, x=150 -->
+      <!-- ② top-right: angle 60° from top: base(230,80), scale 9/10 → (150+80*0.9, 80-50*0.9)=(222,35)... let me do it simpler -->
+      <!-- Using hexagon layout: each axis is 100px from center -->
+      <!-- HTML: 10,9,10,10,8,6 → scale *10 = 100,90,100,100,80,60 -->
+      <polygon points="150,30 222,76.5 222,183.5 150,230 78,183.5 96,76.5" fill="rgba(249,168,37,0.25)" stroke="#F9A825" stroke-width="2.5"/>
+      <!-- Obsidian: 9,8,7,6,9,7 → 90,80,70,60,90,70 -->
+      <polygon points="150,40 214,83.5 214,170.5 150,220 86,170.5 97,83.5" fill="rgba(0,121,107,0.15)" stroke="#00796B" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <!-- Dots HTML -->
+      <circle cx="150" cy="30" r="3" fill="#F9A825"/>
+      <circle cx="222" cy="76.5" r="3" fill="#F9A825"/>
+      <circle cx="222" cy="183.5" r="3" fill="#F9A825"/>
+      <circle cx="150" cy="230" r="3" fill="#F9A825"/>
+      <circle cx="78" cy="183.5" r="3" fill="#F9A825"/>
+      <circle cx="96" cy="76.5" r="3" fill="#F9A825"/>
+    </svg>
+    <div class="radar-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#F9A825"></div><strong>인터랙티브 HTML</strong> — 53점 (1위)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#00796B;opacity:.6"></div><span style="color:#555">Obsidian Vault — 46점 (2위)</span></div>
+    </div>
+  </div>
+  <div class="radar-card">
+    <h3>클라우드 도구 탈락 이유</h3>
+    <table style="width:100%;font-size:.82rem;border-collapse:collapse;">
+      <tr style="background:#f7f7f7;"><th style="padding:8px;text-align:left;">도구</th><th style="padding:8px;">탈락 사유</th></tr>
+      <tr style="border-bottom:1px solid #eee;"><td style="padding:8px;font-weight:600;">마인드맵</td><td style="padding:8px;color:#c0392b;">① 로컬전용 2점 — Miro/Whimsical 서버에 데이터 저장</td></tr>
+      <tr style="border-bottom:1px solid #eee;"><td style="padding:8px;font-weight:600;">Notion</td><td style="padding:8px;color:#c0392b;">① 로컬전용 3점 — 클라우드 DB, 오프라인 제한적</td></tr>
+      <tr style="border-bottom:1px solid #eee;"><td style="padding:8px;font-weight:600;">Canva</td><td style="padding:8px;color:#c0392b;">① 로컬전용 2점 + ④ 대용량 3점 — 7천건 불가</td></tr>
+      <tr><td style="padding:8px;font-weight:600;">PPTX</td><td style="padding:8px;color:#c0392b;">③ 검색 2점 + ④ 대용량 2점 — 정적 파일, 필터 불가</td></tr>
+    </table>
+    <div style="margin-top:16px;padding:12px;background:#e8f5e9;border-radius:8px;font-size:.82rem;">
+      <strong style="color:#1a7a4a;">✅ 핵심 원칙</strong><br>
+      "로컬 전용 가능 여부"가 <strong>필수 조건</strong>이므로,<br>
+      클라우드 의존 도구는 총점과 무관하게 운용 불가.
+    </div>
+  </div>
+</div>
+
+<!-- 권장 전략 -->
+<h2>권장 병행 전략</h2>
+<div class="strategy">
+  <h3>🏆 최종 선정: 인터랙티브 HTML (1위, 53점) + Obsidian Vault (2위, 46점) 병행</h3>
+  <p style="margin-bottom:16px;font-size:.88rem;color:#555;">단일 도구로 모든 요구를 충족할 수 없음. 두 도구의 역할을 분리하여 시너지 극대화.</p>
+  <div class="strategy-grid">
+    <div class="strat-box html">
+      <h4>📊 인터랙티브 HTML 대시보드</h4>
+      <ul>
+        <li>7,415건 전체 데이터 인라인 내장</li>
+        <li>실시간 검색·필터 (Stage/Domain/ProblemType)</li>
+        <li>SVG 통계 차트 (도메인·스테이지·추이)</li>
+        <li>AutoFlow 후보 838건 하이라이트</li>
+        <li>온톨로지 트리 접기/펼치기</li>
+        <li>완전 로컬 standalone .html 파일</li>
+      </ul>
+    </div>
+    <div class="strat-box obs">
+      <h4>🔗 Obsidian 지식 볼트</h4>
+      <ul>
+        <li>C01~C10 대분류 노트 + MOC</li>
+        <li>노트 간 wikilink로 온톨로지 관계 시각화</li>
+        <li>Graph View로 지식 노드 네트워크 탐색</li>
+        <li>YAML frontmatter로 메타데이터 필터</li>
+        <li>마크다운 → 로컬 git 버전 관리 가능</li>
+        <li>AutoFlow 개발 시 참조 지식 DB</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="disq">
+  <h4>⚠️ 클라우드 도구 탈락 사유 요약</h4>
+  <div class="disq-grid">
+    <div class="disq-item"><strong>마인드맵 (Miro 등)</strong>로컬전용 불가, 7천건 노드 렌더링 불가</div>
+    <div class="disq-item"><strong>Notion DB</strong>클라우드 필수, 오프라인 동기화 불완전</div>
+    <div class="disq-item"><strong>Canva</strong>클라우드 의존, 대용량 데이터 처리 불가</div>
+  </div>
+</div>
+
+</div><!-- /container -->
+<footer>
+  <strong>SnapScale Internal Use Only | 인화공 온톨로지 프로젝트</strong><br>
+  평가 기준: 로컬전용·OWL표현력·검색필터·대용량·학습적합·구현난이도 (각 10점 만점)<br>
+  <span style="color:rgba(255,255,255,.5)">2026.05.16 | Version 1.0</span>
+</footer>
+</body>
+</html>
