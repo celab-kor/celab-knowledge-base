@@ -17,8 +17,11 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-KB_BASE_URL = "https://celab-knowledge-base.pages.dev"
-KB_PATH = Path(__file__).resolve().parent.parent
+# 환경변수로 공개/비공개 발행 분기 가능. 미지정 시 기본=지식창고(공개) 설정.
+KB_BASE_URL = os.environ.get("CELAB_KB_BASE_URL", "https://celab-knowledge-base.pages.dev").rstrip("/")
+KB_LABEL = os.environ.get("CELAB_KB_LABEL", "지식창고")
+KB_VISIBILITY = os.environ.get("CELAB_KB_VISIBILITY", "public")
+KB_PATH = Path(os.environ.get("CELAB_KB_PATH", "")).resolve() if os.environ.get("CELAB_KB_PATH") else Path(__file__).resolve().parent.parent
 ENV_LOCAL = Path(__file__).resolve().parent / ".env.local"
 
 

@@ -21,13 +21,15 @@ Defaults for new entries (user may edit afterwards):
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 import time
 from datetime import datetime
 from pathlib import Path
 
-KB_PATH = Path(__file__).resolve().parent.parent
+# CELAB_KB_PATH로 대상 저장소를 지정 가능. 미지정 시 스크립트 부모 디렉터리(=지식창고).
+KB_PATH = Path(os.environ.get("CELAB_KB_PATH", "")).resolve() if os.environ.get("CELAB_KB_PATH") else Path(__file__).resolve().parent.parent
 INDEX_HTML = KB_PATH / "index.html"
 PAGES_DATA = KB_PATH / "pages-data.json"
 
