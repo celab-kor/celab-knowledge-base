@@ -3,3 +3,8 @@
 .sync-out.log
 .sync-err.log
 *.log.tmp
+
+# 비밀키 분리 (슬랙 webhook 등)
+.env
+.env.local
+scripts/.env*
