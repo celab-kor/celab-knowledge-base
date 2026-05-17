@@ -20,7 +20,7 @@
       "id": "US-01",
       "title": "Module 17 Sustainability 번역 (p.319-326, 8쪽)",
       "priority": 1,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "마스터 파일 EHY202.14.01_17_Sustainability_KO.md 가 원본 PDF 폴더에 생성됨",
         "옵시디언 사본 102. Aspentech/EHY202/17. Sustainability.md 가 frontmatter(course=EHY202, module=17, pages='319-326', tags 포함) 포함하여 생성됨",
@@ -33,7 +33,7 @@
       "id": "US-02",
       "title": "Module 06+07 Real Separators (이론 + WS3) 번역 (p.108-134, 27쪽)",
       "priority": 2,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "마스터 파일 EHY202.14.01_06-07_RealSeparators_KO.md 생성",
         "옵시디언 사본 102. Aspentech/EHY202/06-07. Real Separators.md 생성 (frontmatter module=6-7)",
@@ -46,7 +46,7 @@
       "id": "US-03",
       "title": "Module 16 Equation Oriented Modeling 번역 (p.305-318, 14쪽)",
       "priority": 3,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "마스터 파일 EHY202.14.01_16_EquationOriented_KO.md 생성",
         "옵시디언 사본 102. Aspentech/EHY202/16. Equation Oriented Modeling.md 생성",
@@ -58,7 +58,7 @@
       "id": "US-04",
       "title": "Module 02+03 Getting Started (이론 + WS1) 번역 (p.20-66, 47쪽)",
       "priority": 4,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "마스터 파일 EHY202.14.01_02-03_GettingStarted_KO.md 생성",
         "옵시디언 사본 102. Aspentech/EHY202/02-03. Getting Started.md 생성",
@@ -71,7 +71,7 @@
       "id": "US-05",
       "title": "Module 04+05 Advanced Columns (이론 + WS2) 번역 (p.67-107, 41쪽)",
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "마스터 파일 EHY202.14.01_04-05_AdvancedColumns_KO.md 생성",
         "옵시디언 사본 102. Aspentech/EHY202/04-05. Advanced Columns.md 생성",
@@ -83,7 +83,7 @@
       "id": "US-06",
       "title": "Module 08+09 Safety Analysis (이론 + WS4) 번역 (p.135-183, 49쪽)",
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "마스터 파일 EHY202.14.01_08-09_SafetyAnalysis_KO.md 생성",
         "옵시디언 사본 102. Aspentech/EHY202/08-09. Safety Analysis.md 생성",
@@ -96,7 +96,7 @@
       "id": "US-07",
       "title": "Module 10+11 Optimization (이론 + WS5) 번역 (p.184-224, 41쪽)",
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "마스터 파일 EHY202.14.01_10-11_Optimization_KO.md 생성",
         "옵시디언 사본 102. Aspentech/EHY202/10-11. Optimization.md 생성",
@@ -108,7 +108,7 @@
       "id": "US-08",
       "title": "Module 12+13 Blowdown (이론 + WS6) 번역 (p.225-266, 42쪽)",
       "priority": 8,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "마스터 파일 EHY202.14.01_12-13_Blowdown_KO.md 생성",
         "옵시디언 사본 102. Aspentech/EHY202/12-13. Blowdown.md 생성",
@@ -120,7 +120,7 @@
       "id": "US-09",
       "title": "Module 14+15 Acid Gas (이론 + WS7) 번역 (p.267-304, 38쪽)",
       "priority": 9,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "마스터 파일 EHY202.14.01_14-15_AcidGas_KO.md 생성",
         "옵시디언 사본 102. Aspentech/EHY202/14-15. Acid Gas.md 생성",
@@ -132,7 +132,7 @@
       "id": "US-10",
       "title": "Module 19+20 SulSim (이론 + WS9) 번역 (p.371-430, 60쪽)",
       "priority": 10,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "마스터 파일 EHY202.14.01_19-20_SulSim_KO.md 생성",
         "옵시디언 사본 102. Aspentech/EHY202/19-20. SulSim.md 생성",
@@ -144,7 +144,7 @@
       "id": "US-11",
       "title": "Module 01 Intro 번역 (p.3-19, 17쪽)",
       "priority": 11,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "마스터 파일 EHY202.14.01_01_Intro_KO.md 생성",
         "옵시디언 사본 102. Aspentech/EHY202/01. Intro.md 생성",
@@ -156,7 +156,7 @@
       "id": "US-12",
       "title": "최종 정합성 검증 (MOC + 코스 개요 + 진행률)",
       "priority": 12,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "코스 개요 노트의 모든 21개 행이 ✅ 완료 상태",
         "코스 개요 노트의 진행률 카운터가 '21 / 21 (100%)'",
