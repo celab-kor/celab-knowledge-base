@@ -1,0 +1,22 @@
+==== EHY202 전체 번역 진행 로그 ====
+
+[2026-05-18] Ralph 시작. PRD 12 stories (11 module groups + 1 final verification).
+
+== 완료된 작업 (이전 세션) ==
+- Module 18 Reactors (p.327-370, 44쪽) — reference 노트로 완료
+  - 마스터: EHY202.14.01_18_Reactors_Workshop_KO.md (660줄, 35KB)
+  - 옵시디언: 102. Aspentech/EHY202/18. Reactors Workshop.md (684줄, frontmatter 포함)
+  - 코스 개요 노트의 Module 18 행 ✅ 표시
+
+== 확립된 패턴 / 학습 ==
+1. 이론 슬라이드 + WS Workshop 짝은 하나의 노트로 통합 (Part A · 이론 / Part B · Workshop / Part C · Solutions / 번역 메모)
+2. PDF 텍스트 추출: pypdf의 PdfReader.pages[i].extract_text() 사용. 표는 줄바꿈으로 추출되므로 수동 정리 필요
+3. AspenTech 메뉴/필드/스트림명은 모두 영문 그대로 (HYSYS 화면 1:1 매칭)
+4. 화학식: H2O, CO2 (평문) 사용 — HYSYS Component Library와 일치
+5. 단위: SI 우선, imperial 괄호 병기 (예: 930 °C (1706 °F))
+6. 옵시디언 frontmatter: type=course-module, course, module, pages, tags, status=complete 필수
+7. 코스 개요 노트의 표는 ⬜→✅ 변경 + wikilink 삽입 + 진행률 N/21 갱신
+8. 페어 처리 시: module_code="<코드> + <코드_WS>" 형식, 옵시디언 파일명 "06-07. Real Separators.md" 형식
+
+== 다음 작업 ==
+US-01 Module 17 Sustainability 시작 (가장 작은 모듈, 8쪽)
