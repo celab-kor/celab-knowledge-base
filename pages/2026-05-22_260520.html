@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스타트업 전략 회의록 | 온톨로지 AI 플랫폼</title>
+<style>
+:root {
+  --navy: #0d1b2a;
+  --navy2: #1a2d45;
+  --gold: #c9a84c;
+  --gold2: #e8c96a;
+  --text: #e8edf2;
+  --muted: #8a9bb0;
+  --card-bg: #162030;
+  --card-border: #243450;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  line-height: 1.7;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,27,42,0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--card-border);
+  padding: 0 1rem;
+}
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  height: 52px;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+nav a:hover { color: var(--gold2); background: var(--navy2); }
+.nav-brand {
+  color: var(--gold) !important;
+  font-weight: 700;
+  font-size: 0.88rem !important;
+  margin-right: 0.5rem;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a2d45 50%, #0d2238 100%);
+  border-bottom: 1px solid var(--card-border);
+  padding: 3.5rem 1.5rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-inner { max-width: 1100px; margin: 0 auto; }
+.hero-badge {
+  display: inline-block;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold2);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+.hero h1 {
+  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+.hero h1 span { color: var(--gold2); }
+.hero-sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 560px;
+}
+.kpi-card {
+  background: rgba(22,32,48,0.8);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  text-align: center;
+}
+.kpi-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--gold2);
+  line-height: 1;
+}
+.kpi-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+/* ── LAYOUT ── */
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+/* ── SECTION HEADING ── */
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.section-heading .icon {
+  width: 36px; height: 36px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.section-heading h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.section-heading p { font-size: 0.8rem; color: var(--muted); margin-top: 0.1rem; }
+
+/* ── CARD ── */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ── ACCORDION / DETAILS ── */
+details {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  margin-bottom: 0.85rem;
+  overflow: hidden;
+}
+details[open] { border-color: rgba(201,168,76,0.3); }
+summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.1rem 1.4rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary:hover { background: rgba(255,255,255,0.02); }
+.sum-num {
+  width: 28px; height: 28px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.2);
+  color: var(--gold2);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+}
+.sum-title { font-weight: 600; font-size: 0.95rem; color: var(--text); flex: 1; }
+.sum-arrow {
+  color: var(--muted);
+  font-size: 0.8rem;
+  transition: transform 0.25s;
+}
+details[open] .sum-arrow { transform: rotate(180deg); }
+.details-body { padding: 0 1.4rem 1.4rem; }
+
+/* ── TAG ── */
+.tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 5px;
+  margin: 0.15rem;
+  font-weight: 600;
+}
+.tag-blue { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.2); }
+.tag-green { background: rgba(34,197,94,0.12); color: #86efac; border: 1px solid rgba(34,197,94,0.2); }
+.tag-red { background: rgba(239,68,68,0.12); color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
+.tag-gold { background: rgba(201,168,76,0.12); color: var(--gold2); border: 1px solid rgba(201,168,76,0.2); }
+.tag-purple { background: rgba(168,85,247,0.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.2); }
+
+/* ── INSIGHT BOX ── */
+.insight-box {
+  background: rgba(201,168,76,0.05);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 0.9rem 1.1rem;
+  margin: 0.8rem 0;
+}
+.insight-box .i-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.insight-box p { font-size: 0.85rem; color: var(--text); }
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.04));
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 0.85rem;
+}
+.highlight-box .hb-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold2);
+  margin-bottom: 0.6rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+
+/* ── ACTION ITEM TABLE ── */
+.action-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+.action-table th {
+  background: var(--navy2);
+  color: var(--muted);
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.action-table th:first-child { border-radius: 8px 0 0 8px; }
+.action-table th:last-child { border-radius: 0 8px 8px 0; }
+.action-table td {
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid rgba(36,52,80,0.6);
+  vertical-align: top;
+}
+.action-table tr:last-child td { border-bottom: none; }
+.action-table tr:hover td { background: rgba(255,255,255,0.015); }
+.priority-h { color: #fca5a5; font-weight: 700; font-size: 0.72rem; }
+.priority-m { color: var(--gold2); font-weight: 700; font-size: 0.72rem; }
+.priority-l { color: #86efac; font-weight: 700; font-size: 0.72rem; }
+
+/* ── DECISION CARD ── */
+.decision-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.decision-icon {
+  width: 32px; height: 32px; flex-shrink: 0;
+  background: rgba(201,168,76,0.12);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+}
+.decision-text strong { display: block; font-size: 0.88rem; color: var(--text); margin-bottom: 0.2rem; }
+.decision-text p { font-size: 0.8rem; color: var(--muted); }
+
+/* ── INVESTOR GRID ── */
+.inv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.85rem;
+}
+.inv-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+  transition: border-color 0.2s;
+}
+.inv-card.top { border-color: rgba(201,168,76,0.35); }
+.inv-card.maybe { border-color: rgba(59,130,246,0.25); }
+.inv-card.pass { border-color: rgba(100,116,139,0.3); opacity: 0.7; }
+.inv-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.3rem; }
+.inv-stars { color: var(--gold2); font-size: 0.75rem; margin-bottom: 0.4rem; }
+.inv-note { font-size: 0.77rem; color: var(--muted); line-height: 1.5; }
+
+/* ── MERMAID ── */
+.diagram-wrap {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+.diagram-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.mermaid { min-width: 300px; }
+
+/* ── DIVIDER ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--card-border);
+  margin: 2.5rem 0;
+}
+
+/* ── PROGRESS BAR ── */
+.prog-bar-wrap { margin: 0.4rem 0 0.8rem; }
+.prog-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.25rem; display: flex; justify-content: space-between; }
+.prog-track { height: 6px; background: var(--navy2); border-radius: 3px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); transition: width 0.6s; }
+
+/* ── RISK BOX ── */
+.risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.risk-item {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+}
+.risk-item.high { border-left: 3px solid #f87171; }
+.risk-item.med { border-left: 3px solid var(--gold); }
+.risk-item.low { border-left: 3px solid #86efac; }
+.risk-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 0.3rem; }
+.risk-item.high .risk-label { color: #f87171; }
+.risk-item.med .risk-label { color: var(--gold2); }
+.risk-item.low .risk-label { color: #86efac; }
+.risk-item p { font-size: 0.8rem; color: var(--text); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .kpi-row { grid-template-columns: repeat(3,1fr); gap: 0.6rem; }
+  .kpi-num { font-size: 1.4rem; }
+  .risk-grid { grid-template-columns: 1fr; }
+  .inv-grid { grid-template-columns: 1fr; }
+  .action-table { display: block; overflow-x: auto; }
+  .hero h1 { font-size: 1.5rem; }
+}
+</style>
+</head>
+<body>
+<div id="celab-home-btn" style="position:fixed;top:14px;right:14px;z-index:10000;">
+  <a href="https://celab-kor.github.io/celab-knowledge-base/" target="_blank"
+     style="display:flex;align-items:center;gap:7px;
+            background:rgba(13,27,42,0.88);color:#c9a84c;
+            padding:7px 13px;border-radius:22px;
+            font-size:13px;font-weight:700;text-decoration:none;
+            box-shadow:0 2px 10px rgba(0,0,0,0.35);
+            border:1px solid rgba(201,168,76,0.35);
+            backdrop-filter:blur(6px);
+            transition:background 0.2s;"
+     onmouseover="this.style.background='rgba(13,27,42,1)'"
+     onmouseout="this.style.background='rgba(13,27,42,0.88)'"
+     title="CELab 지식창고 홈으로">
+    <svg width="15" height="15" viewBox="0 0 20 20" fill="#c9a84c" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 2L2 9h2v9h5v-5h2v5h5V9h2L10 2z"/>
+    </svg>
+    CELab 지식창고
+  </a>
+</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-brand">📋 회의록</a>
+    <a href="#overview">개요</a>
+    <a href="#agenda1">개발 전략</a>
+    <a href="#agenda2">공동창업 쟁점</a>
+    <a href="#agenda3">투자자 평가</a>
+    <a href="#agenda4">자문단 계약</a>
+    <a href="#decisions">결정사항</a>
+    <a href="#actions">액션아이템</a>
+    <a href="#diagrams">다이어그램</a>
+    <a href="#nextsteps">다음 단계</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">⚡ 내부 전략 회의</div>
+    <h1>온톨로지 AI 플랫폼<br><span>스타트업 전략 심층 회의록</span></h1>
+    <p class="hero-sub">투자 전략 · 개발 로드맵 · 공동창업 지분 구조 · 자문단 계약 논의</p>
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-num">2</div>
+        <div class="kpi-label">주요 참석자</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">4</div>
+        <div class="kpi-label">핵심 안건</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">11</div>
+        <div class="kpi-label">액션아이템</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OVERVIEW ── -->
+<div class="container" id="overview">
+  <div class="section-heading">
+    <div class="icon">📌</div>
+    <div>
+      <h2>회의 개요</h2>
+      <p>기본 정보 및 참석자</p>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+    <div class="card">
+      <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.75rem;">회의 정보</div>
+      <table style="font-size:0.83rem; width:100%; border-collapse:collapse;">
+        <tr>
+          <td style="color:var(--muted); padding:0.3rem 0; width:90px;">주제</td>
+          <td>온톨로지 AI 스타트업 전략 심층 논의</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted); padding:0.3rem 0;">형식</td>
+          <td>비정형 내부 전략 회의 (음성 녹취)</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted); padding:0.3rem 0;">주요 논점</td>
+          <td>개발 속도, 투자 전략, 지분, 계약</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted); padding:0.3rem 0;">분위기</td>
+          <td>솔직하고 심층적인 토의 방식</td>
+        </tr>
+      </table>
+    </div>
+    <div class="card">
+      <div style="font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.75rem;">참석자</div>
+      <div style="font-size:0.85rem;">
+        <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#c9a84c,#e8c96a);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#0d1b2a;">김</div>
+          <div><strong>김상윤 대표</strong><br><span style="font-size:0.75rem;color:var(--muted);">창업자 / CEO — 비즈니스 리드</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.6rem;">
+          <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#60a5fa);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#fff;">박</div>
+          <div><strong>박규호 부장</strong><br><span style="font-size:0.75rem;color:var(--muted);">도메인 전문가 — 온톨로지/엔지니어링</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-top:0;">
+    <div class="hb-title">⚡ 회의 핵심 요약</div>
+    <p style="font-size:0.85rem; color:var(--text);">
+      이 회의는 <strong>네 가지 핵심 전략 이슈</strong>를 다뤘다: ① 개발팀 채용 속도 및 제품화 전략, ② 공동창업자 역할·지분(30%) 관련 투자자 피드백 대응, ③ 10개 투자사 중 우선 타겟 선정(포스텍·카이스트·메시업 Top3), ④ 자문단(1번 교수, 일본 교수) 계약서 독소 조항 재검토. 전반적으로 <strong>'속도보다 정확성'</strong>이라는 기조 위에서 자원 배분과 관계 구조를 정비하는 방향이 논의되었다.
+    </p>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 1.5rem;">
+
+<!-- ── AGENDA 1: 개발 전략 ── -->
+<div class="container" id="agenda1">
+  <div class="section-heading">
+    <div class="icon">⚙️</div>
+    <div>
+      <h2>안건 1 — 개발 속도 및 제품화 전략</h2>
+      <p>채용 규모, 온톨로지 구축 우선순위, SaaS 출시 옵션</p>
+    </div>
+  </div>
+
+  <details open>
+    <summary>
+      <span class="sum-num">①</span>
+      <span class="sum-title">핵심 논의 내용 — 개발 속도 논쟁</span>
+      <span class="sum-arrow">▼</span>
+    </summary>
+    <div class="details-body">
+      <p style="font-size:0.85rem; color:var(--text); margin-bottom:1rem;">
+        투자사 등 외부에서 "<strong>너무 빠르게 엑셀을 밟고 있다</strong>"는 우려가 제기됐다. 개발자를 한 번에 많이 채용하다가 고객사와 약속한 기한을 못 지키면 계약이 날아가고 치명적인 타격이 된다는 논리였다.
+      </p>
+      <div style="font-size:0.83rem; display:flex; flex-direction:column; gap:0.6rem;">
+        <div style="background:var(--navy2); border-radius:8px; padding:0.8rem 1rem;">
+          <strong style="color:var(--gold2);">박규호 부장 의견</strong>
+          <p style="color:var(--text); margin-top:0.3rem;">온톨로지 구축 자체는 개발자 수가 많다고 해결되지 않는다. 현재 받은 기본 비용으로 6~7개월 안에 온톨로지를 빠르게 구축하는 것이 먼저이며, 개발자가 많이 필요한 시점은 <em>온톨로지가 돌아가게끔 하는 제품화 단계</em>이다.</p>
+        </div>
+        <div style="background:var(--navy2); border-radius:8px; padding:0.8rem 1rem;">
+          <strong style="color:var(--gold2);">제안된 경로 A — 소규모 정예팀</strong>
+          <p style="color:var(--text); margin-top:0.3rem;">계약 1건 확정 후 1~2명 추가 채용 + 이종현 부장 조인 → 빠르게 제품 완성 후 판매. 일부 기능이 먼저 구현되면 SaaS 모델로 선출시 → 자체 매출 기반 확보.</p>
+        </div>
+        <div style="background:var(--navy2); border-radius:8px; padding:0.8rem 1rem;">
+          <strong style="color:var(--gold2);">경쟁 환경 인식</strong>
+          <p style="color:var(--text); margin-top:0.3rem;">건설사 반복 작업 자동화(온톨로지)는 페인 포인트가 매우 명확하여 퍼스트무버 우위보다 <em>'정확하게 만들어 정착시키는 것'</em>이 훨씬 중요하다. 노키아 vs 아이폰 비유처럼, 기술 방식의 우열이 있을 뿐 존재 자체는 이미 필요성이 증명된 영역.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sum-num">②</span>
+      <span class="sum-title">팀 빌딩 이력 — 인력 이탈 문제</span>
+      <span class="sum-arrow">▼</span>
+    </summary>
+    <div class="details-body">
+      <p style="font-size:0.85rem; color:var(--text); margin-bottom:0.8rem;">
+        초기 개발자(재용님, 동기님 등)가 인턴 성격으로 합류 후 연속 이탈하는 패턴이 반복됐다. 박규호 부장은 "인턴성 인력으로는 개발을 완성할 수 없다"는 판단에서 파이·파이프 아키텍처 현황 점검을 요청한 상태다.
+      </p>
+      <div class="insight-box">
+        <div class="i-label">🔍 Insight</div>
+        <p>개발 연속성 확보가 선결 과제. 계약 전 개발 가능성 자체를 재검증하고, 핵심 개발자 1인을 풀타임 고용하는 것이 투자 전에 선행돼야 한다.</p>
+      </div>
+    </div>
+  </details>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.75rem; margin-top:0.5rem;">
+    <div class="insight-box">
+      <div class="i-label">💡 Insight 1</div>
+      <p>온톨로지 구축과 제품화는 별개의 단계다. 지금은 소수 정예로 온톨로지부터 완성해야 한다.</p>
+    </div>
+    <div class="insight-box">
+      <div class="i-label">💡 Insight 2</div>
+      <p>SaaS 선출시 옵션은 투자 의존도를 줄이고 현앤(파트너)에게 실증 데이터를 보여주는 양수겸장 전략이다.</p>
+    </div>
+    <div class="insight-box">
+      <div class="i-label">💡 Insight 3</div>
+      <p>경쟁사 동향은 불확실(히든)하므로 속도 경쟁보다 정확도 경쟁에 집중해야 리스크가 낮다.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 1.5rem;">
+
+<!-- ── AGENDA 2: 공동창업 쟁점 ── -->
+<div class="container" id="agenda2">
+  <div class="section-heading">
+    <div class="icon">🤝</div>
+    <div>
+      <h2>안건 2 — 공동창업자 지분 및 역할 쟁점</h2>
+      <p>30% 지분, 도메인 지식 리스크, 투자자 시각 해석</p>
+    </div>
+  </div>
+
+  <details open>
+    <summary>
+      <span class="sum-num">①</span>
+      <span class="sum-title">투자자들의 공통 우려: "혼자 끌어온 것 같은데, 도메인 지식이 부족한 것 아닌가?"</span>
+      <span class="sum-arrow">▼</span>
+    </summary>
+    <div class="details-body">
+      <p style="font-size:0.85rem; color:var(--text); margin-bottom:1rem;">
+        투자자들이 공통적으로 느끼는 뷰를 박규호 부장이 정리하여 전달했다:
+      </p>
+      <div style="font-size:0.83rem; display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1rem;">
+        <div style="padding:0.6rem 0.9rem; background:rgba(239,68,68,0.07); border-radius:8px; border-left:2px solid #f87171;">
+          <strong style="color:#fca5a5;">투자자 인식 A</strong> — 발표·IR·세일즈·뉴스 노출 등 스토리상 김상윤의 기여도가 압도적으로 높아 보인다.
+        </div>
+        <div style="padding:0.6rem 0.9rem; background:rgba(239,68,68,0.07); border-radius:8px; border-left:2px solid #f87171;">
+          <strong style="color:#fca5a5;">투자자 인식 B</strong> — 박규호가 "지금 당장 조인도 아닌 상황"이라면, 도메인 지식 보충을 해주는 형태로 보여 "둘이 한 팀"이 아닌 "보조 역할"처럼 느껴진다.
+        </div>
+        <div style="padding:0.6rem 0.9rem; background:rgba(239,68,68,0.07); border-radius:8px; border-left:2px solid #f87171;">
+          <strong style="color:#fca5a5;">투자자 인식 C</strong> — "혼자 끌어왔으면 도메인 지식이 월등해야 하는데, 그렇지 않다면 애매하다."
+        </div>
+      </div>
+      <div class="insight-box">
+        <div class="i-label">🔍 박규호 부장의 반론</div>
+        <p>자신은 기존 사업(엔지니어 업무 워크플로우 체계화 브랜딩)을 드랍하고 공동창업자 마음으로 조인을 결정한 상태다. 정창경 발표자료 공동 작업, 온톨로지 구조 논의 등 실질적 기여가 있었으나 공식 조인 전이라 투자자에게 보이지 않는 것이 문제의 본질이다.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sum-num">②</span>
+      <span class="sum-title">30% 지분 이슈 — 포스텍·메시업 투자자 반응</span>
+      <span class="sum-arrow">▼</span>
+    </summary>
+    <div class="details-body">
+      <p style="font-size:0.85rem; color:var(--text); margin-bottom:0.8rem;">
+        가장 우호적인 투자사(포스텍)에서도 30% 지분에 대해 <strong>"100% 반대"</strong> 입장을 밝힌 것으로 기록됐다. 메시업 파트너도 같은 맥락에서 지분 문제를 거론했다.
+      </p>
+      <div class="highlight-box">
+        <div class="hb-title">🏛️ 교수님(자문단) 의견</div>
+        <p style="font-size:0.83rem; color:var(--text);">"공동창업자로 들어와도 10%가 대부분 채부 입체" → 공동창업자 지분을 10%로 낮추라는 간접 권고.</p>
+      </div>
+      <div style="font-size:0.83rem; background:var(--navy2); border-radius:8px; padding:0.9rem 1rem; margin-top:0.6rem;">
+        <strong style="color:var(--gold2);">논의 결과</strong>
+        <p style="color:var(--text); margin-top:0.3rem;">김상윤 대표가 "어떻게 깎을지 생각해보겠다"고 유보. 투자 여부와 무관하게 급여 일부 양보는 이미 확정된 사항(디폴트). 포스텍 쪽이 데드라인 전 리스크가 가장 크므로 이 안건에 대해 대표가 책임 있는 결정을 내려야 한다.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sum-num">③</span>
+      <span class="sum-title">인플루언서 인식 이슈 (메시업 파트너 발언)</span>
+      <span class="sum-arrow">▼</span>
+    </summary>
+    <div class="details-body">
+      <p style="font-size:0.85rem; color:var(--text); margin-bottom:0.6rem;">
+        메시업 파트너가 박규호 부장을 "발표·알려지는 것을 좋아하는 인플루언서 성향"으로 판단한 것으로 추정. 박규호 부장은 이를 인정하면서도, 심사역이 충분한 조사 없이 성향으로 평가하는 것에 대해 비판적 입장을 표명.
+      </p>
+      <div class="insight-box">
+        <div class="i-label">💡 Insight</div>
+        <p>온톨로지 구조 논의·하이시스 작동 원리 등 기술적 기여를 IR 자료 또는 미팅에서 명시적으로 언급하는 내러티브 설계가 필요하다.</p>
+      </div>
+    </div>
+  </details>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-top:0.5rem;">
+    <div class="insight-box">
+      <div class="i-label">💡 Insight 1</div>
+      <p>공동창업 히스토리를 투자자에게 설명할 때, 박규호 부장의 구체적 기여(온톨로지 설계 참여, 발표자료 공동 작업 등)를 스토리 안에 명시적으로 포함해야 한다.</p>
+    </div>
+    <div class="insight-box">
+      <div class="i-label">💡 Insight 2</div>
+      <p>지분 30%가 투자 라운드 진행의 병목이 되고 있다. 10~20% 범위 내 합리적 재협상이 투자 가속화의 선결 조건이다.</p>
+    </div>
+    <div class="insight-box">
+      <div class="i-label">💡 Insight 3</div>
+      <p>박규호 부장의 '공식 조인'을 앞당기거나, 최소한 투자 서류상 공동창업자 역할이 명확히 기재돼야 한다.</p>
+    </div>
+    <div class="insight-box">
+      <div class="i-label">💡 Insight 4</div>
+      <p>투자자가 느끼는 "도메인 지식 부족" 우려는 결국 스토리텔링 문제다. 기술 기여를 수치화·구체화하는 IR 업데이트가 필요하다.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 1.5rem;">
+
+<!-- ── AGENDA 3: 투자자 평가 ── -->
+<div class="container" id="agenda3">
+  <div class="section-heading">
+    <div class="icon">💰</div>
+    <div>
+      <h2>안건 3 — 투자자 선별 및 우선순위 결정</h2>
+      <p>10개 투자사 비교 평가 · 케미스트리·기술이해도·위기 동반 가능성 3축 분석</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1rem;">
+    <div style="font-size:0.8rem; color:var(--muted); margin-bottom:0.8rem;">투자사 선별 3대 기준</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.75rem; font-size:0.82rem;">
+      <div style="background:var(--navy2); border-radius:8px; padding:0.75rem;">
+        <div style="color:var(--gold2); font-weight:700; margin-bottom:0.3rem;">① 케미스트리</div>
+        <p style="color:var(--muted);">만나서 결이 맞는 느낌, 팀에 대한 신뢰와 믿음 여부</p>
+      </div>
+      <div style="background:var(--navy2); border-radius:8px; padding:0.75rem;">
+        <div style="color:var(--gold2); font-weight:700; margin-bottom:0.3rem;">② 기술+재무 통합 이해</div>
+        <p style="color:var(--muted);">온톨로지 기술이 왜 필요한지, 고객 가치까지 통합 이해 가능한지</p>
+      </div>
+      <div style="background:var(--navy2); border-radius:8px; padding:0.75rem;">
+        <div style="color:var(--gold2); font-weight:700; margin-bottom:0.3rem;">③ 위기 동반 의지</div>
+        <p style="color:var(--muted);">부정적 지표도 투명 공유하며 끝까지 같이 갈 수 있는 하우스인지</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.5rem;">
+    <div style="font-size:0.78rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.85rem;">🏆 Top 3 — 적극 진행 대상</div>
+    <div class="inv-grid">
+      <div class="inv-card top">
+        <div class="inv-name">포스텍(Post-KAIST)</div>
+        <div class="inv-stars">★★★★★</div>
+        <div><span class="tag tag-green">기술이해 ✓</span><span class="tag tag-green">위기동반 ✓</span><span class="tag tag-gold">케미 ✓</span></div>
+        <p class="inv-note" style="margin-top:0.5rem;">가장 우호적이나 지분 30%에 100% 반대. 다음 주 화요일 IR 예정 → 지분 이슈 선결 필요.</p>
+      </div>
+      <div class="inv-card top">
+        <div class="inv-name">카이스트 청춘</div>
+        <div class="inv-stars">★★★★★</div>
+        <div><span class="tag tag-green">기술이해 ✓</span><span class="tag tag-green">위기동반 ✓</span><span class="tag tag-gold">브랜딩 ✓</span></div>
+        <p class="inv-note" style="margin-top:0.5rem;">기술줄 브랜딩(최소 1개 기술 VC) 측면에서 필수. 다음 주 화요일 IR 예정. 1:1 미팅 사전 권장.</p>
+      </div>
+      <div class="inv-card top">
+        <div class="inv-name">메시업(Meshup)</div>
+        <div class="inv-stars">★★★★☆</div>
+        <div><span class="tag tag-green">창업자 DNA ✓</span><span class="tag tag-green">위기동반 ✓</span><span class="tag tag-red">파트너 케미 △</span></div>
+        <p class="inv-note" style="margin-top:0.5rem;">하우스 자체는 창업자 베이스로 매우 우호적. 단, 담당 파트너의 '인플루언서' 발언이 변수.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.5rem;">
+    <div style="font-size:0.78rem; font-weight:700; color:#60a5fa; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.85rem;">📌 고려 대상 (조건부)</div>
+    <div class="inv-grid">
+      <div class="inv-card maybe">
+        <div class="inv-name">베이스벤처스</div>
+        <div class="inv-stars">★★★★☆</div>
+        <div><span class="tag tag-green">케미 ✓</span><span class="tag tag-green">위기동반 ✓</span><span class="tag tag-red">기술이해 △</span></div>
+        <p class="inv-note" style="margin-top:0.5rem;">심사역 나이스하고 진정성 있음. 경영학 출신이라 기술 이해 약점. 28일 IR 예정.</p>
+      </div>
+      <div class="inv-card maybe">
+        <div class="inv-name">카카오벤처스</div>
+        <div class="inv-stars">★★★☆☆</div>
+        <div><span class="tag tag-green">케미 ✓</span><span class="tag tag-red">기술이해 △</span><span class="tag tag-blue">네트워크 ✓</span></div>
+        <p class="inv-note" style="margin-top:0.5rem;">김형모 파트너와 장기 관계. 기술 이해도 다소 약하나 네트워크 측면 유효.</p>
+      </div>
+    </div>
+  </div>
+
+  <details>
+    <summary>
+      <span class="sum-num">△</span>
+      <span class="sum-title">유보·패스 투자사 — 스트롱·슈미트·퓨처플레이·블루포인트·패스트벤처스</span>
+      <span class="sum-arrow">▼</span>
+    </summary>
+    <div class="details-body">
+      <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.82rem;">
+        <div style="padding:0.6rem 0.9rem; background:var(--navy2); border-radius:8px;">
+          <strong>스트롱벤처스</strong> — 기술 이해 부족, 위기 시 중립적 태도 예상, 조직 안정성 낮음
+        </div>
+        <div style="padding:0.6rem 0.9rem; background:var(--navy2); border-radius:8px;">
+          <strong>슈미트</strong> — 비즈니스는 강하나 기술 전문성 약함. 어려울 때 압박 투자자가 될 가능성.
+        </div>
+        <div style="padding:0.6rem 0.9rem; background:var(--navy2); border-radius:8px;">
+          <strong>퓨처플레이</strong> — 기술 이해 가능하나 딥테크 아님. 주니어 심사역 역량 제한.
+        </div>
+        <div style="padding:0.6rem 0.9rem; background:var(--navy2); border-radius:8px;">
+          <strong>블루포인트(불포파)</strong> — 심사역 개인은 우수하나 버티컬 AI에 하우스 개방성 낮음. 내부 설득 챌린지 지속 예상.
+        </div>
+        <div style="padding:0.6rem 0.9rem; background:var(--navy2); border-radius:8px;">
+          <strong>패스트벤처스</strong> — 케미 및 기술 이해 모두 애매.
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <div style="margin-top:1rem;">
+    <div class="prog-bar-wrap">
+      <div class="prog-label"><span>포스텍</span><span style="color:var(--gold2);">가장 우호적 (지분 이슈 해결 시)</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:88%;"></div></div>
+    </div>
+    <div class="prog-bar-wrap">
+      <div class="prog-label"><span>카이스트 청춘</span><span style="color:var(--gold2);">기술 브랜딩 필수</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:85%;"></div></div>
+    </div>
+    <div class="prog-bar-wrap">
+      <div class="prog-label"><span>메시업</span><span style="color:var(--gold2);">하우스 ○, 파트너 변수</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:72%;"></div></div>
+    </div>
+    <div class="prog-bar-wrap">
+      <div class="prog-label"><span>베이스벤처스</span><span style="color:var(--gold2);">기술 이해 보완 필요</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:62%;"></div></div>
+    </div>
+    <div class="prog-bar-wrap">
+      <div class="prog-label"><span>기타 투자사</span><span>낮은 적합도</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:30%; background: linear-gradient(90deg,#64748b,#94a3b8);"></div></div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 1.5rem;">
+
+<!-- ── AGENDA 4: 자문단 계약 ── -->
+<div class="container" id="agenda4">
+  <div class="section-heading">
+    <div class="icon">📜</div>
+    <div>
+      <h2>안건 4 — 자문단 계약 및 외부 파트너 재검토</h2>
+      <p>1번 교수 계약서 독소 조항 · 일본 교수 ROI · 모노부스 계약 보완</p>
+    </div>
+  </div>
+
+  <details open>
+    <summary>
+      <span class="sum-num">①</span>
+      <span class="sum-title">1번 교수 계약서 — 독소 조항 발견</span>
+      <span class="sum-arrow">▼</span>
+    </summary>
+    <div class="details-body">
+      <p style="font-size:0.85rem; color:var(--text); margin-bottom:0.75rem;">변호사와 검토 결과 다수의 이례적 조항이 발견됐다:</p>
+      <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.82rem; margin-bottom:0.8rem;">
+        <div style="padding:0.6rem 0.9rem; background:rgba(239,68,68,0.07); border-radius:8px; border-left:2px solid #f87171;">
+          <strong style="color:#fca5a5;">독소 조항 1</strong> — 수행 불가 시(부상 등) 스톡옵션이 직계 가족에게 자동 이전. 해당 가족은 비즈니스와 무관한 인물.
+        </div>
+        <div style="padding:0.6rem 0.9rem; background:rgba(239,68,68,0.07); border-radius:8px; border-left:2px solid #f87171;">
+          <strong style="color:#fca5a5;">독소 조항 2</strong> — 마일스톤상 약속한 성과물(영업 연결, 해외 컨설턴트 연결 등)과 계약서 내용 불일치.
+        </div>
+        <div style="padding:0.6rem 0.9rem; background:rgba(239,68,68,0.07); border-radius:8px; border-left:2px solid #f87171;">
+          <strong style="color:#fca5a5;">독소 조항 3</strong> — 정년 이후 연구실 활용 불가로 KAIST·도프텍 연결 실질 기여 불투명.
+        </div>
+        <div style="padding:0.6rem 0.9rem; background:rgba(239,68,68,0.07); border-radius:8px; border-left:2px solid #f87171;">
+          <strong style="color:#fca5a5;">독소 조항 4</strong> — 기타 다수 독소 조항. 변호사와 초안 재작성 필요.
+        </div>
+      </div>
+      <div class="insight-box">
+        <div class="i-label">📌 결론</div>
+        <p>현 초안으로 진행 불가. 우리 측 계약서 초안을 별도 작성해 교수님께 역제안. 국가과제 추가 수주는 현 단계에서 우선순위가 낮음.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sum-num">②</span>
+      <span class="sum-title">일본 교수 자문 — ROI 재검토</span>
+      <span class="sum-arrow">▼</span>
+    </summary>
+    <div class="details-body">
+      <p style="font-size:0.85rem; color:var(--text); margin-bottom:0.6rem;">
+        플랜트 DT 전공으로 온톨로지 구축에 직접적 지식 전달 가능성 낮음. 실제 제공 가치는 레퍼런스·영업 연결 정도인데, 현 단계 우선순위인 <em>제품 완성</em>과의 연관성이 낮다.
+      </p>
+      <div class="insight-box">
+        <div class="i-label">💡 Insight</div>
+        <p>계약 체결 즉시 "몇 가지 던져주는 척"만 할 가능성 있음. 해외 컨설턴트 연결 범위를 구체화하기 전까지 계약 보류 권장.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sum-num">③</span>
+      <span class="sum-title">모노부스 계약 보완 사항</span>
+      <span class="sum-arrow">▼</span>
+    </summary>
+    <div class="details-body">
+      <p style="font-size:0.85rem; color:var(--text); margin-bottom:0.6rem;">이효동 교수님 검토 결과 반영 예정 사항:</p>
+      <div style="font-size:0.82rem; display:flex; flex-direction:column; gap:0.4rem;">
+        <div style="padding:0.5rem 0.8rem; background:var(--navy2); border-radius:7px;">2년 단위 재계약 시 서면 방식 명시</div>
+        <div style="padding:0.5rem 0.8rem; background:var(--navy2); border-radius:7px;">경쟁사 영업 금지 조항 추가</div>
+        <div style="padding:0.5rem 0.8rem; background:var(--navy2); border-radius:7px;">정보전산 컨설팅 요율 수취 항목 삭제 (불법 소지)</div>
+        <div style="padding:0.5rem 0.8rem; background:var(--navy2); border-radius:7px;">계약 해지 요건 구체화</div>
+      </div>
+    </div>
+  </details>
+
+  <div style="margin-top:1rem;">
+    <div class="risk-grid">
+      <div class="risk-item high">
+        <div class="risk-label">HIGH RISK</div>
+        <p>1번 교수 계약서 독소 조항 — 스톡옵션 자동 승계 등. 즉시 재협상 필요.</p>
+      </div>
+      <div class="risk-item high">
+        <div class="risk-label">HIGH RISK</div>
+        <p>포스텍 투자 — 지분 30% 반대로 딜 소실 위험. 이번 주 내 대표 결단 필요.</p>
+      </div>
+      <div class="risk-item med">
+        <div class="risk-label">MED RISK</div>
+        <p>일본 교수 자문 ROI 불명확 — 계약 전 구체 성과물 재협의 필요.</p>
+      </div>
+      <div class="risk-item med">
+        <div class="risk-label">MED RISK</div>
+        <p>개발자 이탈 패턴 — 핵심 개발자 1인 풀타임 확보 없이 일정 준수 불가.</p>
+      </div>
+      <div class="risk-item low">
+        <div class="risk-label">LOW RISK</div>
+        <p>모노부스 계약 — 이효동 교수 검토로 주요 이슈 식별 완료, 반영 진행 중.</p>
+      </div>
+      <div class="risk-item low">
+        <div class="risk-label">LOW RISK</div>
+        <p>메시업 파트너 인플루언서 인식 — 기술 기여 구체화로 내러티브 수정 가능.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 1.5rem;">
+
+<!-- ── DECISIONS ── -->
+<div class="container" id="decisions">
+  <div class="section-heading">
+    <div class="icon">✅</div>
+    <div>
+      <h2>핵심 결정사항</h2>
+      <p>회의에서 명시적·묵시적으로 합의된 의사결정</p>
+    </div>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-icon">🔧</div>
+    <div class="decision-text">
+      <strong>개발 전략: 소규모 정예팀으로 온톨로지 우선 완성</strong>
+      <p>계약 확정 후 1~2명 추가 채용 → 온톨로지 구축 6~7개월 집중 → 일부 기능 완성 시 SaaS 선출시 검토. 투자 전에 개발 연속성 확보가 선결.</p>
+    </div>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-icon">💼</div>
+    <div class="decision-text">
+      <strong>지분 협상: 김상윤 대표가 재검토 후 결론 도출</strong>
+      <p>30% → 조정(10% 전후) 가능성 탐색. 포스텍 IR 전에 입장 정리 필수. 급여 양보는 투자 여부와 무관하게 확정.</p>
+    </div>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-icon">🎯</div>
+    <div class="decision-text">
+      <strong>투자사 집중 대상: 포스텍 · 카이스트 · 메시업 Top3</strong>
+      <p>최소 기술줄 1개(카이스트) 확보를 브랜딩 전략으로 채택. 베이스·카카오는 조건부 고려. 나머지는 온기 유지 수준으로 전환.</p>
+    </div>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-icon">📋</div>
+    <div class="decision-text">
+      <strong>1번 교수 계약서: 우리 측 초안 재작성 후 역제안</strong>
+      <p>현 초안의 독소 조항(스톡옵션 자동 승계 등) 전면 수정. 마일스톤 성과물 재합의. 변호사와 공동 작성.</p>
+    </div>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-icon">🇯🇵</div>
+    <div class="decision-text">
+      <strong>일본 교수 자문: 구체 성과물 확인 후 계약 여부 재결정</strong>
+      <p>국가과제 레퍼런스 추가 수주는 현 단계 우선순위 아님. 해외 컨설턴트 연결 범위 구체화 후 판단.</p>
+    </div>
+  </div>
+
+  <div class="decision-card">
+    <div class="decision-icon">📄</div>
+    <div class="decision-text">
+      <strong>모노부스 계약: 이효동 교수 검토 반영 사항 수정 후 최종 체결</strong>
+      <p>경쟁사 영업 금지, 서면 재계약, 정보전산 요율 삭제 등 4개 조항 반영 확정.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 1.5rem;">
+
+<!-- ── ACTIONS ── -->
+<div class="container" id="actions">
+  <div class="section-heading">
+    <div class="icon">⚡</div>
+    <div>
+      <h2>액션아이템</h2>
+      <p>담당자·마감·우선순위별 실행 과제 전체 목록</p>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;">
+    <table class="action-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>실행 과제</th>
+          <th>담당자</th>
+          <th>마감</th>
+          <th>우선순위</th>
+          <th>비고</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--muted);">01</td>
+          <td><strong>지분 조정안 검토 및 대표 결단</strong><br><span style="color:var(--muted);font-size:0.75rem;">30% → 10~20% 범위 재협상 안 마련</span></td>
+          <td><span class="tag tag-gold">김상윤 대표</span></td>
+          <td>포스텍 IR 전</td>
+          <td><span class="priority-h">HIGH</span></td>
+          <td style="font-size:0.75rem;color:var(--muted);">포스텍 딜 소실 방지</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted);">02</td>
+          <td><strong>포스텍 IR 준비 및 공동창업 내러티브 업데이트</strong><br><span style="color:var(--muted);font-size:0.75rem;">박규호 기술 기여 구체화 포함</span></td>
+          <td><span class="tag tag-blue">김상윤+박규호</span></td>
+          <td>다음 주 화요일</td>
+          <td><span class="priority-h">HIGH</span></td>
+          <td style="font-size:0.75rem;color:var(--muted);">안준현 이사 사전 1:1 미팅 권장</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted);">03</td>
+          <td><strong>1번 교수 계약서 초안 재작성 (우리 측 버전)</strong><br><span style="color:var(--muted);font-size:0.75rem;">독소 조항 전면 제거 + 마일스톤 재합의</span></td>
+          <td><span class="tag tag-gold">김상윤 대표</span><span class="tag tag-purple">변호사</span></td>
+          <td>이번 주 내</td>
+          <td><span class="priority-h">HIGH</span></td>
+          <td style="font-size:0.75rem;color:var(--muted);">역제안 형식으로 전달</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted);">04</td>
+          <td><strong>파이·파이프 아키텍처 현황 점검 보고</strong><br><span style="color:var(--muted);font-size:0.75rem;">개발 완성 가능성 재검증</span></td>
+          <td><span class="tag tag-blue">재윤님+종성님</span></td>
+          <td>이번 주 내</td>
+          <td><span class="priority-h">HIGH</span></td>
+          <td style="font-size:0.75rem;color:var(--muted);">박규호 부장 판단 인풋</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted);">05</td>
+          <td><strong>모노부스 계약서 수정 반영 및 최종 체결</strong><br><span style="color:var(--muted);font-size:0.75rem;">이효동 교수 검토 의견 4개 항목 반영</span></td>
+          <td><span class="tag tag-gold">김상윤 대표</span></td>
+          <td>이번 주</td>
+          <td><span class="priority-m">MED</span></td>
+          <td style="font-size:0.75rem;color:var(--muted);">경쟁사 금지 조항 포함</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted);">06</td>
+          <td><strong>카이스트 청춘 IR 일정 확정 및 준비</strong><br><span style="color:var(--muted);font-size:0.75rem;">화물질 안전 일정으로 재조율</span></td>
+          <td><span class="tag tag-gold">김상윤 대표</span></td>
+          <td>다음 주</td>
+          <td><span class="priority-m">MED</span></td>
+          <td style="font-size:0.75rem;color:var(--muted);">화요일 오후 2시 잠정 확보</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted);">07</td>
+          <td><strong>베이스벤처스 IR 준비 (28일)</strong><br><span style="color:var(--muted);font-size:0.75rem;">기술 이해도 격차 보완 자료 추가</span></td>
+          <td><span class="tag tag-blue">김상윤+박규호</span></td>
+          <td>다음 주 수요일</td>
+          <td><span class="priority-m">MED</span></td>
+          <td style="font-size:0.75rem;color:var(--muted);">28일 수요일 잠정</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted);">08</td>
+          <td><strong>메시업 안준현 이사와 1:1 커피 미팅 주선</strong><br><span style="color:var(--muted);font-size:0.75rem;">파트너 인식 변환 기회</span></td>
+          <td><span class="tag tag-gold">김상윤 대표</span></td>
+          <td>이번 주</td>
+          <td><span class="priority-m">MED</span></td>
+          <td style="font-size:0.75rem;color:var(--muted);">이번 주 체류 여부 확인</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted);">09</td>
+          <td><strong>일본 교수 자문 성과물 범위 재확인</strong><br><span style="color:var(--muted);font-size:0.75rem;">해외 컨설턴트 연결 구체적 범위 파악</span></td>
+          <td><span class="tag tag-gold">김상윤 대표</span></td>
+          <td>2주 내</td>
+          <td><span class="priority-l">LOW</span></td>
+          <td style="font-size:0.75rem;color:var(--muted);">계약 여부 판단 후 진행</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted);">10</td>
+          <td><strong>핵심 개발자 1인 풀타임 채용 계획 수립</strong><br><span style="color:var(--muted);font-size:0.75rem;">계약 확정 시 즉시 실행 플랜</span></td>
+          <td><span class="tag tag-gold">김상윤 대표</span></td>
+          <td>계약 확정 즉시</td>
+          <td><span class="priority-m">MED</span></td>
+          <td style="font-size:0.75rem;color:var(--muted);">이종현 부장 조인 타임라인 연동</td>
+        </tr>
+        <tr>
+          <td style="color:var(--muted);">11</td>
+          <td><strong>SaaS 선출시 가능 기능 목록 작성</strong><br><span style="color:var(--muted);font-size:0.75rem;">온톨로지 부분 완성 기능 중 먼저 판매 가능한 것 도출</span></td>
+          <td><span class="tag tag-blue">박규호+개발팀</span></td>
+          <td>3주 내</td>
+          <td><span class="priority-l">LOW</span></td>
+          <td style="font-size:0.75rem;color:var(--muted);">현앤 성과 공유 연동</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 1.5rem;">
+
+<!-- ── DIAGRAMS ── -->
+<div class="container" id="diagrams">
+  <div class="section-heading">
+    <div class="icon">📊</div>
+    <div>
+      <h2>시각화 다이어그램</h2>
+      <p>워크플로우 · 관계도 · 타임라인 3종</p>
+    </div>
+  </div>
+
+  <!-- Diagram 1: 제품화 의사결정 워크플로우 -->
+  <div class="diagram-wrap">
+    <div class="diagram-title">🔄 다이어그램 1 — 제품화 의사결정 워크플로우</div>
+    <div class="mermaid">
+flowchart TD
+    A([🚀 현재 상태\nPOC 완료 / 계약 진행 중]) --> B{계약 확정?}
+    B -- 예 --> C[핵심 개발자 1~2명 채용\n이종현 부장 조인]
+    B -- 아니오 --> D[기존 3인팀으로\n온톨로지 집중]
+    C --> E[온톨로지 집중 구축\n6~7개월]
+    D --> E
+    E --> F{일부 기능 완성?}
+    F -- 예 --> G[SaaS 선출시\n매출 기반 확보]
+    F -- 계속 --> H[전체 플랫폼 완성]
+    G --> I[현앤 성과 공유\n투자자 설득]
+    H --> I
+    I --> J{투자 유치 성공?}
+    J -- 예 --> K([🎯 공식 서비스 출시\n스케일업])
+    J -- 아니오 --> L[자체 매출로\n지속 운영]
+    L --> K
+
+    style A fill:#1a2d45,stroke:#c9a84c,color:#e8edf2
+    style K fill:#162030,stroke:#c9a84c,color:#e8c96a
+    style G fill:#162030,stroke:#22c55e,color:#86efac
+    style B fill:#0d1b2a,stroke:#243450,color:#8a9bb0
+    style F fill:#0d1b2a,stroke:#243450,color:#8a9bb0
+    style J fill:#0d1b2a,stroke:#243450,color:#8a9bb0
+    </div>
+  </div>
+
+  <!-- Diagram 2: 이해관계자 관계도 -->
+  <div class="diagram-wrap">
+    <div class="diagram-title">🕸️ 다이어그램 2 — 이해관계자 및 안건 관계도</div>
+    <div class="mermaid">
+graph LR
+    TEAM["👥 창업팀\n김상윤 + 박규호"]
+
+    subgraph INV["💰 투자자 그룹"]
+        POST["포스텍\n★★★★★"]
+        KAIST["카이스트 청춘\n★★★★★"]
+        MESH["메시업\n★★★★"]
+        BASE["베이스벤처스\n★★★"]
+    end
+
+    subgraph ADV["🎓 자문단"]
+        PROF1["1번 교수\n⚠️계약서 재검토"]
+        PROFJ["일본 교수\n❓ROI 불명확"]
+    end
+
+    subgraph PARTNER["🤝 파트너"]
+        MONOB["모노부스\n📄계약 보완 중"]
+        HANAEN["현앤\n성과 공유 대상"]
+    end
+
+    subgraph ISSUE["⚡ 핵심 이슈"]
+        SHARE["지분 30%\n→ 재협상 필요"]
+        PROD["제품화\n온톨로지 우선"]
+        BRAND["도메인 지식\n내러티브 강화"]
+    end
+
+    TEAM -->|Top3 IR 진행| POST
+    TEAM -->|Top3 IR 진행| KAIST
+    TEAM -->|Top3 IR 진행| MESH
+    TEAM -->|조건부 진행| BASE
+    TEAM -->|계약 재협상| PROF1
+    TEAM -->|범위 재확인| PROFJ
+    TEAM -->|계약 수정| MONOB
+    TEAM -->|성과 공유| HANAEN
+
+    SHARE -->|투자 병목| POST
+    SHARE -->|투자 병목| MESH
+    PROD -->|6~7개월 집중| HANAEN
+    BRAND -->|투자자 설득| POST
+    BRAND -->|투자자 설득| KAIST
+
+    style TEAM fill:#1a2d45,stroke:#c9a84c,color:#e8c96a
+    style POST fill:#162030,stroke:#c9a84c,color:#e8edf2
+    style KAIST fill:#162030,stroke:#c9a84c,color:#e8edf2
+    style MESH fill:#162030,stroke:#c9a84c,color:#e8edf2
+    style SHARE fill:#1a0d0d,stroke:#f87171,color:#fca5a5
+    style PROD fill:#0d1a0d,stroke:#22c55e,color:#86efac
+    style BRAND fill:#0d1020,stroke:#60a5fa,color:#93c5fd
+    </div>
+  </div>
+
+  <!-- Diagram 3: 타임라인 -->
+  <div class="diagram-wrap">
+    <div class="diagram-title">📅 다이어그램 3 — 단기 실행 타임라인 (향후 8주)</div>
+    <div class="mermaid">
+gantt
+    title 스타트업 주요 마일스톤 (단기 로드맵)
+    dateFormat  YYYY-MM-DD
+    section 계약·법무
+    모노부스 계약 최종 체결       :active,  mono,  2025-07-21, 5d
+    1번 교수 계약서 초안 재작성    :crit,    prof1, 2025-07-21, 7d
+    1번 교수 역제안 및 협상        :         prof2, after prof1, 7d
+    일본 교수 성과물 범위 확인     :         profj, 2025-08-04, 7d
+
+    section 투자 IR
+    포스텍 IR                     :crit,    post,  2025-07-22, 1d
+    카이스트 IR                   :crit,    kaist, 2025-07-22, 1d
+    메시업 1:1 사전 미팅           :         mesh,  2025-07-21, 3d
+    베이스벤처스 IR                :         base,  2025-07-23, 1d
+    지분 조정안 확정               :crit,    share, 2025-07-21, 2d
+
+    section 제품 개발
+    파이·파이프 현황 점검          :crit,    dev1,  2025-07-21, 5d
+    온톨로지 구축 스프린트 1       :         dev2,  after dev1, 21d
+    SaaS 출시 기능 목록 작성       :         saas,  2025-08-04, 7d
+    핵심 개발자 채용 (계약 시)     :         hire,  2025-07-28, 14d
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="margin:0 1.5rem;">
+
+<!-- ── NEXT STEPS ── -->
+<div class="container" id="nextsteps">
+  <div class="section-heading">
+    <div class="icon">🚀</div>
+    <div>
+      <h2>다음 단계 및 후속 과제</h2>
+      <p>이번 회의 이후 즉각 실행이 필요한 방향성</p>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+    <div class="highlight-box">
+      <div class="hb-title">⚡ 이번 주 내 반드시 (Critical)</div>
+      <ul style="font-size:0.83rem; color:var(--text); padding-left:1.2rem; line-height:2;">
+        <li>지분 조정안 대표 결단 → 포스텍 딜 사수</li>
+        <li>1번 교수 계약서 초안 변호사와 재작성</li>
+        <li>파이·파이프 개발 현황 점검 보고 수령</li>
+        <li>메시업 안준현 이사 1:1 미팅 일정 확인</li>
+      </ul>
+    </div>
+    <div class="highlight-box">
+      <div class="hb-title">📅 다음 주 핵심 일정</div>
+      <ul style="font-size:0.83rem; color:var(--text); padding-left:1.2rem; line-height:2;">
+        <li>화요일 — 포스텍 + 카이스트 IR (지분 이슈 해소 후)</li>
+        <li>수요일 — 베이스벤처스 IR (기술 보완 자료 준비)</li>
+        <li>모노부스 계약 수정 최종 체결</li>
+        <li>필즈 미팅 준비</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem;">
+    <div style="font-size:0.8rem; color:var(--gold); font-weight:700; margin-bottom:0.8rem;">🧭 중장기 방향성 (2~3개월)</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem; font-size:0.82rem;">
+      <div style="background:var(--navy2); border-radius:8px; padding:0.8rem;">
+        <div style="color:var(--gold2); font-weight:700; margin-bottom:0.3rem;">📦 제품</div>
+        <p style="color:var(--text);">온톨로지 구축 완료 → SaaS MVP 출시 → 현앤 성과 데이터 확보</p>
+      </div>
+      <div style="background:var(--navy2); border-radius:8px; padding:0.8rem;">
+        <div style="color:var(--gold2); font-weight:700; margin-bottom:0.3rem;">💰 투자</div>
+        <p style="color:var(--text);">포스텍·카이스트 중 1개 확보 (기술 브랜딩) + 메시업 또는 베이스 1개 확보</p>
+      </div>
+      <div style="background:var(--navy2); border-radius:8px; padding:0.8rem;">
+        <div style="color:var(--gold2); font-weight:700; margin-bottom:0.3rem;">👥 팀</div>
+        <p style="color:var(--text);">박규호 공식 조인 타임라인 확정 + 핵심 개발자 풀타임 1인 확보</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:1rem; padding:1.2rem 1.4rem; background:rgba(201,168,76,0.04); border:1px solid rgba(201,168,76,0.15); border-radius:12px; font-size:0.82rem; color:var(--muted);">
+    <strong style="color:var(--gold2);">📝 회의록 작성 참고사항</strong><br>
+    이 회의록은 비정형 음성 녹취에서 자동 생성되었습니다. 화자 구분 및 일부 고유명사(기업명, 인명)는 문맥 기반으로 해석되었으므로 실제 이름과 차이가 있을 수 있습니다. 날짜는 회의 내용의 "다음 주 화요일", "이번 주 수요일" 등 상대 표현을 2025년 7월 3주차 기준으로 추정하여 작성했습니다.
+  </div>
+</div>
+
+<div style="height:3rem;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'dark',
+  themeVariables: {
+    primaryColor: '#1a2d45',
+    primaryTextColor: '#e8edf2',
+    primaryBorderColor: '#243450',
+    lineColor: '#c9a84c',
+    secondaryColor: '#162030',
+    tertiaryColor: '#0d1b2a',
+    background: '#0d1b2a',
+    mainBkg: '#162030',
+    nodeBorder: '#243450',
+    clusterBkg: '#1a2d45',
+    titleColor: '#e8c96a',
+    edgeLabelBackground: '#162030',
+    fontSize: '13px'
+  },
+  gantt: {
+    titleTopMargin: 25,
+    barHeight: 20,
+    fontFamily: 'Apple SD Gothic Neo, Noto Sans KR, sans-serif'
+  },
+  flowchart: {
+    htmlLabels: true,
+    curve: 'basis'
+  }
+});
+</script>
+
+<script type="application/json" id="celab-metadata">
+{"title":"온톨로지 AI 스타트업 전략 회의록","description":"건설 분야 온톨로지 AI 플랫폼 스타트업의 개발 전략·공동창업 지분 쟁점·투자사 선별(포스텍·카이스트·메시업 Top3)·자문단 계약 독소 조항 재검토를 다룬 심층 내부 전략 회의록.","category":"전략","tags":["스타트업","투자IR","온톨로지","공동창업","회의록"],"emoji":"📋"}
+</script>
+<div id="celab-logo-badge" style="position:fixed;bottom:18px;right:18px;z-index:9999;
+  width:52px;height:52px;border-radius:50%;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,0.35);cursor:pointer;"
+  title="CELab · Chemical Engineering Lab"
+  onclick="window.open('https://celab-kor.github.io/celab-knowledge-base/','_blank')">
+  <img src="data:image/jpeg;base64,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" style="width:100%;height:100%;object-fit:cover;display:block;">
+</div>
+<script id="celab-inline-editor">
+(function(){
+  if(window.location.protocol!=='file:') return;
+  var GOLD='#c9a84c',NAVY='#0d1b2a',TEAL='#2c7a7b';
+  var FF='Apple SD Gothic Neo,Noto Sans KR,sans-serif';
+
+  function mkBtn(id,text,color,bottom){
+    var b=document.createElement('div');
+    b.id=id; b.textContent=text;
+    Object.assign(b.style,{position:'fixed',bottom:bottom,right:'28px',zIndex:'99999',
+      background:color,color:color===GOLD?NAVY:'#fff',padding:'10px 20px',borderRadius:'24px',
+      fontWeight:'700',fontSize:'14px',cursor:'pointer',boxShadow:'0 4px 20px rgba(0,0,0,0.5)',
+      fontFamily:FF,userSelect:'none',transition:'all .2s'});
+    document.body.appendChild(b); return b;
+  }
+  var fabEdit=mkBtn('celab-fab-edit','✏️ 편집',GOLD,'28px');
+  var fabLayout=mkBtn('celab-fab-layout','🔄 레이아웃',TEAL,'76px');
+
+  function toast(msg,ok){
+    var t=document.createElement('div'); t.textContent=msg;
+    Object.assign(t.style,{position:'fixed',bottom:'132px',right:'28px',zIndex:'100000',
+      background:ok?'#2f855a':'#c53030',color:'#fff',padding:'10px 18px',borderRadius:'12px',
+      fontSize:'13px',fontFamily:FF,boxShadow:'0 4px 16px rgba(0,0,0,0.4)',transition:'opacity .4s'});
+    document.body.appendChild(t);
+    setTimeout(function(){t.style.opacity='0';setTimeout(function(){t.remove();},400);},4000);
+  }
+
+  function getFilePath(){
+    return decodeURIComponent(window.location.pathname);
+  }
+
+  // ── 편집 다이얼로그 ────────────────────────────────────────
+  fabEdit.addEventListener('click',function(){
+    var existing=document.getElementById('celab-edit-dlg');
+    if(existing){ existing.remove(); return; }
+
+    var overlay=document.createElement('div');
+    overlay.id='celab-edit-dlg';
+    Object.assign(overlay.style,{
+      position:'fixed',bottom:'90px',right:'28px',width:'380px',
+      background:'#fff',borderRadius:'18px',padding:'22px 20px 18px',
+      boxShadow:'0 8px 40px rgba(0,0,0,0.35)',zIndex:'99998',
+      fontFamily:FF,boxSizing:'border-box'
+    });
+
+    overlay.innerHTML=
+      '<div style="font-weight:800;font-size:15px;color:#0d1b2a;margin-bottom:4px;">✏️ AI 편집 요청</div>'+
+      '<div style="font-size:12px;color:#888;margin-bottom:12px;">수정하고 싶은 내용을 자유롭게 적어주세요</div>'+
+      '<textarea id="celab-edit-ta" placeholder="예시)\n• \'6월 목표\' → \'7월 목표\'로 변경\n• 투자금 항목 삭제\n• LLM 전문가 채용 일정 추가\n• 장기 목표에 해외 진출 항목 추가" '+
+        'style="width:100%;height:150px;padding:11px 12px;border:1.5px solid #ddd;border-radius:10px;'+
+        'font-size:13px;font-family:'+FF+';resize:vertical;box-sizing:border-box;line-height:1.6;outline:none;"></textarea>'+
+      '<div style="display:flex;gap:8px;margin-top:12px;">'+
+        '<button id="celab-edit-ok" style="flex:1;padding:11px;background:#c9a84c;color:#0d1b2a;border:none;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;font-family:'+FF+';">🚀 AI 편집 적용</button>'+
+        '<button id="celab-edit-x" style="padding:11px 16px;background:#f0f0f0;color:#555;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;font-family:'+FF+';">✕</button>'+
+      '</div>';
+
+    document.body.appendChild(overlay);
+    document.getElementById('celab-edit-ta').focus();
+
+    document.getElementById('celab-edit-x').onclick=function(){ overlay.remove(); };
+
+    document.getElementById('celab-edit-ok').onclick=function(){
+      var instructions=document.getElementById('celab-edit-ta').value.trim();
+      if(!instructions){ document.getElementById('celab-edit-ta').focus(); return; }
+      if(!(window.electronAPI&&window.electronAPI.updateHtmlLayout)){
+        toast('❌ Electron 앱에서만 사용 가능합니다',false); return;
+      }
+      var btn=document.getElementById('celab-edit-ok');
+      btn.textContent='⏳ AI 편집 중...'; btn.disabled=true; btn.style.opacity='0.7';
+      var fp=getFilePath();
+      window.electronAPI.updateHtmlLayout({filePath:fp,instructions:instructions})
+        .then(function(r){
+          if(r.success){
+            toast('✅ 편집 완료 — 페이지를 새로고침합니다',true);
+            overlay.remove();
+          } else {
+            toast('❌ 편집 실패: '+r.error,false);
+            btn.textContent='🚀 AI 편집 적용'; btn.disabled=false; btn.style.opacity='1';
+          }
+        }).catch(function(e){
+          toast('❌ 오류: '+e.message,false);
+          btn.textContent='🚀 AI 편집 적용'; btn.disabled=false; btn.style.opacity='1';
+        });
+    };
+
+    // Enter+Ctrl/Cmd 단축키로 전송
+    document.getElementById('celab-edit-ta').addEventListener('keydown',function(e){
+      if((e.ctrlKey||e.metaKey)&&e.key==='Enter') document.getElementById('celab-edit-ok').click();
+    });
+  });
+
+  // ── 레이아웃 재생성 버튼 ──────────────────────────────────
+  fabLayout.addEventListener('click',function(){
+    if(!(window.electronAPI&&window.electronAPI.updateHtmlLayout)){
+      toast('❌ Electron 앱에서만 사용 가능합니다',false); return;
+    }
+    var meta={};
+    var metaEl=document.getElementById('celab-metadata');
+    if(metaEl){try{meta=JSON.parse(metaEl.textContent);}catch(e){}}
+    var lines=[];
+    document.querySelectorAll('h1,h2,h3,h4,h5,h6,p,li,td').forEach(function(el){
+      if(el.closest('nav,script,style,#celab-fab-edit,#celab-fab-layout,#celab-edit-dlg')) return;
+      var t=el.textContent.trim();
+      if(t.length<2) return;
+      var tag=el.tagName.toLowerCase();
+      var pfx=tag==='h1'?'# ':tag==='h2'?'## ':tag==='h3'?'### ':tag==='h4'?'#### ':tag==='li'?'- ':'';
+      lines.push(pfx+t);
+    });
+    var fp=getFilePath();
+    fabLayout.textContent='⏳ 재생성 중...'; fabLayout.style.opacity='0.7'; fabLayout.style.cursor='default';
+    window.electronAPI.updateHtmlLayout({filePath:fp,textContent:lines.join('\n'),metadata:meta})
+      .then(function(r){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        if(r.success) toast('✅ 레이아웃 재생성 완료 — 새로고침 중...',true);
+        else toast('❌ 재생성 실패: '+r.error,false);
+      }).catch(function(e){
+        fabLayout.textContent='🔄 레이아웃'; fabLayout.style.opacity='1'; fabLayout.style.cursor='pointer';
+        toast('❌ 오류: '+e.message,false);
+      });
+  });
+})();
+</script>
+</html>
