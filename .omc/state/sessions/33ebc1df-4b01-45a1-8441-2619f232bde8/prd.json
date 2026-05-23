@@ -1,0 +1,55 @@
+{
+  "task": "FGTi 정규 강의 폴더 전체 372개 영상 슬라이드 일괄 추출 (Phase A + A2 패치 적용본)",
+  "stories": [
+    {
+      "id": "US-001",
+      "title": "영상 인벤토리 + bash 배치 스크립트 + 백그라운드 시작",
+      "priority": 1,
+      "passes": false,
+      "acceptanceCriteria": [
+        "find로 /tmp/fgti_all_videos.txt 작성 (372 라인)",
+        "/tmp/fgti_all_batch.sh 외부 스크립트 파일 작성 (한국어 경로 안전 처리: while IFS= read -r)",
+        "nohup + caffeinate -i로 백그라운드 시작",
+        "PID 파일 /tmp/fgti_all_batch.pid에 저장",
+        "/tmp/fgti_all_progress.txt에 N/372 형식 진행률 업데이트",
+        "_extract_slides.py 호출은 sequential (한 번에 한 영상)"
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "진행 모니터링 + 0장 영상·실패 자동 추적",
+      "priority": 2,
+      "passes": false,
+      "acceptanceCriteria": [
+        "최소 5분 간격으로 진행률 + 슬라이드 합계 확인",
+        "PID 죽으면 진단 후 재시작",
+        "같은 영상에서 5회 연속 실패하면 .slide_failed 마커 + 다음 진행",
+        "처리율 트래킹: 영상당 평균 시간 측정"
+      ]
+    },
+    {
+      "id": "US-003",
+      "title": "100% 완료 + 종합 보고",
+      "priority": 3,
+      "passes": false,
+      "acceptanceCriteria": [
+        "372개 영상 모두 처리 (slides.json 또는 .slide_failed 마커)",
+        "폴더별 통계 (영상 수 / 슬라이드 합 / 평균) 보고",
+        "0장 영상 목록 + 사유 분류 (face_only / drawing-only / 깨진 영상)",
+        "video_category가 'drawing'인 영상 목록 추출 (AutoCAD 키워드 검출 검증)"
+      ]
+    },
+    {
+      "id": "US-004",
+      "title": "Phase A 패치 효과 검증 샘플링",
+      "priority": 4,
+      "passes": false,
+      "acceptanceCriteria": [
+        "FGTi 05 01번 영상 (Introduction)에서 REFERENCES 슬라이드 살아남음 확인",
+        "FGTi 06 18번 영상에서 사용자 누락 보고 슬라이드 (Piping engineering 설명) 추출됨 확인",
+        "각 폴더에서 1개 영상 sampling — slides.md 첫 줄 + slide_0001 첫 줄 출력",
+        "slides.json에 video_category, cluster_decision 필드 존재 (Phase A+A2 적용 흔적)"
+      ]
+    }
+  ]
+}
