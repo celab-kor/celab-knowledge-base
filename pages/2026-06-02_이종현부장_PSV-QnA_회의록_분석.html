@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이종현 부장 PSV·P&ID Q&A 회의록 + 자문단 설계 검토 | 2026.06.02</title>
+<style>
+:root{
+  --navy:#1e3c72; --navy2:#2a5298; --bg:#0d1b2a; --bg2:#142235;
+  --green:#32B489; --orange:#f39c12; --red:#e74c3c; --purple:#8e44ad;
+  --teal:#00796B; --gold:#F9A825; --blue:#4a90d9;
+  --text:#e8edf2; --muted:#93a4b8; --card:#162536; --border:#26384f;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);
+  font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+  line-height:1.75;font-size:15px;}
+
+/* HOME */
+#home-btn{position:fixed;top:14px;right:16px;z-index:9999;
+  background:#c9a84c;color:#0d1b2a;padding:8px 16px;border-radius:8px;
+  font-weight:700;font-size:.8rem;text-decoration:none;
+  box-shadow:0 2px 12px rgba(0,0,0,.35);transition:background .15s,transform .1s;
+  display:flex;align-items:center;gap:6px;}
+#home-btn:hover{background:#e8c96a;transform:translateY(-1px);}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(13,27,42,.97);
+  border-bottom:1px solid var(--border);padding:0 18px;display:flex;
+  align-items:center;gap:0;overflow-x:auto;backdrop-filter:blur(8px);}
+nav .logo{font-size:14px;font-weight:800;color:var(--green);
+  margin-right:16px;white-space:nowrap;padding:13px 0;}
+nav a{color:var(--muted);text-decoration:none;font-size:12.5px;font-weight:500;
+  padding:13px 11px;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;}
+nav a:hover{color:var(--green);border-bottom-color:var(--green);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0d1b2a 0%,#1e3c72 45%,#15294a 75%,#0d1b2a 100%);
+  padding:52px 24px 44px;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 25% 35%,rgba(50,180,137,.12) 0%,transparent 55%),
+            radial-gradient(ellipse at 75% 65%,rgba(74,144,217,.08) 0%,transparent 50%);}
+.badge{display:inline-block;background:rgba(50,180,137,.16);border:1px solid rgba(50,180,137,.35);
+  color:var(--green);font-size:11.5px;font-weight:600;padding:4px 14px;border-radius:20px;
+  margin-bottom:16px;letter-spacing:.4px;position:relative;}
+.hero h1{font-size:clamp(21px,3.6vw,31px);font-weight:800;line-height:1.32;margin-bottom:10px;position:relative;}
+.hero h1 span{color:var(--green);}
+.hero .sub{color:var(--muted);font-size:13.5px;margin-bottom:26px;position:relative;}
+.hmeta{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative;}
+.hmeta div{background:rgba(22,37,54,.8);border:1px solid var(--border);border-radius:11px;
+  padding:13px 20px;min-width:120px;backdrop-filter:blur(4px);}
+.hmeta b{display:block;font-size:18px;font-weight:800;color:var(--green);}
+.hmeta small{font-size:11px;color:var(--muted);}
+
+.wrap{max-width:1000px;margin:0 auto;padding:30px 20px 80px;}
+
+.warn{background:rgba(243,156,18,.1);border:1px solid rgba(243,156,18,.4);
+  border-radius:10px;padding:13px 16px;font-size:13px;color:#f5c97a;margin:22px 0;}
+
+section{margin:42px 0;}
+h2{font-size:21px;font-weight:800;color:#fff;margin-bottom:6px;
+  padding-bottom:8px;border-bottom:2px solid var(--navy2);display:flex;align-items:center;gap:9px;}
+h2 .n{background:var(--green);color:#06231a;font-size:13px;font-weight:800;
+  width:26px;height:26px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;}
+h3{font-size:16.5px;font-weight:700;color:var(--green);margin:24px 0 8px;}
+.lead{color:var(--muted);font-size:13.5px;margin-bottom:14px;}
+p{margin:8px 0;}
+
+/* Q&A */
+.qa{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:18px 20px;margin:16px 0;border-left:4px solid var(--blue);}
+.qa .qtag{display:inline-block;background:var(--blue);color:#06203a;font-weight:800;
+  font-size:11px;padding:2px 9px;border-radius:5px;margin-bottom:7px;}
+.qa .q{font-weight:700;color:#dbe7f5;font-size:15px;margin-bottom:10px;}
+.qa .a{font-size:14px;}
+.qa .a b{color:var(--green);}
+.qa .imp{margin-top:11px;padding:9px 12px;background:rgba(50,180,137,.08);
+  border-left:3px solid var(--green);border-radius:0 6px 6px 0;font-size:13px;color:#bfe5d6;}
+.spk{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:4px;color:#fff;margin-right:4px;vertical-align:middle;}
+.s-lee{background:#E65100;} .s-snap{background:var(--navy2);} .s-q{background:#5a6b80;}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top;}
+th{background:var(--navy);color:#fff;font-weight:700;font-size:12.5px;}
+td code{background:#0d1b2a;color:var(--gold);padding:1px 5px;border-radius:4px;font-size:12px;}
+tr:nth-child(even) td{background:rgba(22,37,54,.5);}
+.wrong{color:#ef8b8b;text-decoration:line-through;}
+.right{color:var(--green);font-weight:700;}
+
+/* ibox */
+.ibox{border-radius:11px;padding:15px 18px;margin:15px 0;font-size:13.5px;border:1px solid;}
+.ibox b.t{display:block;font-size:14px;font-weight:800;margin-bottom:6px;}
+.ibox.green{background:rgba(50,180,137,.09);border-color:rgba(50,180,137,.4);} .ibox.green b.t{color:var(--green);}
+.ibox.orange{background:rgba(243,156,18,.09);border-color:rgba(243,156,18,.4);} .ibox.orange b.t{color:var(--orange);}
+.ibox.red{background:rgba(231,76,60,.09);border-color:rgba(231,76,60,.4);} .ibox.red b.t{color:#ef8b8b;}
+.ibox.blue{background:rgba(74,144,217,.09);border-color:rgba(74,144,217,.4);} .ibox.blue b.t{color:var(--blue);}
+.ibox.gold{background:rgba(249,168,37,.09);border-color:rgba(249,168,37,.45);} .ibox.gold b.t{color:var(--gold);}
+.ibox.purple{background:rgba(142,68,173,.1);border-color:rgba(142,68,173,.45);} .ibox.purple b.t{color:#c79be0;}
+.ibox.navy{background:rgba(42,82,152,.16);border-color:rgba(74,144,217,.5);} .ibox.navy b.t{color:#9fc4ee;}
+
+/* panel speech */
+.speech{display:flex;gap:12px;margin:14px 0;}
+.pbadge{flex-shrink:0;width:86px;font-size:11px;font-weight:700;color:#fff;
+  border-radius:8px;padding:8px 6px;text-align:center;height:fit-content;line-height:1.35;}
+.bubble{flex:1;background:var(--card);border:1px solid var(--border);border-radius:0 12px 12px 12px;
+  padding:11px 15px;font-size:13.5px;}
+.b-mod{background:var(--navy);} .b-jade{background:#0D47A1;} .b-vc{background:#1B5E20;}
+.b-fd{background:#BF360C;} .b-feed{background:#2E7D32;} .b-gs{background:#6A1B9A;} .b-ext{background:var(--teal);}
+
+ul{margin:8px 0 8px 20px;} li{margin:5px 0;font-size:13.5px;}
+.tag{display:inline-block;font-size:10px;font-weight:800;padding:2px 7px;border-radius:4px;color:#fff;}
+.h{background:var(--red);} .m{background:var(--orange);} .l{background:#5a6b80;}
+
+footer{background:#0a1420;border-top:1px solid var(--border);padding:26px 24px;
+  text-align:center;font-size:12px;color:var(--muted);}
+footer .ver{margin-top:10px;font-size:11px;color:#5d6f86;}
+.conf{color:var(--gold);font-weight:700;}
+.cite{font-size:11.5px;color:var(--muted);font-style:italic;}
+</style>
+</head>
+<body>
+<a href="https://celab-knowledge-base.pages.dev/" id="home-btn">🏠 지식창고</a>
+
+<nav>
+  <span class="logo">SnapScale · 도메인 멘토링</span>
+  <a href="#overview">개요</a>
+  <a href="#qa">Q&amp;A 전문</a>
+  <a href="#correction">Correction</a>
+  <a href="#gap">갭 분석</a>
+  <a href="#insight">온톨로지 인사이트</a>
+  <a href="#panel">자문단 설계 검토</a>
+  <a href="#action">액션</a>
+</nav>
+
+<div class="hero">
+  <span class="badge">INTERNAL · DOMAIN MENTORING REVIEW · v1.0(Draft)</span>
+  <h1>이종현 부장 <span>PSV·P&amp;ID Q&amp;A 회의록</span><br>+ 화공플랜트 온톨로지 자문단 설계 검토</h1>
+  <div class="sub">판교 대면 세션 · 녹취록 기반 재구성 · CELab Wiki 교차검증 · 내부 팀 패널 검토 포함</div>
+  <div class="hmeta">
+    <div><b>2026.06.02</b><small>판교 (약 50분)</small></div>
+    <div><b>13건</b><small>식별된 Q&amp;A</small></div>
+    <div><b>7개</b><small>Wiki 미커버 영역</small></div>
+    <div><b>1차</b><small>자문단 설계 패널</small></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<div class="warn">
+  ⚠️ <b>안내</b> — 본 문서는 AI가 회의 <b>녹취록(STT)</b>과 CELab Wiki·전략문서를 기반으로 재구성한 <b>로컬 초안</b>입니다.
+  발화자 추정·전문 용어는 STT 특성상 오인식이 있을 수 있으며, 기술적 정밀화는 §3 Correction에서 별도 표기했습니다.
+  외부 배포 전 도메인 전문가 검수가 필요합니다. (git push·슬랙 발송 안 함)
+</div>
+
+<!-- ====== 0. 개요 ====== -->
+<section id="overview">
+  <h2><span class="n">0</span>회의 개요</h2>
+  <p class="lead">이종현 부장(UOP 기본설계 20년급 공정 설계 전문가)이 SnapScale 엔지니어들에게 <b>PSV(Pressure Safety Valve, 안전밸브) 사이징</b>과 <b>P&amp;ID 해석</b>을 1:N 질의응답으로 멘토링한 세션. 화공플랜트 AI/온톨로지 제품 개발을 위한 도메인 지식 전수가 목적이다.</p>
+
+  <table>
+    <tr><th style="width:120px">항목</th><th>내용</th></tr>
+    <tr><td>성격</td><td>도메인 전문가 → 개발팀 1:N 기술 멘토링 (PSV 데이터시트 빈칸을 어떻게 채우는가)</td></tr>
+    <tr><td>답변자</td><td><span class="spk s-lee">이종현 부장</span> 외부 도메인 전문가 (녹취 Participant 2 추정)</td></tr>
+    <tr><td>질문자</td><td><span class="spk s-q">종성/준석 님</span> PSV 학습 담당 엔지니어 · <span class="spk s-snap">SnapScale</span> 진행/PM</td></tr>
+    <tr><td>핵심 목적</td><td>① PSV 시나리오·시트 작성 절차 이해 ② AI 자동화 가능 범위 식별 ③ 도메인↔개발 소통 방식 정립</td></tr>
+  </table>
+
+  <div class="ibox orange">
+    <b class="t">🔑 회의의 메타 맥락 — "커뮤니케이션 미스"가 핵심 사건</b>
+    원래 2차 사내 회의 결론은 <b>"PSV 시트의 각 칸을 '어디서(P&amp;ID/데이터시트/시뮬레이션) 채우는가'를 질문하라"</b>였으나,
+    이 결론이 학습 담당자에게 전달되지 않아 <b>"교과서식 단어 하나하나"</b>를 질문하는 세션이 되었다.
+    이종현 부장: <i>"이런 속도로 나한테 오면 100년 걸리겠다… 교집합을 만들어야 한다."</i>
+    → 이 장면 자체가 SnapScale이 풀려는 문제(도메인 전문가↔개발자 소통 비효율)의 <b>실물 사례</b>다. (§5 인사이트에서 분석)
+  </div>
+</section>
+
+<!-- ====== 1. Q&A ====== -->
+<section id="qa">
+  <h2><span class="n">1</span>식별된 Q&amp;A 전문 (13건)</h2>
+  <p class="lead">녹취록에서 명확히 인지 가능한 질문-답변 쌍을 주제별로 재구성. <span class="spk s-lee">이종현</span>=답변, <span class="spk s-q">엔지니어</span>=질문, <span class="spk s-snap">SnapScale</span>=진행.</p>
+
+  <div class="qa">
+    <span class="qtag">Q1 · P&amp;ID 심볼</span>
+    <div class="q">까맣게 칠해진(해칭된) 밸브 심볼은 CAD export 과정에서 생긴 것인가?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> CAD export 산물이 아니라 <b>사람이 커스텀으로 그려 저장</b>한 것. 그래서 PDF로 풀었을 때도 일관성이 없었던 것. 종류도 나뉜다 — 진짜 새카만 것과 해칭(빗금)으로 채운 것. <b>인쇄하면 동일</b>하게 보인다. 또한 설계부마다 새 리스트를 뽑으므로 해당 설계에 없는 설비는 출력되지 않는다.</div>
+    <div class="imp">💡 심볼 불일치의 원인이 "기계 변환"이 아니라 "사람의 작도 관습"이라는 점 — 온톨로지/심볼 인식 자동화에서 표준 외 변형을 반드시 가정해야 함.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q2 · PSV 핵심</span>
+    <div class="q">PSV 사이징 시 압력 단위(게이지 vs 절대압)가 혼용되는데, 누적압(accumulation) 1.21배(121%)를 곱할 때 게이지 기준인가 절대압 기준인가?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> "<b>상관없다, 똑같다</b>" — Design pressure(예 3.579)에 1.21을 곱해 약 4.3을 얻고, 거기에 대기압(약 0.1 MPa)을 더하면 4.4(절대압). <b>게이지에서 ATM을 더하면 절대압, 빼면 게이지</b>이므로 어느 쪽으로도 표시 가능. 단, ① <b>곱셈(accumulation)은 게이지 값에 곱한 뒤 절대압으로 표시</b>만 해주면 되고, ② <b>Design pressure는 무조건 게이지로 표기</b>한다. 이어 Max Allowable Inlet Line Loss = design pressure의 <b>최대 3%</b>도 게이지 기준으로 곱한다.</div>
+    <div class="imp">💡 가장 빈번한 실무 함정. §3에서 CELab Wiki ep22의 정밀 공식(<code>P1 = 설정압×1.10 + 1.01325 bara</code>)으로 보강·교정. 구두 설명은 옳으나 "곱한 뒤 +ATM" 순서가 누락되면 10~20% 과소 사이징.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q3 · 밸브 배치</span>
+    <div class="q">게이트밸브를 (PSV) 양쪽에 두 개씩 다는 이유? 한쪽만 막으면 안 되나?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> 고장·수리 시 한쪽을 잠그고 한쪽을 열어 <b>격리/우회</b>하기 위함. 한쪽만 막으면 안 되는 이유는 <b>반대편에서도 유체가 역으로 올라올 수 있어</b> 양쪽을 모두 격리해야 안전하게 정비 가능하기 때문.</div>
+    <div class="imp">💡 "이중 격리(double block)"는 정비/안전의 기본 패턴. P&amp;ID상 동일 심볼 반복의 의미가 곧 운전·정비 절차를 내포.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q4 · 제어 시스템</span>
+    <div class="q">PLC와 DCS의 차이는?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> <b>PLC = 조작(입력)만</b> — "밸브 50% 열어라, 유량 얼마" 같은 명령 입력 창. <b>DCS = 수집·시각화·저장까지</b> — 계장 데이터가 모두 연동되어 화면에 띄워지고, 운전원이 전체를 모니터링. 계기 데이터는 DCS로 연동되어 표시된다.</div>
+    <div class="imp">💡 실무 구분으로는 타당하나 기술적으로는 단순화된 설명(현대 PLC도 로깅·SCADA 연동, DCS도 제어 수행). §3에서 보강.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q5 · 공급 책임</span>
+    <div class="q">P&amp;ID의 점선 분계선이 벤더/EPC 공급 책임 경계인가? 실린더-리듀서 사이 연결 파이프는 누가 공급하나?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> 그 사이 별도 파이프는 없다 — <b>플랜지로 끊어놨다.</b> 플랜지까지가 경계. 플랜지는 두 짝 연결이라 <b>한 짝씩 벤더와 EPC가 각각 가져와 볼트만 체결</b>한다. 애매한 경계를 확실히 자르려고 선을 긋는 것.</div>
+    <div class="imp">💡 Scope of Supply(공급 범위)는 P&amp;ID상 플랜지/분계선으로 명시 — 계약·조달 자동화의 명확한 그래프 엣지가 됨.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q6 · 유틸리티 배관</span>
+    <div class="q">에어(공압) 라인에 왜 슬로프(기울기)가 있나? 공기만 흐를 텐데?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> 대기 중 공기를 <b>압축하면 응축수(물)가 생긴다.</b> 드라이 공정을 거쳐도 혹시 모를 물 배출을 위해 슬로프를 준다. (용어 교정: "공합 라인"이 아니라 그냥 <b>"에어라인"</b>으로 부르라.)</div>
+    <div class="imp">💡 라인 클래스별 설계 규칙(슬로프, 드레인 포인트)은 "온도·압력의 함수"라는 일반 원리의 구체적 적용 사례.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q7 · PSV 정비</span>
+    <div class="q">PSV 앞뒤(리듀서 전 vent valve, 익스팬더 뒤 볼밸브)에 닫혀 있는 밸브들의 용도는?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> PSV는 <b>주기적 팝핑 테스트(popping test)</b>가 필요하다. PSV를 떼어내려면 앞뒤 block valve(삼각형 두 개)를 잠그고, 그 사이에 갇힌 유체를 <b>vent/drain으로 빼내야</b> 한다. 라인에 박힌 밸브와 옆으로 빠지는(vent) 밸브는 역할이 다르다. 단순 "보조용"이 아니라 <b>유지보수(정비)용</b>.</div>
+    <div class="imp">💡 vent/drain은 "보조"가 아니라 "안전한 정비 격리"가 본질 — 질문자가 의미를 잘못 추정했던 지점.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q8 · 화재 케이스</span>
+    <div class="q">PSV 화재 케이스는 왜 21%이고 다른 경우는 왜 10%인가? (이종현 부장이 숙제로 출제)</div>
+    <div class="a"><span class="spk s-lee">이종현</span> 화재는 기본 <b>21% 누적(accumulation) 고정</b>(조건에 따라 제낄 수도 있음). 화재 시나리오는 파이프가 지상 20m 이내 등 노출 조건을 고려한다. "387도" 같은 온도 기준의 <b>근거를 직접 찾아오라</b>(AI 활용 가능). → 다음 미팅 숙제로 지정.</div>
+    <div class="imp">💡 21%(화재)/10%(비화재 단일) 누적 규칙은 API 520/521 표준값. §4 갭분석에서 Wiki 신규 추가 1순위.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q9 · 시트 값 출처</span>
+    <div class="q">PSV 시트 하단 값들은 outlet(릴리프 헤더) 조건인가, inlet 조건인가?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> 그건 <b>프로그램(시뮬레이션)을 돌려 구한다.</b> Aspen Plus/HYSYS가 아니라 <b>Flarenet</b>으로 계산한다. (참고: 3두社에서도 PSV 계산을 Aspen으로 가져온 사례가 있었다.)</div>
+    <div class="imp">💡 입력값의 "출처 분류"(고정 API값 / 도면 추출 / 시뮬레이션 산출)가 시트 자동화 설계의 핵심 축.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q10 · 계산 도구</span>
+    <div class="q">시트의 모든 값을 Flarenet으로 계산할 수 있나? 고정값과 도면 추출값은 어떻게 구분되나?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> 모든 걸 계산할 필요는 없고 <b>특정 케이스만 시뮬레이션</b>이 필요. API 기반 고정값이 있고, abnormal 상태(정전 → 펌프·동력 정지 → 압력 강하 등)는 Aspen이라도 돌려야 한다. 물성치(평상시 70℃ → 사고 시 90℃)는 시뮬레이션이 구해주지만 <b>정확하진 않아</b> 엔지니어가 시나리오·가정으로 보정한다. 이를 위해 본인이 만든 <b>PSV Cal 엑셀 매크로 시트</b>를 (정답 노하우로) 공유.</div>
+    <div class="imp">💡 "시뮬레이션 산출 → 엔지니어 가정 보정"의 보정 로직이야말로 전문가 가치의 핵심이자 자동화 난도가 가장 높은 부분.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q11 · 자동화 범위</span>
+    <div class="q">시뮬레이션 API 없이 엑셀 매크로 시트만으로 동작하는 도구를 만들 수 있나?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> 시뮬레이션 값이 신빙성은 높지만, 안 되면 <b>엑셀 계산기로 시나리오·가정을 만들어 들이밀면 된다.</b> 본인은 시뮬레이션을 그리 신뢰하지 않는 편(물성치가 이상하면 바로 안다). <b>모든 케이스는 17개 시나리오 안에 다 들어가며</b>, 시트만 있으면 대략 범위는 커버되어 "태클 받을 일 없다." → SnapScale: "그럼 시뮬레이션까지 안 가도 LLM에 시트 붙여 계산시키는 것만으로 유용하겠다."</div>
+    <div class="imp">💡 닫힌 집합(17 시나리오)부터 MVP를 만들면 시뮬레이션 통합 없이도 "감리 통과 수준" 산출 가능 — 제품 단계화의 결정적 힌트.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q12 · 시나리오 용어</span>
+    <div class="q">시나리오 중 "백(Back/Vacuum 추정)" 상황은 무엇인가?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> "<b>공부해 와라</b>"(직접 답을 주지 않음). 다만 부연: 1kg 수증기가 기체→액체로 응축할 때 200여 kJ의 잠열이 나오며, 응축에 따른 압력 변화가 관련된다. "이 분야는 잘못하면 사람이 죽는다 — 그 책임감으로 하라."</div>
+    <div class="imp">💡 STT상 "백"은 진공/역류(Vacuum·Back-flow) 시나리오로 추정되나 미확정. §3 미확정 용어로 분류. 17개 시나리오 정의 확보 시 해소.</div>
+  </div>
+
+  <div class="qa">
+    <span class="qtag">Q13 · 시나리오 체크 절차</span>
+    <div class="q">17개 시나리오/케이스는 어디서 보며, 어떻게 해당 여부를 판단하나?</div>
+    <div class="a"><span class="spk s-lee">이종현</span> PSV 시트의 <b>overview/scenario 탭</b>에 14~17개 케이스가 있다. <b>P&amp;ID를 보고 해당 여부를 체크</b>한 뒤 각각 계산한다. API 521에 시나리오가 정리되어 있어 참고·보강에 활용. 다음 미팅까지 "빈칸 시트는 안 봐도 되니 <b>이 17개 시나리오만 공부해 와라</b>."</div>
+    <div class="imp">💡 "P&amp;ID 판독 → 시나리오 선택 → 케이스 계산"의 3단계가 PSV 워크플로의 정규 절차. 온톨로지·툴 UX의 골격.</div>
+  </div>
+
+  <div class="ibox navy">
+    <b class="t">📌 자료 요청 & 다음 단계 (회의 합의)</b>
+    <ul>
+      <li><b>3두社에 요청할 자료</b> — PFD · P&amp;ID · 데이터시트 · ISO(아이소메트릭) 도면 · <b>PSV 데이터시트(=정답지)</b>. 동일 입력으로 계산해 결과가 일치하면 신뢰 확보(상사 설득 시 소수점 4자리까지 일치 권장).</li>
+      <li><b>다음 미팅 숙제</b> — 17개 릴리프 시나리오 학습(빈칸 시트 X), 화재 21%/비화재 10% 근거, "백" 시나리오 정의.</li>
+      <li><b>학습 자료</b> — <b>USCSB</b>(美 화학안전위원회) 유튜브: 사고 원인을 3D로 재현한 교육 영상 → 도메인 슬랙 채널 공유.</li>
+      <li><b>소통 원칙(이종현)</b> — "스튜핏 퀘스천은 없다, 단 때와 장소는 가려라" · "내가 가르쳐주면 남는 게 없다, 알아볼 때까지 알아보고 와라" · AI 헐루시네이션 주의 → "AI로 먼저 찾아본 뒤 '이게 맞냐'로 검증 질문하라."</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ====== 2. CORRECTION ====== -->
+<section id="correction">
+  <h2><span class="n">2</span>Correction — CELab Wiki 근거 교정</h2>
+  <p class="lead">녹취록의 STT 오인식과 구두 설명을 <b>CELab Wiki 실제 자료</b>로 교정·정밀화. 근거: <span class="cite">celab-wiki/lectures/08-topic-series/ep22-psv-sizing.html</span>, <span class="cite">celab-wiki/lectures/01-process-map.html</span>.</p>
+
+  <h3>2-1. 용어 STT 오인식 교정표</h3>
+  <table>
+    <tr><th>녹취(STT) 표기</th><th>표준 표기</th><th>비고</th></tr>
+    <tr><td class="wrong">KSV / TSV</td><td class="right">PSV</td><td>Pressure Safety Valve</td></tr>
+    <tr><td class="wrong">앱솔루트</td><td class="right">절대압 (absolute)</td><td>Wiki: bara</td></tr>
+    <tr><td class="wrong">솔크에서 어케멜레이트</td><td class="right">set pressure에서 accumulate</td><td>설정압 + 누적</td></tr>
+    <tr><td class="wrong">플레이어 넷 / 플레어 넷</td><td class="right">Flarenet</td><td>릴리프/플레어 시스템 시뮬레이터</td></tr>
+    <tr><td class="wrong">아스팬 / 플러스 하이지</td><td class="right">Aspen Plus / HYSYS</td><td>공정 시뮬레이터</td></tr>
+    <tr><td class="wrong">공합 라인 / 뉴메틱·유메틱</td><td class="right">에어라인 (pneumatic)</td><td>이종현 본인이 "에어라인"으로 교정</td></tr>
+    <tr><td class="wrong">하이드롤릭 / 하이드 롤리</td><td class="right">Hydraulic (수력 계산)</td><td>"모든 기본이 Hydraulic"</td></tr>
+    <tr><td class="wrong">신보 / 심볼</td><td class="right">심볼 (P&amp;ID symbol)</td><td>"모든 답은 심볼에 있다"</td></tr>
+    <tr><td class="wrong">뒤꿈칠 / 까맣게 칠</td><td class="right">해칭(hatching)/채우기</td><td>밸브 음영 표기</td></tr>
+    <tr><td class="wrong">플렌지 / 브렌즈 / 플랜드</td><td class="right">플랜지 (flange)</td><td>공급 분계선</td></tr>
+    <tr><td class="wrong">레듀썬 / 익스펜더</td><td class="right">리듀서(reducer)/익스팬더(expander)</td><td>관경 변환</td></tr>
+    <tr><td class="wrong">아이소 / 아이스드로 / 아이서</td><td class="right">ISO 도면 (Isometric)</td><td>배관 등각투상도</td></tr>
+    <tr><td class="wrong">익넷 라인 로스</td><td class="right">Inlet Line Loss</td><td>입구 배관 압력강하</td></tr>
+    <tr><td class="wrong">맥스 얼라우드/얼라우브</td><td class="right">Max Allowable (MAWP)</td><td>최대 허용 압력</td></tr>
+    <tr><td class="wrong">USCS / USC sb</td><td class="right">USCSB</td><td>U.S. Chemical Safety Board</td></tr>
+    <tr><td class="wrong">헐리스네이션</td><td class="right">Hallucination</td><td>AI 환각</td></tr>
+    <tr><td class="wrong">스냅트케이</td><td class="right">SnapScale</td><td>사명 (TERMS.md)</td></tr>
+    <tr><td class="wrong">API 5 / API 5일</td><td class="right">API 520 / 521</td><td>릴리프 사이징·시나리오 표준</td></tr>
+    <tr><td class="wrong">클로이 시계</td><td class="right">control volume / 계(界) (추정)</td><td>해방량 산정 기준 체적</td></tr>
+  </table>
+
+  <h3>2-2. 기술 내용 정밀화 (Wiki 교차검증)</h3>
+
+  <div class="ibox green">
+    <b class="t">✅ Q2 게이지/절대압 — 구두 설명은 옳음, Wiki가 공식으로 정밀화</b>
+    이종현 부장의 "곱셈은 게이지로 하고 절대압으로 표시만 하면 된다"는 <b>정확하다.</b> CELab Wiki <code>ep22</code>는 이를 공식으로 형식화:
+    <br>• <b>P1(절대압) = 설정압 × 1.10 + 1.01325 bara</b> (예: 설정압 5 barg → 6.513 bara)
+    <br>• <b>함정 #1</b>: 사이징 면적 공식의 <b>P1에 게이지압을 그대로 넣으면 10~20% 과소 사이징</b>(예시 18% 오차). 즉 "게이지에 1.21 곱한 뒤 <b>반드시 +ATM</b>해 절대압으로 변환"하는 순서가 빠지면 위험.
+    <br>• <b>Design pressure는 게이지 표기</b>가 표준 — 부장 설명과 일치.
+  </div>
+
+  <div class="ibox orange">
+    <b class="t">⚠️ 누적(Accumulation) 계수 — Wiki 미정밀, 표준값으로 보강 필요</b>
+    Wiki ep22 예시는 비화재 <b>10%(×1.10)</b>만 다룸. 회의의 <b>화재 21%</b>는 미수록. 표준(API 520/521) 정리:
+    <br>• 비화재·단일 안전밸브: <b>10% 누적</b> · 다중 안전밸브: <b>16%</b> · <b>화재 케이스: 21% 누적</b>
+    <br>→ 회의 진술(화재 21%/기타 10%)은 표준에 부합. <b>§4 신규 추가 1순위.</b>
+  </div>
+
+  <div class="ibox orange">
+    <b class="t">⚠️ Q4 PLC vs DCS — 실무 단순화, 보강 주석 권장</b>
+    "PLC=조작만 / DCS=수집·시각화·저장"은 운전 관점의 유효한 직관이나 기술적으로는 단순화. 현대 PLC도 로깅·SCADA 연동이 되고, DCS도 연속 공정 제어를 수행한다. 통상 구분은 <b>PLC=이산·고속 인터록/시퀀스, DCS=연속·대규모 공정 감시제어</b>. → Wiki 전체 <b>미커버 → 신규 작성 대상.</b>
+  </div>
+
+  <div class="ibox blue">
+    <b class="t">📐 Q9~Q10 도구 매핑 — 명확화</b>
+    릴리프 헤더/배압 등 outlet 조건과 abnormal 물성치는 <b>Flarenet</b>(릴리프 네트워크) 및 <b>Aspen/HYSYS</b>(공정 물성)로 산출. Wiki는 Aspen/HYSYS는 언급하나 <b>Flarenet은 미커버</b>. PSV의 정적 면적 계산은 Wiki ep22(API 520)로 커버되나, <b>네트워크 배압·동적 시나리오는 별도 도구</b>임을 분리 기술해야 함.
+  </div>
+
+  <div class="ibox red">
+    <b class="t">❓ 미확정 용어 (검증 보류)</b>
+    "백" 시나리오(진공/역류 추정), "387도"(화재 평가 온도 기준 추정), "클로이 시계"(control volume 추정), "3두社/3등"(거래처/협력사 추정), "정답지 eps"(PSV 데이터시트 추정) — STT 신뢰도 낮음. <b>17개 시나리오 정의·자료 확보 후 확정</b> 권장.
+  </div>
+</section>
+
+<!-- ====== 3. GAP ====== -->
+<section id="gap">
+  <h2><span class="n">3</span>데이터 분석 세션 — CELab Wiki 미커버 신규 영역</h2>
+  <p class="lead">이 회의에서 등장한 도메인 개념을 CELab Wiki(50+ 강의/온톨로지)와 대조해 <b>이미 커버 / 부분 / 미커버</b>로 분류. 미커버 영역은 Wiki·온톨로지 확장 백로그가 된다.</p>
+
+  <table>
+    <tr><th>도메인 개념</th><th>Wiki 커버리지</th><th>근거/메모</th><th>조치</th></tr>
+    <tr><td>PSV 사이징 (게이지/절대압, Kb 배압, 오리피스)</td><td><span class="right">완전 ✅</span></td><td>ep22 — P1 공식·함정3·오리피스 표준 수록</td><td>회의를 Wiki로 검증</td></tr>
+    <tr><td>P&amp;ID 발행단계(IFR~AFC)·EPC Phase</td><td><span class="right">완전 ✅</span></td><td>01-process-map — 5단계·7 Phase</td><td>유지</td></tr>
+    <tr><td>벤더/EPC 플랜지 분계선(Scope of Supply)</td><td>부분 🟡</td><td>MR·Vendor Print Code 수록, 플랜지 작도 실무는 약함</td><td>실무 사례 보강</td></tr>
+    <tr><td>릴리프 시나리오 (17개)</td><td>부분 🟡</td><td>ep22에 6개만 명시, API 521 전체 미수록</td><td><span class="tag h">1순위</span> 17개 완성</td></tr>
+    <tr><td>Accumulation 21%/10%/16%</td><td><span class="wrong">미커버 ❌</span></td><td>ep22는 1.10 예시만</td><td><span class="tag h">1순위</span></td></tr>
+    <tr><td>Max Inlet Line Loss 3%</td><td><span class="wrong">미커버 ❌</span></td><td>입구 압력강하 기준 없음</td><td><span class="tag h">1순위</span></td></tr>
+    <tr><td>PLC vs DCS (제어 철학)</td><td><span class="wrong">미커버 ❌</span></td><td>지식베이스 전체 부재</td><td><span class="tag m">2순위</span></td></tr>
+    <tr><td>P&amp;ID 심볼 상세(게이트·체크·vent/drain·해칭)</td><td>최소 🟠</td><td>구체 심볼 라이브러리 없음</td><td><span class="tag m">2순위</span></td></tr>
+    <tr><td>Flarenet (릴리프 네트워크 시뮬)</td><td><span class="wrong">미커버 ❌</span></td><td>배압·헤더 계산 도구 부재</td><td><span class="tag m">2순위</span></td></tr>
+    <tr><td>에어/유틸리티 배관 슬로프(응축수)</td><td><span class="wrong">미커버 ❌</span></td><td>유틸리티 배관 특수규칙 부재</td><td><span class="tag l">3순위</span></td></tr>
+    <tr><td>ISO(Isometric) 도면 표준</td><td><span class="wrong">미커버 ❌</span></td><td>등각투상·체적 산정 연계 부재</td><td><span class="tag l">3순위</span></td></tr>
+    <tr><td>진공/역류("백") 시나리오</td><td><span class="wrong">미커버 ❌</span></td><td>응축 진공·thermal contraction</td><td><span class="tag m">2순위</span></td></tr>
+  </table>
+
+  <div class="ibox gold">
+    <b class="t">🆕 신규 영역 도출 — Wiki/온톨로지 확장 백로그 (7+)</b>
+    <b>1순위(PSV 코어 완성):</b> ① API 521 17개 릴리프 시나리오 전집 ② Accumulation 계수 체계(10/16/21%) ③ Inlet Line Loss 3% 규칙 →
+    이 셋이 PSV 자동화 MVP의 "닫힌 집합" 골격이며, 회의에서 이종현 부장이 "이것만 공부해 오라"고 한 영역과 정확히 일치.<br>
+    <b>2순위(워크플로 연결):</b> ④ PLC/DCS 제어 철학 ⑤ P&amp;ID 심볼 라이브러리 ⑥ Flarenet 배압 계산 ⑦ 진공/역류 시나리오.<br>
+    <b>3순위(주변 지식):</b> 유틸리티 배관 슬로프, ISO 도면·체적 산정.
+  </div>
+
+  <div class="ibox green">
+    <b class="t">📊 분석 결론</b>
+    이 1회 멘토링이 <b>Wiki의 핵심 공백 7건을 즉시 식별</b>해 주었다. 즉, "전문가 멘토링 → 갭 자동 도출 → 온톨로지 백로그화"라는 루프 자체가 작동함을 입증. 이것이 §4·§5의 시스템/자문단 설계 근거가 된다.
+  </div>
+</section>
+
+<!-- ====== 4. INSIGHT ====== -->
+<section id="insight">
+  <h2><span class="n">4</span>온톨로지 시스템 개발 인사이트</h2>
+  <p class="lead">관점: SnapScale이 <b>도메인 전문가 ↔ 개발자 초효율 소통</b>으로 화공플랜트 특화 온톨로지를 구축하는 시스템을 만든다면, 이 회의가 주는 7가지 설계 인사이트.</p>
+
+  <div class="ibox blue">
+    <b class="t">① 추출 단위(granularity)가 전부 — "단어"가 아니라 "시트의 칸"</b>
+    이번 미스커뮤니케이션의 본질은 지식 추출 단위의 불일치였다. 교과서식 "단어 정의"(왜 에어라인에 슬로프?)는 흥미롭지만 산출물을 못 만든다. 이종현 부장이 원한 것은 <b>"PSV 데이터시트의 각 칸을 어디서·어떻게 채우는가"</b>라는 <b>슬롯 채우기(slot-filling) 지식</b>. → 온톨로지의 1차 단위는 <b>"산출물의 셀 × 입력 출처 × 계산 절차"</b>여야 한다. 분류학(taxonomy)이 아니라 절차(procedure) 중심.
+  </div>
+
+  <div class="ibox blue">
+    <b class="t">② 도메인은 이미 "닫힌 그래프"로 구조화돼 있다</b>
+    "모든 답은 심볼(P&amp;ID)에 있다 · 온도·압력의 함수다 · 17개 시나리오 안에 다 들어간다." → 전문가 머릿속 모델이 곧 온톨로지 스키마다:
+    <code>시나리오(17) × 입력소스(P&amp;ID·ISO·데이터시트·시뮬·API고정값) × 계산기(엑셀 PSV Cal·Flarenet) → 출력 셀</code>. 닫힌 집합부터 그래프화하면 완성 가능성이 높다.
+  </div>
+
+  <div class="ibox green">
+    <b class="t">③ "정답지(PSV 데이터시트)" = Ground Truth / Eval Set</b>
+    3두社에서 입력(PFD·P&amp;ID·ISO·데이터시트)과 출력(완성된 PSV 데이터시트)을 한 세트로 확보하라는 전략은, 곧 <b>AI 검증용 정답 데이터셋 구축</b>이다. "소수점 4자리까지 일치"라는 합격 기준까지 명확. → 온톨로지/툴은 처음부터 <b>eval-driven</b>으로 개발.
+  </div>
+
+  <div class="ibox orange">
+    <b class="t">④ 자동화의 마지막 1마일 = "전문가의 가정·시나리오 선택"</b>
+    이종현 부장은 시뮬레이션을 불신하고 "가정과 시나리오를 만들어 들이민다." 물성치 보정, 케이스 선택이 전문가 가치의 핵심. → 온톨로지는 사실(fact)뿐 아니라 <b>"판단 규칙(어떤 조건에서 어떤 시나리오/가정을 택하는가)"</b>을 캡처해야 한다. 이것이 단순 RAG와의 차별점.
+  </div>
+
+  <div class="ibox purple">
+    <b class="t">⑤ 초효율 검증 루프 = AI 1차안 → 근거 명시 → 전문가는 YES/NO만</b>
+    이종현 부장 본인이 제시한 패턴: "AI로 먼저 찾아본 뒤 '이게 맞냐'로 검증 질문하라." 전문가에게 백지 질문을 던지면 100년 걸리지만, <b>근거가 달린 1차안을 판정만</b> 하게 하면 전문가 시간이 1/10로 준다. → 제품 UX와 자문 프로세스 모두 이 "초안+근거 → 판정" 루프로 설계.
+  </div>
+
+  <div class="ibox gold">
+    <b class="t">⑥ 기여 동기 = "이름이 남는 것" (Legacy), 거버넌스의 핵심</b>
+    "노하우는 술 사며 얻는 것 · 아무에게나 안 준다 · 새 주인을 만나라." 전략문서(c-2026-05-07)에서도 이종현 부장은 <b>"내 이름이 남아야 기여 동기"</b>를 강조. → 온톨로지 시스템은 <b>기여자 credit·출처 추적</b>을 1급 기능으로 내장해야 전문가 참여가 지속된다.
+  </div>
+
+  <div class="ibox navy">
+    <b class="t">⑦ "신입에게 시트 던지고 채워봐" = 자연스러운 커리큘럼·평가</b>
+    이종현 부장: "회사에서 신입 들어오면 시트 던져주고 채워봐, 끝." 이 OJT 멘탈모델이 곧 <b>제품 온보딩·평가 구조</b>이자, 도메인 지식 추출의 가장 자연스러운 프로토콜. SnapScale 툴은 이 "시트를 채우며 배우고 검증받는" 흐름을 그대로 디지털화하면 된다.
+  </div>
+</section>
+
+<!-- ====== 5. PANEL ====== -->
+<section id="panel">
+  <h2><span class="n">5</span>자문단 설계 — 내부 팀 검토 (패널 시뮬레이션)</h2>
+  <p class="lead"><b>MTG-CUSTOM</b> · 의제: 화공플랜트 온톨로지 구축을 위한 <b>도메인 전문가 자문단</b>을 (1)Phase별 누구를 (2)몇 명 (3)몇 회·얼마 동안 (4)어떻게 (5)어디에 큐레이션하여 (6)완성 가능한가. 근거: 본 회의 + <span class="cite">c-2026-05-07 인화공 온톨로지 전략</span> + <span class="cite">2026-05-25 자문단 구조</span> + 인화공 온톨로지(7,415 스레드/AutoFlow 838).</p>
+
+  <div class="speech"><div class="pbadge b-mod">김상윤<br>모더레이터</div><div class="bubble">오늘 결론은 하나입니다 — "자문단을 몇 명·몇 회로, 어떻게 굴려야 <b>10월 사업 종료 전</b> 의미 있는 산출이 나오는가." 이종현 부장 세션에서 본 '100년 걸리겠다'는 경고가 출발점입니다. 비효율을 구조로 제거합시다.</div></div>
+
+  <div class="speech"><div class="pbadge b-jade">박규호<br>도메인↔개발 번역</div><div class="bubble">핵심은 <b>전문가 시간을 백지 질문에 쓰지 않는 것</b>입니다. 이종현 부장 본인이 답을 줬어요 — "AI 1차안 + 근거 → 전문가는 맞냐만 판정." 자문단 운영도 동일해야 합니다. 우리가 먼저 인화공 7,415 스레드와 Wiki로 <b>초안 온톨로지</b>를 채우고, 전문가는 <b>검증·교정</b>만 합니다. 백지 인터뷰는 금지.</div></div>
+
+  <div class="speech"><div class="pbadge b-gs">GS현업<br>공정·배관</div><div class="bubble">동의합니다. 단, 전문가를 <b>도메인별</b>로 나눠야 합니다. 한 사람이 공정·배관·장치·안전·제어를 다 못 봐요. PSV는 이종현 부장이 정점이지만, 회전기계·배관 스트레스는 다른 사람입니다. <b>도메인 × Phase 매트릭스</b>로 전문가를 매핑해야 빈칸이 안 생깁니다.</div></div>
+
+  <div class="speech"><div class="pbadge b-feed">이영호<br>FEED·NDA</div><div class="bubble">반드시 <b>기밀/비기밀 경계</b>를 먼저 긋고 시작해야 합니다. 이종현 부장이 PSV Cal 시트를 "새 주인에게" 준 건 그게 <b>방법론(교과서급)</b>이라 가능했던 것. 프로젝트별 사양은 NDA. 자문 1단계는 <b>EPC 비종속 방법론</b>만, 프로젝트 데이터는 2단계 별도 동의. 안 그러면 자문단이 입을 닫습니다.</div></div>
+
+  <div class="speech"><div class="pbadge b-vc">한승민<br>VC·동기부여</div><div class="bubble">시니어는 돈으로 안 움직입니다. <b>"이름이 남는다"</b>가 동력이에요. 자문 산출물(온톨로지 노드)마다 <b>기여자 크레딧</b>을 박으세요. 그리고 욕심내지 마세요 — 전 도메인 동시 착수는 실패합니다. <b>PSV 한 도메인으로 "태클 안 받는" 레퍼런스 1개</b>를 먼저 완성해 보여주는 게 다음 전문가를 끌어옵니다.</div></div>
+
+  <div class="speech"><div class="pbadge b-fd">오태준<br>연쇄창업가</div><div class="bubble">현실적으로 갑시다. 10월 종료면 <b>실질 가용 기간은 3개월</b>. 신규 도메인 4~5개는 불가능합니다. <b>PSV(닫힌 17 시나리오)에 올인</b>해서 eval 통과하는 MVP 1개 → 그 다음 인접 도메인(릴리프/플레어) 확장. 자문 세션은 <b>격주·2시간·도메인당 4~6회</b>면 충분합니다. 매 세션 전 우리가 초안을 채워가고, 세션은 판정 회의로만 씁니다.</div></div>
+
+  <div class="speech"><div class="pbadge b-jade">박규호<br>도메인↔개발 번역</div><div class="bubble">큐레이션은 이미 결론이 있습니다(2026-05-16 평가). <b>인터랙티브 HTML(D3/SVG, 53점)</b>을 메인 온톨로지 뷰로, <b>Obsidian Vault</b>를 보조 지식 볼트로. 스키마는 <code>Stage–Domain–ProblemType</code> 3계층에 이번 §4 슬롯(시나리오×입력출처×계산기)을 결합합니다. 자문 세션 산출물은 그날 바로 노드로 커밋.</div></div>
+
+  <div class="speech"><div class="pbadge b-mod">김상윤<br>모더레이터</div><div class="bubble">완성 가능성에 대한 솔직한 판단은? "전부"는 불가능하다는 데 다들 동의하는 거죠.</div></div>
+
+  <div class="speech"><div class="pbadge b-fd">오태준<br>연쇄창업가</div><div class="bubble">"전부 완성"은 함정입니다. <b>닫힌 집합은 완성 가능, 열린 집합(전문가 판단·가정)은 영원히 미완성</b>입니다. 그래서 KPI를 "온톨로지 100%"가 아니라 <b>"PSV 데이터시트를 3두 정답지와 소수점 4자리까지 일치시키는 AI 1개"</b>로 잡아야 합니다. 이종현 부장의 합격 기준을 그대로 KPI로.</div></div>
+
+  <div class="ibox navy">
+    <b class="t">⚖️ VERDICT — 자문단 설계 합의안</b>
+    <table style="margin-top:8px">
+      <tr><th style="width:120px">질문</th><th>합의</th></tr>
+      <tr><td>① Phase별 누구</td><td><b>도메인 × Phase 매트릭스</b>로 매핑. Phase 1·2(FEED/Basic)부터. PSV/안전 = 이종현 부장(정점), 공정/배관/장치/제어는 도메인별 별도 전문가 + 인화공 시니어 풀.</td></tr>
+      <tr><td>② 몇 명</td><td><b>2-Tier:</b> 코어 자문 <b>도메인당 1~2인(전체 3~5인)</b> + 확장 검증은 <b>인화공 커뮤니티(5,000 Q&amp;A 풀)</b>. 동시 착수는 PSV 1도메인.</td></tr>
+      <tr><td>③ 몇 회·기간</td><td><b>격주 2시간 · 도메인당 4~6회</b>. PSV 우선 완주 후 인접 도메인 순차. 실질 3개월 내 PSV MVP.</td></tr>
+      <tr><td>④ 어떻게(방법)</td><td><b>"AI 1차안+근거 → 전문가 YES/NO 판정"</b> 루프. 백지 인터뷰 금지. 세션 전 우리가 인화공·Wiki로 초안 채움. <b>기밀/비기밀 경계 1단계는 방법론만.</b></td></tr>
+      <tr><td>⑤ 어디 큐레이션</td><td><b>인터랙티브 HTML(D3) 메인 + Obsidian 보조</b>. 스키마 <code>Stage–Domain–ProblemType</code> × 슬롯(시나리오×입력출처×계산기). 세션 즉시 노드 커밋 + <b>기여자 크레딧</b>.</td></tr>
+      <tr><td>⑥ 완성 가능?</td><td><b>닫힌 집합(17 시나리오) = 완성 가능 / 열린 집합(판단·가정) = 점진 보강.</b> KPI = "3두 정답지 소수점 4자리 일치 AI 1개". 온톨로지 완전성이 아닌 <b>eval 통과</b>로 정의.</td></tr>
+    </table>
+  </div>
+
+  <div class="ibox green">
+    <b class="t">🎯 3-1-1 요약 (박규호 → 김상윤)</b>
+    <b>결론:</b> 자문단은 "전 도메인 동시"가 아니라 <b>PSV 1도메인을 코어 3~5인·격투 격주 2시간·검증루프로 3개월 내 eval 통과시키는 것</b>이 정답이다.<br>
+    <b>근거:</b> ① 실질 가용 3개월 → 닫힌 17 시나리오만 완성 가능 ② 전문가 시간은 "초안 판정"에만 써야 100년→3개월 ③ 큐레이션·동기부여(HTML+크레딧)는 기존 결정 재활용 가능.<br>
+    <b>다음 액션:</b> 3두社에 PSV 정답지 세트(PFD·P&amp;ID·ISO·데이터시트) 요청 → eval 셋 구축 착수.
+  </div>
+</section>
+
+<!-- ====== 6. ACTION ====== -->
+<section id="action">
+  <h2><span class="n">6</span>즉시 액션 테이블</h2>
+  <table>
+    <tr><th>과제</th><th>담당</th><th>기한</th><th>우선</th></tr>
+    <tr><td>3두社에 PSV 정답지 세트(PFD·P&amp;ID·ISO·데이터시트·PSV 데이터시트) 요청 → eval 셋 구축</td><td>박규호/SnapScale</td><td>즉시</td><td><span class="tag h">HIGH</span></td></tr>
+    <tr><td>17개 릴리프 시나리오 학습·정리(빈칸 시트 X) + 화재 21%/비화재 10% 근거 + "백" 시나리오 정의</td><td>종성/준석</td><td>다음 미팅 전</td><td><span class="tag h">HIGH</span></td></tr>
+    <tr><td>Wiki 1순위 신규 작성: API 521 17시나리오 / Accumulation 계수 / Inlet Line Loss 3%</td><td>도메인팀</td><td>2주</td><td><span class="tag h">HIGH</span></td></tr>
+    <tr><td>PSV 온톨로지 슬롯 스키마(시나리오×입력출처×계산기) 초안 + PSV Cal 시트 매핑</td><td>박규호</td><td>2주</td><td><span class="tag m">MED</span></td></tr>
+    <tr><td>"AI 1차안+근거 → 전문가 판정" 검증 루프 프로토타입(LLM+PSV 시트)</td><td>개발팀</td><td>3주</td><td><span class="tag m">MED</span></td></tr>
+    <tr><td>USCSB 유튜브 교육 영상 도메인 슬랙 채널 큐레이션</td><td>진행팀</td><td>이번 주</td><td><span class="tag l">LOW</span></td></tr>
+    <tr><td>Wiki 2순위: PLC/DCS · P&amp;ID 심볼 라이브러리 · Flarenet · 진공 시나리오</td><td>도메인팀</td><td>4주+</td><td><span class="tag l">LOW</span></td></tr>
+  </table>
+</section>
+
+</div>
+
+<footer>
+  <strong class="conf">Confidential &amp; Proprietary | SnapScale Internal Use Only</strong><br>
+  근거 자료: 이종현 부장 Q&amp;A 녹취록(2026.06.02, 판교) · celab-wiki/lectures/08-topic-series/ep22-psv-sizing.html · celab-wiki/lectures/01-process-map.html · pages/c-2026-05-07_인화공_커뮤니티_온톨로지_전략.html · pages/2026-05-16_inhwagong_ontology_dashboard.html · pages/2026-05-25_448403.html<br>
+  성격: <b>로컬 초안</b> (git push·슬랙 발송 없음) · 외부 배포 전 도메인 전문가 검수 필요
+  <div class="ver">Version 1.0 (Draft) · 2026.06.02 · 이종현 부장 PSV Q&amp;A 회의록 + CELab Wiki 교정 + 자문단 설계 패널 검토</div>
+</footer>
+
+</body>
+</html>
