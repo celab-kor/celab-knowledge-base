@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ralph 스킬 세팅 및 사용법 — 1시간 초심자 강의</title>
+<style>
+  /* ============ DESIGN TOKENS ============ */
+  :root{
+    --bg:#0E1116;
+    --bg-2:#151A21;
+    --panel:#1B222C;
+    --panel-2:#222B37;
+    --ink:#E8ECF2;
+    --ink-soft:#AEB8C7;
+    --ink-dim:#6F7B8C;
+    --line:#2A3340;
+    --line-soft:#222b37;
+    /* dominant accent — the boulder / torch */
+    --amber:#F5A623;
+    --amber-soft:#FFC861;
+    --amber-deep:#C77F12;
+    /* cool secondary — verification / code states */
+    --teal:#22D3C5;
+    --teal-deep:#0E8C82;
+    /* status */
+    --good:#34D399;
+    --bad:#F87171;
+    --good-bg:rgba(52,211,153,.10);
+    --bad-bg:rgba(248,113,113,.10);
+    --amber-bg:rgba(245,166,35,.10);
+    --teal-bg:rgba(34,211,197,.10);
+    --radius:16px;
+    --radius-sm:10px;
+    --mono:"SFMono-Regular",ui-monospace,"JetBrains Mono","Menlo","Consolas",monospace;
+    --sans:system-ui,-apple-system,"Segoe UI","Apple SD Gothic Neo","Pretendard","Malgun Gothic",sans-serif;
+    --shadow:0 24px 60px -20px rgba(0,0,0,.65);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:
+      radial-gradient(1200px 700px at 82% -10%, rgba(245,166,35,.10), transparent 55%),
+      radial-gradient(1000px 620px at 8% 110%, rgba(34,211,197,.08), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    letter-spacing:-.01em;
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ============ STAGE / SLIDES ============ */
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+  .slide{
+    position:absolute;inset:0;
+    display:none;
+    flex-direction:column;
+    padding:clamp(36px,4.2vw,80px) clamp(40px,6vw,128px);
+    opacity:0;
+    transition:opacity .42s ease;
+  }
+  .slide.active{display:flex;opacity:1;animation:slideIn .5s cubic-bezier(.22,.61,.36,1) both;}
+  @keyframes slideIn{from{opacity:0;transform:translateY(14px) scale(.992)}to{opacity:1;transform:none}}
+
+  /* stagger reveal for direct children of .body */
+  .slide.active .reveal{opacity:0;animation:rise .5s cubic-bezier(.22,.61,.36,1) forwards;}
+  .slide.active .reveal:nth-child(1){animation-delay:.06s}
+  .slide.active .reveal:nth-child(2){animation-delay:.13s}
+  .slide.active .reveal:nth-child(3){animation-delay:.20s}
+  .slide.active .reveal:nth-child(4){animation-delay:.27s}
+  .slide.active .reveal:nth-child(5){animation-delay:.34s}
+  .slide.active .reveal:nth-child(6){animation-delay:.41s}
+  .slide.active .reveal:nth-child(7){animation-delay:.48s}
+  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+  /* ============ SLIDE HEADER ============ */
+  .badge-row{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .badge{
+    font-family:var(--mono);font-size:clamp(12px,1vw,14px);font-weight:600;
+    padding:6px 13px;border-radius:999px;letter-spacing:.02em;
+    border:1px solid var(--line);background:var(--panel);color:var(--ink-soft);
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .badge.mod-a{border-color:rgba(245,166,35,.4);color:var(--amber-soft);background:var(--amber-bg)}
+  .badge.mod-b{border-color:rgba(34,211,197,.4);color:var(--teal);background:var(--teal-bg)}
+  .badge.mod-c{border-color:rgba(167,139,250,.45);color:#C4B5FD;background:rgba(167,139,250,.10)}
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+
+  h1.slide-title{
+    font-size:clamp(28px,3.5vw,52px);
+    font-weight:760;line-height:1.12;letter-spacing:-.025em;
+    margin-bottom:8px;
+  }
+  h1.slide-title .hl{color:var(--amber)}
+  .subtitle{color:var(--ink-soft);font-size:clamp(15px,1.35vw,21px);margin-bottom:6px}
+
+  .body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(12px,1.5vw,20px);padding-top:8px;overflow:auto}
+  .body::-webkit-scrollbar{width:8px}
+  .body::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+
+  /* ============ CARDS / LISTS ============ */
+  .grid{display:grid;gap:clamp(12px,1.4vw,18px)}
+  .grid.cols-2{grid-template-columns:1fr 1fr}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:900px){.grid.cols-2,.grid.cols-3{grid-template-columns:1fr}}
+
+  .card{
+    background:linear-gradient(180deg,var(--panel),var(--bg-2));
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:clamp(16px,1.7vw,24px);
+    position:relative;
+  }
+  .card.accent{border-color:rgba(245,166,35,.35)}
+  .card.teal{border-color:rgba(34,211,197,.35)}
+  .card h3{font-size:clamp(17px,1.5vw,22px);font-weight:680;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+  .card .lead-icon{font-size:1.25em;filter:saturate(1.1)}
+
+  ul.feat{list-style:none;display:flex;flex-direction:column;gap:11px}
+  ul.feat li{
+    position:relative;padding-left:28px;
+    font-size:clamp(15px,1.32vw,20px);color:var(--ink-soft);line-height:1.5;
+  }
+  ul.feat li::before{
+    content:"";position:absolute;left:6px;top:.62em;
+    width:8px;height:8px;border-radius:2px;background:var(--amber);
+    box-shadow:0 0 0 4px var(--amber-bg);
+  }
+  ul.feat.teal li::before{background:var(--teal);box-shadow:0 0 0 4px var(--teal-bg)}
+  ul.feat li strong{color:var(--ink);font-weight:680}
+  ul.feat li em{color:var(--amber-soft);font-style:normal;font-weight:600}
+
+  .note-inline{color:var(--ink-soft);font-size:clamp(14px,1.2vw,18px);line-height:1.6}
+  .note-inline strong{color:var(--ink)}
+
+  /* ============ CODE ============ */
+  pre{
+    background:#0A0D12;border:1px solid var(--line);
+    border-radius:var(--radius-sm);
+    padding:clamp(14px,1.5vw,22px) clamp(16px,1.7vw,24px);
+    font-family:var(--mono);font-size:clamp(13px,1.05vw,16.5px);line-height:1.7;
+    overflow:auto;letter-spacing:0;color:#D6DEEA;position:relative;
+  }
+  pre::before{
+    content:attr(data-label);position:absolute;top:0;right:0;
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-dim);background:var(--panel);
+    padding:3px 12px;border-bottom-left-radius:8px;border-left:1px solid var(--line);border-bottom:1px solid var(--line);
+    font-weight:600;
+  }
+  pre .cm{color:#5B6877;font-style:italic}      /* comment */
+  pre .kw{color:var(--amber-soft);font-weight:600}/* keyword/cmd */
+  pre .st{color:var(--teal)}                      /* string */
+  pre .pa{color:#C4B5FD}                           /* path */
+  pre .nm{color:#7FB4FF}                           /* number/key */
+  pre .ar{color:var(--amber);font-weight:700}      /* arrow */
+  pre .ok{color:var(--good)}
+  pre .no{color:var(--bad)}
+
+  code.ic{
+    font-family:var(--mono);font-size:.9em;background:var(--panel-2);
+    border:1px solid var(--line);border-radius:6px;padding:1px 7px;color:var(--amber-soft);
+    white-space:nowrap;
+  }
+
+  /* ============ TABLES ============ */
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:clamp(13.5px,1.2vw,18px)}
+  table th,table td{padding:11px 16px;text-align:left;border-bottom:1px solid var(--line)}
+  table th{
+    background:var(--panel);color:var(--ink);font-weight:680;font-size:.92em;
+    letter-spacing:.01em;border-bottom:1px solid var(--line);
+  }
+  table tr td:first-child,table tr th:first-child{padding-left:18px}
+  table td{color:var(--ink-soft)}
+  table td code{font-family:var(--mono);color:var(--amber-soft);font-size:.92em}
+  table tr:last-child td{border-bottom:none}
+  .tbl-wrap{border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;background:var(--bg-2)}
+  .yes{color:var(--good);font-weight:700}
+  .no{color:var(--bad);font-weight:700}
+  tr.row-yes td:first-child{color:var(--good)}
+  tr.row-no td:first-child{color:var(--bad)}
+
+  /* ============ CALLOUT / QUOTE ============ */
+  .callout{
+    border-left:4px solid var(--amber);
+    background:var(--amber-bg);
+    border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+    padding:16px 22px;font-size:clamp(15px,1.35vw,21px);color:var(--ink);
+  }
+  .callout.teal{border-left-color:var(--teal);background:var(--teal-bg)}
+  .callout strong{color:var(--amber-soft)}
+  .callout.teal strong{color:var(--teal)}
+
+  /* checklist */
+  ul.check{list-style:none;display:flex;flex-direction:column;gap:10px}
+  ul.check li{position:relative;padding-left:36px;font-size:clamp(15px,1.3vw,20px);color:var(--ink-soft)}
+  ul.check li::before{
+    content:"";position:absolute;left:0;top:.1em;width:22px;height:22px;
+    border:2px solid var(--line);border-radius:6px;background:var(--bg-2);
+  }
+  ul.check li::after{
+    content:"";position:absolute;left:7px;top:.28em;width:7px;height:12px;
+    border:solid var(--amber);border-width:0 3px 3px 0;transform:rotate(42deg);opacity:.85;
+  }
+
+  /* ============ COVER ============ */
+  .cover{align-items:flex-start;justify-content:center}
+  .cover .kicker{
+    font-family:var(--mono);color:var(--amber);letter-spacing:.16em;text-transform:uppercase;
+    font-size:clamp(12px,1.1vw,15px);font-weight:600;margin-bottom:22px;display:flex;align-items:center;gap:12px;
+  }
+  .cover h1{
+    font-size:clamp(40px,6.4vw,98px);font-weight:800;line-height:1.02;letter-spacing:-.03em;margin-bottom:8px;
+  }
+  .cover h1 .ralph{
+    background:linear-gradient(120deg,var(--amber),var(--amber-soft) 60%,var(--teal));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .cover .lede{font-size:clamp(17px,1.9vw,28px);color:var(--ink-soft);max-width:24ch;margin:18px 0 30px;line-height:1.45}
+  .cover .meta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+  .pill{
+    border:1px solid var(--line);background:var(--panel);border-radius:999px;
+    padding:9px 18px;font-size:clamp(13px,1.15vw,17px);color:var(--ink-soft);
+    display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);
+  }
+  .pill b{color:var(--amber);font-weight:700}
+  .pill.teal b{color:var(--teal)}
+  .kbd-hint{display:flex;gap:18px;flex-wrap:wrap;color:var(--ink-dim);font-size:clamp(12.5px,1.05vw,15px)}
+  .kbd-hint span{display:inline-flex;align-items:center;gap:7px}
+  kbd{
+    font-family:var(--mono);font-size:.82em;background:var(--panel-2);border:1px solid var(--line);
+    border-bottom-width:2px;border-radius:6px;padding:2px 8px;color:var(--ink);min-width:22px;text-align:center;display:inline-block;
+  }
+
+  /* boulder motif on cover */
+  .boulder{
+    position:absolute;right:clamp(40px,7vw,150px);top:50%;transform:translateY(-50%);
+    width:clamp(180px,24vw,360px);height:clamp(180px,24vw,360px);pointer-events:none;opacity:.9;
+  }
+  @media(max-width:1100px){.boulder{opacity:.18;right:0}}
+  .boulder .ring{
+    position:absolute;inset:0;border-radius:50%;
+    border:1.5px dashed rgba(245,166,35,.35);
+    animation:spin 26s linear infinite;
+  }
+  .boulder .ring2{inset:18%;border-color:rgba(34,211,197,.3);animation-duration:18s;animation-direction:reverse}
+  .boulder .core{
+    position:absolute;inset:30%;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,var(--amber-soft),var(--amber-deep) 70%,#5b3a08);
+    box-shadow:0 0 60px rgba(245,166,35,.5),inset -10px -12px 30px rgba(0,0,0,.45);
+    animation:bob 4s ease-in-out infinite;
+  }
+  .boulder .glyph{
+    position:absolute;inset:30%;display:flex;align-items:center;justify-content:center;
+    font-size:clamp(40px,7vw,96px);filter:drop-shadow(0 4px 8px rgba(0,0,0,.4));animation:bob 4s ease-in-out infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+  /* ============ SECTION DIVIDER ============ */
+  .section-slide{align-items:flex-start;justify-content:center}
+  .section-slide .sec-num{
+    font-family:var(--mono);font-size:clamp(60px,12vw,180px);font-weight:800;line-height:.9;
+    -webkit-text-stroke:2px var(--amber);color:transparent;opacity:.85;letter-spacing:-.04em;margin-bottom:10px;
+  }
+  .section-slide.b .sec-num{-webkit-text-stroke-color:var(--teal)}
+  .section-slide.c .sec-num{-webkit-text-stroke-color:#A78BFA}
+  .section-slide h1{font-size:clamp(34px,5.2vw,80px);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:14px}
+  .section-slide .sec-desc{font-size:clamp(16px,1.7vw,26px);color:var(--ink-soft);max-width:38ch;line-height:1.5;margin-bottom:24px}
+  .sec-meta{display:flex;gap:14px;flex-wrap:wrap}
+  .sec-meta .pill b{color:inherit}
+
+  /* agenda */
+  .agenda-list{display:flex;flex-direction:column;gap:14px;counter-reset:ag}
+  .agenda-item{
+    display:flex;align-items:center;gap:20px;padding:16px 22px;
+    background:linear-gradient(90deg,var(--panel),var(--bg-2));
+    border:1px solid var(--line);border-radius:var(--radius-sm);
+    transition:transform .2s;
+  }
+  .agenda-item .ag-num{
+    font-family:var(--mono);font-size:clamp(20px,2vw,30px);font-weight:800;color:var(--amber);min-width:1.6em;
+  }
+  .agenda-item.b .ag-num{color:var(--teal)}
+  .agenda-item.c .ag-num{color:#A78BFA}
+  .agenda-item .ag-body{flex:1}
+  .agenda-item .ag-title{font-size:clamp(17px,1.6vw,24px);font-weight:680;color:var(--ink)}
+  .agenda-item .ag-sub{font-size:clamp(13px,1.1vw,16px);color:var(--ink-dim)}
+  .agenda-item .ag-time{font-family:var(--mono);font-size:clamp(13px,1.1vw,16px);color:var(--ink-soft);background:var(--panel);border:1px solid var(--line);padding:5px 13px;border-radius:999px}
+
+  /* flow diagram (ASCII-ish but styled) */
+  .flow{display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--mono)}
+  .flow .node{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:9px 20px;font-size:clamp(13px,1.1vw,17px);color:var(--ink);text-align:center;font-weight:600;
+  }
+  .flow .node.amber{border-color:var(--amber);color:var(--amber-soft);background:var(--amber-bg)}
+  .flow .node.teal{border-color:var(--teal);color:var(--teal);background:var(--teal-bg)}
+  .flow .arr{color:var(--amber);font-size:1.2em}
+  .flow .branch{font-size:clamp(12px,1vw,15px);color:var(--ink-dim)}
+
+  /* ============ INSTRUCTOR NOTES PANEL ============ */
+  #notesPanel{
+    position:fixed;right:0;top:0;bottom:0;width:min(440px,40vw);
+    background:linear-gradient(180deg,#10151C,#0B0E13);
+    border-left:1px solid var(--line);box-shadow:var(--shadow);
+    transform:translateX(102%);transition:transform .34s cubic-bezier(.4,0,.2,1);
+    z-index:60;display:flex;flex-direction:column;padding:28px 30px;
+  }
+  #notesPanel.open{transform:none}
+  #notesPanel .np-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+  #notesPanel .np-head .ico{
+    width:38px;height:38px;border-radius:10px;background:var(--amber-bg);border:1px solid rgba(245,166,35,.4);
+    display:flex;align-items:center;justify-content:center;font-size:20px;
+  }
+  #notesPanel .np-head h4{font-size:18px;font-weight:720;color:var(--ink)}
+  #notesPanel .np-head .np-sub{font-size:12.5px;color:var(--ink-dim);font-family:var(--mono)}
+  #notesBody{overflow:auto;flex:1;font-size:16px;line-height:1.72;color:var(--ink-soft)}
+  #notesBody::-webkit-scrollbar{width:7px}
+  #notesBody::-webkit-scrollbar-thumb{background:var(--line);border-radius:7px}
+  #notesBody p{margin-bottom:14px}
+  #notesBody strong{color:var(--amber-soft)}
+  .np-foot{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-dim);font-family:var(--mono);display:flex;justify-content:space-between}
+
+  /* ============ OVERVIEW GRID ============ */
+  #overview{
+    position:fixed;inset:0;background:rgba(8,10,14,.97);z-index:80;
+    display:none;flex-direction:column;padding:clamp(24px,3vw,56px);overflow:auto;
+  }
+  #overview.open{display:flex;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  #overview h3{font-size:24px;font-weight:740;margin-bottom:6px}
+  #overview .ov-sub{color:var(--ink-dim);font-family:var(--mono);font-size:13px;margin-bottom:24px}
+  .ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .ov-card{
+    aspect-ratio:16/10;background:linear-gradient(160deg,var(--panel),var(--bg-2));
+    border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;
+    display:flex;flex-direction:column;justify-content:space-between;transition:.2s;position:relative;overflow:hidden;
+  }
+  .ov-card:hover{border-color:var(--amber);transform:translateY(-3px);box-shadow:0 14px 30px -12px rgba(245,166,35,.4)}
+  .ov-card.current{border-color:var(--amber);box-shadow:0 0 0 2px var(--amber-bg)}
+  .ov-card .ov-idx{font-family:var(--mono);font-size:12px;color:var(--ink-dim)}
+  .ov-card .ov-t{font-size:15px;font-weight:680;color:var(--ink);line-height:1.3;letter-spacing:-.01em}
+  .ov-card .ov-tag{font-family:var(--mono);font-size:10.5px;padding:3px 9px;border-radius:999px;align-self:flex-start;border:1px solid var(--line);color:var(--ink-soft)}
+  .ov-card .ov-tag.a{color:var(--amber-soft);border-color:rgba(245,166,35,.4)}
+  .ov-card .ov-tag.b{color:var(--teal);border-color:rgba(34,211,197,.4)}
+  .ov-card .ov-tag.c{color:#C4B5FD;border-color:rgba(167,139,250,.4)}
+
+  /* ============ HELP OVERLAY ============ */
+  #help{
+    position:fixed;inset:0;background:rgba(8,10,14,.9);z-index:90;display:none;
+    align-items:center;justify-content:center;backdrop-filter:blur(4px);
+  }
+  #help.open{display:flex;animation:fade .2s ease}
+  .help-card{
+    background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);
+    border-radius:20px;padding:40px 46px;max-width:580px;width:90%;box-shadow:var(--shadow);
+  }
+  .help-card h3{font-size:24px;font-weight:760;margin-bottom:6px}
+  .help-card .hc-sub{color:var(--ink-dim);margin-bottom:24px;font-size:14px}
+  .help-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+  .help-grid div{display:flex;align-items:center;gap:12px;font-size:15px;color:var(--ink-soft)}
+  .help-grid .keys{display:flex;gap:5px;min-width:118px}
+  .help-close{margin-top:26px;text-align:center;color:var(--ink-dim);font-size:13px;font-family:var(--mono)}
+
+  /* ============ BOTTOM CONTROL BAR ============ */
+  #bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:linear-gradient(0deg,rgba(10,13,18,.97),rgba(10,13,18,.78) 70%,transparent);
+    padding:14px clamp(24px,3vw,56px) 16px;
+    display:flex;align-items:center;gap:18px;
+  }
+  #progress{position:absolute;left:0;top:0;height:3px;background:linear-gradient(90deg,var(--amber),var(--teal));width:0;transition:width .35s ease;box-shadow:0 0 12px rgba(245,166,35,.5)}
+  .ctrl-btn{
+    width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--panel);
+    color:var(--ink-soft);font-size:17px;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;justify-content:center;
+  }
+  .ctrl-btn:hover{border-color:var(--amber);color:var(--amber-soft);background:var(--panel-2)}
+  .ctrl-btn.on{border-color:var(--amber);color:var(--amber);background:var(--amber-bg)}
+  .counter{font-family:var(--mono);font-size:15px;color:var(--ink-soft);min-width:74px;text-align:center;letter-spacing:.02em}
+  .counter b{color:var(--amber);font-size:1.18em}
+  .bar-title{flex:1;font-size:14px;color:var(--ink-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-.01em}
+  .bar-spacer{flex:1}
+  .bar-group{display:flex;gap:9px;align-items:center}
+
+  /* timer */
+  #timer{
+    font-family:var(--mono);font-size:14px;color:var(--ink-soft);background:var(--panel);
+    border:1px solid var(--line);border-radius:11px;padding:8px 14px;display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;transition:.18s;
+  }
+  #timer:hover{border-color:var(--teal)}
+  #timer.running{border-color:var(--teal);color:var(--teal)}
+  #timer .t-dot{width:8px;height:8px;border-radius:50%;background:var(--ink-dim)}
+  #timer.running .t-dot{background:var(--teal);box-shadow:0 0 8px var(--teal);animation:pulse 1.2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  /* top-right cluster */
+  #topright{position:fixed;top:clamp(16px,2vw,28px);right:clamp(20px,2.5vw,40px);z-index:55;display:flex;gap:10px;align-items:center}
+
+  .hide{display:none!important}
+
+  @media(max-width:760px){
+    #notesPanel{width:100vw}
+    .boulder{display:none}
+    .bar-title{display:none}
+    .help-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div id="topright">
+  <div id="timer" title="클릭: 시작/일시정지 · 더블클릭: 리셋"><span class="t-dot"></span><span id="timerText">00:00</span></div>
+</div>
+
+<div id="stage"><!-- slides injected --></div>
+
+<!-- INSTRUCTOR NOTES -->
+<aside id="notesPanel" aria-hidden="true">
+  <div class="np-head">
+    <div class="ico">🎙️</div>
+    <div>
+      <h4>강사 노트</h4>
+      <div class="np-sub">Instructor notes · <kbd>N</kbd> 토글</div>
+    </div>
+  </div>
+  <div id="notesBody"></div>
+  <div class="np-foot"><span>화면에는 표시되지 않습니다</span><span id="notesPageRef"></span></div>
+</aside>
+
+<!-- OVERVIEW -->
+<div id="overview" aria-hidden="true">
+  <h3>슬라이드 오버뷰</h3>
+  <div class="ov-sub">클릭해서 점프 · <kbd>O</kbd> 또는 <kbd>Esc</kbd>로 닫기</div>
+  <div class="ov-grid" id="ovGrid"></div>
+</div>
+
+<!-- HELP -->
+<div id="help" aria-hidden="true">
+  <div class="help-card">
+    <h3>키보드 단축키</h3>
+    <div class="hc-sub">발표를 매끄럽게 — 손은 키보드 위에</div>
+    <div class="help-grid">
+      <div><span class="keys"><kbd>→</kbd><kbd>Space</kbd></span> 다음 슬라이드</div>
+      <div><span class="keys"><kbd>←</kbd><kbd>PgUp</kbd></span> 이전 슬라이드</div>
+      <div><span class="keys"><kbd>N</kbd></span> 강사 노트 토글</div>
+      <div><span class="keys"><kbd>O</kbd></span> 오버뷰(썸네일)</div>
+      <div><span class="keys"><kbd>F</kbd></span> 전체화면</div>
+      <div><span class="keys"><kbd>T</kbd></span> 타이머 시작/정지</div>
+      <div><span class="keys"><kbd>Home</kbd></span> 첫 슬라이드</div>
+      <div><span class="keys"><kbd>End</kbd></span> 마지막 슬라이드</div>
+      <div><span class="keys"><kbd>?</kbd></span> 이 도움말</div>
+      <div><span class="keys"><kbd>Esc</kbd></span> 오버레이 닫기</div>
+    </div>
+    <div class="help-close">아무 키나 눌러 닫기</div>
+  </div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div id="bar">
+  <div id="progress"></div>
+  <div class="bar-group">
+    <button class="ctrl-btn" id="prevBtn" title="이전 (←)">‹</button>
+    <button class="ctrl-btn" id="nextBtn" title="다음 (→)">›</button>
+  </div>
+  <div class="counter"><b id="curNum">1</b> / <span id="totNum">34</span></div>
+  <div class="bar-title" id="barTitle"></div>
+  <div class="bar-group">
+    <button class="ctrl-btn" id="notesBtn" title="강사 노트 (N)">🎙️</button>
+    <button class="ctrl-btn" id="ovBtn" title="오버뷰 (O)">▦</button>
+    <button class="ctrl-btn" id="fsBtn" title="전체화면 (F)">⛶</button>
+    <button class="ctrl-btn" id="helpBtn" title="도움말 (?)">?</button>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   SLIDE CONTENT — restructured from moduleA/B/C markdown into semantic HTML.
+   Each slide: { tag, mod(''|a|b|c), badge, title(html), html, note }
+   ===================================================================== */
+const S = [];
+const push = (o)=>S.push(o);
+
+/* ---------- 0. COVER ---------- */
+push({
+  type:'cover',
+  title:'ralph 스킬 세팅 및 사용법',
+  html:`
+  <div class="slide cover">
+    <div class="boulder" aria-hidden="true">
+      <div class="ring"></div><div class="ring ring2"></div>
+      <div class="core"></div><div class="glyph">🪨</div>
+    </div>
+    <div class="body" style="justify-content:center">
+      <div class="reveal kicker"><span>🪨</span> oh-my-claudecode · LEVEL 4 SKILL</div>
+      <h1 class="reveal"><span class="ralph">ralph</span> 스킬<br>세팅 &amp; 사용법</h1>
+      <p class="reveal lede">끝날 때까지 멈추지 않는 자율 실행 루프 — 1시간 초심자 강의</p>
+      <div class="reveal meta-row">
+        <span class="pill">⏱ 총 <b>60분</b></span>
+        <span class="pill teal">📦 모듈 <b>A·B·C</b></span>
+        <span class="pill">🎯 초심자 대상</span>
+      </div>
+      <div class="reveal kbd-hint">
+        <span><kbd>→</kbd> 다음</span>
+        <span><kbd>N</kbd> 강사노트</span>
+        <span><kbd>O</kbd> 오버뷰</span>
+        <span><kbd>F</kbd> 전체화면</span>
+        <span><kbd>?</kbd> 전체 단축키</span>
+      </div>
+    </div>
+  </div>`,
+  note:`<p>강의를 시작하기 전 분위기를 잡는 표지입니다. <strong>"끝날 때까지 멈추지 않는다"</strong>는 ralph의 핵심을 시지프스의 바위 이미지로 먼저 각인시키세요.</p><p>오늘 1시간 동안 설치 → 개념 → 실습 → 트러블슈팅까지 전 과정을 다룬다고 안내하고, 처음 보는 단어가 많아도 괜찮다고 안심시켜 주세요.</p>`
+});
+
+/* ---------- 1. AGENDA ---------- */
+push({
+  type:'plain', badge:'AGENDA · 60분', title:'오늘의 여정',
+  titleHtml:'오늘의 <span class="hl">여정</span> — 60분 4모듈',
+  html:`
+    <div class="agenda-list">
+      <div class="reveal agenda-item a"><div class="ag-num">A</div><div class="ag-body"><div class="ag-title">기초 세팅</div><div class="ag-sub">OMC란? · 레이어 구조 · 스킬 설치 확인 · 호출 3가지 방법</div></div><div class="ag-time">~20분</div></div>
+      <div class="reveal agenda-item b"><div class="ag-num">B</div><div class="ag-body"><div class="ag-title">ralph 핵심 개념 &amp; 루프</div><div class="ag-sub">PRD 주도 루프 · 수용기준 · 실행 사이클 · 멈추지 않는 바위</div></div><div class="ag-time">~20분</div></div>
+      <div class="reveal agenda-item c"><div class="ag-num">C</div><div class="ag-body"><div class="ag-title">실습 · 트러블슈팅 · 마무리</div><div class="ag-sub">첫 실행 · 좋은 과제 쓰기 · 흔한 함정 5가지 · 7단계 체크리스트</div></div><div class="ag-time">~20분</div></div>
+      <div class="reveal callout">이 강의가 끝나면 <strong>"Claude Code야, ralph로 이 기능 끝날 때까지 완성해줘"</strong> 라고 말할 수 있게 됩니다.</div>
+    </div>`,
+  note:`<p>전체 구조를 미리 보여주는 이유는 "지금 내가 어디쯤 있구나"를 알아야 길을 잃지 않기 때문입니다. 각 모듈이 약 20분이라는 시간 배분도 함께 짚어 주세요.</p><p>상단 우측 타이머(<strong>T</strong>키)를 지금 시작해두면 모듈별 페이스 관리에 도움이 됩니다.</p>`
+});
+
+/* ===================== MODULE A SECTION ===================== */
+push({
+  type:'section', sec:'a', num:'A', title:'모듈 A — 기초 세팅',
+  desc:'OMC가 무엇인지, 스킬이 어떻게 생겼는지, ralph가 잘 설치됐는지 — 손으로 직접 확인합니다.',
+  metaHtml:`<span class="pill"><b>⏱ 약 20분</b></span><span class="pill teal">슬라이드 1–9</span>`,
+  note:`<p>여기서부터 모듈 A입니다. 개념 설명이 많지만, 이 토대가 없으면 뒤가 흔들립니다. 가능한 한 청중이 직접 명령어를 따라 치게 유도하세요.</p>`
+});
+
+push({ type:'content', mod:'a', badge:'모듈 A · 1/9', title:'오늘 배울 것: 1시간의 여정',
+  html:`
+  <div class="grid cols-2">
+    <div class="reveal card accent"><h3><span class="lead-icon">🎯</span>목표</h3>
+      <ul class="feat"><li>Claude Code에서 ralph 스킬을 <strong>설치</strong>하고</li><li>실제로 <strong>돌려보고</strong></li><li>결과를 <strong>검증</strong>한다</li></ul></div>
+    <div class="reveal card"><h3><span class="lead-icon">🗺️</span>모듈 구성</h3>
+      <ul class="feat"><li><strong>A (지금)</strong> 기초 세팅 — 개념·구조·설치</li><li><strong>B</strong> ralph 기본 사용법 — 명령·트리거·옵션</li><li><strong>C</strong> 실전 예제 — 루프가 도는 모습 관찰</li><li><strong>D</strong> 심화·트러블슈팅 — critic·중단·실수</li></ul></div>
+  </div>
+  <div class="reveal callout">코드는 한 줄씩 따라 칠 수 있습니다. <strong>막히면 손 드세요.</strong> 강의가 끝나면 "ralph로 이 기능 끝날 때까지 완성해줘"라고 말할 수 있게 됩니다.</div>`,
+  note:`<p>강의 구조를 미리 보여주는 이유는 "지금 내가 어디쯤 있구나"를 알아야 길을 잃지 않기 때문입니다. 오늘 처음 보는 단어가 많이 나오더라도 괜찮습니다. 모듈 A 안에서 차근차근 풀어드릴 테니 그냥 따라오세요.</p>`
+});
+
+push({ type:'content', mod:'a', badge:'모듈 A · 2/9', title:'왜 ralph가 필요한가?',
+  html:`
+  <div class="grid cols-2">
+    <div class="reveal card"><h3><span class="lead-icon">😮‍💨</span>흔한 경험</h3>
+      <ul class="feat"><li>"기능 절반만 만들고 멈춰버렸다"</li><li>"테스트 작성은 알아서 건너뛰었다"</li><li>Claude Code 기본 동작: <strong>질문에 답하고 → 멈춘다.</strong> 완성이 아니라 <em>응답</em>이 기준</li></ul></div>
+    <div class="reveal card"><h3><span class="lead-icon">⚠️</span>생기는 문제들</h3>
+      <ul class="feat"><li>엣지 케이스를 빠뜨린 채 "완성됐습니다" 보고</li><li>에러가 남아 있는데 코드만 짜고 종료</li><li>다음 단계를 사람이 다시 프롬프트해야 하는 피로감</li></ul></div>
+  </div>
+  <div class="reveal callout teal"><strong>ralph가 해결하는 것:</strong> 목표가 실제로 달성될 때까지 스스로 루프를 돌며 계속 작업. 단순 반복이 아니라 매 루프마다 결과를 검증하고 부족하면 다시 시도합니다.</div>`,
+  note:`<p>이 문제는 Claude Code를 처음 써본 분이라면 거의 반드시 겪는 불편함입니다. "왜 알아서 끝까지 안 해주지?"라는 질문에 대한 답이 ralph입니다. ralph를 쓰면 내가 자리를 비워도 작업이 계속 진행되고 있다는 신뢰감이 생깁니다.</p>`
+});
+
+push({ type:'content', mod:'a', badge:'모듈 A · 3/9', title:'큰 그림: 레이어 구조',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal">
+      <pre data-label="layers"><span class="kw">Claude Code</span> <span class="cm">(AI 엔진)</span>
+   <span class="ar">└──</span> <span class="kw">oh-my-claudecode / OMC</span> <span class="cm">(오케스트레이션)</span>
+          <span class="ar">└──</span> <span class="kw">스킬(Skill)</span> <span class="cm">— ralph, autopilot…</span>
+                 <span class="ar">└──</span> <span class="st">ralph</span> <span class="cm">(자기참조 완성 루프)</span></pre>
+    </div>
+    <div class="reveal card"><h3><span class="lead-icon">🧩</span>각 층의 역할</h3>
+      <ul class="feat"><li><strong>Claude Code</strong> 코드·파일·터미널을 다루는 AI 엔진 본체</li><li><strong>OMC</strong> 그 위에 얹는 "스마트 지휘소" — <em>연주자(Claude) vs 지휘자(OMC)</em></li><li><strong>스킬</strong> OMC에 등록된 작업 레시피 — <em>요리 레시피 카드</em></li><li><strong>ralph</strong> PRD 기준으로 반복 검증하는 완성 루프</li></ul></div>
+  </div>
+  <div class="reveal note-inline">이 계층 구조를 이해하면 <strong>"어디가 문제인지"</strong> 금방 찾을 수 있습니다.</div>`,
+  note:`<p>"오케스트레이션"이라는 단어가 처음엔 무겁게 느껴질 수 있는데, 그냥 "여러 도구를 하나의 흐름으로 조율해주는 것"으로 이해하시면 됩니다. 오늘 강의에서 직접 써보면 자연스럽게 감이 올 거예요.</p>`
+});
+
+push({ type:'content', mod:'a', badge:'모듈 A · 4/9', title:'OMC 설치 및 확인',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal">
+      <pre data-label="install"><span class="cm"># 방법 1: 채팅창에 그냥 입력</span>
+<span class="kw">setup omc</span>
+
+<span class="cm"># 방법 2: 슬래시 명령으로 직접 실행</span>
+<span class="kw">/oh-my-claudecode:omc-setup</span></pre>
+      <pre data-label="diagnose" style="margin-top:14px"><span class="cm"># 설치 상태 진단</span>
+<span class="kw">omc-doctor</span></pre>
+    </div>
+    <div class="reveal card accent"><h3><span class="lead-icon">✅</span>꼭 알아둘 점</h3>
+      <ul class="feat"><li>OMC가 없으면 ralph를 부를 수 없음 → <strong>이 단계가 선행 필수</strong></li><li><code class="ic">omc-doctor</code>는 설치·설정·권한을 한 번에 점검</li><li>오류 메시지는 <strong>그대로 복사</strong>해서 질문 — 숨기지 마세요!</li><li>이미 설치된 분은 <code class="ic">omc-doctor</code>로 "정상"만 확인 후 진행</li></ul></div>
+  </div>`,
+  note:`<p>설치 명령이 두 가지인 이유는 "채팅창에 자연어로 쓰는 것"과 "슬래시 명령으로 정확히 호출하는 것" 모두 지원하기 때문입니다. 초심자분들은 자연어가 더 편하니 <strong>setup omc</strong>부터 시도해보세요. 지금 바로 따라 하셔도 됩니다!</p>`
+});
+
+push({ type:'content', mod:'a', badge:'모듈 A · 5/9', title:'스킬은 어디에 저장되나?',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal">
+      <pre data-label="~/.claude/skills/"><span class="pa">~/.claude/skills/</span>
+<span class="ar">├──</span> <span class="kw">ralph/</span>
+<span class="ar">│   └──</span> <span class="st">SKILL.md</span>  <span class="cm">← 실제 내용(레시피)</span>
+<span class="ar">├──</span> <span class="kw">autopilot/</span>
+<span class="ar">│   └──</span> <span class="st">SKILL.md</span>
+<span class="ar">└──</span> …               <span class="cm">← 다른 스킬들</span></pre>
+    </div>
+    <div class="reveal card"><h3><span class="lead-icon">📂</span>스킬 창고 구조</h3>
+      <ul class="feat"><li><code class="ic">~/.claude/skills/</code> 모든 스킬이 모인 "스킬 창고"</li><li>각 스킬 = <strong>폴더 1개 + SKILL.md 1개</strong> (동작·프롬프트·메타)</li><li><code class="ic">.omc-managed</code> 마커 = OMC 자동 관리 폴더 → <strong>직접 수정 금지</strong></li><li>커스터마이징은 <em>.omc-managed가 없는</em> 스킬만 권장</li><li>SKILL.md를 열어보면 동작 원리가 보여 공부가 됨</li></ul></div>
+  </div>`,
+  note:`<p>SKILL.md 파일을 한 번 직접 열어보라고 권하고 싶습니다. 두려운 파일이 아니라 그냥 마크다운 문서입니다. ralph의 SKILL.md를 읽어보면 "아, 이런 식으로 루프를 돌리는구나"가 보입니다. 이해가 깊어지면 나중에 직접 스킬을 만들 수도 있어요.</p>`
+});
+
+push({ type:'content', mod:'a', badge:'모듈 A · 6/9', title:'ralph가 설치됐는지 확인하기',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal">
+      <pre data-label="terminal"><span class="cm"># 터미널에서 직접 확인</span>
+<span class="kw">ls</span> <span class="pa">~/.claude/skills/ralph/</span>
+
+<span class="cm"># 정상 출력 예시 ↓</span>
+<span class="ok">SKILL.md</span>   <span class="cm">✅ 보이면 설치 완료!</span></pre>
+      <pre data-label="preview" style="margin-top:14px"><span class="cm"># 내용 미리보기(선택)</span>
+<span class="kw">head -20</span> <span class="pa">~/.claude/skills/ralph/SKILL.md</span></pre>
+    </div>
+    <div class="reveal card teal"><h3><span class="lead-icon">🔎</span>결과 읽는 법</h3>
+      <ul class="feat teal"><li>아무것도 없거나 <code class="ic">No such file…</code> → <code class="ic">omc-setup</code> 재실행</li><li>SKILL.md가 있는데 안 돌면 → <code class="ic">omc-doctor</code> 진단</li><li>메타: <code class="ic">name=ralph</code>, <strong>레벨 4 스킬</strong>(가장 자율적)</li><li>설명: <em>"Self-referential loop until task completion with configurable verification reviewer"</em></li></ul></div>
+  </div>`,
+  note:`<p>"레벨 4"가 무슨 의미인지 궁금하신 분들을 위해 — OMC 스킬에는 자율 실행 정도에 따라 레벨이 있습니다. 레벨이 높을수록 더 많은 결정을 스스로 합니다. ralph가 레벨 4라는 것은 사람 개입 없이 가장 길게 자율 실행한다는 뜻이에요.</p>`
+});
+
+push({ type:'content', mod:'a', badge:'모듈 A · 7/9', title:'스킬을 부르는 3가지 방법',
+  html:`
+  <div class="grid cols-3">
+    <div class="reveal card"><h3><span class="lead-icon">1️⃣</span>슬래시 명령</h3><p class="note-inline">가장 명확</p>
+      <pre data-label="slash" style="margin-top:10px"><span class="kw">/oh-my-claudecode:ralph</span>
+  <span class="st">&lt;태스크 설명&gt;</span></pre></div>
+    <div class="reveal card accent"><h3><span class="lead-icon">2️⃣</span>키워드 트리거</h3><p class="note-inline">가장 자연스럽고 쉬움 — <strong>초심자 권장</strong></p>
+      <div class="tbl-wrap" style="margin-top:10px"><table>
+      <tr><td><code>ralph</code></td><td>스킬 호출</td></tr>
+      <tr><td><code>don't stop</code></td><td>루프 시작</td></tr>
+      <tr><td><code>keep going until done</code></td><td>루프 시작</td></tr>
+      <tr><td><code>must complete</code></td><td>루프 시작</td></tr>
+      <tr><td><code>finish this</code></td><td>루프 시작</td></tr>
+      </table></div></div>
+    <div class="reveal card"><h3><span class="lead-icon">3️⃣</span>Skill 도구 자동</h3><p class="note-inline">OMC가 문맥을 보고 ralph가 필요하다고 판단하면 <strong>자동 호출</strong> (고급 동작)</p>
+      <div class="callout" style="margin-top:14px;font-size:15px">초심자는 그냥 <strong>"ralph"</strong> 또는 할 일 앞에 <strong>"ralph로"</strong>를 붙이세요.</div></div>
+  </div>`,
+  note:`<p>3가지 방법을 다 외울 필요는 없습니다. 오늘 실습에서는 키워드 트리거("ralph로 이거 해줘")를 주로 쓸 거예요. 가장 자연스럽고 실수할 일도 없습니다. 슬래시 명령은 "정말 정확하게 옵션까지 지정하고 싶을 때" 쓰는 것으로 기억해 두세요.</p>`
+});
+
+push({ type:'content', mod:'a', badge:'모듈 A · 8/9', title:'호출 시 쓸 수 있는 인수 (옵션)',
+  html:`
+  <div class="reveal"><pre data-label="usage"><span class="kw">/oh-my-claudecode:ralph</span> <span class="cm">[</span><span class="st">--no-deslop</span><span class="cm">]</span> <span class="cm">[</span><span class="st">--critic=architect|critic|codex</span><span class="cm">]</span> <span class="st">&lt;태스크 설명&gt;</span></pre></div>
+  <div class="reveal tbl-wrap"><table>
+    <thead><tr><th>옵션</th><th>의미</th><th>언제 쓰나</th></tr></thead>
+    <tbody>
+      <tr><td><code>&lt;태스크 설명&gt;</code></td><td>ralph에게 시킬 작업 <strong style="color:var(--amber)">(필수)</strong></td><td>항상</td></tr>
+      <tr><td><code>--no-deslop</code></td><td>AI 특유의 과장·군더더기 정리 비활성화</td><td>원문 유지가 중요할 때</td></tr>
+      <tr><td><code>--critic=architect</code></td><td>완료 검증자로 architect 사용</td><td>구조 설계 작업</td></tr>
+      <tr><td><code>--critic=critic</code></td><td>완료 검증자로 critic 사용</td><td>코드 품질 리뷰</td></tr>
+      <tr><td><code>--critic=codex</code></td><td>완료 검증자로 codex 사용</td><td>코드 정확도 검증</td></tr>
+    </tbody>
+  </table></div>
+  <div class="reveal callout teal">초심자는 옵션 없이 태스크 설명만 써도 충분합니다. &nbsp;예: <strong>ralph로 로그인 기능 완성해줘 (테스트 포함)</strong></div>`,
+  note:`<p>처음엔 옵션 없이 쓰는 것을 강하게 권장합니다. ralph는 기본값만으로도 잘 동작해요. <strong>--critic</strong> 옵션은 모듈 D에서 실전과 함께 다룰 예정이니 지금은 "이런 게 있구나" 정도만 알고 넘어가세요.</p>`
+});
+
+push({ type:'content', mod:'a', badge:'모듈 A · 9/9', title:'모듈 A 정리 + 다음 예고',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal card"><h3><span class="lead-icon">✅</span>오늘 배운 것 (체크리스트)</h3>
+      <ul class="check"><li>Claude Code → OMC → 스킬 → ralph 계층 구조 이해</li><li><code class="ic">setup omc</code> / <code class="ic">omc-setup</code>으로 OMC 설치</li><li><code class="ic">omc-doctor</code>로 설치 상태 점검</li><li><code class="ic">ls ~/.claude/skills/ralph/</code>로 SKILL.md 확인</li><li>ralph 호출 3가지 방법 (슬래시·키워드·자동)</li></ul></div>
+    <div class="reveal card accent"><h3><span class="lead-icon">🔜</span>다음 모듈 B 예고</h3>
+      <ul class="feat"><li>ralph를 실제로 불러 태스크를 주는 법</li><li>루프가 도는 모습을 <strong>눈으로 확인</strong>하는 법</li><li>중간에 멈추고 싶을 때의 대처법</li></ul>
+      <div class="callout" style="margin-top:16px">핵심 한 줄: <strong>"ralph = 목표가 완성될 때까지 스스로 루프를 돌리는 레벨 4 자율 실행 스킬"</strong></div></div>
+  </div>`,
+  note:`<p>모듈 A에서 개념 설명이 많아서 지루하셨을 수도 있습니다. 모듈 B부터는 직접 손을 움직이는 실습 위주라 훨씬 재밌습니다. 체크리스트에서 아직 체크 못 한 항목이 있다면 지금 질문해 주세요. 넘어가기 전에 모두 OK 상태로 만들고 가겠습니다.</p>`
+});
+
+/* ===================== MODULE B SECTION ===================== */
+push({
+  type:'section', sec:'b', num:'B', title:'모듈 B — ralph 핵심 개념과 동작 원리',
+  desc:'PRD 주도 루프, 수용기준, 검증 사이클, 그리고 "멈추지 않는 바위" — ralph가 어떻게 진짜 완료를 보증하는지.',
+  metaHtml:`<span class="pill teal"><b>⏱ 약 20분</b></span><span class="pill">슬라이드 1–10</span>`,
+  note:`<p>모듈 B는 ralph의 "엔진룸"입니다. 동작 원리가 머리에 그려져야 모듈 C 실습에서 화면을 보고 "지금 무슨 단계지"를 읽을 수 있습니다.</p>`
+});
+
+push({ type:'content', mod:'b', badge:'모듈 B · 1/10', title:'ralph란 무엇인가 — 한 줄 정의',
+  html:`
+  <div class="reveal callout teal" style="font-size:clamp(18px,1.9vw,28px);text-align:center;border-left:none;border-top:3px solid var(--teal)">ralph는 <strong>PRD 주도 지속 루프(persistence loop)</strong> 다.</div>
+  <div class="grid cols-2">
+    <div class="reveal card"><h3><span class="lead-icon">🛡️</span>무엇을 막나</h3>
+      <ul class="feat teal"><li>"다 됐어요"라고 말하기 전에 <strong>진짜 완료인지 스스로 검증</strong></li><li>다단계 작업의 <em>거짓 완료(false completion)</em>를 원천 차단</li><li>모든 유저스토리가 검증을 통과하고 <strong>리뷰어가 승인할 때까지</strong> 멈추지 않음</li></ul></div>
+    <div class="reveal card"><h3><span class="lead-icon">🧱</span>왜 필요한가</h3>
+      <ul class="feat teal"><li>"완료했습니다" 출력해도 테스트가 깨지거나 파일이 빠지는 경우가 흔함</li><li>ralph는 그 간극을 메우는 <strong>실행 보증 장치</strong></li></ul></div>
+  </div>`,
+  note:`<p>"구현했습니다" 한 마디로 끝나는 AI 응답을 받아봤나요? 실제로 실행하면 오류가 나는 경험 다들 있으실 겁니다. ralph는 그 "됐다는 말"을 믿지 않고, 직접 확인한 뒤에야 완료라고 선언합니다. 시지프스의 바위가 절대 멈추지 않듯, ralph도 진짜 완료 전까지는 멈추지 않습니다.</p>`
+});
+
+push({ type:'content', mod:'b', badge:'모듈 B · 2/10', title:'PRD 주도 루프란? — 체크리스트를 다 채울 때까지',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal card teal"><h3><span class="lead-icon">📋</span>PRD = 해야 할 일 체크리스트</h3>
+      <ul class="feat teal"><li><strong>PRD</strong>(Product Requirements Document) = 할 일 체크리스트라 생각</li><li>ralph는 <code class="ic">prd.json</code>의 <strong>모든 항목이 체크될 때까지</strong> 반복</li><li>각 유저스토리에 "이 조건이면 완료"라는 <strong>수용기준</strong>이 달림</li><li>체크리스트가 다 차면 <strong>리뷰어에게 최종 검토</strong> 요청</li><li>리뷰어가 승인해야 비로소 루프 종료</li></ul></div>
+    <div class="reveal callout"><strong>비유:</strong> prd.json은 레시피 체크리스트이고, ralph는 모든 단계를 직접 맛보며 확인하는 요리사입니다. 모든 단계가 "합격"이어야 다음으로 넘어갑니다.</div>
+  </div>`,
+  note:`<p>"PRD"라는 용어가 생소해도 걱정 마세요. ralph를 쓸 때는 그냥 "내가 원하는 결과물 목록"이라고 이해하면 충분합니다. ralph가 prd.json 초안을 자동으로 만들어주기 때문에 처음부터 직접 작성하지 않아도 됩니다. 중요한 건 그 항목들의 수용기준을 얼마나 구체적으로 적느냐입니다.</p>`
+});
+
+push({ type:'content', mod:'b', badge:'모듈 B · 3/10', title:'핵심 파일 2개: prd.json과 progress.txt',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal">
+      <ul class="feat teal" style="margin-bottom:16px"><li><code class="ic">prd.json</code> — 유저스토리 + 수용기준 체크리스트</li><li><code class="ic">progress.txt</code> — 반복마다 진행상황·배운 점 메모장</li><li>저장 경로: <code class="ic">.omc/state/sessions/{sessionId}/</code></li><li>시작 시 prd.json 초안 <strong>자동 생성</strong> — 직접 만들 필요 없음</li></ul>
+    </div>
+    <div class="reveal"><pre data-label="prd.json (미니 예시)">{
+  <span class="nm">"stories"</span>: [{
+    <span class="nm">"id"</span>: <span class="st">"S-01"</span>,
+    <span class="nm">"title"</span>: <span class="st">"로그인 API 구현"</span>,
+    <span class="nm">"acceptance_criteria"</span>: [
+      <span class="st">"POST /api/login → 올바른 자격증명에 200"</span>,
+      <span class="st">"잘못된 비밀번호에 401 반환"</span>,
+      <span class="st">"tests/test_login.py 존재하고 통과"</span>
+    ],
+    <span class="nm">"passes"</span>: <span class="no">false</span>
+  }]
+}</pre></div>
+  </div>`,
+  note:`<p>두 파일 위치를 외울 필요는 없습니다. ralph가 알아서 관리합니다. 다만 "내 진행 상황이 어디 있지?" 궁금할 때 이 경로를 찾아보면 된다는 것만 기억하세요. progress.txt는 특히 루프가 여러 번 돌 때 "지난번에 뭘 시도했고 왜 실패했는지"를 기록해 다음 시도에 활용됩니다.</p>`
+});
+
+push({ type:'content', mod:'b', badge:'모듈 B · 4/10', title:'수용기준이 ralph의 생명이다',
+  html:`
+  <div class="reveal callout">수용기준이 막연하면 ralph는 아무것도 검증할 수 없다 → <strong>"PRD 연극(PRD theater)" 안티패턴.</strong> 막연한 기준은 AI가 스스로 "됐다"고 선언하게 만드는 함정입니다.</div>
+  <div class="grid cols-2">
+    <div class="reveal"><pre data-label="❌ Before — 막연 (금지)"><span class="no">- 로그인 기능 구현 완료</span>
+<span class="no">- 에러 처리 추가</span></pre></div>
+    <div class="reveal"><pre data-label="✅ After — 구체 (권장)"><span class="ok">- POST /api/login → 유효 자격증명에</span>
+<span class="ok">  HTTP 200과 JWT 반환</span>
+<span class="ok">- 잘못된 비밀번호 → HTTP 401과</span>
+<span class="ok">  {"error":"invalid_credentials"}</span>
+<span class="ok">- tests/test_login.py 존재 &amp;</span>
+<span class="ok">  pytest 실행 시 전부 통과</span></pre></div>
+  </div>
+  <div class="reveal note-inline">구체적일수록 ralph의 <strong>자동 검증이 정확</strong>해지고, 진짜 완료와 가짜 완료를 구분할 수 있습니다.</div>`,
+  note:`<p>"구현 완료"처럼 주관적인 기준은 AI도, 사람도 확인할 방법이 없습니다. 반면 "함수가 X 입력에 Y를 반환한다", "테스트 파일이 존재하고 통과한다"는 실제로 실행해서 참/거짓을 판단할 수 있죠. ralph는 코드를 읽는 게 아니라 실제로 실행해서 통과 여부를 판단합니다. 기준이 흐릿하면 ralph도 속습니다.</p>`
+});
+
+push({ type:'content', mod:'b', badge:'모듈 B · 5/10', title:'ralph 실행 사이클 한 바퀴',
+  html:`
+  <div class="grid cols-2" style="align-items:center">
+    <div class="reveal flow">
+      <div class="node amber">PRD 설정</div><div class="arr">↓</div>
+      <div class="node">스토리 선택 <span style="color:var(--ink-dim)">(passes:false 첫 항목)</span></div><div class="arr">↓</div>
+      <div class="node">구현 <span style="color:var(--ink-dim)">→ executor 등 위임</span></div><div class="arr">↓</div>
+      <div class="node teal">수용기준 검증 <span style="color:var(--ink-dim)">(테스트·빌드·린트 실행)</span></div>
+      <div class="branch">통과? — No → 같은 스토리 재시도 ↺</div><div class="arr">↓ Yes</div>
+      <div class="node">passes: true</div>
+      <div class="branch">모두 완료? — No → 다음 스토리</div><div class="arr">↓ Yes</div>
+      <div class="node amber">리뷰어 검증</div>
+    </div>
+    <div class="reveal card"><h3><span class="lead-icon">🏗️</span>핵심 3가지</h3>
+      <ul class="feat"><li>ralph는 <strong>직접 코드를 짜지 않는다</strong> — 전문 에이전트에 구현 위임</li><li>검증은 <strong>실제 실행</strong>(테스트·빌드·린트)으로 — 코드 읽기가 아님</li><li>같은 이슈가 <strong>3회 이상 반복</strong>되면 루프를 멈추고 근본 문제 보고</li></ul></div>
+  </div>`,
+  note:`<p>ralph를 "공사 현장 감독"에 비유하면 이해하기 쉽습니다. 감독은 직접 벽돌을 쌓지 않고 전문 작업자에게 일을 시키지만, 각 공정이 끝나면 직접 기준에 맞는지 확인합니다. 합격해야 다음 공정으로 넘어가죠. ralph가 딱 그 역할입니다.</p>`
+});
+
+push({ type:'content', mod:'b', badge:'모듈 B · 6/10', title:'검증 단계 — 변경 규모별 티어',
+  html:`
+  <div class="reveal tbl-wrap"><table>
+    <thead><tr><th>티어</th><th>조건</th><th>리뷰어 모델</th></tr></thead>
+    <tbody>
+      <tr><td><span class="yes">STANDARD</span></td><td>일반 변경 (5파일 미만·100줄 미만 + 풀테스트 포함)</td><td><code>architect-medium / Sonnet</code></td></tr>
+      <tr><td><span class="yes">STANDARD</span></td><td>표준 변경</td><td><code>architect-medium / Sonnet</code></td></tr>
+      <tr><td><span style="color:var(--amber);font-weight:700">THOROUGH</span></td><td>20+ 파일 변경, 보안·아키텍처 관련</td><td><code>architect / Opus</code></td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid cols-2">
+    <div class="reveal callout">수용기준 통과 후 <strong>리뷰어 에이전트</strong>가 코드 전체를 검토합니다. ralph의 최소 기준은 항상 <strong>STANDARD 이상</strong> — 검증을 건너뛰는 일은 없습니다.</div>
+    <div class="reveal callout teal"><code class="ic">--critic=architect|critic|codex</code> 옵션으로 리뷰어를 직접 선택 (기본값: architect).</div>
+  </div>`,
+  note:`<p>작은 변경은 빠른 Sonnet 모델로, 보안이나 대규모 리팩토링은 더 신중한 Opus 모델로 검토합니다. 직접 리뷰어를 지정하고 싶을 때는 ralph 호출 시 --critic 옵션을 붙이면 됩니다. 예를 들어 코드 비평 전문 에이전트를 쓰고 싶다면 --critic=critic을 씁니다.</p>`
+});
+
+push({ type:'content', mod:'b', badge:'모듈 B · 7/10', title:'디슬롭 + 회귀 재검증 — "완성 후 청소"',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal card"><h3><span class="lead-icon">🧹</span>디슬롭(Deslop)이란</h3>
+      <ul class="feat"><li>리뷰어 승인 후 <strong>ai-slop-cleaner 스킬</strong>이 자동 실행</li><li>AI가 만든 군더더기(중복·불필요 주석·과잉 추상화) 정리</li><li>청소 후 <strong>테스트·빌드·린트 재실행</strong>으로 회귀(regression) 확인</li><li>재검증을 통과해야 비로소 완료 처리</li><li><code class="ic">--no-deslop</code> 옵션으로 이 단계 끄기 가능</li></ul></div>
+    <div class="reveal callout teal"><strong>비유:</strong> 빗자루로 방을 청소하고 나서 다시 물건들이 제자리에 있는지 확인하는 것. 청소 중에 실수로 뭔가 치워버리지 않았는지 점검하는 단계입니다.</div>
+  </div>`,
+  note:`<p>AI가 생성한 코드에는 종종 필요 없는 console.log, 중복된 타입 선언, 과도하게 복잡한 추상화가 섞여 있습니다. 디슬롭은 그걸 자동으로 걷어냅니다. 단, 청소 과정에서 의도치 않게 코드가 깨질 수 있으므로 반드시 다시 테스트를 돌려 확인합니다.</p>`
+});
+
+push({ type:'content', mod:'b', badge:'모듈 B · 8/10', title:'"멈추지 않는 바위" — The boulder never stops',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal">
+      <pre data-label="loop"><span class="kw">시작</span> <span class="ar">→</span> 루프 <span class="ar">→</span> 루프 <span class="ar">→</span> 루프 <span class="ar">→</span> <span class="ok">[완료 확인]</span>
+                                  <span class="ar">→</span> <span class="kw">/oh-my-claudecode:cancel</span>
+   ↑________________________________________|
+        <span class="cm">"The boulder never stops"</span></pre>
+      <ul class="feat" style="margin-top:14px"><li>작동 중 시스템이 <strong>"The boulder never stops"</strong> 메시지 주입 = "계속 진행하라"는 신호</li><li>완료 약속 메시지 전까지 루프는 계속 돈다</li><li>정상 완료 시 <code class="ic">/oh-my-claudecode:cancel</code>로 깔끔히 종료 + 상태 정리</li></ul>
+    </div>
+    <div class="reveal card accent"><h3><span class="lead-icon">🛑</span>정당한 중단 조건</h3>
+      <ul class="feat"><li>자격증명 누락, 요구사항 불명확, 외부 서비스 다운 등 <strong>근본 블로커</strong></li><li>사용자의 <code class="ic">stop / cancel / abort</code> 명령</li><li>같은 이슈가 <strong>3회 이상 반복</strong> → 근본 문제로 판단</li></ul></div>
+  </div>`,
+  note:`<p>시지프스가 바위를 산 위로 계속 밀어 올리듯, ralph도 완료되기 전까지는 절대 쉬지 않습니다. 다만 시지프스와 다른 점은 ralph는 결국 정상에 도달한다는 것이죠. 도달하면 /cancel로 루프를 정리해줘야 다음 작업이 깔끔하게 시작됩니다.</p>`
+});
+
+push({ type:'content', mod:'b', badge:'모듈 B · 9/10', title:'ralph를 써야 할 때 vs 쓰지 말아야 할 때',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal card teal"><h3><span class="lead-icon">✅</span>ralph가 딱 맞는 상황</h3>
+      <ul class="feat teal"><li>보장된 완료와 검증이 필요한 작업</li><li>"끝까지 가서 완성해줘" 류의 요청</li><li>다단계 구현이 모두 테스트를 통과해야 할 때</li><li>중간에 손 놓으면 안 되는 중요한 피처</li></ul></div>
+    <div class="reveal"><div class="tbl-wrap"><table>
+      <thead><tr><th>대신 이런 상황이면</th><th>이 도구를</th></tr></thead>
+      <tbody>
+        <tr><td>아이디어 → 완성 코드 전체 파이프라인</td><td><code>autopilot</code></td></tr>
+        <tr><td>탐색·조사·계획 단계</td><td><code>plan</code></td></tr>
+        <tr><td>빠른 일회성 수정</td><td><code>executor</code> 직접</td></tr>
+        <tr><td>완료 여부를 수동으로 직접 제어</td><td><code>ultrawork</code></td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+  <div class="reveal note-inline">ralph는 <strong>"완성 보증"</strong>이 필요할 때의 도구입니다. 탐색 중이거나 결과물이 빠르게 필요할 때는 더 가벼운 도구가 낫습니다.</div>`,
+  note:`<p>ralph는 강력하지만 모든 상황에 맞는 망치는 아닙니다. "이 버그 빨리 고쳐줘"라면 그냥 executor를 쓰는 게 훨씬 빠릅니다. 반면 "이번 스프린트 피처 세 개를 전부 테스트 통과시켜줘"라면 ralph가 최적입니다. 도구를 상황에 맞게 고르는 게 핵심입니다.</p>`
+});
+
+push({ type:'content', mod:'b', badge:'모듈 B · 10/10', title:'모듈 B 요약 — 동작 원리 한눈에',
+  html:`
+  <div class="reveal callout teal" style="text-align:center;font-family:var(--mono);font-size:clamp(15px,1.5vw,22px);border-left:none;border-top:3px solid var(--teal)">ralph = <strong>PRD(체크리스트)</strong> + <strong>검증 루프</strong> + <strong>리뷰어 승인</strong> + <strong>디슬롭 청소</strong></div>
+  <div class="grid cols-2">
+    <div class="reveal card"><h3><span class="lead-icon">🎓</span>핵심 4가지</h3>
+      <ul class="feat teal"><li><strong>수용기준은 구체적으로</strong> — "완료" 말고 "테스트 X가 통과"</li><li><strong>루프는 멈추지 않는다</strong> — The boulder never stops</li><li><strong>검증은 실행으로</strong> — 코드 읽기가 아닌 테스트·빌드·린트</li><li><strong>끝나면 cancel</strong> — <code class="ic">/oh-my-claudecode:cancel</code></li></ul></div>
+    <div class="reveal card accent"><h3><span class="lead-icon">🔜</span>다음 모듈 C에서는</h3>
+      <ul class="feat"><li>ralph를 실제로 호출하는 방법</li><li><code class="ic">prd.json</code> 수용기준 작성 실습</li><li>루프가 채워지는 모습을 눈으로 확인</li></ul></div>
+  </div>`,
+  note:`<p>동작 원리를 이해했으면 실제로 써볼 차례입니다. 다음 모듈에서는 지금까지 배운 개념을 바탕으로 직접 ralph를 실행하고 prd.json이 어떻게 채워지는지 눈으로 확인합니다. 모듈 B 내용이 추상적으로 느껴졌다면 모듈 C 실습 후에 훨씬 명확해질 겁니다.</p>`
+});
+
+/* ===================== MODULE C SECTION ===================== */
+push({
+  type:'section', sec:'c', num:'C', title:'모듈 C — 실전 실습 · 트러블슈팅 · 마무리',
+  desc:'직접 손을 움직여 ralph를 돌려보고, 좋은 과제를 쓰는 법과 흔한 함정 5가지를 익힙니다.',
+  metaHtml:`<span class="pill"><b style="color:#A78BFA">⏱ 약 20분</b></span><span class="pill">슬라이드 1–9</span><span class="pill teal">선수: 모듈 A·B</span>`,
+  note:`<p>모듈 C는 실습 위주라 가장 재밌는 파트입니다. 가능하면 실제로 화면을 공유하며 작은 과제 하나를 같이 돌려보세요. 청중도 자기 환경에서 따라 하게 하면 효과가 큽니다.</p>`
+});
+
+push({ type:'content', mod:'c', badge:'모듈 C · 1/9', title:'첫 ralph 실행 — 안전한 연습 과제로 시작',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal card"><h3><span class="lead-icon">🐣</span>첫 과제의 원칙</h3>
+      <ul class="feat"><li>처음엔 <strong>작고 되돌리기 쉬운 과제</strong> — 실패해도 잃을 게 없게</li><li>좋은 예: "README에 '설치' 섹션 추가, <code class="ic">npm install</code> 실행으로 검증"</li><li>키워드 한 마디 또는 전체 슬래시 커맨드 둘 다 ralph를 깨움</li><li>실행 후엔 <strong>손대지 말고 지켜보기</strong> — PRD 스캐폴드부터 시작</li></ul></div>
+    <div class="reveal"><pre data-label="실제 입력 예시"><span class="cm"># 방법 1 — 슬래시 커맨드</span>
+<span class="kw">/oh-my-claudecode:ralph</span> <span class="st">README에 '설치(Installation)'</span>
+<span class="st">섹션을 추가하고, npm install이 에러 없이</span>
+<span class="st">완료되는지로 검증해줘</span>
+
+<span class="cm"># 방법 2 — 자연어 트리거</span>
+<span class="kw">ralph로</span> <span class="st">README 설치 섹션 추가 끝까지 완성해줘</span></pre></div>
+  </div>`,
+  note:`<p>"첫 번째 실습이라 겁나는 분 있죠? ralph는 기존 파일을 무작정 지우지 않아요. 먼저 git 커밋이 하나 있는 상태라면 언제든 되돌릴 수 있습니다. README 수정이라는 아주 작은 과제로 루프가 어떻게 돌아가는지 눈으로 확인하는 게 이번 목표입니다."</p>`
+});
+
+push({ type:'content', mod:'c', badge:'모듈 C · 2/9', title:'실행 화면에서 보게 되는 것 — 단계별 흐름',
+  html:`
+  <div class="reveal flow" style="flex-direction:row;flex-wrap:wrap;justify-content:center;gap:6px">
+    <div class="node amber">① PRD 스캐폴드 자동 생성</div><div class="arr">→</div>
+    <div class="node">② 스토리별 진행 로그</div><div class="arr">→</div>
+    <div class="node">③ 에이전트 위임 로그</div><div class="arr">→</div>
+    <div class="node teal">④ 검증 → 승인</div><div class="arr">→</div>
+    <div class="node amber">⑤ 완료 시 자동 cancel</div>
+  </div>
+  <div class="grid cols-2">
+    <div class="reveal card"><ul class="feat"><li><strong>① PRD 스캐폴드</strong>: 요구사항 문서 초안 작성 (사용자 입력 불필요)</li><li><strong>② 진행 로그</strong>: "Story 1/3 실행 중…" 형태로 각 작업 단위 출력</li><li><strong>③ 위임 로그</strong>: executor, writer, test-engineer 등 이름이 찍힘</li></ul></div>
+    <div class="reveal card teal"><ul class="feat teal"><li><strong>④ 검증→승인</strong>: 리뷰어(기본 architect)가 검토, 통과하면 다음 스토리</li><li><strong>⑤ 자동 cancel</strong>: 모두 승인되면 스스로 <code class="ic">cancel</code> 호출해 정리</li></ul>
+      <div class="callout teal" style="margin-top:14px">기다릴 것은 딱 하나: <strong>"ralph 완료"</strong> 또는 <strong>"blocked — 확인 필요"</strong> 메시지.</div></div>
+  </div>`,
+  note:`<p>"터미널에 뭔가 계속 흘러내려가면 당황스럽죠. 사실 읽을 필요 없어요. PRD → Story → 검증 → 다음 Story 순서를 머리에 넣어두고, 마지막 줄만 보면 됩니다. 막히면 ralph가 먼저 멈추고 질문하니까요."</p>`
+});
+
+push({ type:'content', mod:'c', badge:'모듈 C · 3/9', title:'좋은 과제 vs 나쁜 과제',
+  html:`
+  <div class="reveal note-inline">ralph는 <strong>수용기준이 검증 가능한 과제</strong>에서 빛납니다. 모호하면 PRD theater(형식만 있고 실질 없는 완료)로 끝납니다.</div>
+  <div class="reveal tbl-wrap"><table>
+    <tbody>
+      <tr class="row-yes"><td>✅</td><td><code>사용자 로그인 API 추가, Jest 테스트 2개 통과로 검증</code></td><td>검증 수단 명시, 범위 명확</td></tr>
+      <tr class="row-yes"><td>✅</td><td><code>npm run build 에러 0개가 될 때까지 TS 오류 수정</code></td><td>종료 조건 측정 가능</td></tr>
+      <tr class="row-yes"><td>✅</td><td><code>README 설치 섹션 추가, npm install 성공으로 검증</code></td><td>작고 되돌리기 쉬움</td></tr>
+      <tr class="row-no"><td>❌</td><td><code>앱을 멋지게 만들어줘</code></td><td>수용기준 없음, 무한루프 위험</td></tr>
+      <tr class="row-no"><td>❌</td><td><code>코드 전체 리팩터링해줘</code></td><td>범위 무제한, 검증 불가</td></tr>
+      <tr class="row-no"><td>❌</td><td><code>더 좋게</code></td><td>PRD를 마음대로 작성 → 기대와 다른 결과</td></tr>
+    </tbody>
+  </table></div>
+  <div class="reveal callout">과제를 쓰기 전 스스로 물어라: <strong>"이게 완료됐는지 어떻게 확인할 수 있나?"</strong> 대답이 바로 안 나오면 더 구체적으로 다듬으세요.</div>`,
+  note:`<p>"ralph에게 '멋지게 만들어줘'를 시키면 정말로 뭔가를 만들어줘요. 근데 여러분이 원하는 게 아닐 가능성이 높아요. 수용기준을 못 쓰겠으면 일단 --no-deslop 없이 작은 과제 하나만 써보고, ralph가 만든 PRD를 보면서 '아, 이게 내가 원하는 거 맞나?'를 확인하세요."</p>`
+});
+
+push({ type:'content', mod:'c', badge:'모듈 C · 4/9', title:'옵션 플래그 실전 — --no-deslop · --critic',
+  html:`
+  <div class="reveal"><pre data-label="usage"><span class="kw">/oh-my-claudecode:ralph</span> <span class="cm">[</span><span class="st">--no-deslop</span><span class="cm">]</span> <span class="cm">[</span><span class="st">--critic=architect|critic|codex</span><span class="cm">]</span> <span class="st">&lt;과제&gt;</span></pre></div>
+  <div class="grid cols-2">
+    <div class="reveal card"><h3><span class="lead-icon">🧹</span>--no-deslop</h3>
+      <ul class="feat"><li>기본: 완료 후 ai-slop-cleaner가 AI 군더더기 제거</li><li>사용 시: 정리 패스를 <strong>건너뜀</strong></li><li>언제: 빠른 프로토타입, 정리가 오히려 원치 않는 변경을 일으킬 때</li></ul></div>
+    <div class="reveal card teal"><h3><span class="lead-icon">🔍</span>--critic (리뷰어 선택)</h3>
+      <div class="tbl-wrap"><table>
+        <tr><td><code>architect</code><br><span style="color:var(--ink-dim);font-size:.85em">기본</span></td><td>구조·설계 판단이 중요한 기능 구현</td></tr>
+        <tr><td><code>critic</code></td><td>논리 결함·엣지케이스 집중 검토</td></tr>
+        <tr><td><code>codex</code></td><td>코드 품질·스타일 중심, codex 모델 활용</td></tr>
+      </table></div></div>
+  </div>`,
+  note:`<p>"처음엔 기본값(architect)으로 두세요. 플래그는 ralph를 몇 번 써보고 '리뷰어가 이 부분을 못 잡네'라는 감이 생겼을 때 바꾸면 됩니다. --no-deslop도 마찬가지예요."</p>`
+});
+
+push({ type:'content', mod:'c', badge:'모듈 C · 5/9', title:'진행 중 개입과 중단 — 언제, 어떻게',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal">
+      <pre data-label="중단 방법"><span class="cm"># 방법 1 — 자연어</span>
+<span class="kw">stop</span>
+<span class="kw">cancel</span>
+<span class="kw">abort</span>
+
+<span class="cm"># 방법 2 — 슬래시 (가장 확실)</span>
+<span class="kw">/oh-my-claudecode:cancel</span></pre>
+    </div>
+    <div class="reveal card"><h3><span class="lead-icon">🚦</span>중단의 종류</h3>
+      <ul class="feat"><li><strong>정상 완료</strong>: 모든 스토리 마치면 스스로 cancel — 할 일 없음</li><li><strong>ralph가 먼저 멈춤</strong>: 자격증명 누락·요구사항 불명확·외부 서비스 다운 등 근본 블로커 → 보고 후 환경 고치고 재호출</li><li><strong>같은 이슈 3회+</strong>: 근본 문제로 간주하고 보고 → 과제 정의·환경 점검</li></ul></div>
+  </div>`,
+  note:`<p>"ralph가 멈추면 패닉하지 마세요. 멈춘 게 정상 동작이에요. 뭘 고쳐야 하는지 ralph가 직접 말해줍니다. 그냥 읽고 지시대로 따르면 됩니다."</p>`
+});
+
+push({ type:'content', mod:'c', badge:'모듈 C · 6/9', title:'흔한 함정 & 트러블슈팅 — 초심자가 진짜 겪는 것',
+  html:`
+  <div class="grid cols-2" style="gap:12px">
+    <div class="reveal card"><h3 style="font-size:18px"><span class="lead-icon">🔌</span>1. "ralph가 안 불려요"</h3>
+      <p class="note-inline"><strong>증상</strong> skill not found / 반응 없음 · <strong>해결</strong> <code class="ic">ls ~/.claude/skills/ralph</code> 확인 → 없으면 <code class="ic">omc-setup</code> 재실행</p></div>
+    <div class="reveal card"><h3 style="font-size:18px"><span class="lead-icon">🎭</span>2. "PRD만 만들고 끝나요" (PRD theater)</h3>
+      <p class="note-inline"><strong>증상</strong> 문서만 있고 코드 변경 없음 · <strong>해결</strong> 과제에 측정 가능한 검증 기준 명시 ("테스트 X개 통과", "빌드 에러 0개")</p></div>
+    <div class="reveal card"><h3 style="font-size:18px"><span class="lead-icon">🔁</span>3. "계속 같은 걸 반복해요"</h3>
+      <p class="note-inline"><strong>증상</strong> 같은 오류 3회+ 진전 없음 · <strong>해결</strong> <code class="ic">cancel</code> → 요구사항·환경(버전·환경변수) 점검 후 재시도</p></div>
+    <div class="reveal card"><h3 style="font-size:18px"><span class="lead-icon">🧪</span>4. "테스트가 없어 검증 못 해요"</h3>
+      <p class="note-inline"><strong>증상</strong> "검증 수단 없다"고 멈춤 · <strong>해결</strong> 호출 전 <code class="ic">npm run build</code>·<code class="ic">eslint .</code>·수동 절차를 과제에 명시</p></div>
+    <div class="reveal card" style="grid-column:1/-1"><h3 style="font-size:18px"><span class="lead-icon">🐢</span>5. "너무 오래 돌아요"</h3>
+      <p class="note-inline"><strong>증상</strong> 30분+ 진행, 끝 기미 없음 (과제 범위가 너무 큼) · <strong>해결</strong> <code class="ic">cancel</code> → 과제를 <strong>독립적인 작은 스토리</strong> 여러 개로 쪼개 순서대로 호출</p></div>
+  </div>`,
+  note:`<p>"이 다섯 가지는 ralph 스킬 문서에도 명시된 실제 엣지케이스예요. 특히 2번(PRD theater)은 처음에 정말 많이 겪어요. 과제 쓸 때 '검증 기준'만 챙겨도 절반은 해결됩니다."</p>`
+});
+
+push({ type:'content', mod:'c', badge:'모듈 C · 7/9', title:'ralph vs 다른 스킬 — 빠른 선택 가이드',
+  html:`
+  <div class="reveal tbl-wrap"><table>
+    <thead><tr><th>스킬</th><th>이럴 때 이걸</th></tr></thead>
+    <tbody>
+      <tr><td><code style="color:var(--amber)">ralph</code></td><td>수용기준이 있는 과제를 끝까지 자율 완료하고 싶을 때</td></tr>
+      <tr><td><code>autopilot</code></td><td>아이디어 → 동작 코드 전체 파이프라인을 한 번에 뚫을 때</td></tr>
+      <tr><td><code>ultrawork</code></td><td>완료 판단을 내가 직접 하면서 단계별 수동 제어</td></tr>
+      <tr><td><code>plan</code></td><td>실행 전 구조와 계획만 먼저 탐색</td></tr>
+      <tr><td><code>executor</code></td><td>범위가 명확한 빠른 일회성 수정을 바로 실행</td></tr>
+    </tbody>
+  </table></div>
+  <div class="reveal callout">확신이 없으면 <code class="ic">/oh-my-claudecode:ralplan</code>으로 먼저 계획을 검토한 뒤 실행 스킬을 고르세요.</div>`,
+  note:`<p>"ralph와 autopilot은 비슷해 보이는데 결정적 차이가 있어요. ralph는 '이미 뭘 만들어야 할지 아는데 검증루프 돌리며 끝까지 해줘'고, autopilot은 '아이디어 하나 줄게, 코드로 만들어줘'에요. 오늘 실습은 ralph니까 과제를 먼저 구체적으로 정의하고 시작하는 게 핵심입니다."</p>`
+});
+
+push({ type:'content', mod:'c', badge:'모듈 C · 8/9', title:'모범 워크플로우 체크리스트 — 7단계',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal">
+      <pre data-label="7-step workflow"><span class="ar">①</span> 스킬 설치 확인 <span class="cm">— ls ~/.claude/skills/ralph</span>
+<span class="ar">②</span> 과제를 구체적으로 정의 <span class="cm">(무엇·검증법)</span>
+<span class="ar">③</span> 검증 수단 확보 <span class="cm">(테스트/빌드/린터)</span>
+<span class="ar">④</span> ralph 호출 <span class="cm">— /oh-my-claudecode:ralph</span>
+<span class="ar">⑤</span> 진행 관찰 <span class="cm">(손 안 댐)</span>
+<span class="ar">⑥</span> 승인 / cancel 확인
+<span class="ar">⑦</span> 결과 검토 <span class="cm">— git diff로 예상 밖 변경 체크</span></pre>
+    </div>
+    <div class="reveal card" style="border-color:var(--bad)"><h3><span class="lead-icon">⛔</span>절대 하지 말 것</h3>
+      <ul class="feat"><li style="--c:var(--bad)">테스트를 <strong>지워서 통과</strong>시키기</li><li>범위 <strong>임의 축소</strong></li><li><strong>부분 완료</strong> 선언</li></ul>
+      <div class="callout" style="margin-top:14px;border-left-color:var(--bad);background:var(--bad-bg)">이는 ralph 실행 정책 위반이며 <strong style="color:var(--bad)">루프를 오염</strong>시킵니다.</div></div>
+  </div>`,
+  note:`<p>"이 7단계를 종이에 써서 모니터 옆에 붙여두세요. 처음 다섯 번은 습관이 될 때까지 체크박스를 실제로 체크하면서 진행하는 걸 권장합니다. 특히 3번(검증 수단)을 빠뜨리는 경우가 많아요."</p>`
+});
+
+push({ type:'content', mod:'c', badge:'모듈 C · 9/9', title:'마무리 — 오늘 배운 것과 다음 스텝',
+  html:`
+  <div class="grid cols-2" style="align-items:start">
+    <div class="reveal card teal"><h3><span class="lead-icon">📝</span>오늘 3줄 요약</h3>
+      <ul class="feat teal"><li>ralph는 명확한 과제를 <strong>PRD → 스토리 루프 → 검증</strong>으로 끝까지 자율 완료</li><li>좋은 프롬프트 = <strong>측정 가능한 검증 기준</strong>. 모호하면 PRD theater</li><li>막히면 ralph가 먼저 멈추고 보고 — <strong>5가지 트러블슈팅</strong>만 알면 대부분 해결</li></ul></div>
+    <div class="reveal"><pre data-label="집에서 해볼 첫 실습"><span class="kw">/oh-my-claudecode:ralph</span> <span class="st">현재 프로젝트 README에</span>
+<span class="st">'기여 방법(Contributing)' 섹션을 추가하고,</span>
+<span class="st">파일이 저장되고 마크다운 문법 오류가</span>
+<span class="st">없음을 확인하는 것으로 검증해줘</span></pre>
+      <ul class="feat" style="margin-top:12px"><li>작은 과제 → 결과 확인 → 조금 더 큰 과제 순으로 반복</li><li>막히면 <code class="ic">cancel</code>로 초기화 후 다시 시작</li></ul></div>
+  </div>`,
+  note:`<p>"오늘 모듈 A·B·C를 통해 설치부터 실전까지 전체 흐름을 다 봤습니다. 가장 중요한 건 직접 손으로 돌려보는 거예요. 완벽한 과제가 아니어도 괜찮아요. 작게 시작해서 ralph가 어떻게 움직이는지 몸으로 익히는 게 먼저입니다. 오늘 수고하셨습니다."</p>`
+});
+
+/* ---------- FINAL: SUMMARY / Q&A ---------- */
+push({
+  type:'final',
+  title:'정리 & Q&A',
+  html:`
+  <div class="slide section-slide c" style="justify-content:center">
+    <div class="body" style="justify-content:center">
+      <div class="reveal sec-num" style="-webkit-text-stroke-color:var(--amber)">🪨</div>
+      <h1 class="reveal">정리 &amp; <span style="color:var(--amber)">Q&amp;A</span></h1>
+      <p class="reveal sec-desc">설치 → 개념 → 실습 → 트러블슈팅. 이제 "ralph로 끝까지 완성해줘"라고 말할 수 있습니다.</p>
+      <div class="reveal grid cols-3" style="max-width:980px;width:100%">
+        <div class="card accent"><h3 style="font-size:17px">🎯 A · 세팅</h3><p class="note-inline">OMC 설치 → SKILL.md 확인 → 호출 3가지 방법</p></div>
+        <div class="card teal"><h3 style="font-size:17px">⚙️ B · 원리</h3><p class="note-inline">PRD 루프 + 검증 + 리뷰어 승인 + 디슬롭</p></div>
+        <div class="card" style="border-color:rgba(167,139,250,.4)"><h3 style="font-size:17px">🛠️ C · 실전</h3><p class="note-inline">구체적 과제 · 함정 5가지 · 7단계 체크리스트</p></div>
+      </div>
+      <div class="reveal callout" style="max-width:980px;margin-top:8px">질문이 있으시면 지금 바로 해주세요. 실습 중 막히는 점은 화면 공유로 같이 보겠습니다. &nbsp;<strong>오늘 수고하셨습니다! 🙌</strong></div>
+    </div>
+  </div>`,
+  note:`<p>마지막 정리 슬라이드입니다. 세 모듈을 한 문장씩으로 복기시키고, 질문을 적극 유도하세요. 가장 강조할 메시지: <strong>"작게 시작해서 직접 돌려보는 것"</strong>이 ralph를 익히는 가장 빠른 길입니다.</p>`
+});
+
+/* =====================================================================
+   RENDERER
+   ===================================================================== */
+const stage = document.getElementById('stage');
+const modName = {a:'모듈 A',b:'모듈 B',c:'모듈 C'};
+
+S.forEach((s,i)=>{
+  let el;
+  if(s.type==='cover' || s.type==='final'){
+    const wrap=document.createElement('div');
+    wrap.innerHTML=s.html.trim();
+    el=wrap.firstElementChild;
+  } else if(s.type==='section'){
+    el=document.createElement('section');
+    el.className='slide section-slide '+s.sec;
+    el.innerHTML=`<div class="body" style="justify-content:center">
+        <div class="reveal badge-row"><span class="badge mod-${s.sec}"><span class="dot"></span>SECTION</span></div>
+        <div class="reveal sec-num">${s.num}</div>
+        <h1 class="reveal">${s.title}</h1>
+        <p class="reveal sec-desc">${s.desc}</p>
+        <div class="reveal sec-meta">${s.metaHtml}</div>
+      </div>`;
+  } else {
+    el=document.createElement('section');
+    el.className='slide';
+    const badgeCls = s.mod ? 'mod-'+s.mod : '';
+    const title = s.titleHtml || s.title;
+    el.innerHTML=`
+      <div class="badge-row">
+        <span class="badge ${badgeCls}"><span class="dot"></span>${s.badge}</span>
+      </div>
+      <h1 class="slide-title">${title}</h1>
+      <div class="body">${s.html}</div>`;
+  }
+  el.dataset.idx=i;
+  stage.appendChild(el);
+});
+
+const slides=[...document.querySelectorAll('.slide')];
+const TOTAL=slides.length;
+document.getElementById('totNum').textContent=TOTAL;
+
+/* =====================================================================
+   PLAYER STATE & NAV
+   ===================================================================== */
+let cur=0;
+const $=(id)=>document.getElementById(id);
+
+function shortTitle(i){
+  const s=S[i];
+  if(s.type==='cover')return 'ralph 스킬 세팅 및 사용법';
+  if(s.type==='section')return s.title;
+  if(s.type==='final')return '정리 & Q&A';
+  return s.title;
+}
+
+function render(){
+  slides.forEach((sl,i)=>sl.classList.toggle('active',i===cur));
+  $('curNum').textContent=cur+1;
+  $('progress').style.width=((cur)/(TOTAL-1)*100)+'%';
+  $('barTitle').textContent=shortTitle(cur);
+  // notes
+  const note=S[cur].note||'<p style="color:var(--ink-dim)">이 슬라이드에는 강사 노트가 없습니다.</p>';
+  $('notesBody').innerHTML=note;
+  $('notesPageRef').textContent=(cur+1)+' / '+TOTAL;
+  // overview highlight
+  document.querySelectorAll('.ov-card').forEach((c,i)=>c.classList.toggle('current',i===cur));
+  // hash
+  if(location.hash!=='#'+cur) history.replaceState(null,'','#'+cur);
+}
+
+function go(n){
+  cur=Math.max(0,Math.min(TOTAL-1,n));
+  render();
+}
+const next=()=>go(cur+1);
+const prev=()=>go(cur-1);
+
+/* =====================================================================
+   OVERVIEW GRID
+   ===================================================================== */
+const ovGrid=$('ovGrid');
+S.forEach((s,i)=>{
+  const card=document.createElement('div');
+  card.className='ov-card';
+  let tag='', tagcls='';
+  if(s.type==='cover'){tag='COVER'}
+  else if(s.type==='final'){tag='Q&A'}
+  else if(s.type==='section'){tag=modName[s.sec]||'SECTION';tagcls=s.sec}
+  else if(s.mod){tag=modName[s.mod];tagcls=s.mod}
+  else {tag='AGENDA'}
+  card.innerHTML=`<div class="ov-idx">${String(i+1).padStart(2,'0')}</div>
+    <div class="ov-t">${shortTitle(i)}</div>
+    <div class="ov-tag ${tagcls}">${tag}</div>`;
+  card.addEventListener('click',()=>{go(i);toggleOverview(false);});
+  ovGrid.appendChild(card);
+});
+
+/* =====================================================================
+   TOGGLES
+   ===================================================================== */
+function toggleNotes(force){
+  const p=$('notesPanel');
+  const on= force!==undefined?force:!p.classList.contains('open');
+  p.classList.toggle('open',on);
+  p.setAttribute('aria-hidden',!on);
+  $('notesBtn').classList.toggle('on',on);
+}
+function toggleOverview(force){
+  const o=$('overview');
+  const on= force!==undefined?force:!o.classList.contains('open');
+  o.classList.toggle('open',on);
+  o.setAttribute('aria-hidden',!on);
+  $('ovBtn').classList.toggle('on',on);
+}
+function toggleHelp(force){
+  const h=$('help');
+  const on= force!==undefined?force:!h.classList.contains('open');
+  h.classList.toggle('open',on);
+  h.setAttribute('aria-hidden',!on);
+}
+function toggleFs(){
+  if(!document.fullscreenElement){document.documentElement.requestFullscreen?.();}
+  else{document.exitFullscreen?.();}
+}
+document.addEventListener('fullscreenchange',()=>{
+  $('fsBtn').classList.toggle('on',!!document.fullscreenElement);
+});
+
+/* =====================================================================
+   TIMER
+   ===================================================================== */
+let tStart=null, tElapsed=0, tInt=null;
+function fmt(ms){
+  const s=Math.floor(ms/1000);
+  const m=Math.floor(s/60), ss=s%60;
+  return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0');
+}
+function tick(){ $('timerText').textContent=fmt(tElapsed+(tStart?Date.now()-tStart:0)); }
+function timerToggle(){
+  const el=$('timer');
+  if(tStart){ // pause
+    tElapsed+=Date.now()-tStart; tStart=null;
+    clearInterval(tInt); el.classList.remove('running');
+  } else { // start
+    tStart=Date.now(); el.classList.add('running');
+    tInt=setInterval(tick,250); tick();
+  }
+}
+function timerReset(){
+  tStart=null;tElapsed=0;clearInterval(tInt);
+  $('timer').classList.remove('running');$('timerText').textContent='00:00';
+}
+$('timer').addEventListener('click',timerToggle);
+$('timer').addEventListener('dblclick',(e)=>{e.preventDefault();timerReset();});
+
+/* =====================================================================
+   EVENTS
+   ===================================================================== */
+$('prevBtn').addEventListener('click',prev);
+$('nextBtn').addEventListener('click',next);
+$('notesBtn').addEventListener('click',()=>toggleNotes());
+$('ovBtn').addEventListener('click',()=>toggleOverview());
+$('fsBtn').addEventListener('click',toggleFs);
+$('helpBtn').addEventListener('click',()=>toggleHelp());
+$('overview').addEventListener('click',(e)=>{if(e.target.id==='overview')toggleOverview(false);});
+$('help').addEventListener('click',()=>toggleHelp(false));
+
+document.addEventListener('keydown',(e)=>{
+  // if help open, any key closes
+  if($('help').classList.contains('open')){ toggleHelp(false); e.preventDefault(); return; }
+  switch(e.key){
+    case 'ArrowRight': case 'PageDown': case ' ': case 'Spacebar':
+      e.preventDefault(); next(); break;
+    case 'ArrowLeft': case 'PageUp':
+      e.preventDefault(); prev(); break;
+    case 'Home': e.preventDefault(); go(0); break;
+    case 'End': e.preventDefault(); go(TOTAL-1); break;
+    case 'n': case 'N': case 'ㅜ': toggleNotes(); break;
+    case 'o': case 'O': case 'ㅐ': toggleOverview(); break;
+    case 'f': case 'F': case 'ㄹ': toggleFs(); break;
+    case 't': case 'T': case 'ㅅ': timerToggle(); break;
+    case '?': toggleHelp(); break;
+    case 'Escape':
+      toggleOverview(false); toggleHelp(false);
+      if($('notesPanel').classList.contains('open')) toggleNotes(false);
+      break;
+  }
+});
+
+// swipe (touch / laptop trackpad)
+let touchX=null;
+stage.addEventListener('touchstart',e=>touchX=e.touches[0].clientX,{passive:true});
+stage.addEventListener('touchend',e=>{
+  if(touchX===null)return;
+  const dx=e.changedTouches[0].clientX-touchX;
+  if(Math.abs(dx)>60){ dx<0?next():prev(); }
+  touchX=null;
+},{passive:true});
+
+// deep-link restore
+function fromHash(){
+  const n=parseInt(location.hash.replace('#',''),10);
+  if(!isNaN(n)&&n>=0&&n<TOTAL) cur=n;
+}
+window.addEventListener('hashchange',()=>{ fromHash(); render(); });
+
+fromHash();
+render();
+</script>
+</body>
+</html>

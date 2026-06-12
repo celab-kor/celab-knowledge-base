@@ -198,3 +198,7 @@ After doing this, you may fix the identity used for this commit with:
 To https://github.com/celab-kor/celab-knowledge-base.git
    1813f2f..7b7b2da  main -> main
 [2026-06-03 00:34:20] ✅ [지식창고] 1 파일 동기화 완료
+[2026-06-12 17:25:29] 📥 [지식창고] inbox→pages: 2026-06-12_ralph-스킬-세팅-및-사용법_초심자강의.html
+[2026-06-12 17:25:29] 📥 [지식창고] inbox→pages: 2026-06-12_inhwagong_ontology_dashboard.html
+[register] + pages/2026-06-12_ralph-스킬-세팅-및-사용법_초심자강의.html
+[register] + pages/2026-06-12_inhwagong_ontology_dashboard.html
